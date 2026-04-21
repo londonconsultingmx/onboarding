@@ -115,9 +115,9 @@
   animation-delay: 2.5s;
 }
 
-/* Title overlay on iso */
+/* Title overlay on iso — lifted above .bl engineering label */
 .iso-title{
-  position:absolute; left:16px; bottom:14px; z-index:3;
+  position:absolute; left:16px; bottom:38px; z-index:3;
   font-family: var(--serif); color: var(--lcg-dark); font-size:20px; line-height:1.1;
   letter-spacing:-.01em; max-width: 70%;
 }
