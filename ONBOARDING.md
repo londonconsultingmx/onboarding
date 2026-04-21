@@ -45,7 +45,7 @@ El Día 4 se rediseña de "Herramientas" a **"Herramientas & AI"**. Se comprime 
 
 ### Detalle
 
-**Bienvenida + Accesos (1h)** — Recepción formal por P&C. Firma de documentación de ingreso. Alta en M365 (cuenta @londoncg.mx), Teams, SharePoint, OneDrive. Entrega de equipo y credenciales. Tour de oficina.
+**Bienvenida + Accesos (1h)** — Recepción formal por P&C. Firma del paquete inicial: Contrato individual, Aviso de privacidad, Protocolo NOM y Política de reembolso. Alta por Platform de cuenta corporativa `@londoncg.mx` y licencias en **Microsoft 365** (Outlook, Teams, SharePoint, OneDrive), **Power Platform** (Power BI, Power Apps, Power Automate), **Monday** y **Miro**. Entrega de equipo y credenciales. Tour de oficina.
 
 **¿Quiénes somos? (45m)** — Historia de LCG. Modelo de consultoría por consultor-semana. Propuesta de valor ("We make change happen together"). Claim "Shape Your Business". Statement de descubrir oportunidades, implementar soluciones y comprometer resultados sostenibles.
 
