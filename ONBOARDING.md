@@ -33,33 +33,38 @@ El Día 4 se rediseña de "Herramientas" a **"Herramientas & AI"**. Se comprime 
 
 ### Agenda
 
-| Bloque | Duración | Facilitador sugerido |
-|---|---|---|
-| Bienvenida + Accesos | 1h | P&C (Mafer) + IT |
-| ¿Quiénes somos? | 45m | Dirección general |
-| Organigrama + Roles | 40m | P&C (Mafer) |
-| Valores London | 30m | P&C (Mafer) |
-| London Balance | 45m | P&C (Mafer) |
-| Políticas de Viáticos | 45m | Admin (Jorge) |
-| Políticas Generales | 1h | Admin (Jorge) |
+| # | Bloque | Duración | Facilitador sugerido |
+|---|---|---|---|
+| 01 | Bienvenida ejecutiva · ¿Quiénes somos? | 45m | Director patrocinador (Fernando Sánchez / Jaime Restrepo) |
+| 02 | Accesos & firma de documentos | 1h | Capital Humano + IT |
+| 03 | Cultura y valores | 45m | P&C (Mafer) |
+| 04 | Estructura organizacional | 30m | P&C (Mafer) |
+| 05 | Políticas y Código de conducta | 1h | Admin (Jorge González) |
+| 06 | Administración & reembolsos | 45m | Admin (Jorge González) |
+| 07 | SharePoint & M365 | 40m | IT / Platform (Ricardo) |
+| 08 | Networking virtual | 1h | P&C + mentor asignado |
+
+**Total:** 6h 25m de contenido + breaks + lunch.
 
 ### Detalle
 
-**Bienvenida + Accesos (1h)** — Recepción formal por P&C. Firma del paquete inicial: Contrato individual, Aviso de privacidad, Protocolo NOM y Política de reembolso. Alta por Platform de cuenta corporativa `@londoncg.mx` y licencias en **Microsoft 365** (Outlook, Teams, SharePoint, OneDrive), **Power Platform** (Power BI, Power Apps, Power Automate), **Monday** y **Miro**. Entrega de equipo y credenciales. Tour de oficina.
+**01 · Bienvenida ejecutiva · ¿Quiénes somos? (45m)** — Director patrocinador (Fernando Sánchez o Jaime Restrepo). London y London México: propósito, trayectoria, compromiso con el cliente. Modelo de consultoría por consultor-semana. Tagline "Shape Your Business" y claim "We make change happen together".
 
-**¿Quiénes somos? (45m)** — Historia de LCG. Modelo de consultoría por consultor-semana. Propuesta de valor ("We make change happen together"). Claim "Shape Your Business". Statement de descubrir oportunidades, implementar soluciones y comprometer resultados sostenibles.
+**02 · Accesos & firma de documentos (1h)** — Capital Humano e IT. Firma del paquete inicial: Contrato individual, Aviso de privacidad, Protocolo NOM y Política de reembolso. Alta de cuenta corporativa `@londoncg.mx` y licencias en **Microsoft 365** (Outlook, Teams, SharePoint, OneDrive), **Power Platform** (Power BI, Power Apps, Power Automate), **Monday** y **Miro**. Verificación de equipo.
 
-**Organigrama + Roles (40m)** — Estructura directiva. Áreas de soporte (P&C, Admin, IT, Growth, Finanzas). Roles en proyecto (Director, Gerente, Consultor) y sus handoffs.
+**03 · Cultura y valores (45m)** — Valores institucionales LCG. Cómo se traducen tagline y claim en comportamiento diario y decisiones con cliente. Expectativas en oficina y en sitio de cliente. Casos reales resueltos con base en valores.
 
-**Valores London (30m)** — Valores institucionales. Expectativas de comportamiento en cliente y oficina. Casos reales resueltos con base en valores.
+**04 · Estructura organizacional (30m)** — Verticales LCG México, áreas de soporte (P&C, Admin, IT, Growth, Finanzas) y modelo de gobernanza de proyecto (Director, Gerente, Consultor) con sus handoffs.
 
-**London Balance (45m)** — Filosofía de balance profesional-personal. Política de jornadas, viajes, descansos. Canales de comunicación con P&C y líder directo.
+**05 · Políticas y Código de conducta (1h)** — Jorge González. Ética, confidencialidad y expectativas de comportamiento. NDAs, propiedad intelectual, manejo de información de cliente, comunicación externa y uso de equipo.
 
-**Políticas de Viáticos (45m)** — Tipos de viaje, topes, comprobación. Herramientas de registro. Tarjetas corporativas. Reembolsos.
+**06 · Administración & reembolsos (45m)** — Proceso de reembolso, montos máximos y políticas de gasto de proyecto. Tipos de viaje, tarjetas corporativas, plazos de comprobación y herramientas de registro.
 
-**Políticas Generales (1h)** — Código de conducta. Confidencialidad y manejo de información de cliente. Uso de equipo. Comunicación externa. NDAs y propiedad intelectual.
+**07 · SharePoint & M365 (40m)** — Sistemas core LCG: dónde vive cada cosa. Knowledge base en SharePoint, colaboración en Teams, archivos en OneDrive, documentos vivos en Word/Excel/PowerPoint online. Convenciones de carpetas y permisos.
 
-**Entregable del día:** accesos operativos configurados, conocimiento de estructura organizacional, marco normativo firmado.
+**08 · Networking virtual (1h)** — Breakout en Teams con otros nuevos ingresos y mentor asignado. Primer contacto de red interna y ronda de presentación estructurada. Cierre del día.
+
+**Entregable del día:** paquete legal firmado, accesos operativos verificados, conocimiento de estructura y cultura, mentor identificado.
 
 ---
 

@@ -66,7 +66,7 @@ Capturas de pantalla del portal y variantes de animaciones, para referencia en i
 
 | Día | Tema | Duración |
 |-----|------|----------|
-| 1 | Inducción corporativa | 5h 25m (7 bloques) |
+| 1 | Inducción corporativa | 6h 25m (8 bloques) |
 | 2 | Metodologías LCG | 6h 30m (7 bloques) |
 | 3 | Industrias y especialidades | 8h (4 bloques de 2h) |
 | 4 | **Herramientas & AI** | 7h (2h 30m herramientas + 4h 30m AI) |
