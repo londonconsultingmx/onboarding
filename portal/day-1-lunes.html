@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Lunes · Día 01 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=3" />
+<link rel="stylesheet" href="shared/iso.css?v=3" />
+<style>
+.day-main{ padding-bottom: 80px; }
+
+.d-hero{
+  padding: 42px 0 32px; border-bottom: 1px solid var(--hairline);
+}
+.d-hero-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; }
+.d-hero .idx{ font-family: ui-monospace, Menlo, monospace; font-size:12px; color:var(--ink-4); letter-spacing:.18em; text-transform:uppercase; margin-bottom:8px; display:block; }
+.d-hero h1{ font-family: var(--serif); font-weight:400; font-size: clamp(44px, 5vw, 72px); line-height:.98; letter-spacing:-.03em; margin:0 0 14px; }
+.d-hero h1 em{ font-style:italic; color:var(--cat-ide); }
+.d-hero .sub{ font-size:17px; color:var(--ink-2); max-width:580px; margin:0; }
+
+.d-hero-stats{ display:flex; gap:32px; flex-shrink:0; padding-bottom:6px; }
+.d-hero-stats .s{ text-align:right; }
+.d-hero-stats .s .label{ display:block; margin-bottom:4px; }
+.d-hero-stats .s .v{ font-family:var(--serif); font-size:30px; line-height:1; letter-spacing:-.02em; color:var(--ink); }
+.d-hero-stats .s .v sup{ font-size:13px; font-family:var(--sans); color:var(--ink-3); }
+
+.filter-bar{
+  padding: 20px 0 24px; border-bottom: 1px solid var(--hairline);
+  display:flex; gap: 10px; align-items:center;
+}
+.filter-bar .label{ margin-right:8px; }
+.filter-chip{
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--hairline);
+  background: var(--surface); font-size: 13px; color: var(--ink-2); cursor:pointer;
+  display:inline-flex; align-items:center; gap: 8px;
+}
+.filter-chip.is-active{ background: var(--ink); color:#fff; border-color: var(--ink); }
+.filter-chip .d{ width:7px; height:7px; border-radius:50%; background: currentColor; }
+.filter-bar-spacer{ flex:1; }
+
+.timeline{ padding: 36px 0; }
+.t-row{
+  display: grid; grid-template-columns: 84px 28px 1fr;
+  gap: 24px; padding: 14px 0; align-items: stretch;
+}
+.t-time{ padding-top: 16px; text-align: right; }
+.t-time .hour{ font-family: var(--serif); font-size: 24px; line-height:1; color: var(--ink); letter-spacing: -.01em; }
+.t-time .dur{ font-size: 11px; color: var(--ink-4); margin-top: 4px; font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em; }
+
+.t-spine{ position: relative; display:flex; justify-content:center; }
+.t-spine::before{
+  content:""; position: absolute; top: 0; bottom: -14px; left: 50%;
+  width: 1px; background: var(--hairline); transform: translateX(-.5px);
+}
+.t-spine .mark{
+  position: relative; z-index: 1;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--hairline);
+  margin-top: 22px;
+}
+.t-spine.doing .mark{
+  background: #fff; border-color: var(--cat-ide);
+  box-shadow: 0 0 0 5px rgba(58,117,97,.15);
+  animation: isoPulse 1.6s ease-in-out infinite;
+}
+.t-row:last-child .t-spine::before{ display:none; }
+.t-row.is-break .t-time{ padding-top: 8px; }
+.t-row.is-break .t-spine .mark{ border-style: dashed; }
+
+.t-card{
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md); padding: 18px 22px;
+  display: grid; grid-template-columns: 6px 1fr auto auto; gap: 20px;
+  align-items: center;
+  position: relative; text-decoration:none; color:inherit;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.t-card:hover{ transform: translateY(-1px); border-color: var(--ink-3); box-shadow: var(--shadow-2); }
+.t-card .cat-bar{ align-self: stretch; border-radius: 999px; }
+.t-card .cat-bar.ide{ background: var(--cat-ide); }
+.t-card .body{ min-width: 0; }
+.t-card .cap-row{ display:flex; gap:10px; align-items:center; margin-bottom: 6px; font-size: 11.5px; color: var(--ink-4); letter-spacing:.02em; }
+.t-card .cap-row .pill{ padding:3px 10px; font-size:11px; background: var(--surface-2); border:1px solid var(--hairline); }
+.t-card .cap-row .pill.ide{ background: var(--cat-ide-bg); color: var(--cat-ide); border:none; }
+.t-card h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing:-.015em; line-height:1.15; margin: 0 0 4px; color: var(--ink); }
+.t-card .desc{ font-size: 13.5px; color: var(--ink-3); line-height: 1.45; margin: 0; }
+.t-card .fac{ display:flex; gap:8px; align-items:center; flex-shrink:0; }
+.t-card .fac .avatar{ width:28px; height:28px; font-size:11px; }
+.t-card .fac .n{ font-size: 12px; font-weight: 600; color: var(--ink); line-height:1.1; }
+.t-card .fac .r{ font-size: 10.5px; color: var(--ink-4); }
+.t-card .status{
+  flex-shrink:0; display:flex; gap:8px; align-items:center;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hairline);
+}
+.t-card.doing{ border-color: var(--cat-ide); box-shadow: 0 0 0 3px rgba(58,117,97,.12); }
+.t-card.doing .status{ color: var(--cat-ide); border-color: rgba(58,117,97,.3); background: rgba(58,117,97,.08); }
+.t-card.doing .status::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; animation: isoPulse 1.6s ease-in-out infinite; }
+
+.t-break{
+  background: transparent; border: 1px dashed var(--hairline);
+  border-radius: var(--r-md); padding: 12px 22px;
+  display:flex; gap: 14px; align-items:center; color: var(--ink-4); font-size: 13px;
+}
+.t-break .ico{ width:20px; height:20px; color: var(--ink-4); }
+
+.day-dist{
+  margin-top: 32px; padding: 28px 32px;
+  background: var(--cat-ide-bg); border: 1px solid rgba(58,117,97,.25); border-radius: var(--r-md);
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+}
+.day-dist h3{ font-family: var(--serif); font-weight:400; font-size: 22px; margin: 0 0 16px; letter-spacing:-.01em; }
+.dist-bar{ height: 14px; border-radius: 999px; overflow:hidden; display:flex; background: rgba(255,255,255,.5); }
+.dist-bar span{ display:block; height:100%; }
+.dist-legend{ display:flex; gap: 20px; margin-top: 14px; flex-wrap:wrap; }
+.dist-legend .l{ display:flex; gap:8px; align-items:center; font-size: 12px; color: var(--ink-2); }
+.dist-legend .l .d{ width: 10px; height: 10px; border-radius: 3px; }
+.dist-legend .l b{ color: var(--ink); }
+.day-dist .totals{ text-align:right; }
+.day-dist .totals .big{ font-family: var(--serif); font-size: 44px; line-height:1; color: var(--cat-ide); letter-spacing:-.02em; }
+.day-dist .totals .small{ font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 27 sesiones · Día 1 por iniciar</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list">
+        <li>
+          <a class="day-item is-active" href="day-1-lunes.html"><span class="num">1</span><span class="name">Lunes</span><span class="pct">0%</span></a>
+          <ul class="sub-sessions">
+            <li><a class="sub-sess" href="session-d1-bienvenida.html"><span class="dot" style="background:var(--cat-ide)"></span> Bienvenida &amp; Accesos</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> ¿Quiénes somos?</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> Organigrama + Roles</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> Valores London</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> London Balance</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> Políticas de Viáticos</a></li>
+            <li><a class="sub-sess" href="#"><span class="dot" style="background:var(--cat-ide)"></span> Políticas Generales</a></li>
+          </ul>
+        </li>
+        <li><a class="day-item" href="#"><span class="num">2</span><span class="name">Martes</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">3</span><span class="name">Miércoles</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="#"><span class="num">4</span><span class="name">Jueves</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="#"><span class="num">5</span><span class="name">Viernes</span><span class="pct">0%</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <b>Lunes · Día 01</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ide-bg); color: var(--cat-ide); border-color: transparent;">
+        <span class="pill-dot"></span> Identidad
+      </span>
+    </header>
+
+    <main class="day-main">
+      <section class="d-hero">
+        <div class="container d-hero-head">
+          <div>
+            <span class="idx">Día 01 · Lunes · Inducción corporativa</span>
+            <h1><em>Identidad.</em> Quiénes somos y cómo operamos.</h1>
+            <p class="sub">El Lunes es tu entrada formal a LCG: firmas tu paquete inicial, recibes accesos, conoces al equipo y aprendes el marco de políticas y cultura que rige todo lo que hacemos en México.</p>
+          </div>
+          <div class="d-hero-stats">
+            <div class="s"><span class="label">Bloques</span><span class="v">7</span></div>
+            <div class="s"><span class="label">Duración</span><span class="v">5<sup>h 25m</sup></span></div>
+            <div class="s"><span class="label">Completado</span><span class="v">0<sup>%</sup></span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="filter-bar">
+          <span class="label">Bloques</span>
+          <button class="filter-chip is-active">Día completo · 7</button>
+          <button class="filter-chip" style="color: var(--cat-ide)"><span class="d"></span> Identidad · 7</button>
+          <div class="filter-bar-spacer"></div>
+        </div>
+
+        <div class="timeline">
+
+          <!-- Bloque 1 - Bienvenida & Accesos · CURRENT -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">09:00</div>
+              <div class="dur">1 H</div>
+            </div>
+            <div class="t-spine doing"><div class="mark"></div></div>
+            <a href="session-d1-bienvenida.html" class="t-card doing">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 01 · 09:00–10:00</span>
+                </div>
+                <h3>Bienvenida &amp; Accesos — paquete inicial y herramientas</h3>
+                <p class="desc">Firma de contrato, aviso de privacidad, protocolo NOM y política de reembolso. Alta de M365, Power Platform, Monday y Miro.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar" style="background: var(--cat-ide); color:#fff;">PC</div>
+                <div><div class="n">P&amp;C + Platform</div><div class="r">Mafer · IT</div></div>
+              </div>
+              <span class="status">Siguiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 2 - ¿Quiénes somos? -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">10:00</div>
+              <div class="dur">45 M</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 02 · 10:00–10:45</span>
+                </div>
+                <h3>¿Quiénes somos? — historia y propuesta de valor LCG</h3>
+                <p class="desc">Historia de LCG, modelo consultor-semana, tagline "Shape Your Business" y claim "We make change happen together".</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">DG</div>
+                <div><div class="n">Dirección General</div><div class="r">Luis Ortiz</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Break -->
+          <div class="t-row is-break">
+            <div class="t-time"><div class="hour" style="font-size:16px; color:var(--ink-4);">10:45</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <div class="t-break">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+              Break · 15 min &nbsp;·&nbsp; Café y primer contacto con cohorte
+            </div>
+          </div>
+
+          <!-- Bloque 3 - Organigrama -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">11:00</div>
+              <div class="dur">40 M</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 03 · 11:00–11:40</span>
+                </div>
+                <h3>Organigrama + Roles — cómo se estructura LCG México</h3>
+                <p class="desc">Estructura directiva, áreas de soporte (P&amp;C, Admin, IT, Growth, Finanzas) y roles en proyecto (Director, Gerente, Consultor) con sus handoffs.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">PC</div>
+                <div><div class="n">P&amp;C</div><div class="r">Mafer</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 4 - Valores -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">11:40</div>
+              <div class="dur">30 M</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 04 · 11:40–12:10</span>
+                </div>
+                <h3>Valores London — cómo nos comportamos</h3>
+                <p class="desc">Valores institucionales, expectativas de comportamiento en cliente y oficina, casos reales resueltos con base en valores.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">PC</div>
+                <div><div class="n">P&amp;C</div><div class="r">Mafer</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 5 - London Balance -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">12:10</div>
+              <div class="dur">45 M</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 05 · 12:10–12:55</span>
+                </div>
+                <h3>London Balance — filosofía de balance profesional-personal</h3>
+                <p class="desc">Política de jornadas, viajes y descansos. Canales de comunicación con P&amp;C y tu líder directo.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">PC</div>
+                <div><div class="n">P&amp;C</div><div class="r">Mafer</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Lunch -->
+          <div class="t-row is-break">
+            <div class="t-time"><div class="hour" style="font-size:16px; color:var(--ink-4);">12:55</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <div class="t-break">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18"/><path d="M12 11V3"/><path d="M21 11a9 9 0 1 1-18 0"/></svg>
+              Lunch · 60 min &nbsp;·&nbsp; Comida compartida con tu cohorte
+            </div>
+          </div>
+
+          <!-- Bloque 6 - Políticas de Viáticos -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">13:55</div>
+              <div class="dur">45 M</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 06 · 13:55–14:40</span>
+                </div>
+                <h3>Políticas de Viáticos — reglas operativas de viaje</h3>
+                <p class="desc">Tipos de viaje, topes y comprobación. Herramientas de registro, tarjetas corporativas y reembolsos.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">JG</div>
+                <div><div class="n">Admin</div><div class="r">Jorge González</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 7 - Políticas Generales -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">14:40</div>
+              <div class="dur">1 H</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar ide"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ide">Identidad</span>
+                  <span>Bloque 07 · 14:40–15:40</span>
+                </div>
+                <h3>Políticas Generales — marco normativo LCG</h3>
+                <p class="desc">Código de conducta, confidencialidad y manejo de información de cliente. Uso de equipo, comunicación externa, NDAs y propiedad intelectual.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">JG</div>
+                <div><div class="n">Admin</div><div class="r">Jorge González</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Distribution -->
+        <div class="day-dist">
+          <div>
+            <h3>Distribución del día</h3>
+            <div class="dist-bar">
+              <span style="width:18.5%; background: var(--cat-ide);"></span>
+              <span style="width:13.8%; background: var(--cat-ide); opacity:.88;"></span>
+              <span style="width:12.3%; background: var(--cat-ide); opacity:.76;"></span>
+              <span style="width:9.2%;  background: var(--cat-ide); opacity:.64;"></span>
+              <span style="width:13.8%; background: var(--cat-ide); opacity:.52;"></span>
+              <span style="width:13.8%; background: var(--cat-ide); opacity:.40;"></span>
+              <span style="width:18.5%; background: var(--cat-ide); opacity:.28;"></span>
+            </div>
+            <div class="dist-legend">
+              <div class="l"><span class="d" style="background: var(--cat-ide)"></span><b>1h</b> Bienvenida + Accesos</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.88"></span><b>45m</b> ¿Quiénes somos?</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.76"></span><b>40m</b> Organigrama</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.64"></span><b>30m</b> Valores</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.52"></span><b>45m</b> Balance</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.40"></span><b>45m</b> Viáticos</div>
+              <div class="l"><span class="d" style="background: var(--cat-ide); opacity:.28"></span><b>1h</b> Políticas</div>
+            </div>
+          </div>
+          <div class="totals">
+            <div class="big">5<sup style="font-size:20px">h 25m</sup></div>
+            <div class="small">de inducción corporativa</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>
