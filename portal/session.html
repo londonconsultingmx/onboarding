@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Monday · Gestión de casos — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=3" />
+<link rel="stylesheet" href="shared/iso.css?v=3" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F7F5F0 0%, transparent 100%);
+}
+.s-hero-inner{
+  display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 48px; padding: 44px 0 56px; align-items: center;
+}
+.s-hero-kicker{
+  display:flex; gap:10px; align-items:center; margin-bottom: 18px;
+}
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--cat-sys-bg); color: var(--cat-sys);
+  font-size: 11.5px; font-weight: 700; letter-spacing:.12em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(40px, 4.4vw, 62px); line-height: 1.02;
+  letter-spacing:-.025em; margin: 0 0 22px; color: var(--ink);
+}
+.s-hero-sub{ font-size: 17px; color: var(--ink-2); line-height: 1.55; max-width: 560px; margin: 0 0 28px; }
+
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 32px; padding: 20px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 4px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 22px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:18px; }
+.s-hero-meta .facilitator{ display:flex; gap:10px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:32px; height:32px; font-size:11px; }
+.s-hero-meta .facilitator .val{ font-size: 14px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
+
+.s-hero-visual{
+  position: relative; aspect-ratio: 1 / 1; max-height: 520px;
+}
+
+/* Two-col body */
+.s-body{
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 48px; padding: 48px 0;
+}
+
+/* Section blocks */
+.s-block{ margin-bottom: 48px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 32px; line-height: 1.1; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 18px; line-height: 1.5; color: var(--ink); }
+
+/* Learning objectives */
+.objectives{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  list-style:none; padding:0; margin: 0;
+}
+.objectives li{
+  display:flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface);
+}
+.objectives li .num{
+  flex-shrink:0; width: 24px; height: 24px; border-radius:50%;
+  background: var(--lcg-cream); color: var(--lcg-dark);
+  display:flex; align-items:center; justify-content:center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; font-weight: 700;
+  border: 1px solid #E9E1CC;
+}
+.objectives li p{ margin:0; font-size: 14px; line-height: 1.45; color: var(--ink); }
+
+/* Video / iso block */
+.content-iso{
+  aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden;
+  position: relative;
+  margin: 0 0 14px;
+}
+.content-iso .iso-title{ font-size: 22px; }
+.content-iso-cap{
+  font-size: 12.5px; color: var(--ink-4); margin-bottom: 30px;
+}
+
+/* Step list (numbered) */
+.steps{ list-style:none; padding:0; margin:0; counter-reset: step; }
+.steps li{
+  display:grid; grid-template-columns: 32px 1fr; gap: 20px;
+  padding: 18px 0; border-top: 1px solid var(--hairline);
+  counter-increment: step;
+}
+.steps li:first-child{ border-top:0; }
+.steps li::before{
+  content: counter(step, decimal-leading-zero);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--lcg-dark);
+  letter-spacing: .1em; padding-top: 4px;
+}
+.steps li h4{ font-family: var(--sans); font-weight: 600; font-size: 16px; margin: 0 0 6px; color: var(--ink); }
+.steps li p{ margin: 0; font-size: 14.5px; color: var(--ink-2); line-height:1.55; }
+.steps li .chip{
+  display:inline-block; font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; padding: 2px 8px; border-radius: 4px;
+  background: var(--surface-2); color: var(--ink-3);
+  border: 1px solid var(--hairline);
+  margin-right: 6px; margin-top: 8px;
+}
+
+/* Exercise callout */
+.exercise{
+  padding: 24px; border-radius: var(--r-md);
+  background: var(--lcg-cream); border: 1px solid #E9E1CC;
+  display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center;
+}
+.exercise .ex-icon{
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--lcg-dark); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.exercise h4{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
+.exercise p{ margin: 0; font-size: 13px; color: var(--ink-2); }
+
+/* Complete bar (bottom action) */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{
+  display:flex; gap: 10px; align-items:center;
+  color: var(--ink-3); text-decoration:none; font-size: 13.5px;
+}
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside / right rail */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  padding: 20px; background: var(--surface); margin-bottom: 16px;
+}
+.aside-box h4{
+  margin:0 0 12px; font-family: var(--sans); font-weight: 700;
+  font-size: 11px; letter-spacing:.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Outline nav */
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{
+  display: flex; gap: 10px; align-items:center;
+  padding: 8px 10px; border-radius: 6px;
+  text-decoration:none; color: var(--ink-3); font-size: 13px;
+  border-left: 2px solid transparent;
+}
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--lcg-dark); background: var(--lcg-cream); }
+.outline li a .tick{
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--hairline); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.outline li a.done .tick{ background: var(--lcg-green); color:#fff; }
+.outline li a.done .tick svg{ width: 9px; height: 9px; }
+
+/* Resources */
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a{
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 8px;
+  text-decoration:none; color: var(--ink); font-size: 13px;
+  border: 1px solid var(--hairline); background: var(--surface-2);
+  transition: all .15s;
+}
+.res-list a:hover{ border-color: var(--lcg-dark); background: var(--surface); }
+.res-list .r-icon{
+  width: 32px; height: 32px; border-radius: 6px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; color: var(--lcg-dark);
+}
+.res-list .r-name{ flex:1; font-weight: 600; font-size: 13px; line-height:1.2; }
+.res-list .r-meta{ font-size: 11px; color: var(--ink-4); display:block; font-weight:400; }
+.res-list .r-size{ font-size: 11px; color: var(--ink-4); font-family: ui-monospace, Menlo, monospace; }
+
+/* Notes */
+.notes-box textarea{
+  width:100%; min-height: 120px; resize: vertical;
+  border: 1px solid var(--hairline); border-radius: 8px;
+  padding: 12px; font-family: var(--sans); font-size: 13.5px;
+  color: var(--ink); background: var(--surface-2);
+  outline: none;
+}
+.notes-box textarea:focus{ border-color: var(--lcg-dark); background: var(--surface); }
+.notes-foot{ display:flex; justify-content: space-between; align-items:center; font-size: 11px; color: var(--ink-4); margin-top: 8px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">48<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:48%"></span></div>
+      <div class="meta">12 de 25 sesiones · Día 3 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list">
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Lunes</span><span class="pct">100%</span></a></li>
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Martes</span><span class="pct">100%</span></a></li>
+        <li>
+          <a class="day-item is-active" href="day.html"><span class="num">3</span><span class="name">Miércoles</span><span class="pct">40%</span></a>
+          <ul class="sub-sessions">
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Verticales LCG · overview</a></li>
+            <li><a class="sub-sess is-current" href="session.html"><span class="dot" style="background:var(--cat-ind)"></span> Supply SCM · diagnóstico</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Lean 4.0 · fundamentos</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Excelencia Comercial</a></li>
+          </ul>
+        </li>
+        <li><a class="day-item" href="day.html"><span class="num">4</span><span class="name">Jueves</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">5</span><span class="name">Viernes</span><span class="pct">0%</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+        <li><a class="day-item" href="#"><span class="num" style="background:transparent; border:none; font-size:14px;">☰</span><span class="name">Recursos</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <!-- Main -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day.html" style="color:inherit; text-decoration:none;">Miércoles</a>
+        <span style="opacity:.4">/</span>
+        <b>Monday · Gestión de casos</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-sys-bg); color: var(--cat-sys); border-color: transparent;">
+        <span class="pill-dot"></span> Sistemas de trabajo
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+      <button class="iconbtn" title="Marcador">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div>
+            <div class="s-hero-kicker">
+              <span class="pill-cat">Sistemas de trabajo</span>
+              <span class="pill"><span style="opacity:.5">Día 03</span>&nbsp;·&nbsp;Sesión 02 de 05</span>
+            </div>
+            <h1>Monday para la gestión de casos y entregables del proyecto.</h1>
+            <p class="s-hero-sub">
+              Cómo estructuramos un proyecto LCG en Monday: tableros de caso,
+              estados de entregables, automatizaciones semanales y tableros de
+              cartera que usa Partner para cada cliente.
+            </p>
+
+            <div class="s-hero-meta">
+              <div class="item">
+                <span class="label">Duración</span>
+                <span class="val"><span class="u-mono">45</span> min</span>
+              </div>
+              <div class="item">
+                <span class="label">Módulos</span>
+                <span class="val"><span class="u-mono">06</span></span>
+              </div>
+              <div class="item">
+                <span class="label">Ejercicios</span>
+                <span class="val"><span class="u-mono">02</span></span>
+              </div>
+              <div class="item">
+                <span class="label">Facilita</span>
+                <div class="facilitator" style="margin-top:4px;">
+                  <div class="avatar">DR</div>
+                  <div>
+                    <div class="val">Diego Ramírez</div>
+                    <div class="sub">Sr. Manager · Retail</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="s-hero-visual">
+            <div class="iso" id="s-hero-iso">
+              <span class="tl">DWG-203 · SYS/MONDAY</span>
+              <span class="tr">SCALE 1:2</span>
+              <span class="bl">45 MIN · 6 MOD</span>
+              <span class="br">CASE.FLOW</span>
+              <span class="iso-kicker">Case Management · Live</span>
+              <div class="sweep"></div>
+              <div class="iso-title">Flujo de<br/>caso LCG</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <!-- Main content -->
+          <article>
+
+            <!-- Objectives -->
+            <section class="s-block">
+              <div class="s-block-label">01 · Objetivos de aprendizaje</div>
+              <h2>Al terminar esta sesión, serás capaz de:</h2>
+              <ul class="objectives">
+                <li><span class="num">1</span><p>Configurar un tablero de proyecto LCG con la plantilla estándar y vincular entregables.</p></li>
+                <li><span class="num">2</span><p>Diferenciar los estados de caso (diagnóstico, diseño, ejecución, cierre) y cuándo mover cada uno.</p></li>
+                <li><span class="num">3</span><p>Leer y actuar sobre el tablero de cartera que revisa tu Partner cada lunes a las 8:30.</p></li>
+                <li><span class="num">4</span><p>Construir 2 automatizaciones mínimas (status changed → notify, due date → reminder).</p></li>
+              </ul>
+            </section>
+
+            <!-- Video / intro iso -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">02 · Contexto</div>
+              <h2>Por qué Monday — y por qué así.</h2>
+              <p class="lead">
+                En LCG, Monday no es un to-do list: es el expediente vivo del proyecto.
+                Cuando un Partner abre el tablero de cartera los lunes, asume que
+                <em>lo que ve es verdad</em> — por eso el ritual de actualización
+                diaria importa tanto como la metodología.
+              </p>
+              <div class="content-iso">
+                <div class="iso" id="s-intro-iso" style="border-radius:var(--r-md);">
+                  <span class="tl">FIG-02 · BOARD.3D</span>
+                  <span class="tr">LIVE</span>
+                  <span class="iso-kicker" style="font-size:9px; padding:3px 8px;">Visualización del tablero</span>
+                  <div class="sweep"></div>
+                </div>
+              </div>
+              <p class="content-iso-cap">
+                Fig. 02 — Representación isométrica del flujo de datos desde las filas
+                del tablero (fuente) hasta la vista de cartera del Partner (consumidor).
+              </p>
+              <p>
+                Cada proyecto tiene un único tablero, y cada tablero tiene la misma
+                estructura de columnas: <em>Entregable · Owner · Status · Due · Cliente ·
+                Engagement · Horas</em>. Esta uniformidad es lo que permite que la vista
+                de cartera agregue 40 proyectos sin romperse.
+              </p>
+            </section>
+
+            <!-- Steps -->
+            <section class="s-block" id="sec-config">
+              <div class="s-block-label">03 · Configuración paso a paso</div>
+              <h2>Desde la plantilla hasta el primer entregable.</h2>
+              <ol class="steps">
+                <li>
+                  <div>
+                    <h4>Duplica la plantilla de proyecto LCG</h4>
+                    <p>Workspace <b>LCG · Proyectos Activos</b> → botón <b>Usar plantilla</b> → plantilla <em>Engagement Base v3</em>.</p>
+                    <span class="chip">workspace/activos</span><span class="chip">plantilla v3</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Renombra siguiendo la convención CLIENTE · TIPO · YYMM</h4>
+                    <p>Ej: <b>Grupo Alpha · Transformación · 2604</b>. El <em>YYMM</em> es el mes de kick-off y se usa para filtrar por cohorte en cartera.</p>
+                    <span class="chip">convención · estricta</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Vincula el tablero a la cartera del Partner</h4>
+                    <p>Columna de conexión → <b>Cartera · Partner Owner</b>. Esto es lo que hace que el tablero aparezca automáticamente en la vista ejecutiva del lunes.</p>
+                    <span class="chip">mirror column</span><span class="chip">partner-owner</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Configura las 2 automatizaciones mínimas</h4>
+                    <p>Cuando <em>Status</em> cambia a <b>Blocked</b> → notificar al Manager. Cuando <em>Due date</em> llega en ≤48h → recordatorio al Owner.</p>
+                    <span class="chip">automation#1</span><span class="chip">automation#2</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Captura los primeros 3 entregables del diagnóstico</h4>
+                    <p>Siempre: <b>Kick-off deck</b>, <b>Mapa de stakeholders</b>, <b>Plan de entrevistas semana 1</b>. Estos tres son obligatorios, el resto lo define el Manager.</p>
+                    <span class="chip">entregables-base</span>
+                  </div>
+                </li>
+              </ol>
+            </section>
+
+            <!-- Exercise -->
+            <section class="s-block" id="sec-ex">
+              <div class="s-block-label">04 · Ejercicio</div>
+              <div class="exercise">
+                <div class="ex-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+                </div>
+                <div>
+                  <h4>Configura tu primer tablero de caso (15 min)</h4>
+                  <p>Usa el cliente ficticio <b>Grupo Tauro · Dx Operaciones · 2604</b>. Entrega un screenshot al final del día.</p>
+                </div>
+                <a href="#" class="btn btn-primary">Abrir ejercicio</a>
+              </div>
+            </section>
+
+            <!-- Key takeaways -->
+            <section class="s-block" id="sec-key">
+              <div class="s-block-label">05 · Para recordar</div>
+              <h2>Tres cosas que no se negocian.</h2>
+              <ol class="steps">
+                <li><div><h4>Actualiza antes de las 8:00 del lunes.</h4><p>El Partner revisa la cartera a las 8:30. Lo que no esté actualizado, no existe.</p></div></li>
+                <li><div><h4>Un proyecto = un tablero.</h4><p>Nunca proyectos compartidos en un solo tablero ni varios tableros para el mismo engagement.</p></div></li>
+                <li><div><h4>Status "Blocked" activa conversación.</h4><p>No basta con mover la tarjeta; hay que escribir en el comentario qué está bloqueando y a quién necesitas.</p></div></li>
+              </ol>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="session.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
+                  <span class="title">Organigrama &amp; equipos</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <button class="btn btn-secondary btn-lg">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Marcar como completada
+                </button>
+                <a class="btn btn-primary btn-lg" href="session.html">
+                  Siguiente · Power BI
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Aside -->
+          <aside class="s-aside">
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="done" href="#"><span class="tick"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Objetivos</a></li>
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Contexto — por qué Monday</a></li>
+                <li><a href="#sec-config"><span class="tick"></span>Configuración paso a paso</a></li>
+                <li><a href="#sec-ex"><span class="tick"></span>Ejercicio</a></li>
+                <li><a href="#sec-key"><span class="tick"></span>Para recordar</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="#">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Plantilla Monday · Engagement v3<span class="r-meta">.mdtemplate</span></div>
+                  <span class="r-size">12 KB</span>
+                </a></li>
+                <li><a href="#">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                  <div class="r-name">Guía de convenciones de nombres<span class="r-meta">.pdf · 8 páginas</span></div>
+                  <span class="r-size">1.2 MB</span>
+                </a></li>
+                <li><a href="#">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+                  <div class="r-name">Video — Lunes de cartera<span class="r-meta">.mp4 · 6:20</span></div>
+                  <span class="r-size">82 MB</span>
+                </a></li>
+                <li><a href="#">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                  <div class="r-name">Checklist · Primer tablero<span class="r-meta">.pdf · imprimible</span></div>
+                  <span class="r-size">340 KB</span>
+                </a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box notes-box">
+              <h4>Mis notas</h4>
+              <textarea placeholder="Escribe aquí tus notas de la sesión. Se guardan automáticamente en tu perfil de consultor."></textarea>
+              <div class="notes-foot">
+                <span>Privadas · solo tú las ves</span>
+                <span>0 / 2000</span>
+              </div>
+            </div>
+
+            <div class="aside-box" style="background: var(--lcg-cream); border-color:#E9E1CC;">
+              <h4 style="color: var(--lcg-dark);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Agenda 20 min con tu <b>Buddy asignado</b> para revisar tu tablero
+                antes del primer lunes de cartera.
+              </p>
+              <a href="#" style="font-size: 12.5px; font-weight: 600; color: var(--lcg-dark);">Agendar con Buddy →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=3"></script>
+<script src="shared/app.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', ()=>{
+    buildSysIso(document.getElementById('s-hero-iso'));
+    buildSysIso(document.getElementById('s-intro-iso'));
+  });
+</script>
+</body>
+</html>

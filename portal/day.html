@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Miércoles · Día 03 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=3" />
+<link rel="stylesheet" href="shared/iso.css?v=3" />
+<style>
+.day-main{ padding-bottom: 80px; }
+
+.d-hero{
+  padding: 42px 0 32px; border-bottom: 1px solid var(--hairline);
+}
+.d-hero-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; }
+.d-hero .idx{ font-family: ui-monospace, Menlo, monospace; font-size:12px; color:var(--ink-4); letter-spacing:.18em; text-transform:uppercase; margin-bottom:8px; display:block; }
+.d-hero h1{ font-family: var(--serif); font-weight:400; font-size: clamp(44px, 5vw, 72px); line-height:.98; letter-spacing:-.03em; margin:0 0 14px; }
+.d-hero h1 em{ font-style:italic; color:var(--lcg-dark); }
+.d-hero .sub{ font-size:17px; color:var(--ink-2); max-width:560px; margin:0; }
+
+.d-hero-stats{ display:flex; gap:32px; flex-shrink:0; padding-bottom:6px; }
+.d-hero-stats .s{ text-align:right; }
+.d-hero-stats .s .label{ display:block; margin-bottom:4px; }
+.d-hero-stats .s .v{ font-family:var(--serif); font-size:30px; line-height:1; letter-spacing:-.02em; color:var(--ink); }
+.d-hero-stats .s .v sup{ font-size:13px; font-family:var(--sans); color:var(--ink-3); }
+
+/* Day filter bar */
+.filter-bar{
+  padding: 20px 0 24px; border-bottom: 1px solid var(--hairline);
+  display:flex; gap: 10px; align-items:center;
+}
+.filter-bar .label{ margin-right:8px; }
+.filter-chip{
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--hairline);
+  background: var(--surface); font-size: 13px; color: var(--ink-2); cursor:pointer;
+  display:inline-flex; align-items:center; gap: 8px;
+}
+.filter-chip.is-active{ background: var(--ink); color:#fff; border-color: var(--ink); }
+.filter-chip .d{ width:7px; height:7px; border-radius:50%; background: currentColor; }
+.filter-bar-spacer{ flex:1; }
+.view-toggle{ display:inline-flex; border:1px solid var(--hairline); border-radius: 999px; padding: 3px; background: var(--surface); }
+.view-toggle button{ padding: 5px 12px; border:0; border-radius: 999px; background: transparent; font-size:12.5px; color: var(--ink-3); cursor:pointer; font-weight:600; }
+.view-toggle button.is-active{ background: var(--lcg-cream); color: var(--lcg-dark); }
+
+/* Timeline */
+.timeline{ padding: 36px 0; }
+.t-row{
+  display: grid; grid-template-columns: 84px 28px 1fr;
+  gap: 24px; padding: 14px 0; align-items: stretch;
+}
+.t-time{ padding-top: 16px; text-align: right; }
+.t-time .hour{ font-family: var(--serif); font-size: 24px; line-height:1; color: var(--ink); letter-spacing: -.01em; }
+.t-time .dur{ font-size: 11px; color: var(--ink-4); margin-top: 4px; font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em; }
+
+.t-spine{ position: relative; display:flex; justify-content:center; }
+.t-spine::before{
+  content:""; position: absolute; top: 0; bottom: -14px; left: 50%;
+  width: 1px; background: var(--hairline); transform: translateX(-.5px);
+}
+.t-spine .mark{
+  position: relative; z-index: 1;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--hairline);
+  margin-top: 22px;
+}
+.t-spine.done .mark{ background: var(--lcg-green); border-color: var(--lcg-green); }
+.t-spine.done .mark::after{
+  content:""; position:absolute; left:2px; top:3px; width:6px; height:3px;
+  border-left:1.5px solid #fff; border-bottom: 1.5px solid #fff;
+  transform: rotate(-45deg);
+}
+.t-spine.doing .mark{ background: #fff; border-color: var(--cat-tool); box-shadow: 0 0 0 5px rgba(198,138,62,.15); animation: isoPulse 1.6s ease-in-out infinite; }
+.t-row:last-child .t-spine::before{ display:none; }
+.t-row.is-break .t-time{ padding-top: 8px; }
+.t-row.is-break .t-spine .mark{ border-style: dashed; }
+
+.t-card{
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md); padding: 18px 22px;
+  display: grid; grid-template-columns: 6px 1fr auto auto; gap: 20px;
+  align-items: center;
+  position: relative; text-decoration:none; color:inherit;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.t-card:hover{ transform: translateY(-1px); border-color: var(--ink-3); box-shadow: var(--shadow-2); }
+.t-card .cat-bar{ align-self: stretch; border-radius: 999px; }
+.t-card .cat-bar.met{ background: var(--cat-met); }
+.t-card .cat-bar.sys{ background: var(--cat-sys); }
+.t-card .cat-bar.tool{ background: var(--cat-tool); }
+.t-card .cat-bar.ind{ background: var(--cat-ind); }
+.t-card .body{ min-width: 0; }
+.t-card .cap-row{ display:flex; gap:10px; align-items:center; margin-bottom: 6px; font-size: 11.5px; color: var(--ink-4); letter-spacing:.02em; }
+.t-card .cap-row .pill{ padding:3px 10px; font-size:11px; background: var(--surface-2); border:1px solid var(--hairline); }
+.t-card .cap-row .pill.met{ background: var(--cat-met-bg); color: var(--cat-met); border:none; }
+.t-card .cap-row .pill.sys{ background: var(--cat-sys-bg); color: var(--cat-sys); border:none; }
+.t-card .cap-row .pill.tool{ background: var(--cat-tool-bg); color: var(--cat-tool-ink, var(--cat-tool)); border:none; }
+.t-card .cap-row .pill.ind{ background: var(--cat-ind-bg); color: var(--cat-ind); border:none; }
+.t-card h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing:-.015em; line-height:1.15; margin: 0 0 4px; color: var(--ink); }
+.t-card .desc{ font-size: 13.5px; color: var(--ink-3); line-height: 1.45; margin: 0; }
+.t-card .fac{ display:flex; gap:8px; align-items:center; flex-shrink:0; }
+.t-card .fac .avatar{ width:28px; height:28px; font-size:11px; }
+.t-card .fac .n{ font-size: 12px; font-weight: 600; color: var(--ink); line-height:1.1; }
+.t-card .fac .r{ font-size: 10.5px; color: var(--ink-4); }
+.t-card .status{
+  flex-shrink:0; display:flex; gap:8px; align-items:center;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hairline);
+}
+.t-card.done{ background: #F7F5F0; }
+.t-card.done h3{ color: var(--ink-2); }
+.t-card.done .status{ color: var(--lcg-green); border-color: rgba(3,181,133,.3); background: rgba(3,181,133,.08); }
+.t-card.doing{ border-color: var(--cat-tool); box-shadow: 0 0 0 3px rgba(198,138,62,.12); }
+.t-card.doing .status{ color: var(--cat-tool); border-color: rgba(198,138,62,.3); background: rgba(198,138,62,.08); }
+.t-card.doing .status::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; animation: isoPulse 1.6s ease-in-out infinite; }
+
+/* Break row */
+.t-break{
+  background: transparent; border: 1px dashed var(--hairline);
+  border-radius: var(--r-md); padding: 12px 22px;
+  display:flex; gap: 14px; align-items:center; color: var(--ink-4); font-size: 13px;
+}
+.t-break .ico{ width:20px; height:20px; color: var(--ink-4); }
+
+/* Day distribution chart */
+.day-dist{
+  margin-top: 32px; padding: 28px 32px;
+  background: var(--lcg-cream); border: 1px solid #E9E1CC; border-radius: var(--r-md);
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+}
+.day-dist h3{ font-family: var(--serif); font-weight:400; font-size: 22px; margin: 0 0 16px; letter-spacing:-.01em; }
+.dist-bar{ height: 14px; border-radius: 999px; overflow:hidden; display:flex; background: var(--hairline); }
+.dist-bar span{ display:block; height:100%; }
+.dist-legend{ display:flex; gap: 20px; margin-top: 14px; flex-wrap:wrap; }
+.dist-legend .l{ display:flex; gap:8px; align-items:center; font-size: 12px; color: var(--ink-2); }
+.dist-legend .l .d{ width: 10px; height: 10px; border-radius: 3px; }
+.dist-legend .l b{ color: var(--ink); }
+.day-dist .totals{ text-align:right; }
+.day-dist .totals .big{ font-family: var(--serif); font-size: 44px; line-height:1; color: var(--lcg-dark); letter-spacing:-.02em; }
+.day-dist .totals .small{ font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">48<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:48%"></span></div>
+      <div class="meta">12 de 25 sesiones · Día 3 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list">
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Lunes</span><span class="pct">100%</span></a></li>
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Martes</span><span class="pct">100%</span></a></li>
+        <li>
+          <a class="day-item is-active" href="day.html"><span class="num">3</span><span class="name">Miércoles</span><span class="pct">40%</span></a>
+          <ul class="sub-sessions">
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Verticales LCG · overview</a></li>
+            <li><a class="sub-sess is-current" href="session.html"><span class="dot" style="background:var(--cat-ind)"></span> Supply SCM · diagnóstico</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Lean 4.0 · fundamentos</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Excelencia Comercial</a></li>
+          </ul>
+        </li>
+        <li><a class="day-item" href="day.html"><span class="num">4</span><span class="name">Jueves</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">5</span><span class="name">Viernes</span><span class="pct">0%</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <b>Miércoles · Día 03</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <button class="iconbtn" title="Buscar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+    </header>
+
+    <main class="day-main">
+      <section class="d-hero">
+        <div class="container d-hero-head">
+          <div>
+            <span class="idx">Día 03 · Miércoles 22 de abril</span>
+            <h1>Industria. Los cuatro motores operativos de LCG.</h1>
+            <p class="sub">El miércoles es el corazón del programa: abrimos con las verticales donde opera LCG y seguimos con tres bloques profundos (Supply SCM, Lean 4.0 y Excelencia Comercial) que definen cómo entregamos valor en cada industria.</p>
+          </div>
+          <div class="d-hero-stats">
+            <div class="s"><span class="label">Bloques</span><span class="v">4</span></div>
+            <div class="s"><span class="label">Duración</span><span class="v">8<sup>h</sup></span></div>
+            <div class="s"><span class="label">Completado</span><span class="v">25<sup>%</sup></span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="filter-bar">
+          <span class="label">Bloques</span>
+          <button class="filter-chip is-active">Día completo · 4</button>
+          <button class="filter-chip" style="color: var(--cat-ind)"><span class="d"></span> Industria · 4</button>
+          <div class="filter-bar-spacer"></div>
+          <div class="view-toggle">
+            <button class="is-active">Timeline</button>
+            <button>Grid</button>
+          </div>
+        </div>
+
+        <div class="timeline">
+
+          <!-- Bloque 1 - Verticales LCG -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">09:00</div>
+              <div class="dur">2 H</div>
+            </div>
+            <div class="t-spine done"><div class="mark"></div></div>
+            <a href="day.html" class="t-card done">
+              <span class="cat-bar ind"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ind">Industria</span>
+                  <span>Bloque 01 · 09:00–11:00</span>
+                </div>
+                <h3>Verticales LCG — industrias donde trabajamos</h3>
+                <p class="desc">Mapa completo de sectores: retail, consumo masivo, financiero, salud, manufactura, energía y gobierno. Casos representativos y tesis de valor por vertical.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">LCG</div>
+                <div><div class="n">Industry Partners</div><div class="r">Panel multisector</div></div>
+              </div>
+              <span class="status">✓ Completada</span>
+            </a>
+          </div>
+
+          <!-- Break -->
+          <div class="t-row is-break">
+            <div class="t-time"><div class="hour" style="font-size:16px; color:var(--ink-4);">11:00</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <div class="t-break">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+              Break · 15 min &nbsp;·&nbsp; Café y check-in con tu Buddy
+            </div>
+          </div>
+
+          <!-- Bloque 2 - CURRENT · Supply SCM -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">11:15</div>
+              <div class="dur">2 H</div>
+            </div>
+            <div class="t-spine doing"><div class="mark"></div></div>
+            <a href="session.html" class="t-card doing">
+              <span class="cat-bar ind"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ind">Industria</span>
+                  <span>Bloque 02 · 11:15–13:15</span>
+                </div>
+                <h3>Supply SCM — diagnóstico integral de cadena de suministro</h3>
+                <p class="desc">De demanda a distribución: inventarios, sourcing, planeación S&amp;OP y palancas de ahorro.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">LCG</div>
+                <div><div class="n">Especialista Supply Chain</div><div class="r">Industry Lead</div></div>
+              </div>
+              <span class="status">En curso</span>
+            </a>
+          </div>
+
+          <!-- Lunch -->
+          <div class="t-row is-break">
+            <div class="t-time"><div class="hour" style="font-size:16px; color:var(--ink-4);">13:15</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <div class="t-break">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18"/><path d="M12 11V3"/><path d="M21 11a9 9 0 1 1-18 0"/></svg>
+              Lunch · 60 min &nbsp;·&nbsp; Mesa compartida con tu cohorte
+            </div>
+          </div>
+
+          <!-- Bloque 3 - Lean 4.0 -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">14:15</div>
+              <div class="dur">2 H</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="day.html" class="t-card">
+              <span class="cat-bar ind"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ind">Industria</span>
+                  <span>Bloque 03 · 14:15–16:15</span>
+                </div>
+                <h3>Lean 4.0 — fundamentos, herramientas y tecnología</h3>
+                <p class="desc">VSM, kaizen y el stack digital Lean: cómo LCG entrega resultados operativos medibles.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">LCG</div>
+                <div><div class="n">Especialista Lean</div><div class="r">Industry Lead</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 4 - Excelencia Comercial -->
+          <div class="t-row">
+            <div class="t-time">
+              <div class="hour">16:30</div>
+              <div class="dur">2 H</div>
+            </div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="day.html" class="t-card">
+              <span class="cat-bar ind"></span>
+              <div class="body">
+                <div class="cap-row">
+                  <span class="pill ind">Industria</span>
+                  <span>Bloque 04 · 16:30–18:30</span>
+                </div>
+                <h3>Excelencia Comercial — pipeline, CRM e indicadores</h3>
+                <p class="desc">Fuerza de ventas, productividad comercial y el dashboard que pide el cliente cada lunes.</p>
+              </div>
+              <div class="fac">
+                <div class="avatar">LCG</div>
+                <div><div class="n">Especialista Comercial</div><div class="r">Industry Lead</div></div>
+              </div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Distribution -->
+        <div class="day-dist">
+          <div>
+            <h3>Distribución del día por vertical</h3>
+            <div class="dist-bar">
+              <span style="width:25%; background: var(--cat-ind);"></span>
+              <span style="width:25%; background: var(--cat-ind); opacity:.82;"></span>
+              <span style="width:25%; background: var(--cat-ind); opacity:.64;"></span>
+              <span style="width:25%; background: var(--cat-ind); opacity:.46;"></span>
+            </div>
+            <div class="dist-legend">
+              <div class="l"><span class="d" style="background: var(--cat-ind)"></span><b>25%</b> Verticales LCG · 2h</div>
+              <div class="l"><span class="d" style="background: var(--cat-ind); opacity:.82"></span><b>25%</b> Supply SCM · 2h</div>
+              <div class="l"><span class="d" style="background: var(--cat-ind); opacity:.64"></span><b>25%</b> Lean 4.0 · 2h</div>
+              <div class="l"><span class="d" style="background: var(--cat-ind); opacity:.46"></span><b>25%</b> Excelencia Comercial · 2h</div>
+            </div>
+          </div>
+          <div class="totals">
+            <div class="big">8<sup style="font-size:20px">h</sup></div>
+            <div class="small">de inmersión profunda en industria</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>

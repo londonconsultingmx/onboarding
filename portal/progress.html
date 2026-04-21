@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Mi progreso — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=3" />
+<link rel="stylesheet" href="shared/iso.css?v=3" />
+<style>
+.p-main{ padding-bottom: 80px; }
+.p-hero{ padding: 44px 0 32px; border-bottom: 1px solid var(--hairline); }
+.p-hero-head{ display:flex; justify-content: space-between; align-items:flex-end; gap: 32px; }
+.p-hero .idx{ font-family: ui-monospace, Menlo, monospace; font-size:12px; color:var(--ink-4); letter-spacing:.18em; text-transform:uppercase; margin-bottom:8px; display:block; }
+.p-hero h1{ font-family: var(--serif); font-weight:400; font-size: clamp(44px, 5vw, 68px); line-height:.98; letter-spacing:-.03em; margin:0 0 14px; }
+.p-hero .sub{ font-size:17px; color:var(--ink-2); max-width:560px; margin:0; }
+
+/* Big stats */
+.p-stats{
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  padding: 36px 0;
+}
+.p-stat{
+  padding: 24px; border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface); display: flex; flex-direction: column; gap: 10px;
+  min-height: 150px;
+}
+.p-stat.hl{ background: linear-gradient(165deg, #0E1F1C 0%, #0A4A44 100%); color:#fff; border-color: transparent; position: relative; overflow: hidden; }
+.p-stat.hl::after{ content:""; position:absolute; right:-30px; bottom:-30px; width:160px; height:160px; background: radial-gradient(closest-side, rgba(138,244,233,.35), transparent 70%); pointer-events:none; }
+.p-stat .label{ color: var(--ink-3); }
+.p-stat.hl .label{ color: #8AF4E9; }
+.p-stat .big{ font-family: var(--serif); font-size: 56px; line-height:.95; letter-spacing:-.025em; color: var(--ink); font-weight:400; }
+.p-stat.hl .big{ color: #fff; }
+.p-stat .big sup{ font-size: 20px; font-family: var(--sans); color: var(--ink-3); margin-left: 2px; }
+.p-stat.hl .big sup{ color: #8AF4E9; }
+.p-stat .sub{ font-size: 13px; color: var(--ink-3); margin-top: auto; }
+.p-stat.hl .sub{ color: #B8E6DE; }
+.p-stat .progress{ margin-top: 10px; }
+.p-stat.hl .progress{ background: rgba(255,255,255,.15); }
+.p-stat.hl .progress > span{ background: var(--lcg-mint); }
+
+/* Matrix */
+.matrix-section{ padding: 48px 0; border-top: 1px solid var(--hairline); }
+.section-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 28px; }
+.section-top h2{ font-family: var(--serif); font-weight:400; font-size: 34px; letter-spacing:-.02em; margin:0; }
+.section-top .hint{ font-size:13px; color:var(--ink-4); }
+
+.matrix{
+  display: grid;
+  grid-template-columns: 140px repeat(5, 1fr) 100px;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md);
+  overflow: hidden;
+}
+.matrix .mh{
+  padding: 14px 16px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  color: var(--ink-3); background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline);
+}
+.matrix .mh.cat{ display:flex; gap:8px; align-items:center; }
+.matrix .mh.cat .d{ width:8px; height:8px; border-radius:50%; }
+.matrix .mcell{
+  padding: 18px 16px; border-bottom: 1px solid var(--hairline);
+  display:flex; flex-direction:column; gap:6px; justify-content:center;
+}
+.matrix .mcell.label{ background: var(--surface-2); font-weight: 600; color: var(--ink); font-size: 14px; }
+.matrix .mcell.label small{ display:block; font-size: 11px; color: var(--ink-4); font-weight:400; margin-top:3px; }
+.matrix .mcell.cell{ text-align:center; align-items:center; border-left: 1px solid var(--hairline); }
+.matrix .mcell.cell .mini{
+  width: 36px; height: 36px; border-radius: 8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 12px; font-weight: 700; color: var(--ink-2);
+  font-family: ui-monospace, Menlo, monospace;
+  background: var(--surface-2); border: 1px solid var(--hairline);
+}
+.matrix .mcell.cell .mini.done{ background: var(--lcg-dark); color:#fff; border-color: var(--lcg-dark); }
+.matrix .mcell.cell .mini.partial{ background: var(--lcg-cream); color: var(--lcg-dark); border-color: #E9E1CC; }
+.matrix .mcell.cell .mini.todo{ background: var(--surface); color: var(--ink-4); }
+.matrix .mcell.cell .mini.locked{ background: transparent; border-style: dashed; color: var(--ink-4); opacity:.5; }
+.matrix .mcell.cell .tiny{ font-size: 10px; color: var(--ink-4); }
+.matrix .mcell.tot{
+  background: var(--surface-2); border-left: 1px solid var(--hairline);
+  text-align:right; font-variant-numeric: tabular-nums;
+}
+.matrix .mcell.tot .v{ font-family: var(--serif); font-size: 24px; color: var(--ink); letter-spacing:-.01em; }
+.matrix .mcell.tot .s{ font-size: 11px; color: var(--ink-4); }
+.matrix .row-last .mcell{ border-bottom: 0; }
+
+/* Checklist */
+.ck-section{ padding: 48px 0; border-top: 1px solid var(--hairline); }
+.ck-grid{
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px;
+}
+.ck-list{ background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 8px; }
+.ck-list .item{
+  display:flex; gap: 14px; align-items: flex-start;
+  padding: 14px 16px; border-bottom: 1px solid var(--hairline);
+}
+.ck-list .item:last-child{ border-bottom: 0; }
+.ck-list .box{
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+  border: 1.5px solid var(--hairline); background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.ck-list .item.done .box{ background: var(--lcg-green); border-color: var(--lcg-green); }
+.ck-list .item.done .box::after{ content:""; width:8px; height:4px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
+.ck-list .item.locked .box{ border-style: dashed; }
+.ck-list .body{ flex:1; min-width:0; }
+.ck-list .body .t{ font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.ck-list .item.done .t{ color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--ink-4); }
+.ck-list .item.locked .t{ color: var(--ink-4); }
+.ck-list .body .s{ font-size: 12px; color: var(--ink-4); margin-top: 2px; }
+.ck-list .day{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing:.08em; flex-shrink:0; padding-top:4px; }
+
+/* Certificate card */
+.cert{
+  background: linear-gradient(165deg, #0B2A25 0%, #074D46 60%, #0A6B60 100%);
+  color:#fff; border-radius: var(--r-lg); padding: 36px; position: relative; overflow: hidden;
+  display:flex; flex-direction: column; gap: 20px; min-height: 100%;
+}
+.cert::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(50% 40% at 85% 10%, rgba(138,244,233,.3), transparent 70%),
+    radial-gradient(40% 40% at 10% 90%, rgba(3,181,133,.3), transparent 70%);
+}
+.cert > *{ position:relative; z-index:1; }
+.cert .emb{ position:absolute; right: -30px; top: 24px; opacity:.12; height: 180px; z-index:0; }
+.cert .kicker{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing:.18em; text-transform:uppercase; color: #8AF4E9; }
+.cert h3{ font-family: var(--serif); font-weight:400; font-size: 36px; line-height: 1.08; letter-spacing:-.02em; margin: 0; }
+.cert p{ color: #B8E6DE; font-size: 14.5px; line-height: 1.55; margin: 0; max-width: 420px; }
+.cert .circle-prog{ width: 120px; height: 120px; display:block; }
+.cert .progress{ background: rgba(255,255,255,.2); }
+.cert .progress > span{ background: var(--lcg-mint); }
+.cert .cert-meta{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.15); }
+.cert .cert-meta .m{ display:flex; flex-direction:column; }
+.cert .cert-meta .m .lbl{ font-size: 10.5px; letter-spacing:.12em; text-transform:uppercase; color: #8AF4E9; }
+.cert .cert-meta .m .v{ font-family: var(--serif); font-size: 20px; color:#fff; margin-top: 2px; letter-spacing:-.01em; }
+.cert .cta{ display:flex; gap:10px; margin-top: auto; padding-top: 8px; }
+.cert .btn-primary{ background:#fff; color: var(--lcg-dark); }
+.cert .btn-secondary{ color:#fff; border-color: rgba(255,255,255,.25); }
+
+/* Activity heatmap */
+.heat{ padding: 48px 0; border-top: 1px solid var(--hairline); }
+.heat-row{ display:flex; gap: 5px; align-items:center; margin-bottom: 6px; }
+.heat-row .lb{ width: 70px; font-size: 11px; color: var(--ink-4); font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em; }
+.heat-row .cells{ display:flex; gap: 5px; flex:1; }
+.heat-row .c{ flex:1; aspect-ratio: 1; border-radius: 4px; background: var(--hairline); min-height: 20px; }
+.heat-legend{ display:flex; gap: 12px; align-items:center; margin-top: 10px; font-size: 11px; color: var(--ink-4); }
+.heat-legend .scale{ display:flex; gap: 3px; }
+.heat-legend .scale span{ width: 14px; height: 14px; border-radius: 3px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">48<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:48%"></span></div>
+      <div class="meta">12 de 25 sesiones · Día 3 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list">
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Lunes</span><span class="pct">100%</span></a></li>
+        <li><a class="day-item is-done" href="day.html"><span class="num">✓</span><span class="name">Martes</span><span class="pct">100%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">3</span><span class="name">Miércoles</span><span class="pct">40%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">4</span><span class="name">Jueves</span><span class="pct">0%</span></a></li>
+        <li><a class="day-item" href="day.html"><span class="num">5</span><span class="name">Viernes</span><span class="pct">0%</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item is-active" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <b>Mi progreso</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <a class="btn btn-secondary" href="#">Exportar PDF</a>
+    </header>
+
+    <main class="p-main">
+      <section class="p-hero">
+        <div class="container p-hero-head">
+          <div>
+            <span class="idx">Dashboard personal</span>
+            <h1>Así vas, Mariana.</h1>
+            <p class="sub">Un resumen de tu avance por día, por pilar y los entregables que cierran tu onboarding. Tu Partner y tu Buddy ven exactamente lo mismo que tú.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Big stats -->
+        <div class="p-stats">
+          <div class="p-stat hl">
+            <span class="label label">Progreso global</span>
+            <div class="big">48<sup>%</sup></div>
+            <div class="progress"><span style="width:48%"></span></div>
+            <div class="sub">12 de 25 sesiones completadas</div>
+          </div>
+          <div class="p-stat">
+            <span class="label label" style="color: var(--cat-met)">Metodológico</span>
+            <div class="big">67<sup>%</sup></div>
+            <div class="progress"><span style="width:67%; background: var(--cat-met);"></span></div>
+            <div class="sub">6 de 9 sesiones · 4h 20m</div>
+          </div>
+          <div class="p-stat">
+            <span class="label label" style="color: var(--cat-sys)">Sistemas</span>
+            <div class="big">40<sup>%</sup></div>
+            <div class="progress"><span style="width:40%; background: var(--cat-sys);"></span></div>
+            <div class="sub">4 de 10 sesiones · 3h 10m</div>
+          </div>
+          <div class="p-stat">
+            <span class="label label" style="color: var(--cat-tool)">Herramientas</span>
+            <div class="big">33<sup>%</sup></div>
+            <div class="progress"><span style="width:33%; background: var(--cat-tool);"></span></div>
+            <div class="sub">2 de 6 sesiones · 1h 30m</div>
+          </div>
+        </div>
+
+        <!-- Matrix -->
+        <section class="matrix-section">
+          <div class="section-top">
+            <h2>Matriz día × pilar</h2>
+            <span class="hint">X · pilar temático  /  Y · día de la semana</span>
+          </div>
+          <div class="matrix">
+            <div class="mh"></div>
+            <div class="mh">Lun</div>
+            <div class="mh">Mar</div>
+            <div class="mh">Mié</div>
+            <div class="mh">Jue</div>
+            <div class="mh">Vie</div>
+            <div class="mh" style="text-align:right;">Total</div>
+
+            <div class="mcell label">Metodológico<small>9 sesiones</small></div>
+            <div class="mcell cell"><div class="mini done">2/2</div></div>
+            <div class="mcell cell"><div class="mini done">2/2</div></div>
+            <div class="mcell cell"><div class="mini partial">1/2</div></div>
+            <div class="mcell cell"><div class="mini todo">0/2</div></div>
+            <div class="mcell cell"><div class="mini locked">—</div><span class="tiny">1</span></div>
+            <div class="mcell tot"><span class="v">5/9</span><span class="s">56%</span></div>
+
+            <div class="mcell label">Sistemas<small>10 sesiones</small></div>
+            <div class="mcell cell"><div class="mini done">2/2</div></div>
+            <div class="mcell cell"><div class="mini done">2/2</div></div>
+            <div class="mcell cell"><div class="mini partial">1/2</div></div>
+            <div class="mcell cell"><div class="mini todo">0/3</div></div>
+            <div class="mcell cell"><div class="mini locked">—</div><span class="tiny">1</span></div>
+            <div class="mcell tot"><span class="v">5/10</span><span class="s">50%</span></div>
+
+            <div class="mcell label row-last">Herramientas<small>6 sesiones</small></div>
+            <div class="mcell cell row-last"><div class="mini done">1/1</div></div>
+            <div class="mcell cell row-last"><div class="mini done">1/1</div></div>
+            <div class="mcell cell row-last"><div class="mini todo">0/1</div></div>
+            <div class="mcell cell row-last"><div class="mini todo">0/2</div></div>
+            <div class="mcell cell row-last"><div class="mini locked">—</div><span class="tiny">1</span></div>
+            <div class="mcell tot row-last"><span class="v">2/6</span><span class="s">33%</span></div>
+          </div>
+        </section>
+
+        <!-- Checklist + Cert -->
+        <section class="ck-section">
+          <div class="section-top">
+            <h2>Entregables &amp; certificación</h2>
+            <span class="hint">8 entregables · 3 cerrados</span>
+          </div>
+          <div class="ck-grid">
+            <div class="ck-list">
+              <div class="item done">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Perfil en People Portal completado</div>
+                  <div class="s">Datos personales, foto oficial y preferencias de proyecto</div>
+                </div>
+                <div class="day">LUN 01</div>
+              </div>
+              <div class="item done">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Credencial digital y acceso a VPN LCG</div>
+                  <div class="s">Aprobado por IT · válido a 12 meses</div>
+                </div>
+                <div class="day">LUN 01</div>
+              </div>
+              <div class="item done">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Primer 1:1 con Buddy asignado</div>
+                  <div class="s">Alejandra Ponce · Sr. Consultant · 30 min</div>
+                </div>
+                <div class="day">MAR 02</div>
+              </div>
+              <div class="item">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Tablero Monday configurado (ejercicio Día 3)</div>
+                  <div class="s">Cliente ficticio Grupo Tauro · entrega al final del día</div>
+                </div>
+                <div class="day">MIÉ 03</div>
+              </div>
+              <div class="item">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Reporte Power BI replicado sobre template LCG</div>
+                  <div class="s">3 páginas · revisado con Ana Villareal</div>
+                </div>
+                <div class="day">MIÉ 03</div>
+              </div>
+              <div class="item">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Workshop Miro simulado con cohorte</div>
+                  <div class="s">Facilitación en pareja · 45 min</div>
+                </div>
+                <div class="day">JUE 04</div>
+              </div>
+              <div class="item">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Diagnóstico ejecutivo del caso "Retail regional en pausa"</div>
+                  <div class="s">Pirámide de síntomas → hipótesis → recomendaciones</div>
+                </div>
+                <div class="day">JUE 04</div>
+              </div>
+              <div class="item locked">
+                <div class="box"></div>
+                <div class="body">
+                  <div class="t">Presentación final al Partner (15 min + Q&amp;A)</div>
+                  <div class="s">Se habilita al completar todos los entregables anteriores</div>
+                </div>
+                <div class="day">VIE 05</div>
+              </div>
+            </div>
+
+            <div class="cert">
+              <img src="assets/emblema-verde.png" alt="" class="emb" />
+              <span class="kicker">Certificación · pendiente</span>
+              <h3>Certificado de Inducción LCG · Consultor 26'</h3>
+              <p>Al completar tu semana, la firma emite un certificado digital firmado por Partnership. Se sube automáticamente a tu perfil.</p>
+
+              <div style="display:flex; gap:24px; align-items:center;">
+                <svg class="circle-prog" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="10"/>
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#8AF4E9" stroke-width="10"
+                    stroke-linecap="round" stroke-dasharray="326.7"
+                    stroke-dashoffset="169.9" transform="rotate(-90 60 60)"/>
+                  <text x="60" y="56" text-anchor="middle" fill="#fff" font-family="Fraunces, serif" font-size="28" font-weight="400">48%</text>
+                  <text x="60" y="76" text-anchor="middle" fill="#8AF4E9" font-size="10" font-family="Manrope, sans-serif" letter-spacing="1.5">ONBOARDING</text>
+                </svg>
+                <div style="flex:1;">
+                  <div class="progress"><span style="width:48%"></span></div>
+                  <div style="color:#B8E6DE; font-size:12.5px; margin-top:10px;">
+                    Faltan <b style="color:#fff;">13 sesiones</b> y <b style="color:#fff;">5 entregables</b> para emitir el certificado.
+                  </div>
+                </div>
+              </div>
+
+              <div class="cert-meta">
+                <div class="m"><span class="lbl">Cohorte</span><span class="v">Abril 26'</span></div>
+                <div class="m"><span class="lbl">Horas acum.</span><span class="v">16h 40m</span></div>
+                <div class="m"><span class="lbl">Racha</span><span class="v">3 días</span></div>
+              </div>
+              <div class="cta">
+                <a class="btn btn-primary" href="landing.html">Retomar onboarding →</a>
+                <a class="btn btn-secondary" href="#">Cómo se evalúa</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Heatmap -->
+        <section class="heat">
+          <div class="section-top">
+            <h2>Intensidad por bloque horario</h2>
+            <span class="hint">Minutos de contenido efectivo · oficina CDMX</span>
+          </div>
+          <div>
+            <script>
+            (function(){
+              const blocks = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+              const data = [
+                // Mon - Fri rows
+                [3,3,4,1,0,3,3,2,1,0],
+                [3,4,4,1,0,4,4,3,2,0],
+                [2,4,4,0,0,3,4,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]
+              ];
+              const colors = ['var(--hairline)', '#D7EFE5','#9EDBC6','#5FC3A0','#03B585','#085E54'];
+              const labels = ['LUN','MAR','MIÉ','JUE','VIE'];
+              let html = '<div class="heat-row"><span class="lb"></span><div class="cells">';
+              blocks.forEach(b=> html += `<span style="flex:1; text-align:center; font-size:10px; color:var(--ink-4); font-family:ui-monospace,Menlo,monospace;">${b}</span>`);
+              html += '</div></div>';
+              data.forEach((row,i)=>{
+                html += `<div class="heat-row"><span class="lb">${labels[i]}</span><div class="cells">`;
+                row.forEach(v=>{
+                  html += `<span class="c" style="background:${colors[v]}"></span>`;
+                });
+                html += '</div></div>';
+              });
+              html += '<div class="heat-legend"><span>Menos</span><div class="scale">';
+              colors.forEach(c=> html += `<span style="background:${c}"></span>`);
+              html += '</div><span>Más</span></div>';
+              document.currentScript.parentElement.innerHTML += html;
+            })();
+            </script>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Portal Onboarding · LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=3" />
+<link rel="stylesheet" href="shared/iso.css?v=3" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+/* =======================================================
+   Landing — LCG Portal Onboarding
+   ======================================================= */
+.landing-main{ padding-bottom: 80px; }
+
+/* Hero */
+.hero{
+  position: relative;
+  padding: 48px 0 56px;
+  border-bottom: 1px solid var(--hairline);
+  overflow: hidden;
+}
+.hero-grid{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 56px;
+  align-items: center;
+}
+.hero-kicker{
+  display: inline-flex; align-items:center; gap:10px;
+  padding: 6px 12px 6px 8px; border-radius: 999px;
+  background: var(--lcg-cream); border:1px solid #E9E1CC;
+  font-size: 12px; font-weight: 600; color: var(--ink-2);
+  letter-spacing: .02em;
+  margin-bottom: 22px;
+}
+.hero-kicker .dot{ width:8px; height:8px; border-radius:50%; background: var(--lcg-green);
+  box-shadow: 0 0 0 3px rgba(3,181,133,.18);
+}
+.hero h1{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(54px, 6.2vw, 92px);
+  line-height: .96;
+  letter-spacing: -.03em;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+.hero h1 em{
+  font-style: italic;
+  color: var(--lcg-dark);
+  position: relative;
+}
+.hero h1 em::after{
+  content:""; position:absolute; left:0; right:0; bottom:4px; height:8px;
+  background: var(--lcg-mint); opacity:.55; z-index:-1; border-radius:2px;
+}
+.hero-sub{
+  font-size: 18px; line-height: 1.55; color: var(--ink-2);
+  max-width: 520px; margin: 0 0 28px;
+}
+.hero-cta{ display:flex; gap:12px; align-items:center; margin-bottom: 34px; }
+.hero-stats{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 34px; padding-top: 22px; border-top: 1px solid var(--hairline);
+}
+.hero-stat .label{ display:block; margin-bottom: 4px; }
+.hero-stat .val{
+  font-family: var(--serif); font-size: 32px; line-height:1;
+  letter-spacing: -.02em; color: var(--ink); font-weight: 400;
+}
+.hero-stat .val sup{ font-size:14px; color: var(--ink-3); font-family: var(--sans); font-weight: 500; margin-left:2px; }
+
+/* Hero visual — large iso */
+.hero-visual{
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-height: 560px;
+}
+.hero-visual .iso{ height:100%; border-radius: var(--r-lg); }
+
+/* ───────────── Hero DNA helix ───────────── */
+.helix-frame{
+  position: relative;
+  height: 100%;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 80% at 80% -10%, rgba(138,244,233,.18) 0, transparent 55%),
+    radial-gradient(90% 70% at 10% 110%, rgba(122,78,181,.08) 0, transparent 55%),
+    linear-gradient(180deg, #FAF7F0 0%, #F2EEE8 100%);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+.helix-frame::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(8,94,84,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8,94,84,.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 30%, transparent 85%);
+  pointer-events:none;
+}
+.helix-frame > svg{
+  position: absolute;
+  inset: 0; width: 100%; height: 100%;
+  display: block;
+}
+.helix-frame .hf-tl,
+.helix-frame .hf-tr,
+.helix-frame .hf-bl,
+.helix-frame .hf-br{
+  position: absolute;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; letter-spacing: .15em;
+  color: var(--ink-3); padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: rgba(255,255,255,.6);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+.helix-frame .hf-tl{ top: 16px; left: 16px; }
+.helix-frame .hf-tr{ top: 16px; right: 16px; }
+.helix-frame .hf-bl{ bottom: 16px; left: 16px; }
+.helix-frame .hf-br{ bottom: 16px; right: 16px; }
+
+.helix-caption{
+  position: absolute;
+  left: 28px; bottom: 64px; right: 28px;
+  z-index: 2;
+  max-width: 62%;
+}
+.helix-caption .helix-kicker{
+  display:inline-block;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cat-ai);
+  padding: 3px 8px;
+  border: 1px solid rgba(122,78,181,.25);
+  border-radius: 999px;
+  background: rgba(238,231,248,.7);
+  margin-bottom: 10px;
+}
+.helix-caption h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 22px; line-height: 1.1; letter-spacing: -.015em;
+  margin: 0 0 6px; color: var(--ink);
+}
+.helix-caption p{
+  font-size: 12.5px; line-height: 1.45;
+  color: var(--ink-3); margin: 0;
+  text-wrap: pretty;
+}
+
+/* helix animations */
+@keyframes helix-drift {
+  0%, 100% { transform: translateY(0) }
+  50%      { transform: translateY(-6px) }
+}
+@keyframes rung-in {
+  from { opacity: 0; transform: scaleX(.2) }
+  to   { opacity: 1; transform: scaleX(1) }
+}
+@keyframes node-pop {
+  0%   { opacity: 0; transform: scale(.4) }
+  60%  { opacity: 1; transform: scale(1.15) }
+  100% { opacity: 1; transform: scale(1) }
+}
+@keyframes spine-draw {
+  from { stroke-dashoffset: 1800 }
+  to   { stroke-dashoffset: 0 }
+}
+@keyframes label-fade {
+  from { opacity: 0; transform: translateX(-4px) }
+  to   { opacity: 1; transform: translateX(0) }
+}
+
+#helix-svg{ animation: helix-drift 6s ease-in-out infinite; }
+#helix-svg .spine-a,
+#helix-svg .spine-b{
+  fill: none;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+  animation: spine-draw 1.8s ease-out forwards;
+}
+#helix-svg .spine-a{ stroke: #085E54; }
+#helix-svg .spine-b{ stroke: #7A4EB5; animation-delay: .15s; opacity: .85; }
+
+#helix-svg .rung{
+  stroke-width: 1.2;
+  transform-origin: center;
+  transform-box: fill-box;
+  opacity: 0;
+  animation: rung-in .5s ease-out forwards;
+}
+#helix-svg .node{
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: node-pop .4s cubic-bezier(.5,1.6,.3,1) forwards;
+}
+#helix-svg .day-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; letter-spacing: .14em;
+  fill: var(--ink-3);
+  opacity: 0;
+  animation: label-fade .4s ease-out forwards;
+}
+#helix-svg .day-title{
+  font-family: var(--serif);
+  font-size: 15px; font-weight: 400; letter-spacing: -.01em;
+  fill: var(--ink);
+  opacity: 0;
+  animation: label-fade .4s ease-out forwards;
+}
+#helix-svg .helix-axis{
+  stroke: rgba(8,94,84,.12);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+@media (prefers-reduced-motion: reduce) {
+  #helix-svg, #helix-svg *{ animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+}
+
+/* Section heads */
+.section{
+  padding: 64px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.section-head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom: 40px; gap: 32px;
+}
+.section-head h2{
+  margin:0;
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.04; letter-spacing: -.025em;
+  max-width: 620px;
+}
+.section-head .section-meta{
+  max-width: 360px; color: var(--ink-3); font-size: 14.5px; line-height: 1.55;
+  padding-bottom: 6px;
+}
+.section-num{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px; display:block;
+}
+
+/* Pillars grid */
+.pillars{
+  display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.pillars-5{
+  grid-template-columns: repeat(5, 1fr); gap: 14px;
+}
+.pillar{
+  display:flex; flex-direction:column;
+  background: var(--surface);
+  border:1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+  position: relative;
+}
+.pillar-sm .pillar-body{ padding: 18px 18px 20px; gap: 12px; }
+.pillar-sm h3{ font-size: 20px !important; }
+.pillar-sm p{ font-size: 13px !important; }
+.pillar-sm .pillar-head .cat-name{ font-size: 10.5px !important; }
+.pillar.is-current{ border-color: var(--cat-ind); box-shadow: 0 0 0 1px var(--cat-ind) inset; }
+.pillar.is-current .dot-live{
+  display:inline-block; width:6px; height:6px; border-radius:50%;
+  background: var(--cat-ind); margin-left:6px; vertical-align:middle;
+  box-shadow: 0 0 0 3px rgba(198,138,62,.2);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{ opacity:.4 } 50%{ opacity:1 } }
+.pillar-ai{
+  background: linear-gradient(180deg, var(--cat-ai-bg) 0%, #FFFFFF 65%);
+  border-color: #D8CCEE;
+}
+.pillar-ai h3{ color: var(--cat-ai); }
+.badge-new{
+  position:absolute; top:10px; right:10px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 9px; letter-spacing:.14em; text-transform:uppercase;
+  padding: 4px 8px; border-radius: 999px;
+  background: var(--cat-ai); color:#fff; font-weight:700;
+}
+.pillar:hover{ transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.pillar .iso-sm{ border-radius: 0; aspect-ratio: 16/11; }
+.pillar-body{ padding: 22px 22px 24px; display:flex; flex-direction: column; gap:14px; flex:1; }
+.pillar-head{ display:flex; align-items:center; gap:10px; }
+.pillar-head .cat-dot{ width:8px; height:8px; border-radius:50%; }
+.pillar-head .cat-name{ font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color: var(--ink-3); }
+.pillar h3{ font-family: var(--serif); font-weight:400; font-size: 24px; line-height: 1.15; letter-spacing:-.015em; margin:0; }
+.pillar p{ font-size: 14px; line-height:1.55; color: var(--ink-3); margin:0; }
+.pillar-meta{
+  margin-top:auto; padding-top: 16px; border-top: 1px dashed var(--hairline);
+  display:flex; justify-content: space-between; align-items:center;
+  font-size: 12px; color: var(--ink-3);
+}
+.pillar-meta .u-mono{ color: var(--ink-2); }
+
+/* Week grid */
+.week{
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+}
+.day-card{
+  background: var(--surface); border:1px solid var(--hairline);
+  border-radius: var(--r-md); padding: 18px 16px 16px;
+  display:flex; flex-direction:column; gap: 12px; min-height: 220px;
+  position:relative; overflow:hidden;
+  text-decoration: none; color: inherit;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.day-card:hover{ transform: translateY(-2px); border-color: var(--lcg-dark); }
+.day-card.is-done{ background: #0A4A44; color:#E5F5F2; border-color: #0A4A44; }
+.day-card.is-done .caption{ color:#8AF4E9; }
+.day-card.is-done h3{ color:#fff; }
+.day-card.is-done .day-bar{ background: rgba(138,244,233,.25); }
+.day-card.is-done .day-bar span{ background: var(--lcg-mint); }
+.day-card.is-done .session-tick{ color: #8AF4E9; }
+.day-card.is-current{ border-color: var(--lcg-dark); box-shadow: 0 0 0 3px rgba(8,94,84,.12); }
+.day-card .day-idx{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color: var(--ink-4);
+}
+.day-card.is-done .day-idx{ color:#8AF4E9; }
+.day-card h3{
+  font-family: var(--serif); font-weight:400; font-size: 26px;
+  letter-spacing:-.02em; margin:0; line-height:1;
+}
+.day-card .day-sub{ font-size:12.5px; color: var(--ink-3); margin-top:-6px; }
+.day-card.is-done .day-sub{ color: #B8E6DE; }
+.day-bar{ height:3px; background: var(--hairline); border-radius:999px; overflow:hidden; }
+.day-bar span{ display:block; height:100%; background: var(--lcg-dark); border-radius:999px; }
+.day-card .sessions-row{
+  display:flex; gap:3px; flex-wrap:wrap; margin-top:auto;
+}
+.day-card .sess-tick{
+  width: 18px; height: 4px; border-radius: 999px; background: var(--hairline-2);
+}
+.day-card.is-done .sess-tick{ background: rgba(255,255,255,.3); }
+.day-card .sess-tick.done{ background: var(--lcg-green); }
+.day-card.is-done .sess-tick.done{ background: var(--lcg-mint); }
+.day-card .sess-tick.doing{ background: #C68A3E; animation: isoPulse 1.6s ease-in-out infinite; }
+.day-card .footer-row{
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:11.5px; color: var(--ink-4);
+}
+.day-card.is-done .footer-row{ color:#8AF4E9; }
+.day-card .footer-row b{ color: var(--ink-2); font-weight:600; }
+.day-card.is-done .footer-row b{ color:#fff; }
+
+/* Next up */
+.nextup{
+  display:grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: stretch;
+}
+.nextup-card{
+  background: linear-gradient(165deg, #0E1F1C 0%, #0A2F2A 60%, #0A4A44 100%);
+  color: #E5F5F2;
+  border-radius: var(--r-lg);
+  padding: 36px 36px 32px;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.nextup-card::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(50% 35% at 85% 15%, rgba(138,244,233,.25), transparent 70%),
+    radial-gradient(40% 40% at 10% 90%, rgba(3,181,133,.35), transparent 70%);
+}
+.nextup-card > *{ position: relative; z-index: 1; }
+.nextup-card .kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color:#8AF4E9; letter-spacing:.18em; text-transform:uppercase;
+}
+.nextup-card .kicker .dot{ width:6px; height:6px; border-radius:50%; background:#8AF4E9; animation: isoPulse 1.6s ease-in-out infinite; }
+.nextup-card h2{
+  font-family: var(--serif); font-weight:400; font-size: 42px;
+  line-height: 1.05; letter-spacing:-.02em; margin:0;
+  max-width: 540px;
+}
+.nextup-meta{ display:flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #B8E6DE; }
+.nextup-meta .m{ display:flex; align-items:center; gap:8px; }
+.nextup-cta{ display:flex; gap: 12px; margin-top:auto; padding-top: 12px; }
+.nextup-cta .btn-primary{ background:#fff; color: var(--lcg-dark); }
+.nextup-cta .btn-primary:hover{ background:#E5F5F2; }
+.nextup-cta .btn-secondary{ color:#fff; border-color: rgba(255,255,255,.25); background: transparent; }
+.nextup-cta .btn-secondary:hover{ background: rgba(255,255,255,.08); }
+
+.nextup-side{
+  display:flex; flex-direction: column; gap:12px;
+}
+.up-item{
+  display:flex; gap: 14px; align-items:center;
+  padding: 16px; background: var(--surface); border:1px solid var(--hairline);
+  border-radius: var(--r-md);
+  text-decoration:none; color:inherit;
+  transition: border-color .2s;
+}
+.up-item:hover{ border-color: var(--lcg-dark); }
+.up-item .mini-iso{
+  width: 64px; height: 64px; flex-shrink: 0;
+  border-radius: 10px; overflow:hidden;
+  background: linear-gradient(180deg, #0B2A25, #061915);
+  position: relative;
+}
+.up-item .mini-iso svg{ width:100%; height:100%; }
+.up-item .up-body{ flex:1; min-width:0; }
+.up-item .up-body .caption{ display:flex; gap:8px; align-items:center; margin-bottom: 4px; }
+.up-item .up-body h4{ margin:0 0 4px; font-family: var(--sans); font-weight:600; font-size:14px; line-height:1.3; color: var(--ink); }
+.up-item .up-body p{ margin:0; font-size:12px; color: var(--ink-4); }
+.up-item .up-cta{ color: var(--ink-4); flex-shrink:0; }
+.up-item:hover .up-cta{ color: var(--lcg-dark); }
+
+/* Faculty strip */
+.faculty{
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;
+}
+.fac{
+  display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+  padding: 16px; border:1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface);
+}
+.fac-av{
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--lcg-dark), var(--lcg-green));
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px;
+}
+.fac b{ font-size:13px; font-weight:600; color: var(--ink); line-height:1.2; }
+.fac span{ font-size:11.5px; color: var(--ink-4); }
+
+/* Footer mark */
+.foot{
+  padding: 36px 0 20px; text-align:center;
+  color: var(--ink-4); font-size: 12px;
+  display:flex; flex-direction:column; gap:8px; align-items:center;
+}
+.foot img{ height:14px; opacity:.55; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============= SIDEBAR ============= -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+
+    <div class="side-progress">
+      <div class="label">Progreso global</div>
+      <div class="val">34<span style="font-size:20px; color:#8AF4E9;">%</span></div>
+      <div class="progress"><span style="width:34%"></span></div>
+      <div class="meta">8 de 24 bloques · Día 3 en curso</div>
+    </div>
+
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list">
+        <li><a class="day-item is-done" href="day.html">
+          <span class="num">✓</span><span class="name">Día 01 · Identidad</span><span class="pct">100%</span>
+        </a></li>
+        <li><a class="day-item is-done" href="day.html">
+          <span class="num">✓</span><span class="name">Día 02 · Metodología</span><span class="pct">100%</span>
+        </a></li>
+        <li>
+          <a class="day-item is-active" href="day.html">
+            <span class="num">3</span><span class="name">Día 03 · Industria</span><span class="pct">42%</span>
+          </a>
+          <ul class="sub-sessions">
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Verticales LCG · overview</a></li>
+            <li><a class="sub-sess is-current" href="session.html"><span class="dot" style="background:var(--cat-ind)"></span> Supply SCM · diagnóstico</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Lean 4.0 · fundamentos</a></li>
+            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Excelencia Comercial</a></li>
+          </ul>
+        </li>
+        <li><a class="day-item" href="day.html">
+          <span class="num">4</span><span class="name">Día 04 · Herramientas & AI</span><span class="pct">0%</span>
+        </a></li>
+        <li><a class="day-item" href="day.html">
+          <span class="num">5</span><span class="name">Día 05 · Aplicación</span><span class="pct">0%</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+        <li><a class="day-item" href="#"><span class="num" style="background:transparent; border:none; font-size:14px;">☰</span><span class="name">Recursos</span></a></li>
+        <li><a class="day-item" href="#"><span class="num" style="background:transparent; border:none; font-size:14px;">✉</span><span class="name">Soporte</span></a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-foot">
+      <span>v 1.0 · LCG México</span>
+    </div>
+  </aside>
+
+  <!-- ============= MAIN ============= -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <span>Portal</span>
+        <span style="opacity:.4">/</span>
+        <b>Inicio</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <button class="iconbtn" title="Buscar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="iconbtn" title="Notificaciones">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      </button>
+      <button class="iconbtn" title="Ayuda">?</button>
+    </header>
+
+    <main class="landing-main">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-kicker"><span class="dot"></span> Bienvenida · Cohorte Abril 2026</div>
+            <h1>
+              Hola, Mariana.<br/>
+              Construyamos tu <em>primera semana</em> en LCG.
+            </h1>
+            <p class="hero-sub">
+              5 días, 24 bloques y una semana para integrarte a la firma:
+              identidad y cultura, el cuerpo metodológico LCG, las verticales
+              donde operamos, las herramientas — incluida fluidez con
+              <em style="font-style:italic; color:var(--ink);">AI como copiloto diario</em>
+              — y un caso integrado de cierre.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-primary btn-lg" href="session.html">
+                Retomar sesión actual
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </a>
+              <a class="btn btn-secondary btn-lg" href="progress.html">Ver mi progreso</a>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="label">Días</span>
+                <span class="val">5</span>
+              </div>
+              <div class="hero-stat">
+                <span class="label">Bloques</span>
+                <span class="val">24</span>
+              </div>
+              <div class="hero-stat">
+                <span class="label">Completado</span>
+                <span class="val">34<sup>%</sup></span>
+              </div>
+              <div class="hero-stat">
+                <span class="label">Horas totales</span>
+                <span class="val">34<sup>h</sup></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero DNA helix visual -->
+          <div class="hero-visual">
+            <div class="helix-frame">
+              <span class="hf-tl">DNA · LCG/MX</span>
+              <span class="hf-tr">ONBOARDING · 5 DÍAS</span>
+              
+              <svg id="helix-svg" viewBox="0 0 480 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PILLARS → Ejes del programa -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-num">01 · Los cinco ejes</span>
+              <h2>Cinco capas que se construyen en secuencia.</h2>
+            </div>
+            <p class="section-meta">
+              Cada día del onboarding activa un eje. La semana encadena de lo
+              institucional a lo aplicado — terminas con un caso real resuelto
+              y un plan personal firmado con tu líder.
+            </p>
+          </div>
+
+          <div class="pillars pillars-5">
+            <!-- Eje 1 — Identidad -->
+            <article class="pillar pillar-sm">
+              <div class="pillar-body">
+                <div class="pillar-head">
+                  <span class="cat-dot" style="background: var(--cat-ide)"></span>
+                  <span class="cat-name">Día 1 · Identidad</span>
+                </div>
+                <h3>Quiénes somos y cómo operamos.</h3>
+                <p>Bienvenida, accesos M365, historia y propuesta de valor LCG, organigrama, valores, London Balance y marco normativo completo.</p>
+                <div class="pillar-meta">
+                  <span>6 bloques · 5h</span>
+                  <span class="u-mono">100%</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Eje 2 — Metodología -->
+            <article class="pillar pillar-sm">
+              <div class="pillar-body">
+                <div class="pillar-head">
+                  <span class="cat-dot" style="background: var(--cat-met)"></span>
+                  <span class="cat-name">Día 2 · Metodología</span>
+                </div>
+                <h3>El cuerpo metodológico LCG.</h3>
+                <p>PASER, PreDx, Análisis Exhaustivo, Gemba Walks, Estudios Analíticos, Plan de Vuelo, Value Stream, MEF y Business Shaper.</p>
+                <div class="pillar-meta">
+                  <span>7 bloques · 6h 30m</span>
+                  <span class="u-mono">100%</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Eje 3 — Industria -->
+            <article class="pillar pillar-sm is-current">
+              <div class="pillar-body">
+                <div class="pillar-head">
+                  <span class="cat-dot" style="background: var(--cat-ind)"></span>
+                  <span class="cat-name">Día 3 · Industria <span class="dot-live"></span></span>
+                </div>
+                <h3>Dónde juega LCG México.</h3>
+                <p>Mapa de verticales LCG — industrias donde operamos — más Supply SCM, Lean 4.0 y Excelencia Comercial con casos representativos.</p>
+                <div class="pillar-meta">
+                  <span>4 bloques · 8h</span>
+                  <span class="u-mono">42%</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Eje 4 — Herramientas & AI -->
+            <article class="pillar pillar-sm pillar-ai">
+              <span class="badge-new">Rediseñado</span>
+              <div class="pillar-body">
+                <div class="pillar-head">
+                  <span class="cat-dot" style="background: var(--cat-ai)"></span>
+                  <span class="cat-name">Día 4 · Herramientas & AI</span>
+                </div>
+                <h3>AI como copiloto diario.</h3>
+                <p>Power BI y Monday/Miro comprimidos; el ecosistema Claude (Claude.ai, Code, Cowork, API) expandido a 4h 30m con laboratorio práctico.</p>
+                <div class="pillar-meta">
+                  <span>7 bloques · 7h</span>
+                  <span class="u-mono">0%</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Eje 5 — Aplicación -->
+            <article class="pillar pillar-sm">
+              <div class="pillar-body">
+                <div class="pillar-head">
+                  <span class="cat-dot" style="background: var(--cat-apl)"></span>
+                  <span class="cat-name">Día 5 · Aplicación</span>
+                </div>
+                <h3>Caso integrado, PID y proyecto.</h3>
+                <p>Caso end-to-end con Claude, retro de la semana, Plan Individual de Desarrollo firmado y handoff formal al equipo de proyecto.</p>
+                <div class="pillar-meta">
+                  <span>4 bloques · 8h</span>
+                  <span class="u-mono">0%</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- WEEK -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-num">02 · Tu semana</span>
+              <h2>Cinco días, encadenados.</h2>
+            </div>
+            <p class="section-meta">
+              Cada día construye sobre el anterior. El miércoles trabajas las
+              verticales donde operamos; el jueves das el giro al ecosistema
+              Claude y el viernes aterrizas todo en un caso integrado real.
+            </p>
+          </div>
+
+          <div class="week">
+            <a class="day-card is-done" href="day.html">
+              <span class="day-idx">Día 01 · Lun</span>
+              <h3>Identidad</h3>
+              <div class="day-sub">Inducción corporativa LCG</div>
+              <div class="day-bar"><span style="width:100%"></span></div>
+              <div class="sessions-row">
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+              </div>
+              <div class="footer-row"><span>6 bloques</span><b>5h</b></div>
+            </a>
+            <a class="day-card is-done" href="day.html">
+              <span class="day-idx">Día 02 · Mar</span>
+              <h3>Metodología</h3>
+              <div class="day-sub">PASER, PreDx, Gemba, VSA</div>
+              <div class="day-bar"><span style="width:100%"></span></div>
+              <div class="sessions-row">
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick done"></span>
+              </div>
+              <div class="footer-row"><span>7 bloques</span><b>6h 30m</b></div>
+            </a>
+            <a class="day-card is-current" href="day.html">
+              <span class="day-idx">Día 03 · Mié · hoy</span>
+              <h3>Industria</h3>
+              <div class="day-sub">Verticales · SCM · Lean 4.0 · Comercial</div>
+              <div class="day-bar"><span style="width:42%"></span></div>
+              <div class="sessions-row">
+                <span class="sess-tick done"></span>
+                <span class="sess-tick doing"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+              </div>
+              <div class="footer-row"><span>4 bloques</span><b>8h</b></div>
+            </a>
+            <a class="day-card" href="day.html" style="position:relative">
+              <span class="day-idx" style="color:var(--cat-ai); font-weight:700">Día 04 · Jue · AI</span>
+              <h3>Herramientas & AI</h3>
+              <div class="day-sub">Power BI · Monday · Claude end-to-end</div>
+              <div class="day-bar"><span style="width:0%"></span></div>
+              <div class="sessions-row">
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span>
+              </div>
+              <div class="footer-row"><span>7 bloques</span><b>7h</b></div>
+            </a>
+            <a class="day-card" href="day.html">
+              <span class="day-idx">Día 05 · Vie</span>
+              <h3>Aplicación</h3>
+              <div class="day-sub">Caso integrado, PID y asignación</div>
+              <div class="day-bar"><span style="width:0%"></span></div>
+              <div class="sessions-row">
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+              </div>
+              <div class="footer-row"><span>4 bloques</span><b>8h</b></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT UP -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-num">03 · Continuar</span>
+              <h2>Retomar donde te quedaste.</h2>
+            </div>
+          </div>
+
+          <div class="nextup">
+            <!-- Left: current card -->
+            <div class="nextup-card">
+              <div class="kicker"><span class="dot"></span> En curso · Día 3 · Bloque 2 de 4</div>
+              <h2>Supply SCM — diagnóstico integral de cadena de suministro.</h2>
+              <div class="nextup-meta">
+                <span class="m">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                  2h
+                </span>
+                <span class="m">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                  Facilita · Especialista Supply Chain
+                </span>
+                <span class="m">
+                  <span style="width:8px; height:8px; background:var(--cat-ind); border-radius:50%; display:inline-block;"></span>
+                  Día 3 · Industria
+                </span>
+              </div>
+              <div class="nextup-cta">
+                <a class="btn btn-primary btn-lg" href="session.html">
+                  Continuar sesión
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9Z"/></svg>
+                </a>
+                <a class="btn btn-secondary btn-lg" href="day.html">Ver día completo</a>
+              </div>
+            </div>
+
+            <!-- Right: up-next list -->
+            <div class="nextup-side">
+              <a class="up-item" href="session.html">
+                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
+                  <defs><linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8AF4E9"/><stop offset="1" stop-color="#03B585"/></linearGradient></defs>
+                  <g transform="translate(32,34)">
+                    <polygon points="0,-14 16,-6 16,10 0,18 -16,10 -16,-6" fill="none" stroke="url(#mg1)" stroke-width="1.1"/>
+                    <polygon points="0,-14 16,-6 0,2 -16,-6" fill="rgba(138,244,233,.2)" stroke="#8AF4E9" stroke-width="1"/>
+                    <line x1="0" y1="-14" x2="0" y2="18" stroke="#8AF4E9" stroke-width=".6" opacity=".5"/>
+                    <line x1="-16" y1="-6" x2="16" y2="-6" stroke="#8AF4E9" stroke-width=".6" opacity=".5"/>
+                  </g>
+                </svg></div>
+                <div class="up-body">
+                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ind);border-radius:50%;display:inline-block;"></span> Industria · Día 3 · Bloque 3</div>
+                  <h4>Lean 4.0 — fundamentos, herramientas y tecnología</h4>
+                  <p>2h · Especialista Lean</p>
+                </div>
+                <div class="up-cta">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </div>
+              </a>
+
+              <a class="up-item" href="session.html">
+                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
+                  <g transform="translate(32,34)">
+                    <circle cx="0" cy="0" r="10" fill="none" stroke="#8AF4E9" stroke-width="1"/>
+                    <circle cx="0" cy="0" r="6" fill="#03B585" opacity=".6"/>
+                    <g stroke="#8AF4E9" stroke-width="1">
+                      <line x1="-14" y1="0" x2="-10" y2="0"/><line x1="10" y1="0" x2="14" y2="0"/>
+                      <line x1="0" y1="-14" x2="0" y2="-10"/><line x1="0" y1="10" x2="0" y2="14"/>
+                      <line x1="-10" y1="-10" x2="-7" y2="-7"/><line x1="7" y1="7" x2="10" y2="10"/>
+                      <line x1="10" y1="-10" x2="7" y2="-7"/><line x1="-10" y1="10" x2="-7" y2="7"/>
+                    </g>
+                  </g>
+                </svg></div>
+                <div class="up-body">
+                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ind);border-radius:50%;display:inline-block;"></span> Industria · Día 3 · Bloque 4</div>
+                  <h4>Excelencia Comercial — pipeline, CRM e indicadores</h4>
+                  <p>2h · Especialista Comercial</p>
+                </div>
+                <div class="up-cta">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </div>
+              </a>
+
+              <a class="up-item" href="session.html">
+                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
+                  <g transform="translate(32,34)">
+                    <rect x="-18" y="-12" width="36" height="24" rx="2" fill="none" stroke="#8AF4E9" stroke-width="1"/>
+                    <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#8AF4E9" stroke-width=".6"/>
+                    <line x1="-6" y1="-12" x2="-6" y2="12" stroke="#8AF4E9" stroke-width=".6"/>
+                    <line x1="6" y1="-12" x2="6" y2="12" stroke="#8AF4E9" stroke-width=".6"/>
+                    <rect x="-5" y="-3" width="10" height="6" fill="#03B585" opacity=".7"/>
+                  </g>
+                </svg></div>
+                <div class="up-body">
+                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ai);border-radius:50%;display:inline-block;"></span> AI · Día 4 · Bloque AI-2</div>
+                  <h4>Ecosistema Claude en LCG — las 4 formas de usarlo</h4>
+                  <p>1h 15m · Transformación Digital</p>
+                </div>
+                <div class="up-cta">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FACULTY -->
+      <section class="section" style="border:none;">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-num">04 · Faculty</span>
+              <h2>Las personas que te acompañan esta semana.</h2>
+            </div>
+            <p class="section-meta">
+              Seniors, managers y partners con experiencia activa en proyectos.
+              Cada sesión la facilita alguien que la aplica todos los días.
+            </p>
+          </div>
+          <div class="faculty">
+            <div class="fac"><div class="fac-av">DR</div><b>Diego Ramírez</b><span>Sr. Manager · Retail</span></div>
+            <div class="fac"><div class="fac-av">AV</div><b>Ana Villareal</b><span>Manager · Data &amp; Analytics</span></div>
+            <div class="fac"><div class="fac-av">PS</div><b>Paulina Sáenz</b><span>Sr. Consultant · Transformación</span></div>
+            <div class="fac"><div class="fac-av">CM</div><b>Carlos Medellín</b><span>Partner · Estrategia</span></div>
+            <div class="fac"><div class="fac-av">LF</div><b>Laura Fuentes</b><span>Manager · Operaciones</span></div>
+            <div class="fac"><div class="fac-av">JO</div><b>Jorge Ochoa</b><span>Sr. Consultant · Finanzas</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="foot">
+        <img src="assets/logo-lcg-verde-oscuro.png" alt="LCG" />
+        <span>© 2026 London Consulting Group México · Portal Interno de Onboarding v1.0</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+<script>
+  // Build hero DNA helix
+  window.addEventListener('DOMContentLoaded', ()=>{
+    buildHeroHelix(document.getElementById('helix-svg'));
+  });
+
+  function buildHeroHelix(svg){
+    if(!svg) return;
+    const SVG = 'http://www.w3.org/2000/svg';
+    const n = (tag, attrs={}, parent=svg)=>{
+      const el = document.createElementNS(SVG, tag);
+      for(const k in attrs) el.setAttribute(k, attrs[k]);
+      if(parent) parent.appendChild(el);
+      return el;
+    };
+
+    // viewBox 480 × 720
+    const W = 480, H = 720;
+    const cx = W/2;
+    const topY = 80, botY = 660;
+    const amp = 130;           // horizontal swing — wider for clear helix
+    const turns = 2.2;         // how many full twists across the height
+    const samples = 160;
+
+    // subtle vertical axis
+    n('line', {
+      x1: cx, y1: topY-30, x2: cx, y2: botY+30,
+      class:'helix-axis'
+    });
+
+    // spine paths
+    let dA = '', dB = '';
+    const pts = [];
+    for(let i=0; i<=samples; i++){
+      const t = i/samples;
+      const y = topY + (botY-topY)*t;
+      const theta = t * Math.PI * turns;
+      const xA = cx + Math.sin(theta) * amp;
+      const xB = cx + Math.sin(theta + Math.PI) * amp;
+      pts.push({t, y, xA, xB, theta});
+      dA += (i===0?'M':'L') + xA.toFixed(1) + ' ' + y.toFixed(1);
+      dB += (i===0?'M':'L') + xB.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    n('path', { d: dA, class: 'spine-a' });
+    n('path', { d: dB, class: 'spine-b' });
+
+    // 5 rungs — 1 per day; evenly spaced from t=0.08 to t=0.92
+    const DAYS = [
+      { n:'01', title:'Identidad',            color:'#3A7561' },
+      { n:'02', title:'Metodología',          color:'#085E54' },
+      { n:'03', title:'Industria',            color:'#C68A3E', current:true },
+      { n:'04', title:'Herramientas & AI',    color:'#7A4EB5', highlight:true },
+      { n:'05', title:'Aplicación',           color:'#03B585' },
+    ];
+
+    DAYS.forEach((d, i)=>{
+      const t = 0.08 + (i/(DAYS.length-1)) * 0.84;
+      // find nearest sample
+      const sIdx = Math.round(t*samples);
+      const s = pts[sIdx];
+      const front = Math.cos(s.theta); // >0 → rightside up depth
+
+      // rung (line between the two spines at this y)
+      const rung = n('line', {
+        x1: s.xA, y1: s.y, x2: s.xB, y2: s.y,
+        stroke: d.color,
+        'stroke-opacity': .55,
+        class:'rung',
+        style:`animation-delay: ${0.7 + i*0.18}s`
+      });
+
+      // nodes at each end
+      n('circle', {
+        cx: s.xA, cy: s.y, r: 6,
+        fill: d.color, class:'node',
+        style:`animation-delay: ${0.85 + i*0.18}s`
+      });
+      n('circle', {
+        cx: s.xB, cy: s.y, r: 6,
+        fill: '#FFFFFF', stroke: d.color, 'stroke-width': 2,
+        class:'node',
+        style:`animation-delay: ${0.95 + i*0.18}s`
+      });
+
+      // current day — double ring
+      if(d.current){
+        n('circle', {
+          cx: s.xA, cy: s.y, r: 11,
+          fill:'none', stroke: d.color, 'stroke-width': 1, 'stroke-opacity': .4,
+          class:'node',
+          style:`animation-delay: ${0.85 + i*0.18}s`
+        });
+      }
+
+      // big highlight for AI day — pulsing outer glow
+      if(d.highlight){
+        const g = n('circle', {
+          cx: s.xB, cy: s.y, r: 14,
+          fill:'none', stroke: d.color, 'stroke-width': 1, 'stroke-opacity': .35,
+          class:'node',
+          style:`animation-delay: ${0.95 + i*0.18}s`
+        });
+      }
+
+      // label side: whichever is farther left at top, left label; else alternate
+      const labelLeft = s.xA < s.xB;
+      const labelX = labelLeft ? Math.min(s.xA, s.xB) - 14 : Math.max(s.xA, s.xB) + 14;
+      const anchor = labelLeft ? 'end' : 'start';
+
+      const label = n('text', {
+        x: labelX, y: s.y - 4, 'text-anchor': anchor,
+        class:'day-label',
+        style:`animation-delay: ${1.1 + i*0.18}s`
+      });
+      label.textContent = `DÍA ${d.n}`;
+      const title = n('text', {
+        x: labelX, y: s.y + 14, 'text-anchor': anchor,
+        class:'day-title',
+        style:`animation-delay: ${1.18 + i*0.18}s`,
+        fill: d.color
+      });
+      title.textContent = d.title;
+    });
+
+    // decorative end caps
+    const top = pts[0], bot = pts[samples];
+    [top, bot].forEach((s, i)=>{
+      n('circle', {
+        cx: s.xA, cy: s.y, r: 3.5,
+        fill: '#085E54', opacity:.7,
+        class:'node',
+        style:`animation-delay: ${1.6 + i*0.1}s`
+      });
+      n('circle', {
+        cx: s.xB, cy: s.y, r: 3.5,
+        fill: '#7A4EB5', opacity:.7,
+        class:'node',
+        style:`animation-delay: ${1.65 + i*0.1}s`
+      });
+    });
+  }
+</script>
+</body>
+</html>

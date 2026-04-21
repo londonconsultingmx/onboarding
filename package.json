@@ -1,0 +1,15 @@
+{
+  "name": "onboarding-lcg",
+  "version": "1.0.0",
+  "description": "Programa oficial de onboarding LCG México - 5 días",
+  "private": true,
+  "scripts": {
+    "build": "node generate_docx.js",
+    "regenerate": "node generate_docx.js"
+  },
+  "dependencies": {
+    "docx": "^9.0.0"
+  },
+  "author": "London Consulting Group México",
+  "license": "UNLICENSED"
+}
