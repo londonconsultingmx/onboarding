@@ -15,7 +15,13 @@
   border-bottom: 1px solid var(--hairline);
   background: linear-gradient(180deg, #F7F1E3 0%, transparent 100%);
 }
-.s-hero-inner{ padding: 44px 0 56px; }
+.s-hero-inner{
+  display: grid; grid-template-columns: 1.15fr .85fr;
+  gap: 48px; padding: 44px 0 56px; align-items: center;
+}
+.s-hero-visual{
+  position: relative; aspect-ratio: 1 / 1; max-height: 520px;
+}
 .s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 18px; }
 .s-hero-kicker .pill-cat{
   display:inline-flex; align-items:center; gap:8px;
@@ -431,31 +437,41 @@
       <!-- Hero -->
       <section class="s-hero">
         <div class="container s-hero-inner">
-          <div class="s-hero-kicker">
-            <span class="pill-cat">Industria</span>
-            <span class="pill"><span style="opacity:.5">Día 03</span>&nbsp;·&nbsp;Sesión 01 de 04</span>
-          </div>
-          <h1>Verticales LCG — <em>industrias donde trabajamos.</em></h1>
-          <p class="s-hero-sub">
-            Mapa completo de sectores: agroindustria, alimentos, manufactura,
-            retail, consumo, financiero, construcción, hotelería, logística.
-            Cada vertical con clientes representativos, casos Growth Story y
-            la vocación de ese sector en el mercado mexicano.
-          </p>
-          <div class="s-hero-meta">
-            <div class="item"><span class="label">Verticales</span><span class="val"><span class="u-mono">09</span> + 3</span></div>
-            <div class="item"><span class="label">Clientes</span><span class="val"><span class="u-mono">80</span>+</span></div>
-            <div class="item"><span class="label">Growth Stories</span><span class="val"><span class="u-mono">09</span></span></div>
-            <div class="item">
-              <span class="label">Facilitan</span>
-              <div class="facilitator" style="margin-top:4px;">
-                <div class="avatar" style="background: var(--cat-ind); color:#fff;">IP</div>
-                <div>
-                  <div class="val">Industry Partners</div>
-                  <div class="sub">Panel multisector</div>
+          <div>
+            <div class="s-hero-kicker">
+              <span class="pill-cat">Industria</span>
+              <span class="pill"><span style="opacity:.5">Día 03</span>&nbsp;·&nbsp;Sesión 01 de 04</span>
+            </div>
+            <h1>Verticales LCG — <em>industrias donde trabajamos.</em></h1>
+            <p class="s-hero-sub">
+              Mapa completo de sectores: agroindustria, alimentos, manufactura,
+              retail, consumo, financiero, construcción, hotelería, logística.
+              Cada vertical con clientes representativos, casos Growth Story y
+              la vocación de ese sector en el mercado mexicano.
+            </p>
+            <div class="s-hero-meta">
+              <div class="item"><span class="label">Verticales</span><span class="val"><span class="u-mono">09</span> + 3</span></div>
+              <div class="item"><span class="label">Clientes</span><span class="val"><span class="u-mono">80</span>+</span></div>
+              <div class="item"><span class="label">Growth Stories</span><span class="val"><span class="u-mono">09</span></span></div>
+              <div class="item">
+                <span class="label">Facilitan</span>
+                <div class="facilitator" style="margin-top:4px;">
+                  <div class="avatar" style="background: var(--cat-ind); color:#fff;">IP</div>
+                  <div>
+                    <div class="val">Industry Partners</div>
+                    <div class="sub">Panel multisector</div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="s-hero-visual">
+            <iframe
+              src="eagle-warrior-portal.html?v=1"
+              title="Guerrero águila · animación de industria"
+              loading="lazy"
+              style="width:100%; height:100%; border:0; border-radius: var(--r-lg); background: var(--lcg-cream); display:block;"></iframe>
           </div>
         </div>
       </section>
