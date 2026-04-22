@@ -89,3 +89,27 @@ function initTweaks(){
 }
 
 document.addEventListener('DOMContentLoaded', initTweaks);
+
+// ---------- Collapsible sidebar days ----------
+// Days with sub-sessions start collapsed. Clicking a day expands its
+// sessions; clicking again (already open) navigates to the day page.
+// Only one day can be expanded at a time.
+function initSidebarCollapse(){
+  const dayLis = document.querySelectorAll('.sidebar .day-list > li');
+  dayLis.forEach(li => {
+    const subList = li.querySelector('.sub-sessions');
+    if (!subList) return;
+    const dayItem = li.querySelector('.day-item');
+    if (!dayItem) return;
+
+    dayItem.addEventListener('click', (e) => {
+      if (li.classList.contains('is-open')) return; // second click: navigate
+      e.preventDefault();
+      li.parentElement.querySelectorAll('li.is-open').forEach(o => {
+        if (o !== li) o.classList.remove('is-open');
+      });
+      li.classList.add('is-open');
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', initSidebarCollapse);

@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=1440" />
 <title>Portal Onboarding · LCG</title>
-<link rel="stylesheet" href="shared/tokens.css?v=4" />
-<link rel="stylesheet" href="shared/iso.css?v=4" />
+<link rel="stylesheet" href="shared/tokens.css?v=5" />
+<link rel="stylesheet" href="shared/iso.css?v=5" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
 /* =======================================================
@@ -285,13 +285,6 @@
   border-color: #D8CCEE;
 }
 .pillar-ai h3{ color: var(--cat-ai); }
-.badge-new{
-  position:absolute; top:10px; right:10px;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 9px; letter-spacing:.14em; text-transform:uppercase;
-  padding: 4px 8px; border-radius: 999px;
-  background: var(--cat-ai); color:#fff; font-weight:700;
-}
 .pillar:hover{ transform: translateY(-2px); box-shadow: var(--shadow-2); }
 .pillar .iso-sm{ border-radius: 0; aspect-ratio: 16/11; }
 .pillar-body{ padding: 22px 22px 24px; display:flex; flex-direction: column; gap:14px; flex:1; }
@@ -659,7 +652,6 @@
 
             <!-- Eje 4 — Herramientas & AI -->
             <article class="pillar pillar-sm pillar-ai">
-              <span class="badge-new">Rediseñado</span>
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-ai)"></span>
@@ -914,7 +906,7 @@
   </div>
 </div>
 
-<script src="shared/app.js"></script>
+<script src="shared/app.js?v=5"></script>
 <script>
   // Build hero DNA helix
   window.addEventListener('DOMContentLoaded', ()=>{
