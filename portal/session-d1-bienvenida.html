@@ -16,8 +16,7 @@
   background: linear-gradient(180deg, #F7F5F0 0%, transparent 100%);
 }
 .s-hero-inner{
-  display: grid; grid-template-columns: 1.1fr .9fr;
-  gap: 48px; padding: 44px 0 56px; align-items: center;
+  padding: 44px 0 56px;
 }
 .s-hero-kicker{
   display:flex; gap:10px; align-items:center; margin-bottom: 18px;
@@ -48,10 +47,6 @@
 .s-hero-meta .facilitator .avatar{ width:32px; height:32px; font-size:11px; }
 .s-hero-meta .facilitator .val{ font-size: 14px; font-family: var(--sans); font-weight:600; line-height:1.2; }
 .s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
-
-.s-hero-visual{
-  position: relative; aspect-ratio: 1 / 1; max-height: 520px;
-}
 
 /* Two-col body */
 .s-body{
@@ -328,17 +323,6 @@
             </div>
           </div>
 
-          <div class="s-hero-visual">
-            <div class="iso" id="s-hero-iso">
-              <span class="tl">DWG-101 · IDE/WELCOME</span>
-              <span class="tr">DÍA 01</span>
-              <span class="bl">60 MIN · 8 ÍTEMS</span>
-              <span class="br">ONBOARDING.START</span>
-              <span class="iso-kicker">Kit inicial · LCG</span>
-              <div class="sweep"></div>
-              <div class="iso-title">Paquete<br/>inicial</div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -636,14 +620,10 @@
     refresh();
   });
 
-  function init(){
-    if (window.buildHeroIso) buildHeroIso(document.getElementById('s-hero-iso'));
-    refresh();
-  }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', refresh);
   } else {
-    init();
+    refresh();
   }
 })();
 </script>
