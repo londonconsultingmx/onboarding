@@ -470,23 +470,7 @@
 
     <div>
       <div class="nav-section-label">Semana 1</div>
-      <ul class="day-list">
-        <li><a class="day-item is-done" href="day-1-lunes.html">
-          <span class="num">✓</span><span class="name">Día 01 · Identidad</span><span class="pct">100%</span>
-        </a></li>
-        <li><a class="day-item is-done" href="day.html">
-          <span class="num">✓</span><span class="name">Día 02 · Metodología</span><span class="pct">100%</span>
-        </a></li>
-        <li>
-          <a class="day-item is-active" href="day.html">
-            <span class="num">3</span><span class="name">Día 03 · Industria</span><span class="pct">42%</span>
-          </a>
-          <ul class="sub-sessions">
-            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Verticales LCG · overview</a></li>
-            <li><a class="sub-sess is-current" href="session.html"><span class="dot" style="background:var(--cat-ind)"></span> Supply SCM · diagnóstico</a></li>
-            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Lean 4.0 · fundamentos</a></li>
-            <li><a class="sub-sess" href="day.html"><span class="dot" style="background:var(--cat-ind)"></span> Excelencia Comercial</a></li>
-          </ul>
+      <ul class="day-list" data-sidebar="days"></ul>
         </li>
         <li><a class="day-item" href="day.html">
           <span class="num">4</span><span class="name">Día 04 · Herramientas & AI</span><span class="pct">0%</span>
@@ -906,7 +890,7 @@
   </div>
 </div>
 
-<script src="shared/app.js?v=5"></script>
+<script src="shared/app.js?v=6"></script>
 <script>
   // Build hero DNA helix
   window.addEventListener('DOMContentLoaded', ()=>{

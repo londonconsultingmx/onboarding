@@ -90,13 +90,106 @@ function initTweaks(){
 
 document.addEventListener('DOMContentLoaded', initTweaks);
 
+// ---------- Shared sidebar day list ----------
+// Single source of truth for the "Semana 1" block so every page renders
+// the exact same menu. Each HTML just needs a placeholder:
+//     <ul class="day-list" data-sidebar="days"></ul>
+// Active / current / open states are inferred from location.pathname.
+const SIDEBAR_DAYS = [
+  {
+    num: 1, name: "Día 01 · Identidad", href: "day-1-lunes.html", cat: "ide",
+    sessions: [
+      { name: "Bienvenida ejecutiva",         href: "session-d1-b01-bienvenida-ejecutiva.html" },
+      { name: "Accesos & firma",              href: "session-d1-bienvenida.html" },
+      { name: "Cultura y valores",            href: "#" },
+      { name: "Estructura organizacional",    href: "#" },
+      { name: "Políticas y Código de conducta", href: "#" },
+      { name: "Administración & reembolsos",  href: "#" },
+      { name: "SharePoint & M365",            href: "#" },
+      { name: "Networking virtual",           href: "#" }
+    ]
+  },
+  {
+    num: 2, name: "Día 02 · Metodología", href: "#", cat: "met",
+    sessions: [
+      { name: "Plan de Vuelo",                href: "#" },
+      { name: "Performance Analysis",         href: "#" },
+      { name: "Value Stream Analysis (VSA)",  href: "#" },
+      { name: "MEF · Evaluación Financiera",  href: "#" },
+      { name: "PASER",                        href: "#" },
+      { name: "PreDx & Análisis Exhaustivo",  href: "#" },
+      { name: "Diseño e Implementación",      href: "#" }
+    ]
+  },
+  {
+    num: 3, name: "Día 03 · Industria", href: "day.html", cat: "ind",
+    sessions: [
+      { name: "Verticales LCG · overview",    href: "day.html" },
+      { name: "Supply SCM · diagnóstico",     href: "session.html" },
+      { name: "Lean 4.0 · fundamentos",       href: "day.html" },
+      { name: "Excelencia Comercial",         href: "day.html" }
+    ]
+  },
+  {
+    num: 4, name: "Día 04 · Herramientas & AI", href: "#", cat: "ai",
+    sessions: [
+      { name: "Power BI",                     href: "#" },
+      { name: "Monday & Miro",                href: "#" },
+      { name: "AI-1 · Fundamentos Claude",    href: "#" },
+      { name: "AI-2 · Claude.ai día a día",   href: "#" },
+      { name: "AI-3 · Integraciones LCG",     href: "#" },
+      { name: "AI-4 · Stack complementario",  href: "#" },
+      { name: "AI-5 · Framework Competencia", href: "#" }
+    ]
+  },
+  {
+    num: 5, name: "Día 05 · Aplicación", href: "#", cat: "apl",
+    sessions: [
+      { name: "Caso integrado",               href: "#" },
+      { name: "Presentación a panel",         href: "#" },
+      { name: "Intro a primer proyecto",      href: "#" },
+      { name: "Cierre ejecutivo",             href: "#" }
+    ]
+  }
+];
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderSidebarDayList(container){
+  const path = (location.pathname.split('/').pop() || 'landing.html').toLowerCase();
+
+  container.innerHTML = SIDEBAR_DAYS.map(day => {
+    const dayActive      = day.href !== '#' && path === day.href.toLowerCase();
+    const currentSession = day.sessions.find(s => s.href !== '#' && s.href.toLowerCase() === path);
+    const isOpen         = dayActive || !!currentSession;
+
+    const subItems = day.sessions.map(s => {
+      const current = s.href !== '#' && s.href.toLowerCase() === path;
+      return `<li><a class="sub-sess${current ? ' is-current' : ''}" href="${s.href}"><span class="dot" style="background:var(--cat-${day.cat})"></span> ${escapeHtml(s.name)}</a></li>`;
+    }).join('');
+
+    return (
+      `<li${isOpen ? ' class="is-open"' : ''}>` +
+        `<a class="day-item${dayActive ? ' is-active' : ''}" href="${day.href}">` +
+          `<span class="num">${day.num}</span>` +
+          `<span class="name">${escapeHtml(day.name)}</span>` +
+          `<span class="pct">0%</span>` +
+        `</a>` +
+        `<ul class="sub-sessions">${subItems}</ul>` +
+      `</li>`
+    );
+  }).join('');
+}
+
 // ---------- Collapsible sidebar days ----------
 // Days with sub-sessions start collapsed. Clicking a day expands its
 // sessions; clicking again (already open) navigates to the day page.
 // Only one day can be expanded at a time.
 function initSidebarCollapse(){
-  const dayLis = document.querySelectorAll('.sidebar .day-list > li');
-  dayLis.forEach(li => {
+  document.querySelectorAll('.sidebar .day-list > li').forEach(li => {
     const subList = li.querySelector('.sub-sessions');
     if (!subList) return;
     const dayItem = li.querySelector('.day-item');
@@ -112,4 +205,12 @@ function initSidebarCollapse(){
     });
   });
 }
-document.addEventListener('DOMContentLoaded', initSidebarCollapse);
+
+function initSidebar(){
+  // Render dynamic day list (if the page uses the shared placeholder)
+  const container = document.querySelector('.sidebar [data-sidebar="days"]');
+  if (container) renderSidebarDayList(container);
+  // Wire click-to-expand on whatever day-list is present
+  initSidebarCollapse();
+}
+document.addEventListener('DOMContentLoaded', initSidebar);
