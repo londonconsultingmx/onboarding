@@ -237,7 +237,7 @@
   <div class="ring r3"></div>
 
   <div class="fig-wrap">
-    <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig masked" id="fig">
+    <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig" id="fig" width="702" height="763">
   </div>
 
   <div class="label">
@@ -254,12 +254,27 @@
 
 <script>
   const fig = document.getElementById('fig');
+  // Feature-detect mask-image support; if missing, skip the reveal entirely
+  // so the fig is just visible (no sweep, but no chance of getting stuck).
+  const supportsMask =
+    CSS && CSS.supports &&
+    (CSS.supports('mask-image', 'linear-gradient(black, black)') ||
+     CSS.supports('-webkit-mask-image', 'linear-gradient(black, black)'));
+
   function animateReveal(){
+    if (!supportsMask) return;
     fig.style.setProperty('--rev', '0%');
     fig.classList.add('masked');
     const start = performance.now();
     const dur = 1400;
     const delay = 1100;
+    let done = false;
+    function finish(){
+      if (done) return;
+      done = true;
+      fig.classList.remove('masked');
+      fig.style.removeProperty('--rev');
+    }
     function tick(t){
       const el = t - start;
       if (el < delay){ requestAnimationFrame(tick); return; }
@@ -267,11 +282,18 @@
       const e = 1 - Math.pow(1 - p, 3);
       fig.style.setProperty('--rev', (e * 100) + '%');
       if (p < 1) requestAnimationFrame(tick);
-      else fig.classList.remove('masked');
+      else finish();
     }
     requestAnimationFrame(tick);
+    // Safety: no matter what, reveal finishes within 3s
+    setTimeout(finish, 3000);
   }
-  animateReveal();
+
+  // Wait for the image to actually load before starting the mask animation.
+  // If it errors, we still want the broken-image placeholder rather than
+  // a silently empty fig.
+  if (fig.complete && fig.naturalWidth > 0) animateReveal();
+  else fig.addEventListener('load', animateReveal, { once: true });
 </script>
 </body>
 </html>
