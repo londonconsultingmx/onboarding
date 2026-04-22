@@ -145,6 +145,25 @@
     to  { opacity:1; transform: translateY(0);}
   }
 
+  /* ---- Title (bottom-left) ---- */
+  .label{
+    position:absolute;
+    left: 48px; bottom: 72px;
+    z-index: 5;
+    max-width: 36%;
+  }
+  .label h1{
+    font-family:'Fraunces',serif;
+    font-weight: 300;
+    font-size: clamp(18px, 2.4vw, 30px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--lcg-dark);
+    margin: 0;
+    opacity:0; animation: riseIn 1s 2.05s forwards ease-out;
+  }
+  .label h1 em{ font-style: italic; font-weight: 300; color: var(--lcg-green);}
+
   /* ---- Coord markers ---- */
   .coord{
     position:absolute;
@@ -210,8 +229,12 @@
     <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig" id="fig" width="702" height="763">
   </div>
 
+  <div class="label">
+    <h1>Guerrero<br><em>jaguar.</em></h1>
+  </div>
+
   <div class="chrome-bottom">
-    <div>Guerrero Jaguar</div>
+    <div>FIG · HUICHOL</div>
     <div class="meta">LCG.HELLO</div>
   </div>
 </div>
