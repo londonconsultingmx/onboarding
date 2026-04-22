@@ -124,7 +124,7 @@ const SIDEBAR_DAYS = [
   {
     num: 3, name: "Día 03 · Industria", href: "day.html", cat: "ind",
     sessions: [
-      { name: "Verticales LCG · overview",    href: "day.html" },
+      { name: "Verticales LCG · overview",    href: "session-d3-b01-verticales.html" },
       { name: "Supply SCM · diagnóstico",     href: "session.html" },
       { name: "Lean 4.0 · fundamentos",       href: "day.html" },
       { name: "Excelencia Comercial",         href: "day.html" }

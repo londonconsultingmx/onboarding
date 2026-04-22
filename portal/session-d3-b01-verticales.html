@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Verticales LCG · Día 03 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F7F1E3 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 44px 0 56px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 18px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--cat-ind-bg); color: var(--cat-ind);
+  font-size: 11.5px; font-weight: 700; letter-spacing:.12em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(40px, 4.4vw, 62px); line-height: 1.02;
+  letter-spacing:-.025em; margin: 0 0 22px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-ind); }
+.s-hero-sub{ font-size: 17px; color: var(--ink-2); line-height: 1.55; max-width: 680px; margin: 0 0 28px; }
+
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 32px; padding: 20px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 4px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 22px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:18px; }
+.s-hero-meta .facilitator{ display:flex; gap:10px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:32px; height:32px; font-size:11px; }
+.s-hero-meta .facilitator .val{ font-size: 14px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
+
+/* Two-col body */
+.s-body{
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 48px; padding: 48px 0;
+}
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-ind); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 640px; }
+
+/* Map grid — 9 verticales tiles */
+.v-map{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  list-style: none; padding: 0; margin: 0;
+}
+.v-map li a{
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 18px 20px; border: 1px solid var(--hairline);
+  border-radius: var(--r-md); background: var(--surface);
+  text-decoration: none; color: inherit;
+  transition: border-color .15s, background .15s, transform .12s;
+}
+.v-map li a:hover{
+  border-color: var(--cat-ind); background: var(--cat-ind-bg);
+  transform: translateY(-1px);
+}
+.v-map li .n{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em;
+  color: var(--cat-ind); font-weight: 700; text-transform: uppercase;
+}
+.v-map li .nm{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 18px; line-height: 1.15; letter-spacing: -.01em;
+  color: var(--ink); margin-top: 2px;
+}
+.v-map li .tag{
+  font-size: 12px; color: var(--ink-3); line-height: 1.35;
+  margin-top: 4px;
+}
+
+/* Vertical detail card */
+.vertical{
+  padding: 28px 32px; margin-bottom: 16px;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface);
+  display: grid; grid-template-columns: 1fr; gap: 18px;
+}
+.vertical.has-case{
+  border-color: rgba(198,138,62,.35);
+  background: linear-gradient(180deg, var(--surface) 0%, rgba(245,236,220,.35) 100%);
+}
+.v-head{
+  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  padding-bottom: 14px; border-bottom: 1px solid var(--hairline);
+}
+.v-head .v-num{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; letter-spacing: .14em;
+  color: var(--cat-ind); font-weight: 700; text-transform: uppercase;
+}
+.v-head h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 28px; line-height: 1.1; letter-spacing: -.02em;
+  color: var(--ink); margin: 0;
+}
+.v-sub{ font-size: 13px; color: var(--ink-3); margin-left: auto; }
+
+.v-row{
+  display: grid; grid-template-columns: 140px 1fr; gap: 24px;
+  align-items: start;
+}
+.v-row .label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em;
+  color: var(--ink-4); text-transform: uppercase;
+  padding-top: 2px;
+}
+.v-row p{ margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.v-row p b{ color: var(--ink); font-weight: 600; }
+
+.chip-row{ display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-row .chip{
+  display: inline-flex; align-items: center;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--cat-ind-bg); color: var(--cat-ind);
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.client-list{
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.55;
+}
+.client-list .c{
+  display: inline-block;
+  padding: 3px 10px; margin: 2px 4px 2px 0;
+  border: 1px solid var(--hairline); border-radius: 4px;
+  background: var(--surface-2); color: var(--ink);
+  font-weight: 500; font-size: 12.5px;
+}
+
+/* Growth Story callout */
+.growth-stories{ display: flex; flex-direction: column; gap: 8px; }
+.growth-story{
+  display: grid; grid-template-columns: 42px 1fr auto; gap: 14px;
+  align-items: center;
+  padding: 12px 16px; border-radius: var(--r-md);
+  background: var(--ink); color: #fff;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+}
+.growth-story:hover{ transform: translateY(-1px); box-shadow: var(--shadow-2); }
+.growth-story .play{
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--lcg-mint); color: var(--lcg-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.growth-story .gs-title{
+  font-family: var(--serif); font-size: 15px; line-height: 1.25;
+  color: #fff; margin: 0;
+}
+.growth-story .gs-title em{ font-style: italic; color: var(--lcg-mint); font-weight: 400; }
+.growth-story .gs-meta{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .12em;
+  color: rgba(255,255,255,.6); text-transform: uppercase;
+  margin-top: 3px;
+}
+.growth-story .gs-go{
+  font-size: 11px; color: var(--lcg-mint); font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+/* Complementary verticals */
+.comp-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  list-style: none; padding: 0; margin: 0;
+}
+.comp-grid li{
+  padding: 18px 20px; border: 1px solid var(--hairline);
+  border-radius: var(--r-md); background: var(--surface);
+}
+.comp-grid li h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 18px; line-height: 1.1; letter-spacing: -.01em;
+  margin: 0 0 6px; color: var(--ink);
+}
+.comp-grid li .clients-inline{
+  font-size: 12.5px; color: var(--ink-2); margin: 0 0 8px;
+}
+.comp-grid li .voc-inline{
+  font-size: 12px; color: var(--ink-3); line-height: 1.45;
+  font-style: italic; margin: 0;
+}
+
+/* Context MX: economy structure */
+.ctx-structure{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  list-style: none; padding: 0; margin: 0 0 28px;
+}
+.ctx-structure li{
+  padding: 18px 20px; border-left: 3px solid var(--cat-ind);
+  background: var(--surface); border-top: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.ctx-structure li .n{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em;
+  color: var(--cat-ind); text-transform: uppercase; font-weight: 700;
+}
+.ctx-structure li h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 18px; margin: 4px 0 6px; color: var(--ink);
+  letter-spacing: -.01em;
+}
+.ctx-structure li p{ margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
+
+/* FDI rank */
+.fdi{
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.fdi .rank{
+  padding: 12px 18px; background: var(--cat-ind-bg); border-radius: var(--r-md);
+  display: flex; align-items: center; gap: 10px;
+  min-width: 220px; flex: 1 1 200px;
+}
+.fdi .rank .pos{
+  font-family: var(--serif); font-size: 32px; line-height: 1;
+  color: var(--cat-ind); letter-spacing: -.02em; font-weight: 400;
+}
+.fdi .rank .nm{
+  font-family: var(--sans); font-weight: 600;
+  font-size: 14px; color: var(--ink); line-height: 1.2;
+}
+.fdi .rank .tag{ font-size: 11px; color: var(--ink-3); }
+
+/* Regions */
+.regions-grid{
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  overflow: hidden;
+}
+.regions-grid li{
+  display: grid; grid-template-columns: 180px 1fr 1fr;
+  gap: 24px; align-items: start;
+  padding: 18px 22px; background: var(--surface);
+  border-top: 1px solid var(--hairline);
+}
+.regions-grid li:first-child{ border-top: 0; }
+.regions-grid li .r-name{
+  font-family: var(--serif); font-size: 18px; color: var(--ink);
+  letter-spacing: -.01em;
+}
+.regions-grid li .r-name .r-tag{
+  display: block; font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--cat-ind); letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 4px;
+}
+.regions-grid li .r-states{
+  font-size: 12.5px; color: var(--ink-2); line-height: 1.5;
+}
+.regions-grid li .r-focus{
+  font-size: 12.5px; color: var(--ink-3); line-height: 1.5;
+  font-style: italic;
+}
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{
+  display:flex; gap: 10px; align-items:center;
+  color: var(--ink-3); text-decoration:none; font-size: 13.5px;
+}
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  padding: 20px; background: var(--surface); margin-bottom: 16px;
+}
+.aside-box h4{
+  margin:0 0 12px; font-family: var(--sans); font-weight: 700;
+  font-size: 11px; letter-spacing:.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Session progress + completion toggle (shared pattern) */
+.sess-complete .sess-pct-row{
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.sess-complete .sess-pct-big{
+  font-family: var(--serif); font-size: 38px; line-height: 1;
+  letter-spacing: -.025em; color: var(--cat-ind);
+}
+.sess-complete .sess-pct-sign{ font-size: 20px; color: var(--ink-3); margin-left: 2px; }
+.sess-complete .sess-pct-lbl{
+  font-size: 11px; color: var(--ink-4);
+  font-family: ui-monospace, Menlo, monospace; letter-spacing: .1em;
+}
+.sess-complete .sess-bar{
+  height: 6px; background: var(--surface-2); border-radius: 999px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.sess-complete .sess-bar span{
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--cat-ind), var(--lcg-green));
+  width: 0%; transition: width .4s ease;
+}
+.sess-toggle{
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface); color: var(--ink);
+  cursor: pointer; font-family: var(--sans); font-weight: 600;
+  font-size: 13.5px; text-align: left;
+  transition: border-color .15s, background .15s, transform .12s;
+}
+.sess-toggle:hover{ border-color: var(--cat-ind); transform: translateY(-1px); }
+.sess-toggle .sess-chk{
+  width: 20px; height: 20px; border-radius: 6px;
+  border: 1.5px solid var(--ink-4); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .15s, border-color .15s;
+  position: relative;
+}
+.sess-toggle.is-done{ border-color: var(--cat-ind); background: var(--cat-ind-bg); }
+.sess-toggle.is-done .sess-chk{ background: var(--cat-ind); border-color: var(--cat-ind); }
+.sess-toggle.is-done .sess-chk::after{
+  content: ""; width: 5px; height: 9px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.sess-toggle.is-done .sess-txt{ color: var(--cat-ind); }
+
+/* Outline nav */
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{
+  display: flex; gap: 10px; align-items:center;
+  padding: 7px 10px; border-radius: 6px;
+  text-decoration:none; color: var(--ink-3); font-size: 12.5px;
+  border-left: 2px solid transparent;
+}
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ind); background: var(--cat-ind-bg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <!-- Main -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day.html" style="color:inherit; text-decoration:none;">Miércoles</a>
+        <span style="opacity:.4">/</span>
+        <b>Verticales LCG · overview</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ind-bg); color: var(--cat-ind); border-color: transparent;">
+        <span class="pill-dot"></span> Industria
+      </span>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Industria</span>
+            <span class="pill"><span style="opacity:.5">Día 03</span>&nbsp;·&nbsp;Sesión 01 de 04</span>
+          </div>
+          <h1>Verticales LCG — <em>industrias donde trabajamos.</em></h1>
+          <p class="s-hero-sub">
+            Mapa completo de sectores: agroindustria, alimentos, manufactura,
+            retail, consumo, financiero, construcción, hotelería, logística.
+            Cada vertical con clientes representativos, casos Growth Story y
+            la vocación de ese sector en el mercado mexicano.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Verticales</span><span class="val"><span class="u-mono">09</span> + 3</span></div>
+            <div class="item"><span class="label">Clientes</span><span class="val"><span class="u-mono">80</span>+</span></div>
+            <div class="item"><span class="label">Growth Stories</span><span class="val"><span class="u-mono">09</span></span></div>
+            <div class="item">
+              <span class="label">Facilitan</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-ind); color:#fff;">IP</div>
+                <div>
+                  <div class="val">Industry Partners</div>
+                  <div class="sub">Panel multisector</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <article>
+
+            <!-- 00 Mapa general -->
+            <section class="s-block" id="sec-mapa">
+              <div class="s-block-label">00 · Mapa general</div>
+              <h2>Nueve verticales, <em>un mismo modelo.</em></h2>
+              <p class="lead">
+                Soluciones horizontales LCG (Estrategia · Operaciones · Digital · Talento)
+                aplicadas a nueve sectores donde tenemos tesis profunda. Haz clic para
+                saltar al detalle de cada uno.
+              </p>
+              <ul class="v-map">
+                <li><a href="#v01"><span class="n">V 01</span><span class="nm">Agroindustria</span><span class="tag">Berries · cítricos · hortalizas · granos</span></a></li>
+                <li><a href="#v02"><span class="n">V 02</span><span class="nm">Alimentos y Bebidas</span><span class="tag">Panificación · café · mariscos · bebidas</span></a></li>
+                <li><a href="#v03"><span class="n">V 03</span><span class="nm">Manufactura, Automotriz y Químicos</span><span class="tag">OEM · autopartes · químicos · metalmecánica</span></a></li>
+                <li><a href="#v04"><span class="n">V 04</span><span class="nm">Retail</span><span class="tag">Autoservicio · conveniencia · cerámica</span></a></li>
+                <li><a href="#v05"><span class="n">V 05</span><span class="nm">Bienes de Consumo / Distribución</span><span class="tag">Mayoreo · distribución FMCG</span></a></li>
+                <li><a href="#v06"><span class="n">V 06</span><span class="nm">Servicios Financieros y Seguros</span><span class="tag">Banca · aseguradoras · fintech</span></a></li>
+                <li><a href="#v07"><span class="n">V 07</span><span class="nm">Construcción e Inmobiliario</span><span class="tag">Residencial · centros comerciales · obra civil</span></a></li>
+                <li><a href="#v08"><span class="n">V 08</span><span class="nm">Hotelería, Turismo y Aviación</span><span class="tag">Hoteles · FIBRA · aviación ejecutiva</span></a></li>
+                <li><a href="#v09"><span class="n">V 09</span><span class="nm">Logística y Supply Chain</span><span class="tag">3PL · transporte · operación logística</span></a></li>
+              </ul>
+            </section>
+
+            <!-- 01 Agroindustria -->
+            <section class="s-block" id="v01">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 01</span>
+                  <h3>Agroindustria</h3>
+                  <span class="v-sub">México referente global en fresh produce</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Berries</span><span class="chip">Cítricos</span><span class="chip">Hortalizas</span>
+                    <span class="chip">Caña de azúcar</span><span class="chip">Granos</span><span class="chip">Pesca</span>
+                    <span class="chip">Invernaderos</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Berrymex</span><span class="c">AgroGonzámex</span><span class="c">Sun Berries</span>
+                    <span class="c">La Norteñita</span><span class="c">Grupo Los Cerritos</span>
+                    <span class="c">Grupo Azucarero del Trópico</span><span class="c">Pinsa</span>
+                    <span class="c">Red Sun Farms</span><span class="c">Agrícola El Toro</span>
+                    <span class="c">GN Productores</span><span class="c">Grupo Palenque</span>
+                    <span class="c">Colimán</span><span class="c">Biotegro</span>
+                    <span class="c">Ingenios Santos</span><span class="c">El Cerezo</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Stories</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://youtu.be/2uMH63ZIeZw" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">AgroGonzámex · <em>"Harvesting Legacy of Excellence"</em></p>
+                        <p class="gs-meta">Ignacio González · Director Ejecutivo · T1:E3</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                    <a class="growth-story" href="https://youtu.be/AMGCGGIn-jc" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">La Norteñita · <em>"Cultivating a High-Performance Organization"</em></p>
+                        <p class="gs-meta">Luis Antonio Corral · T2:E3</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>México es <b>referente global en exportación de berries, aguacate, hortalizas y productos frescos</b>. Principales zonas productoras: Jalisco, Michoacán, Sinaloa, Guanajuato, Zacatecas, Baja California.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 Alimentos y Bebidas -->
+            <section class="s-block" id="v02">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 02</span>
+                  <h3>Alimentos y Bebidas</h3>
+                  <span class="v-sub">Sector defensivo, presencia nacional</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Panificación</span><span class="chip">Café</span>
+                    <span class="chip">Mariscos procesados</span><span class="chip">Bebidas</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Panovo</span><span class="c">Café El Marino</span>
+                    <span class="c">Bepensa</span><span class="c">ECOM</span>
+                    <span class="c">Del Pacífico Seafoods</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Story</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://www.youtube.com/watch?v=_Ax-Ur_u0Rs" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">Panovo · <em>"Baking Innovation into Operational Excellence"</em></p>
+                        <p class="gs-meta">Roberto Ramírez · Director General · T2:E2</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>La industria alimentaria es una de las <b>ramas manufactureras más relevantes del país</b>, junto con equipo de transporte. Sector defensivo con presencia nacional en todas las regiones.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 Manufactura, Automotriz y Químicos -->
+            <section class="s-block" id="v03">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 03</span>
+                  <h3>Manufactura, Automotriz y Químicos</h3>
+                  <span class="v-sub">Motor de la economía mexicana</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Manufactura industrial</span><span class="chip">OEM automotriz</span>
+                    <span class="chip">Autopartes</span><span class="chip">Distribución automotriz</span>
+                    <span class="chip">Agroquímicos</span><span class="chip">Químicos industriales</span>
+                    <span class="chip">Metalmecánica</span><span class="chip">Textil técnico</span>
+                    <span class="chip">Hornos industriales</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">FEMSA</span><span class="c">Coflex</span>
+                    <span class="c">Nutec Bickley</span><span class="c">Marie Lou</span>
+                    <span class="c">Grupo Cruces</span><span class="c">Becktel</span>
+                    <span class="c">Insul Therm</span><span class="c">Katcon</span>
+                    <span class="c">Difrenosa</span><span class="c">Gruver</span>
+                    <span class="c">Surman</span><span class="c">Gonher</span>
+                    <span class="c">GonherMex</span><span class="c">Monsanto</span>
+                    <span class="c">Cartuchos Águila</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Stories</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://www.youtube.com/watch?v=U7-v3F5ovxw" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">Coflex · <em>"A World-Class Manufacturing Operation"</em></p>
+                        <p class="gs-meta">Eduardo Coronado · Co-CEO · T2:E4</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                    <a class="growth-story" href="https://www.youtube.com/watch?v=B8c4b2AYF9c" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">GonherMex · <em>"Unlocking Commercial Excellence"</em></p>
+                        <p class="gs-meta">Gerardo Gómez · T2:E1</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                    <a class="growth-story" href="https://youtu.be/S4rCRkebOrk" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">Gonher · <em>"Real-Time Shift"</em></p>
+                        <p class="gs-meta">Rodrigo González · T1:E1</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>Manufactura es <b>el sector más relevante de la economía mexicana</b> y principal receptor de inversión extranjera directa. Regiones clave: <b>Norte</b> (Nuevo León, Coahuila, Chihuahua, Tamaulipas, Baja California) y <b>Bajío</b> (Querétaro, Guanajuato, San Luis Potosí, Aguascalientes).</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 Retail -->
+            <section class="s-block" id="v04">
+              <div class="vertical">
+                <div class="v-head">
+                  <span class="v-num">Vertical 04</span>
+                  <h3>Retail</h3>
+                  <span class="v-sub">Top 3 sectores del PIB</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Autoservicio</span><span class="chip">Tiendas de conveniencia</span>
+                    <span class="chip">Cerámica</span><span class="chip">Retail especializado</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">7-Eleven</span><span class="c">Cesantoni</span>
+                    <span class="c">Artelí</span><span class="c">Bexel</span>
+                    <span class="c">Santandreu</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>El <b>comercio al por menor es uno de los tres sectores más grandes del PIB</b>. Crecimiento sostenido por expansión de cadenas de conveniencia y convergencia con canales digitales.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 05 Bienes de Consumo / Distribución -->
+            <section class="s-block" id="v05">
+              <div class="vertical">
+                <div class="v-head">
+                  <span class="v-num">Vertical 05</span>
+                  <h3>Bienes de Consumo / Distribución</h3>
+                  <span class="v-sub">Uno de los 3 sectores más grandes del PIB</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Mayoreo</span><span class="chip">Distribución FMCG</span>
+                    <span class="chip">Bonos</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Iconn</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>El <b>comercio al por mayor es uno de los tres sectores más grandes del PIB</b>. Distribución mayorista en transformación continua por canales digitales B2B y logística especializada.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 06 Servicios Financieros y Seguros -->
+            <section class="s-block" id="v06">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 06</span>
+                  <h3>Servicios Financieros y Seguros</h3>
+                  <span class="v-sub">#2 en atracción de IED</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Banca</span><span class="chip">Aseguradoras</span>
+                    <span class="chip">Financieras especializadas</span><span class="chip">Fintech</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Banregio</span><span class="c">Banbajío</span>
+                    <span class="c">Banamex</span><span class="c">Zurich Santander</span>
+                    <span class="c">GNP Seguros</span><span class="c">HDI</span>
+                    <span class="c">General de Seguros</span><span class="c">Fidex</span>
+                    <span class="c">Tertius</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Story</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://youtu.be/afE0rFB-CY0" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">HDI · <em>"Tech-Driven Transformation"</em></p>
+                        <p class="gs-meta">Juan Ignacio González Gómez · CEO · T1:E5</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p><b>Segundo sector más relevante en atracción de inversión extranjera directa.</b> Sector con presión estructural por transformación digital, apertura fintech y regulación de ciberseguridad.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 07 Construcción e Inmobiliario -->
+            <section class="s-block" id="v07">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 07</span>
+                  <h3>Construcción e Inmobiliario</h3>
+                  <span class="v-sub">Ciclo ligado a inversión industrial</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Desarrollos residenciales</span><span class="chip">Centros comerciales</span>
+                    <span class="chip">Vivienda</span><span class="chip">Obra civil</span>
+                    <span class="chip">Empaque corrugado</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">GIM Desarrollos</span><span class="c">Consorcio ARA</span>
+                    <span class="c">Acosta Verde</span><span class="c">Prosic</span>
+                    <span class="c">Artigraf</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Story</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://youtu.be/5-vHAFqglio" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">GIM Desarrollos · <em>"Constructing the Foundations for a Strong Future"</em></p>
+                        <p class="gs-meta">Isaac Meta Cohen · CEO · T1:E2</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>Sector con <b>demanda sostenida por parques industriales, vivienda urbana y obra pública</b>. Ciclos ligados a inversión industrial y crecimiento demográfico.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 08 Hotelería, Turismo y Aviación -->
+            <section class="s-block" id="v08">
+              <div class="vertical has-case">
+                <div class="v-head">
+                  <span class="v-num">Vertical 08</span>
+                  <h3>Hotelería, Turismo y Aviación</h3>
+                  <span class="v-sub">Una de las principales fuentes de divisas</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">Hoteles urbanos</span><span class="chip">FIBRA hotelera</span>
+                    <span class="chip">Aviación ejecutiva</span>
+                    <span class="chip">Transporte turístico y terrestre</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Grupo Posadas</span><span class="c">Fibra Inn</span>
+                    <span class="c">ALE Aerolíneas Ejecutivas</span>
+                    <span class="c">Aerovics</span><span class="c">Corporativo UNNE</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Growth Story</span>
+                  <div class="growth-stories">
+                    <a class="growth-story" href="https://youtu.be/ULzxaVwA_BA" target="_blank" rel="noopener noreferrer">
+                      <span class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+                      <div>
+                        <p class="gs-title">ALE Aerolíneas Ejecutivas · <em>"Unlocking Team Potential"</em></p>
+                        <p class="gs-meta">Manuel Sierra Rivera · CEO · T1:E4</p>
+                      </div>
+                      <span class="gs-go">Ver →</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>Turismo es una de las <b>principales fuentes de divisas del país</b>. Zonas clave: Quintana Roo, CDMX, Jalisco, Baja California Sur, Yucatán.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 09 Logística y Supply Chain -->
+            <section class="s-block" id="v09">
+              <div class="vertical">
+                <div class="v-head">
+                  <span class="v-num">Vertical 09</span>
+                  <h3>Logística y Supply Chain</h3>
+                  <span class="v-sub">Por posición geográfica y nearshoring</span>
+                </div>
+                <div class="v-row">
+                  <span class="label">Subsectores</span>
+                  <div class="chip-row">
+                    <span class="chip">3PL</span><span class="chip">Transporte de carga</span>
+                    <span class="chip">Operación logística</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Clientes</span>
+                  <div class="client-list">
+                    <span class="c">Ryder</span>
+                  </div>
+                </div>
+                <div class="v-row">
+                  <span class="label">Vocación MX</span>
+                  <p>Sector crítico por la <b>posición geográfica de México entre Norteamérica, Asia y Latinoamérica</b>. Demanda impulsada por la reconfiguración de cadenas de suministro regionales.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 10 Complementarias -->
+            <section class="s-block" id="sec-comp">
+              <div class="s-block-label">10 · Verticales complementarias</div>
+              <h2>Tres sectores con exposición selectiva.</h2>
+              <p>Industrias donde LCG ha trabajado con clientes específicos sin consolidar una vertical dedicada.</p>
+
+              <ul class="comp-grid">
+                <li>
+                  <h4>Energía / Petróleo y Gas</h4>
+                  <p class="clients-inline"><b>Clientes:</b> Astrum (Grupo Proeza) · Cotemar</p>
+                  <p class="voc-inline">Sector vinculado a infraestructura energética y servicios offshore.</p>
+                </li>
+                <li>
+                  <h4>Farmacéutico y Productos Médicos</h4>
+                  <p class="clients-inline"><b>Clientes:</b> Pharmatycsa</p>
+                  <p class="voc-inline">México es uno de los principales exportadores de dispositivos médicos de América Latina.</p>
+                </li>
+                <li>
+                  <h4>Educación</h4>
+                  <p class="clients-inline"><b>Clientes:</b> UDEM · ASFM · Olamí</p>
+                  <p class="voc-inline">Instituciones privadas con modelos de transformación académico-administrativa.</p>
+                </li>
+              </ul>
+            </section>
+
+            <!-- 11 Contexto México -->
+            <section class="s-block" id="sec-contexto">
+              <div class="s-block-label">11 · Contexto estructural de México</div>
+              <h2>Dónde juega la <em>economía mexicana.</em></h2>
+              <p class="lead">
+                Tres actividades económicas, seis sectores que concentran la mayor parte
+                del PIB, y cinco regiones industriales con vocaciones distintas.
+              </p>
+
+              <div class="s-block-label" style="margin-top: 28px;">Estructura de la economía</div>
+              <ul class="ctx-structure">
+                <li>
+                  <span class="n">Actividades terciarias</span>
+                  <h4>Servicios</h4>
+                  <p>Componente más grande del PIB: comercio, servicios financieros, inmobiliarios, transporte, turismo.</p>
+                </li>
+                <li>
+                  <span class="n">Actividades secundarias</span>
+                  <h4>Industria</h4>
+                  <p>Manufactura, construcción, minería y energía. Principal receptor de IED.</p>
+                </li>
+                <li>
+                  <span class="n">Actividades primarias</span>
+                  <h4>Agro</h4>
+                  <p>Agricultura, ganadería, pesca y forestal. México referente global en fresh produce.</p>
+                </li>
+              </ul>
+              <p style="font-size: 13.5px; color: var(--ink-3); margin: -10px 0 28px; font-style: italic;">
+                <b style="color: var(--ink); font-style: normal;">Seis sectores</b> concentran la mayor parte de la economía: manufactura · comercio al por menor · servicios inmobiliarios · comercio al por mayor · transportes y almacenamiento · construcción.
+              </p>
+
+              <div class="s-block-label">Sectores líderes en inversión extranjera directa</div>
+              <div class="fdi">
+                <div class="rank"><span class="pos">01</span><div><div class="nm">Manufactura</div><span class="tag">Automotriz · electrónica · aeroespacial</span></div></div>
+                <div class="rank"><span class="pos">02</span><div><div class="nm">Servicios Financieros y Seguros</div><span class="tag">Banca · fintech · aseguradoras</span></div></div>
+                <div class="rank"><span class="pos">03</span><div><div class="nm">Minería</div><span class="tag">Metales · extracción</span></div></div>
+              </div>
+
+              <div class="s-block-label">Cinco regiones industriales</div>
+              <ul class="regions-grid">
+                <li>
+                  <div class="r-name"><span class="r-tag">Región 01</span>Norte / Frontera</div>
+                  <div class="r-states">Nuevo León · Coahuila · Chihuahua · Tamaulipas · Baja California · Sonora</div>
+                  <div class="r-focus">Automotriz · electrónica · aeroespacial · manufactura de exportación</div>
+                </li>
+                <li>
+                  <div class="r-name"><span class="r-tag">Región 02</span>Bajío</div>
+                  <div class="r-states">Querétaro · Guanajuato · Aguascalientes · San Luis Potosí · Jalisco</div>
+                  <div class="r-focus">Automotriz · aeroespacial · agro · logística</div>
+                </li>
+                <li>
+                  <div class="r-name"><span class="r-tag">Región 03</span>Centro / Valle de México</div>
+                  <div class="r-states">CDMX · Edo. Méx. · Puebla · Hidalgo · Morelos · Tlaxcala</div>
+                  <div class="r-focus">Servicios financieros · farmacéutico · automotriz (Puebla) · e-commerce · corporativos</div>
+                </li>
+                <li>
+                  <div class="r-name"><span class="r-tag">Región 04</span>Occidente</div>
+                  <div class="r-states">Jalisco · Colima · Nayarit · Michoacán</div>
+                  <div class="r-focus">Electrónica / TI · agroindustria · tequila · logística Pacífico</div>
+                </li>
+                <li>
+                  <div class="r-name"><span class="r-tag">Región 05</span>Sur-Sureste</div>
+                  <div class="r-states">Veracruz · Tabasco · Campeche · Yucatán · Quintana Roo · Oaxaca · Chiapas</div>
+                  <div class="r-focus">Petróleo y gas · turismo · agroindustria</div>
+                </li>
+              </ul>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="day.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span>
+                  <span class="title">Miércoles · Día 03</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="session.html">
+                  Siguiente · Supply SCM
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Aside -->
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 01 de 04 · Día 03</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-mapa">Mapa general</a></li>
+                <li><a href="#v01">V 01 · Agroindustria</a></li>
+                <li><a href="#v02">V 02 · Alimentos y Bebidas</a></li>
+                <li><a href="#v03">V 03 · Manufactura</a></li>
+                <li><a href="#v04">V 04 · Retail</a></li>
+                <li><a href="#v05">V 05 · Consumo / Distribución</a></li>
+                <li><a href="#v06">V 06 · Financiero y Seguros</a></li>
+                <li><a href="#v07">V 07 · Construcción</a></li>
+                <li><a href="#v08">V 08 · Hotelería / Turismo</a></li>
+                <li><a href="#v09">V 09 · Logística</a></li>
+                <li><a href="#sec-comp">Complementarias</a></li>
+                <li><a href="#sec-contexto">Contexto México</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ind-bg); border-color: rgba(198,138,62,.35);">
+              <h4 style="color: var(--cat-ind);">Growth Stories</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 10px;">
+                Nueve casos de éxito con CEOs y Directores Generales. Cada uno cuenta
+                una transformación LCG desde la voz del cliente.
+              </p>
+              <span style="font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em; color: var(--cat-ind);">Playlist en YouTube · LCG MX</span>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js?v=8"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd3-b01-verticales';
+
+  function loadStore(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
