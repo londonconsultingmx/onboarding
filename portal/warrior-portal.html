@@ -99,9 +99,9 @@
     z-index: 3;
   }
   .fig{
-    width: 50%;
-    max-width: 520px;
-    max-height: 74%;
+    width: 66%;
+    max-width: 700px;
+    max-height: 82%;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 30px 40px rgba(8,94,84,0.18));
@@ -140,39 +140,6 @@
     50%    { opacity:0.55; transform: translate(-50%,-50%) scale(1.08);}
   }
 
-  /* ---- Label block ---- */
-  .label{
-    position:absolute;
-    left: 48px; bottom: 78px;
-    z-index: 5;
-    max-width: 46%;
-  }
-  .label .eyebrow{
-    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--lcg-ink-60); font-weight:600;
-    margin-bottom: 10px;
-    opacity:0; animation: riseIn .8s 1.9s forwards ease-out;
-  }
-  .label h1{
-    font-family:'Fraunces',serif;
-    font-weight: 300;
-    font-size: clamp(26px, 3.6vw, 42px);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
-    color: var(--lcg-dark);
-    margin: 0 0 10px;
-    opacity:0; animation: riseIn 1s 2.05s forwards ease-out;
-  }
-  .label h1 em{ font-style: italic; font-weight: 300; color: var(--lcg-green);}
-  .label p{
-    font-family:'Manrope',sans-serif;
-    font-size: 13.5px;
-    line-height: 1.45;
-    color: var(--lcg-ink-60);
-    margin: 0;
-    max-width: 320px;
-    opacity:0; animation: riseIn 1s 2.25s forwards ease-out;
-  }
   @keyframes riseIn{
     from{ opacity:0; transform: translateY(14px);}
     to  { opacity:1; transform: translateY(0);}
@@ -241,12 +208,6 @@
 
   <div class="fig-wrap">
     <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig" id="fig" width="702" height="763">
-  </div>
-
-  <div class="label">
-    <div class="eyebrow">Arte popular · Huichol</div>
-    <h1>Guerrero<br><em>jaguar.</em></h1>
-    <p>Figura ceremonial con chaquira, alas policromadas y escudo solar. Bienvenida al portal de onboarding LCG.</p>
   </div>
 
   <div class="chrome-bottom">
