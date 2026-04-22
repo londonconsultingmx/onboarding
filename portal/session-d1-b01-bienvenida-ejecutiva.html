@@ -350,6 +350,57 @@
   color: var(--ink-3);
 }
 
+/* Session progress + completion toggle */
+.sess-complete .sess-pct-row{
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.sess-complete .sess-pct-big{
+  font-family: var(--serif); font-size: 38px; line-height: 1;
+  letter-spacing: -.025em; color: var(--cat-ide);
+}
+.sess-complete .sess-pct-sign{ font-size: 20px; color: var(--ink-3); margin-left: 2px; }
+.sess-complete .sess-pct-lbl{
+  font-size: 11px; color: var(--ink-4);
+  font-family: ui-monospace, Menlo, monospace; letter-spacing: .1em;
+}
+.sess-complete .sess-bar{
+  height: 6px; background: var(--surface-2); border-radius: 999px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.sess-complete .sess-bar span{
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--cat-ide), var(--lcg-green));
+  width: 0%; transition: width .4s ease;
+}
+.sess-toggle{
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface); color: var(--ink);
+  cursor: pointer; font-family: var(--sans); font-weight: 600;
+  font-size: 13.5px; text-align: left;
+  transition: border-color .15s, background .15s, transform .12s;
+}
+.sess-toggle:hover{ border-color: var(--cat-ide); transform: translateY(-1px); }
+.sess-toggle .sess-chk{
+  width: 20px; height: 20px; border-radius: 6px;
+  border: 1.5px solid var(--ink-4); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .15s, border-color .15s;
+  position: relative;
+}
+.sess-toggle.is-done{ border-color: var(--cat-ide); background: var(--cat-ide-bg); }
+.sess-toggle.is-done .sess-chk{ background: var(--cat-ide); border-color: var(--cat-ide); }
+.sess-toggle.is-done .sess-chk::after{
+  content: ""; width: 5px; height: 9px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.sess-toggle.is-done .sess-txt{ color: var(--cat-ide); }
+
 /* Outline nav */
 .outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
 .outline li a{
@@ -767,6 +818,19 @@
 
           <!-- Aside -->
           <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 01 de 08 · Día 01</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
             <div class="aside-box">
               <h4>Contenido</h4>
               <ul class="outline">
@@ -814,6 +878,39 @@
 <script src="shared/iso-builders.js?v=4"></script>
 <script src="shared/app.js"></script>
 <script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd1-b01-bienvenida-ejecutiva';
+
+  function loadStore(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
 </script>
 </body>
 </html>
