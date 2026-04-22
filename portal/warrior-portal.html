@@ -94,14 +94,17 @@
 
   /* ---- Fig ---- */
   .fig-wrap{
-    position:absolute; inset: 0;
-    display:flex; align-items: flex-start; justify-content: center;
-    padding-top: 6%;
+    position:absolute;
+    top: 9%; left: 50%;
+    width: 36%; max-width: 360px;
+    transform: translateX(-50%);
+    aspect-ratio: 702 / 763;
     z-index: 3;
   }
   .fig{
-    width: 44%;
-    max-width: 460px;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
     filter: drop-shadow(0 30px 40px rgba(8,94,84,0.18));
     opacity: 0;
     transform: translateY(20px) scale(0.98);
@@ -198,18 +201,6 @@
     text-transform: none;
   }
 
-  /* ---- Tick marks decorativos en las esquinas ---- */
-  .tick{
-    position:absolute; z-index: 4;
-    width: 14px; height: 14px;
-    border-color: var(--lcg-dark);
-    opacity: 0;
-    animation: riseIn .8s 1.4s forwards ease-out;
-  }
-  .tick.tl{ top: 60px; left: 40px; border-top: 1px solid; border-left: 1px solid;}
-  .tick.tr{ top: 60px; right: 40px; border-top: 1px solid; border-right: 1px solid;}
-  .tick.bl{ bottom: 60px; left: 40px; border-bottom: 1px solid; border-left: 1px solid;}
-  .tick.br{ bottom: 60px; right: 40px; border-bottom: 1px solid; border-right: 1px solid;}
 </style>
 </head>
 <body>
@@ -220,11 +211,6 @@
     <div>FIG‑100 · IDE/HELLO</div>
     <div class="pill"><span class="dot"></span>Portal · Bienvenida</div>
   </div>
-
-  <span class="tick tl"></span>
-  <span class="tick tr"></span>
-  <span class="tick bl"></span>
-  <span class="tick br"></span>
 
   <div class="coord tr">
     Pieza
@@ -238,7 +224,7 @@
   <div class="ring r3"></div>
 
   <div class="fig-wrap">
-    <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig" id="fig" width="702" height="763">
+    <img src="assets/guerrero.png" alt="Guerrero huichol" class="fig" id="fig">
   </div>
 
   <div class="label">
