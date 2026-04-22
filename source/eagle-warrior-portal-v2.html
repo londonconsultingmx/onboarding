@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Guerrero Águila · Verticales · LCG</title>
+<title>Guerrero Águila · Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..700;1,9..144,200..700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -153,9 +153,9 @@
   /* Label */
   .label{
     position:absolute;
-    left: 48px; bottom: 72px;
+    left: 48px; bottom: 78px;
     z-index: 5;
-    max-width: 36%;
+    max-width: 46%;
   }
   .label .eyebrow{
     font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
@@ -166,7 +166,7 @@
   .label h1{
     font-family:'Fraunces',serif;
     font-weight: 300;
-    font-size: clamp(18px, 2.4vw, 30px);
+    font-size: clamp(40px, 5.2vw, 76px);
     line-height: 0.98;
     letter-spacing: -0.03em;
     color: var(--lcg-dark);
@@ -263,8 +263,8 @@
 <div class="stage" id="stage">
 
   <div class="chrome-top">
-    <div>FIG-300 · IND/MAPA</div>
-    <div class="pill"><span class="dot"></span>Portal · Verticales</div>
+    <div>ANI‑003 · FIG/GUERRERO</div>
+    <div class="pill"><span class="dot"></span>Portal · Bienvenida</div>
   </div>
 
   <span class="tick tl"></span>
@@ -295,6 +295,10 @@
   <div class="ring r3"></div>
 
   <div class="fig-wrap">
+    <img src="assets/eagle-half.png" alt="Guerrero Águila" class="fig masked" id="fig">
+  </div>
+  <div class="fig-wrap" style="display:none">
+    <!-- Placeholder SVG (desactivado ahora que tenemos imagen real) -->
     <div class="fig-placeholder masked" id="fig">
       <svg viewBox="0 0 540 960" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -511,22 +515,72 @@
   </div>
 
   <div class="label">
+    <div class="eyebrow">Arte popular · Huichol</div>
     <h1>Guerrero<br><em>águila.</em></h1>
+    <p>Figura ceremonial con chaquira, penacho solar y escudo de rayos. Guardián del cielo en el portal.</p>
   </div>
 
   <div class="chrome-bottom">
-    <div>Guerrero Águila</div>
-    <div class="meta">LCG.INDUSTRIA</div>
+    <div>FIG · HUICHOL</div>
+    <div class="meta">LCG.PORTAL</div>
   </div>
 </div>
 
+<div class="tweaks" id="tweaks">
+  <h3>Tweaks</h3>
 
+  <div class="row">
+    <label>Flotación <span id="flv">On</span></label>
+    <div class="seg" id="floatSeg">
+      <button data-v="on" class="active">On</button>
+      <button data-v="off">Off</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <label>Glow solar</label>
+    <div class="seg" id="glowSeg">
+      <button data-v="on" class="active">On</button>
+      <button data-v="off">Off</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <label>Rayos</label>
+    <div class="seg" id="raysSeg">
+      <button data-v="on" class="active">On</button>
+      <button data-v="off">Off</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <label>Fondo</label>
+    <div class="seg" id="bgSeg">
+      <button data-v="grid" class="active">Grid</button>
+      <button data-v="dots">Puntos</button>
+      <button data-v="none">Limpio</button>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button id="replay">Replay</button>
+  </div>
+</div>
 
 <script>
-const fig  = document.getElementById('fig');
-const rays = document.querySelector('.sunrays');
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "float": "on",
+  "glow": "on",
+  "rays": "on",
+  "bg": "grid"
+}/*EDITMODE-END*/;
 
-// Generate sun rays
+const fig = document.getElementById('fig');
+const bg  = document.querySelector('.bg');
+const glow= document.querySelector('.glow');
+const rays= document.querySelector('.sunrays');
+
+// Construir rayos SVG
 (function(){
   const g = rays.querySelector('#rayg');
   if (!g) return;
@@ -542,25 +596,12 @@ const rays = document.querySelector('.sunrays');
   }
 })();
 
-const supportsMask =
-  CSS && CSS.supports &&
-  (CSS.supports('mask-image', 'linear-gradient(black, black)') ||
-   CSS.supports('-webkit-mask-image', 'linear-gradient(black, black)'));
-
 function animateReveal(){
-  if (!supportsMask) { fig.classList.remove('masked'); return; }
   fig.style.setProperty('--rev', '0%');
   fig.classList.add('masked');
   const start = performance.now();
   const dur = 1400;
   const delay = 1100;
-  let done = false;
-  function finish(){
-    if (done) return;
-    done = true;
-    fig.classList.remove('masked');
-    fig.style.removeProperty('--rev');
-  }
   function tick(t){
     const el = t - start;
     if (el < delay){ requestAnimationFrame(tick); return; }
@@ -568,12 +609,57 @@ function animateReveal(){
     const e = 1 - Math.pow(1 - p, 3);
     fig.style.setProperty('--rev', (e * 100) + '%');
     if (p < 1) requestAnimationFrame(tick);
-    else finish();
+    else fig.classList.remove('masked');
   }
   requestAnimationFrame(tick);
-  setTimeout(finish, 3000);
 }
 animateReveal();
+
+function applyTweaks(){
+  fig.style.animation = TWEAKS.float === 'on'
+    ? 'figIn 1.4s 1.1s forwards cubic-bezier(.2,.7,.2,1), float 7s 2.5s ease-in-out infinite'
+    : 'figIn 1.4s 1.1s forwards cubic-bezier(.2,.7,.2,1)';
+
+  glow.style.display = TWEAKS.glow === 'on' ? '' : 'none';
+  rays.style.display = TWEAKS.rays === 'on' ? '' : 'none';
+
+  bg.style.display = TWEAKS.bg === 'none' ? 'none' : '';
+  bg.classList.toggle('dots-only', TWEAKS.bg === 'dots');
+  bg.classList.toggle('grid-only', TWEAKS.bg === 'grid');
+}
+applyTweaks();
+
+function wireSeg(segId, key){
+  const seg = document.getElementById(segId);
+  seg.querySelectorAll('button').forEach(b => {
+    if (b.dataset.v === TWEAKS[key]) b.classList.add('active');
+    else b.classList.remove('active');
+    b.addEventListener('click', () => {
+      seg.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      TWEAKS[key] = b.dataset.v;
+      window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]: TWEAKS[key]}}, '*');
+      applyTweaks();
+    });
+  });
+}
+wireSeg('floatSeg','float');
+wireSeg('glowSeg','glow');
+wireSeg('raysSeg','rays');
+wireSeg('bgSeg','bg');
+
+document.getElementById('replay').addEventListener('click', () => {
+  fig.style.animation = 'none'; fig.offsetHeight;
+  applyTweaks();
+  animateReveal();
+});
+
+window.addEventListener('message', (e) => {
+  const d = e.data || {};
+  if (d.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('on');
+  if (d.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
+});
+window.parent.postMessage({type:'__edit_mode_available'}, '*');
 </script>
 
 </body>
