@@ -502,15 +502,11 @@
           </div>
 
           <div class="s-hero-visual">
-            <div class="iso" id="s-hero-iso">
-              <span class="tl">DWG-100 · IDE/HELLO</span>
-              <span class="tr">DÍA 01 · S01</span>
-              <span class="bl">45 MIN · 6 CAP</span>
-              <span class="br">LCG.HELLO</span>
-              <span class="iso-kicker">Bienvenida · ejecutiva</span>
-              <div class="sweep"></div>
-              <div class="iso-title">Hola,<br/>bienvenida</div>
-            </div>
+            <iframe
+              src="warrior-portal.html"
+              title="Guerrero huichol · animación de bienvenida"
+              loading="lazy"
+              style="width:100%; height:100%; border:0; border-radius: var(--r-lg); background: var(--lcg-cream); display:block;"></iframe>
           </div>
         </div>
       </section>
@@ -818,14 +814,6 @@
 <script src="shared/iso-builders.js?v=4"></script>
 <script src="shared/app.js"></script>
 <script>
-  function init(){
-    if (window.buildHeroIso) buildHeroIso(document.getElementById('s-hero-iso'));
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
 </script>
 </body>
 </html>
