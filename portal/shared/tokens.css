@@ -234,19 +234,21 @@ body{
 .day-item .pct{ font-size:11px; color:var(--ink-4); font-variant-numeric: tabular-nums; }
 
 .sub-sessions{ margin:4px 0 8px 32px; padding:0; list-style:none; display:none; flex-direction:column; gap:2px; }
+.day-list > li{ position: relative; }
 .day-list > li.is-open > .sub-sessions{ display:flex; }
-.day-list > li:has(.sub-sessions) > .day-item::after{
-  content:""; width:6px; height:6px;
-  border-right:1.5px solid var(--ink-4);
-  border-bottom:1.5px solid var(--ink-4);
-  transform: rotate(-45deg); margin-left: 4px;
-  transition: transform .2s, border-color .2s;
-  flex-shrink:0;
+.day-item{ padding-right: 34px; }
+.day-chev{
+  position: absolute;
+  right: 6px; top: 6px;
+  width: 24px; height: 24px;
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--ink-4);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; padding: 0;
+  transition: transform .2s, background .15s, color .15s;
 }
-.day-list > li.is-open:has(.sub-sessions) > .day-item::after{
-  transform: rotate(45deg);
-  border-color: var(--ink-2);
-}
+.day-chev:hover{ background: var(--surface-2); color: var(--ink); }
+.day-list > li.is-open > .day-chev{ transform: rotate(90deg); color: var(--ink-2); }
 .sub-sess{
   display:flex; align-items:center; gap:8px;
   padding: 6px 10px; font-size:12.5px; color:var(--ink-3);

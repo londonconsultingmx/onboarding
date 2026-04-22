@@ -110,7 +110,7 @@ const SIDEBAR_DAYS = [
     ]
   },
   {
-    num: 2, name: "Día 02 · Metodología", href: "#", cat: "met",
+    num: 2, name: "Día 02 · Metodología", href: "day-2-martes.html", cat: "met",
     sessions: [
       { name: "Plan de Vuelo",                href: "#" },
       { name: "Performance Analysis",         href: "#" },
@@ -131,7 +131,7 @@ const SIDEBAR_DAYS = [
     ]
   },
   {
-    num: 4, name: "Día 04 · Herramientas & AI", href: "#", cat: "ai",
+    num: 4, name: "Día 04 · Herramientas & AI", href: "day-4-jueves.html", cat: "ai",
     sessions: [
       { name: "Power BI",                     href: "#" },
       { name: "Monday & Miro",                href: "#" },
@@ -143,7 +143,7 @@ const SIDEBAR_DAYS = [
     ]
   },
   {
-    num: 5, name: "Día 05 · Aplicación", href: "#", cat: "apl",
+    num: 5, name: "Día 05 · Aplicación", href: "day-5-viernes.html", cat: "apl",
     sessions: [
       { name: "Caso integrado",               href: "#" },
       { name: "Presentación a panel",         href: "#" },
@@ -178,6 +178,9 @@ function renderSidebarDayList(container){
           `<span class="name">${escapeHtml(day.name)}</span>` +
           `<span class="pct">0%</span>` +
         `</a>` +
+        `<button class="day-chev" type="button" aria-label="Mostrar sesiones">` +
+          `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>` +
+        `</button>` +
         `<ul class="sub-sessions">${subItems}</ul>` +
       `</li>`
     );
@@ -185,23 +188,19 @@ function renderSidebarDayList(container){
 }
 
 // ---------- Collapsible sidebar days ----------
-// Days with sub-sessions start collapsed. Clicking a day expands its
-// sessions; clicking again (already open) navigates to the day page.
-// Only one day can be expanded at a time.
+// Day label acts as a normal link — single click navigates to the day
+// page. The chevron button (right side of the row) toggles the nested
+// sub-session list. Only one day open at a time.
 function initSidebarCollapse(){
   document.querySelectorAll('.sidebar .day-list > li').forEach(li => {
-    const subList = li.querySelector('.sub-sessions');
-    if (!subList) return;
-    const dayItem = li.querySelector('.day-item');
-    if (!dayItem) return;
-
-    dayItem.addEventListener('click', (e) => {
-      if (li.classList.contains('is-open')) return; // second click: navigate
+    const chev = li.querySelector('.day-chev');
+    if (!chev) return;
+    chev.addEventListener('click', (e) => {
       e.preventDefault();
-      li.parentElement.querySelectorAll('li.is-open').forEach(o => {
-        if (o !== li) o.classList.remove('is-open');
-      });
-      li.classList.add('is-open');
+      e.stopPropagation();
+      const wasOpen = li.classList.contains('is-open');
+      li.parentElement.querySelectorAll('li.is-open').forEach(o => o.classList.remove('is-open'));
+      if (!wasOpen) li.classList.add('is-open');
     });
   });
 }

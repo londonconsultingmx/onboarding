@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Viernes · Día 05 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.day-main{ padding-bottom: 80px; }
+
+.d-hero{
+  padding: 42px 0 32px; border-bottom: 1px solid var(--hairline);
+}
+.d-hero-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; }
+.d-hero .idx{ font-family: ui-monospace, Menlo, monospace; font-size:12px; color:var(--ink-4); letter-spacing:.18em; text-transform:uppercase; margin-bottom:8px; display:block; }
+.d-hero h1{ font-family: var(--serif); font-weight:400; font-size: clamp(44px, 5vw, 72px); line-height:.98; letter-spacing:-.03em; margin:0 0 14px; }
+.d-hero h1 em{ font-style:italic; color:var(--cat-apl); }
+.d-hero .sub{ font-size:17px; color:var(--ink-2); max-width:580px; margin:0; }
+
+.d-hero-stats{ display:flex; gap:32px; flex-shrink:0; padding-bottom:6px; }
+.d-hero-stats .s{ text-align:right; }
+.d-hero-stats .s .label{ display:block; margin-bottom:4px; }
+.d-hero-stats .s .v{ font-family:var(--serif); font-size:30px; line-height:1; letter-spacing:-.02em; color:var(--ink); }
+.d-hero-stats .s .v sup{ font-size:13px; font-family:var(--sans); color:var(--ink-3); }
+
+.filter-bar{
+  padding: 20px 0 24px; border-bottom: 1px solid var(--hairline);
+  display:flex; gap: 10px; align-items:center;
+}
+.filter-bar .label{ margin-right:8px; }
+.filter-chip{
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--hairline);
+  background: var(--surface); font-size: 13px; color: var(--ink-2); cursor:pointer;
+  display:inline-flex; align-items:center; gap: 8px;
+}
+.filter-chip.is-active{ background: var(--ink); color:#fff; border-color: var(--ink); }
+.filter-chip .d{ width:7px; height:7px; border-radius:50%; background: currentColor; }
+.filter-bar-spacer{ flex:1; }
+
+.timeline{ padding: 36px 0; }
+.t-row{
+  display: grid; grid-template-columns: 84px 28px 1fr;
+  gap: 24px; padding: 14px 0; align-items: stretch;
+}
+.t-time{ padding-top: 16px; text-align: right; }
+.t-time .hour{ font-family: var(--serif); font-size: 24px; line-height:1; color: var(--ink); letter-spacing: -.01em; }
+.t-time .dur{ font-size: 11px; color: var(--ink-4); margin-top: 4px; font-family: ui-monospace, Menlo, monospace; letter-spacing:.1em; }
+
+.t-spine{ position: relative; display:flex; justify-content:center; }
+.t-spine::before{
+  content:""; position: absolute; top: 0; bottom: -14px; left: 50%;
+  width: 1px; background: var(--hairline); transform: translateX(-.5px);
+}
+.t-spine .mark{
+  position: relative; z-index: 1;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--hairline);
+  margin-top: 22px;
+}
+.t-spine.doing .mark{
+  background: #fff; border-color: var(--cat-apl);
+  box-shadow: 0 0 0 5px rgba(3,181,133,.15);
+  animation: isoPulse 1.6s ease-in-out infinite;
+}
+.t-row:last-child .t-spine::before{ display:none; }
+.t-row.is-break .t-time{ padding-top: 8px; }
+.t-row.is-break .t-spine .mark{ border-style: dashed; }
+
+.t-card{
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md); padding: 18px 22px;
+  display: grid; grid-template-columns: 6px 1fr auto auto; gap: 20px;
+  align-items: center;
+  position: relative; text-decoration:none; color:inherit;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.t-card:hover{ transform: translateY(-1px); border-color: var(--ink-3); box-shadow: var(--shadow-2); }
+.t-card .cat-bar{ align-self: stretch; border-radius: 999px; }
+.t-card .cat-bar.apl{ background: var(--cat-apl); }
+.t-card .body{ min-width: 0; }
+.t-card .cap-row{ display:flex; gap:10px; align-items:center; margin-bottom: 6px; font-size: 11.5px; color: var(--ink-4); letter-spacing:.02em; }
+.t-card .cap-row .pill{ padding:3px 10px; font-size:11px; background: var(--surface-2); border:1px solid var(--hairline); }
+.t-card .cap-row .pill.apl{ background: var(--cat-apl-bg); color: var(--cat-apl); border:none; }
+.t-card h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing:-.015em; line-height:1.15; margin: 0 0 4px; color: var(--ink); }
+.t-card .desc{ font-size: 13.5px; color: var(--ink-3); line-height: 1.45; margin: 0; }
+.t-card .fac{ display:flex; gap:8px; align-items:center; flex-shrink:0; }
+.t-card .fac .avatar{ width:28px; height:28px; font-size:11px; }
+.t-card .fac .n{ font-size: 12px; font-weight: 600; color: var(--ink); line-height:1.1; }
+.t-card .fac .r{ font-size: 10.5px; color: var(--ink-4); }
+.t-card .status{
+  flex-shrink:0; display:flex; gap:8px; align-items:center;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hairline);
+}
+.t-card.doing{ border-color: var(--cat-apl); box-shadow: 0 0 0 3px rgba(3,181,133,.12); }
+.t-card.doing .status{ color: var(--cat-apl); border-color: rgba(3,181,133,.3); background: rgba(3,181,133,.08); }
+.t-card.doing .status::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; animation: isoPulse 1.6s ease-in-out infinite; }
+
+.t-break{
+  background: transparent; border: 1px dashed var(--hairline);
+  border-radius: var(--r-md); padding: 12px 22px;
+  display:flex; gap: 14px; align-items:center; color: var(--ink-4); font-size: 13px;
+}
+.t-break .ico{ width:20px; height:20px; color: var(--ink-4); }
+
+.day-dist{
+  margin-top: 32px; padding: 28px 32px;
+  background: var(--cat-apl-bg); border: 1px solid rgba(3,181,133,.25); border-radius: var(--r-md);
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+}
+.day-dist h3{ font-family: var(--serif); font-weight:400; font-size: 22px; margin: 0 0 16px; letter-spacing:-.01em; }
+.dist-bar{ height: 14px; border-radius: 999px; overflow:hidden; display:flex; background: rgba(255,255,255,.5); }
+.dist-bar span{ display:block; height:100%; }
+.dist-legend{ display:flex; gap: 20px; margin-top: 14px; flex-wrap:wrap; }
+.dist-legend .l{ display:flex; gap:8px; align-items:center; font-size: 12px; color: var(--ink-2); }
+.dist-legend .l .d{ width: 10px; height: 10px; border-radius: 3px; }
+.dist-legend .l b{ color: var(--ink); }
+.day-dist .totals{ text-align:right; }
+.day-dist .totals .big{ font-family: var(--serif); font-size: 44px; line-height:1; color: var(--cat-apl); letter-spacing:-.02em; }
+.day-dist .totals .small{ font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">MT</div>
+      <div class="side-user-meta">
+        <strong>Mariana Torres</strong>
+        <span>Consultora Asociada · Cohorte Abril 26</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <b>Viernes · Día 05</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-apl-bg); color: var(--cat-apl); border-color: transparent;">
+        <span class="pill-dot"></span> Aplicación
+      </span>
+    </header>
+
+    <main class="day-main">
+      <section class="d-hero">
+        <div class="container d-hero-head">
+          <div>
+            <span class="idx">Día 05 · Viernes · Aplicación y cierre</span>
+            <h1><em>Aplicación.</em> La semana aterriza en un caso real.</h1>
+            <p class="sub">Caso integrado con data anonimizada, presentación a panel de directores, handoff al gerente de proyecto y cierre ejecutivo del director patrocinador.</p>
+          </div>
+          <div class="d-hero-stats">
+            <div class="s"><span class="label">Bloques</span><span class="v">4</span></div>
+            <div class="s"><span class="label">Duración</span><span class="v">8<sup>h</sup></span></div>
+            <div class="s"><span class="label">Completado</span><span class="v">0<sup>%</sup></span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="filter-bar">
+          <span class="label">Bloques</span>
+          <button class="filter-chip is-active">Día completo · 4</button>
+          <button class="filter-chip" style="color: var(--cat-apl)"><span class="d"></span> Aplicación · 4</button>
+          <div class="filter-bar-spacer"></div>
+        </div>
+
+        <div class="timeline">
+          <!-- Bloque 1 · Caso integrado -->
+          <div class="t-row">
+            <div class="t-time"><div class="hour">09:00</div><div class="dur">3 H</div></div>
+            <div class="t-spine doing"><div class="mark"></div></div>
+            <a href="#" class="t-card doing">
+              <span class="cat-bar apl"></span>
+              <div class="body">
+                <div class="cap-row"><span class="pill apl">Aplicación</span><span>Bloque 01 · 09:00–12:00</span></div>
+                <h3>Caso integrado</h3>
+                <p class="desc">Ejercicio con data anonimizada real: aplicar Plan de Vuelo, VSA y Claude sobre un reto de cliente.</p>
+              </div>
+              <div class="fac"><div class="avatar">GA</div><div><div class="n">Gerente asignado</div><div class="r">Variable por ingreso</div></div></div>
+              <span class="status">Siguiente</span>
+            </a>
+          </div>
+
+          <!-- Lunch -->
+          <div class="t-row is-break">
+            <div class="t-time"><div class="hour" style="font-size:16px; color:var(--ink-4);">12:00</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <div class="t-break">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18"/><path d="M12 11V3"/><path d="M21 11a9 9 0 1 1-18 0"/></svg>
+              Lunch · 60 min &nbsp;·&nbsp; Última comida de cohorte
+            </div>
+          </div>
+
+          <!-- Bloque 2 · Presentación -->
+          <div class="t-row">
+            <div class="t-time"><div class="hour">13:00</div><div class="dur">2 H</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar apl"></span>
+              <div class="body">
+                <div class="cap-row"><span class="pill apl">Aplicación</span><span>Bloque 02 · 13:00–15:00</span></div>
+                <h3>Presentación a panel</h3>
+                <p class="desc">Nuevos ingresos presentan hallazgos a directores vía Teams. Feedback estructurado por los directores.</p>
+              </div>
+              <div class="fac"><div class="avatar">DS</div><div><div class="n">Directores senior</div><div class="r">Panel multidisciplinario</div></div></div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 3 · Intro a proyecto -->
+          <div class="t-row">
+            <div class="t-time"><div class="hour">15:00</div><div class="dur">2 H</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar apl"></span>
+              <div class="body">
+                <div class="cap-row"><span class="pill apl">Aplicación</span><span>Bloque 03 · 15:00–17:00</span></div>
+                <h3>Intro a primer proyecto</h3>
+                <p class="desc">Handoff del gerente asignado: contexto del cliente, expectativas, plan 30-60-90.</p>
+              </div>
+              <div class="fac"><div class="avatar">GA</div><div><div class="n">Gerente asignado</div><div class="r">Variable por ingreso</div></div></div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+          <!-- Bloque 4 · Cierre -->
+          <div class="t-row">
+            <div class="t-time"><div class="hour">17:00</div><div class="dur">1 H</div></div>
+            <div class="t-spine"><div class="mark"></div></div>
+            <a href="#" class="t-card">
+              <span class="cat-bar apl"></span>
+              <div class="body">
+                <div class="cap-row"><span class="pill apl">Aplicación</span><span>Bloque 04 · 17:00–18:00</span></div>
+                <h3>Cierre ejecutivo</h3>
+                <p class="desc">Director patrocinador · reflexión, entrega de compromiso mutuo, brindis de graduación virtual.</p>
+              </div>
+              <div class="fac"><div class="avatar">DP</div><div><div class="n">Director patrocinador</div><div class="r">Fernando S. / Jaime R.</div></div></div>
+              <span class="status">Pendiente</span>
+            </a>
+          </div>
+
+        
+        </div>
+
+        <!-- Distribution -->
+        <div class="day-dist">
+          <div>
+            <h3>Distribución del día</h3>
+            <div class="dist-bar">
+              <span style="width:37.5%; background: var(--cat-apl);"></span>
+              <span style="width:25%;   background: var(--cat-apl); opacity:.78;"></span>
+              <span style="width:25%;   background: var(--cat-apl); opacity:.56;"></span>
+              <span style="width:12.5%; background: var(--cat-apl); opacity:.34;"></span>
+            </div>
+            <div class="dist-legend">
+              <div class="l"><span class="d" style="background: var(--cat-apl)"></span><b>3h</b> Caso integrado</div>
+              <div class="l"><span class="d" style="background: var(--cat-apl); opacity:.78"></span><b>2h</b> Presentación a panel</div>
+              <div class="l"><span class="d" style="background: var(--cat-apl); opacity:.56"></span><b>2h</b> Intro primer proyecto</div>
+              <div class="l"><span class="d" style="background: var(--cat-apl); opacity:.34"></span><b>1h</b> Cierre ejecutivo</div>
+          </div>
+          <div class="totals">
+            <div class="big">6<sup style="font-size:20px">h 25m</sup></div>
+            <div class="small">de aplicación y cierre</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/app.js?v=7"></script>
+</body>
+</html>
