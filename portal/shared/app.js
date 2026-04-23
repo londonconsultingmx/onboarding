@@ -426,7 +426,7 @@ function updateLandingProgress(){
         return (
           `<a class="up-item" href="${escapeHtml(href)}">` +
             `<div class="mini-iso" style="display:flex; align-items:center; justify-content:center;">` +
-              `<span style="display:inline-flex; width:36px; height:36px; border-radius:10px; background:var(--cat-${cat}-bg); color:var(--cat-${cat}); font-family:var(--serif); font-size:18px; align-items:center; justify-content:center;">${item.day.num}</span>` +
+              `<span style="display:inline-flex; width:36px; height:36px; border-radius:10px; background:var(--cat-${cat}-bg); color:var(--cat-${cat}); font-family:var(--serif); font-size:18px; align-items:center; justify-content:center;">${item.blockIdx}</span>` +
             `</div>` +
             `<div class="up-body">` +
               `<div class="caption"><span style="width:6px;height:6px;background:var(--cat-${cat});border-radius:50%;display:inline-block;"></span> ${escapeHtml(item.day.short)} · Día ${item.day.num} · Bloque ${item.blockIdx}</div>` +
