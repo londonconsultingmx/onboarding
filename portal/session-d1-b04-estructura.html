@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Estructura organizacional · Día 1 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero — Día 01 (cat-ide) */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F4F9F6 0%, transparent 100%);
+}
+.s-hero-inner{
+  display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 48px; padding: 44px 0 56px; align-items: center;
+}
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 18px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--cat-ide-bg); color: var(--cat-ide);
+  font-size: 11.5px; font-weight: 700; letter-spacing:.12em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(40px, 4.4vw, 62px); line-height: 1.02;
+  letter-spacing:-.025em; margin: 0 0 22px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-ide); }
+.s-hero-sub{ font-size: 17px; color: var(--ink-2); line-height: 1.55; max-width: 580px; margin: 0 0 28px; }
+
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 32px; padding: 20px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 4px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 22px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:18px; }
+.s-hero-meta .facilitator{ display:flex; gap:10px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:32px; height:32px; font-size:11px; }
+.s-hero-meta .facilitator .val{ font-size: 14px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
+
+/* Hero visual — schematic blueprint of an org tree */
+.s-hero-visual{
+  position: relative; aspect-ratio: 1 / 1; max-height: 520px;
+  border-radius: var(--r-lg); overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(3,181,133,.18) 0%, transparent 45%),
+    linear-gradient(180deg, #FAF7F0 0%, #F2EEE8 100%);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-2);
+  display: flex; align-items: center; justify-content: center;
+  padding: 36px;
+}
+.s-hero-visual::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(8,94,84,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8,94,84,.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events:none;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, #000 30%, transparent 88%);
+}
+.hero-vis-tree{
+  position: relative; z-index: 2;
+  width: 100%; max-width: 380px;
+}
+.hero-vis-tree svg{ display:block; width: 100%; height: auto; }
+.hero-vis-tree .node-c{ font-family: ui-monospace, Menlo, monospace; font-size: 9px; letter-spacing:.14em; fill: var(--ink-4); text-anchor: middle; }
+.hero-vis-tree .node-bg{ fill: var(--surface); stroke: var(--cat-ide); stroke-width: 1.4; }
+.hero-vis-tree .node-bg.is-secondary{ stroke: var(--ink-3); stroke-width: 1; opacity:.85; }
+.hero-vis-tree .node-bg.is-tertiary{ stroke: var(--hairline); stroke-width: 1; fill: var(--surface-2); }
+.hero-vis-tree .node-line{ stroke: var(--cat-ide); stroke-width: 1.4; fill:none; opacity:.65; }
+.hero-vis-tree .node-line.is-light{ stroke: var(--hairline); stroke-width: 1; }
+.hero-vis-tree .node-dot{ fill: var(--cat-ide); }
+.hero-vis-corner{
+  position: absolute; z-index: 2;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; letter-spacing: .15em; color: var(--ink-4);
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(4px);
+}
+.hero-vis-corner.tl{ top:14px; left:14px; }
+.hero-vis-corner.br{ bottom:14px; right:14px; color: var(--cat-ide); border-color: rgba(58,117,97,.3); }
+
+/* Two-col body */
+.s-body{
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 48px; padding: 48px 0;
+}
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-ide); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 680px; }
+
+/* CEO card */
+.ceo-card{
+  display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center;
+  padding: 28px 32px;
+  border: 1.5px solid var(--cat-ide);
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-ide-bg) 0%, var(--surface) 100%);
+  box-shadow: var(--shadow-2);
+}
+.ceo-card .ceo-av{
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--cat-ide); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--serif); font-size: 24px; letter-spacing:-.01em;
+}
+.ceo-card .ceo-name{ font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 0; color: var(--ink); letter-spacing: -.015em; }
+.ceo-card .ceo-role{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing:.14em; color: var(--cat-ide); text-transform: uppercase; font-weight: 700; margin: 4px 0 0; }
+.ceo-card .ceo-meta{
+  display:flex; flex-direction:column; gap:6px; align-items:flex-end;
+  font-size: 11.5px; color: var(--ink-3);
+  font-family: ui-monospace, Menlo, monospace; letter-spacing: .1em;
+}
+.ceo-card .ceo-meta b{ color: var(--ink); font-weight: 600; }
+
+/* Branch headers */
+.branch-row{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin: 24px 0 10px;
+}
+.branch-pill{
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  border: 1px solid var(--cat-ide);
+  background: var(--cat-ide); color: #fff;
+  border-radius: var(--r-md);
+  font-size: 11.5px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.branch-pill.is-support{
+  background: var(--surface); color: var(--ink); border-color: var(--hairline);
+}
+.branch-pill .b-count{
+  margin-left:auto; font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; opacity: .7;
+}
+
+/* People grid (per branch) */
+.org-row{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  align-items: stretch;
+}
+.org-col{
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 16px;
+  background: var(--surface);
+}
+.org-col.is-primary{ border-color: var(--cat-ide); background: linear-gradient(180deg, rgba(228,238,232,.4) 0%, var(--surface) 80%); }
+.people-grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.people-grid.cols-1{ grid-template-columns: 1fr; }
+.people-grid.cols-3{ grid-template-columns: 1fr 1fr 1fr; }
+.p-card{
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--surface);
+  display: flex; flex-direction: column; gap: 4px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.p-card:hover{ border-color: var(--cat-ide); box-shadow: var(--shadow-2); }
+.p-card.is-vacant{
+  border-style: dashed;
+  background: transparent;
+  opacity: .85;
+}
+.p-card.is-senior{ border-color: var(--cat-ide); background: var(--cat-ide-bg); }
+.p-card .p-row1{ display:flex; gap:10px; align-items:center; }
+.p-card .p-av{
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--lcg-cream); color: var(--lcg-dark);
+  display:flex; align-items:center; justify-content:center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  border: 1px solid #E9E1CC;
+}
+.p-card.is-senior .p-av{ background: var(--cat-ide); color:#fff; border-color: var(--cat-ide); }
+.p-card.is-vacant .p-av{ background: transparent; border-style: dashed; color: var(--ink-4); font-weight: 400; font-size: 16px; }
+.p-card .p-name{ font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); line-height:1.2; }
+.p-card .p-role{ font-size: 11.5px; color: var(--ink-3); line-height:1.35; margin: 0; }
+.p-card .p-meta{
+  display:flex; gap:8px; font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; color: var(--ink-4); letter-spacing: .08em;
+  margin-top: 4px;
+}
+.p-card .p-meta .chip{
+  padding: 2px 7px; border-radius: 4px;
+  background: var(--surface-2); color: var(--ink-3);
+  border: 1px solid var(--hairline);
+}
+.p-card.is-senior .p-meta .chip{ background: rgba(255,255,255,.55); border-color: rgba(58,117,97,.25); color: var(--cat-ide); }
+
+/* Project teams diagram */
+.proj-callout{
+  margin-top: 24px; padding: 24px;
+  border: 1.5px dashed var(--cat-ide);
+  border-radius: var(--r-md);
+  background: var(--cat-ide-bg);
+}
+.proj-callout h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 0 0 4px; color: var(--ink); letter-spacing: -.01em; }
+.proj-callout .proj-head-meta{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--cat-ide); letter-spacing:.14em; text-transform:uppercase; font-weight: 700; margin-bottom: 18px; }
+.proj-grid{
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 6px;
+}
+.proj-card{
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+.proj-card .pc-num{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ide); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
+.proj-card h4{ margin: 4px 0 4px; font-family: var(--serif); font-weight: 400; font-size: 18px; line-height: 1.15; letter-spacing:-.01em; color: var(--ink); }
+.proj-card p{ margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
+.proj-mgr{
+  margin-bottom: 14px; padding: 14px 18px;
+  background: var(--ink); color:#fff; border-radius: 8px;
+  display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+}
+.proj-mgr .pm-title{ font-family: var(--serif); font-weight: 400; font-size: 20px; margin: 0; letter-spacing: -.01em; }
+.proj-mgr .pm-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: rgba(255,255,255,.65); letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+.proj-mgr .pm-loc{ font-size: 11px; font-family: ui-monospace, Menlo, monospace; color: rgba(255,255,255,.7); letter-spacing: .1em; }
+
+/* Roles explained */
+.roles-list{ list-style:none; padding:0; margin:0; }
+.role-item{
+  padding: 22px 0;
+  border-top: 1px solid var(--hairline);
+  display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start;
+}
+.role-item:first-child{ border-top:0; padding-top:0; }
+.role-head .r-cat{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ide); letter-spacing:.14em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.role-head h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height:1.1; letter-spacing:-.015em; margin: 0; color: var(--ink); }
+.role-body{ font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.role-body p{ margin: 0 0 10px; }
+.role-body p:last-child{ margin-bottom: 0; }
+.role-body b{ color: var(--ink); }
+.role-body .ladder{
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.role-body .ladder .step{
+  flex:1;
+  padding: 8px 12px; border-radius: 6px;
+  background: var(--surface-2); border: 1px solid var(--hairline);
+  font-size: 12px;
+}
+.role-body .ladder .step b{ display:block; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ide); letter-spacing:.12em; margin-bottom: 2px; }
+
+/* Reflection callout */
+.reflect{
+  padding: 24px 28px; border-radius: var(--r-md);
+  background: var(--lcg-cream); border: 1px solid #E9E1CC;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center;
+}
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: var(--lcg-dark); color: #fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
+.reflect p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside / right rail */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--lcg-dark); background: var(--lcg-cream); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ide); background: var(--cat-ide-bg); }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ide-bg); color: var(--cat-ide); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ide); background: linear-gradient(180deg, var(--cat-ide-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ide); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ide); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ide); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ide); background: var(--surface); color: var(--cat-ide); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ide-bg); }
+.sess-toggle.is-done{ background: var(--cat-ide); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ide); border-bottom:2px solid var(--cat-ide); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">RD</div>
+      <div class="side-user-meta">
+        <strong>Rodrigo Dieck</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones · Día 1 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <!-- Main -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-1-lunes.html" style="color:inherit; text-decoration:none;">Lunes</a>
+        <span style="opacity:.4">/</span>
+        <b>Estructura organizacional</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ide-bg); color: var(--cat-ide); border-color: transparent;">
+        <span class="pill-dot"></span> Identidad
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div>
+            <div class="s-hero-kicker">
+              <span class="pill-cat">Identidad</span>
+              <span class="pill"><span style="opacity:.5">Día 01</span>&nbsp;·&nbsp;Bloque 04 de 08</span>
+            </div>
+            <h1>Estructura <em>organizacional.</em></h1>
+            <p class="s-hero-sub">
+              CEO al frente, dos ramas — Sales &amp; Operations y Support Services
+              Structure — y los equipos de proyecto que se forman para cada cliente.
+              Quién es quién, qué hace, dónde está y a quién reporta.
+            </p>
+
+            <div class="s-hero-meta">
+              <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">30</span> min</span></div>
+              <div class="item"><span class="label">Personas</span><span class="val"><span class="u-mono">10</span></span></div>
+              <div class="item"><span class="label">Sedes</span><span class="val"><span class="u-mono">04</span></span></div>
+              <div class="item">
+                <span class="label">Facilita</span>
+                <div class="facilitator" style="margin-top:4px;">
+                  <div class="avatar" style="background: var(--cat-ide); color:#fff;">MV</div>
+                  <div>
+                    <div class="val">Mafer Valencia</div>
+                    <div class="sub">Capital Humano</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero visual — stylised org tree -->
+          <div class="s-hero-visual">
+            <span class="hero-vis-corner tl">ORG · LCG MX</span>
+            <span class="hero-vis-corner br">10 NODOS</span>
+            <div class="hero-vis-tree">
+              <svg viewBox="0 0 380 360" aria-hidden="true">
+                <!-- CEO node -->
+                <rect class="node-bg" x="155" y="14" width="70" height="34" rx="6"/>
+                <text class="node-c" x="190" y="35">CEO</text>
+
+                <!-- Spine to two branches -->
+                <path class="node-line" d="M190 48 V 78 H 90 V 100 M190 78 H 290 V 100"/>
+
+                <!-- Branch labels -->
+                <rect class="node-bg is-secondary" x="40" y="100" width="100" height="26" rx="5"/>
+                <text class="node-c" x="90" y="116">SALES &amp; OPS</text>
+                <rect class="node-bg is-secondary" x="240" y="100" width="100" height="26" rx="5"/>
+                <text class="node-c" x="290" y="116">SUPPORT</text>
+
+                <!-- Sales & Ops fan-out: 4 DOs -->
+                <path class="node-line is-light" d="M90 126 V 158 M30 158 H 150 M30 158 V 178 M70 158 V 178 M110 158 V 178 M150 158 V 178"/>
+                <rect class="node-bg" x="14" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="30" y="192">FS</text>
+                <rect class="node-bg" x="54" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="70" y="192">JR</text>
+                <rect class="node-bg" x="94" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="110" y="192">AC</text>
+                <rect class="node-bg" x="134" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="150" y="192">LP</text>
+
+                <!-- Support fan-out: Jorge + 2 -->
+                <path class="node-line is-light" d="M290 126 V 158 M260 158 H 320 M260 158 V 178 M320 158 V 178"/>
+                <rect class="node-bg is-tertiary" x="244" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="260" y="192">MV</text>
+                <rect class="node-bg is-tertiary" x="304" y="178" width="32" height="20" rx="4"/>
+                <text class="node-c" x="320" y="192">CC</text>
+                <rect class="node-bg" x="274" y="208" width="32" height="20" rx="4"/>
+                <text class="node-c" x="290" y="222">JG</text>
+
+                <!-- Project teams cluster (under DOs) -->
+                <path class="node-line" d="M90 198 V 220 M50 220 H 130 M50 220 V 246 M90 220 V 246 M130 220 V 246"/>
+                <circle class="node-dot" cx="50" cy="252" r="5"/>
+                <circle class="node-dot" cx="90" cy="252" r="5"/>
+                <circle class="node-dot" cx="130" cy="252" r="5"/>
+                <text class="node-c" x="90" y="282">EQUIPOS DE PROYECTO</text>
+
+                <!-- Connector down -->
+                <path class="node-line" d="M90 282 V 308"/>
+                <rect class="node-bg" x="40" y="308" width="100" height="22" rx="5"/>
+                <text class="node-c" x="90" y="323">GERENTE</text>
+
+                <path class="node-line is-light" d="M90 330 V 348 M60 348 H 120 M60 348 V 354 M90 348 V 354 M120 348 V 354"/>
+                <circle class="node-dot" cx="60" cy="356" r="3"/>
+                <circle class="node-dot" cx="90" cy="356" r="3"/>
+                <circle class="node-dot" cx="120" cy="356" r="3"/>
+
+                <!-- Comercial cluster -->
+                <path class="node-line is-light" d="M210 198 V 230"/>
+                <rect class="node-bg is-tertiary" x="180" y="230" width="60" height="22" rx="4"/>
+                <text class="node-c" x="210" y="245">COMERCIAL</text>
+
+                <!-- P&C single -->
+                <path class="node-line is-light" d="M260 198 V 232"/>
+                <rect class="node-bg is-tertiary" x="248" y="232" width="42" height="20" rx="4"/>
+                <text class="node-c" x="269" y="246">P&amp;C</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <!-- Main content -->
+          <article>
+
+            <!-- 01 · Intro -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · El modelo</div>
+              <h2>Una firma chica, <em>una operación clara.</em></h2>
+              <p class="lead">
+                LCG México opera con una estructura plana: un CEO al frente, dos
+                ramas — la operativa que conecta con cliente y la corporativa que
+                sostiene la firma — y equipos de proyecto que se forman a la
+                medida del cliente con un Gerente y tres líderes de iniciativa.
+              </p>
+              <p>
+                Conocer el organigrama te ahorra tiempo: sabes a quién escribir
+                para cada cosa, cuál es la línea de reporte y por dónde escalar
+                cuando algo se atora.
+              </p>
+            </section>
+
+            <!-- 02 · CEO -->
+            <section class="s-block" id="sec-ceo">
+              <div class="s-block-label">02 · Liderazgo</div>
+              <h2>Al frente de México.</h2>
+              <div class="ceo-card">
+                <div class="ceo-av">LO</div>
+                <div>
+                  <h3 class="ceo-name">Luis Ortiz</h3>
+                  <p class="ceo-role">CEO México · Founder</p>
+                </div>
+                <div class="ceo-meta">
+                  <span><b>Reporte:</b> Board global</span>
+                  <span><b>Sede:</b> MTY</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · Las dos ramas -->
+            <section class="s-block" id="sec-ramas">
+              <div class="s-block-label">03 · Las dos ramas</div>
+              <h2>Cómo se organizan los equipos.</h2>
+              <p>
+                Bajo el CEO, dos áreas con propósitos distintos: <b>Sales &amp; Operations</b>
+                ejecuta proyectos con cliente y <b>Support Services Structure</b> sostiene
+                la operación interna (finanzas, legal, administración, talento).
+              </p>
+
+              <div class="branch-row">
+                <span class="branch-pill">
+                  Sales &amp; Operations
+                  <span class="b-count">7 · S&amp;OP / SALES / P&amp;C</span>
+                </span>
+                <span class="branch-pill is-support">
+                  Support Services Structure
+                  <span class="b-count">3 · S&amp;S</span>
+                </span>
+              </div>
+
+              <div class="org-row">
+                <!-- LEFT: Sales & Operations -->
+                <div class="org-col is-primary">
+                  <div class="people-grid">
+                    <div class="p-card is-senior">
+                      <div class="p-row1">
+                        <div class="p-av">FS</div>
+                        <div>
+                          <div class="p-name">Fernando Sánchez</div>
+                          <p class="p-role">Director de Operaciones <b>Senior</b></p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">S&amp;OP</span></div>
+                    </div>
+                    <div class="p-card is-senior">
+                      <div class="p-row1">
+                        <div class="p-av">JR</div>
+                        <div>
+                          <div class="p-name">Jaime Restrepo</div>
+                          <p class="p-role">Director de Operaciones <b>Senior</b></p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">S&amp;OP</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">AC</div>
+                        <div>
+                          <div class="p-name">Alfredo Chávez</div>
+                          <p class="p-role">Director de Operaciones</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">CDMX</span><span class="chip">S&amp;OP</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">LP</div>
+                        <div>
+                          <div class="p-name">Leonardo Pimentel</div>
+                          <p class="p-role">Director de Operaciones</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">GDL</span><span class="chip">S&amp;OP</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">FQ</div>
+                        <div>
+                          <div class="p-name">Francisco Quezada</div>
+                          <p class="p-role">Gerente People &amp; Culture</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">LEÓN</span><span class="chip">P&amp;C</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">JM</div>
+                        <div>
+                          <div class="p-name">Juan Carlos Muro</div>
+                          <p class="p-role">Coordinador Comercial</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">GDL</span><span class="chip">SALES</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">EG</div>
+                        <div>
+                          <div class="p-name">Ernesto García</div>
+                          <p class="p-role">Coordinador Comercial</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">SALES</span></div>
+                    </div>
+                    <div class="p-card is-vacant">
+                      <div class="p-row1">
+                        <div class="p-av">+</div>
+                        <div>
+                          <div class="p-name">Vacante · Hiring</div>
+                          <p class="p-role">Coordinador Comercial</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">SALES</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- RIGHT: Support Services Structure -->
+                <div class="org-col">
+                  <div class="people-grid cols-1">
+                    <div class="p-card is-senior">
+                      <div class="p-row1">
+                        <div class="p-av">JG</div>
+                        <div>
+                          <div class="p-name">Jorge González</div>
+                          <p class="p-role">Gerente Finanzas, Legal y Administración</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">S&amp;S</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">MV</div>
+                        <div>
+                          <div class="p-name">María Fernanda Valencia</div>
+                          <p class="p-role">Analista de Desarrollo Organizacional</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">S&amp;S</span></div>
+                    </div>
+                    <div class="p-card">
+                      <div class="p-row1">
+                        <div class="p-av">CC</div>
+                        <div>
+                          <div class="p-name">Carlos Constantino</div>
+                          <p class="p-role">Analista Control Administrativo y Financiero</p>
+                        </div>
+                      </div>
+                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">S&amp;S</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project team callout -->
+              <div class="proj-callout">
+                <div class="proj-head-meta">Sales &amp; Operations · Línea de proyecto</div>
+                <h3>Equipos de proyecto — reportan directo a Director de Operaciones</h3>
+                <p style="font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin: 8px 0 16px;">
+                  Cada engagement con cliente arma su propio equipo. El Gerente
+                  vive en site con el cliente y se apoya en tres consultores que
+                  lideran las iniciativas del proyecto.
+                </p>
+
+                <div class="proj-mgr">
+                  <div>
+                    <div class="pm-tag">Lidera el proyecto · Reporta a DO</div>
+                    <h4 class="pm-title">Gerente de Proyecto</h4>
+                  </div>
+                  <span class="pm-loc">EN SITE DE CLIENTE · OPERATIONS</span>
+                </div>
+
+                <div class="proj-grid">
+                  <div class="proj-card">
+                    <div class="pc-num">Iniciativa 01</div>
+                    <h4>Consultor de Operaciones</h4>
+                    <p>Líder de iniciativa por proyecto. Niveles: <b>CNI · JR · SR</b>.</p>
+                  </div>
+                  <div class="proj-card">
+                    <div class="pc-num">Iniciativa 02</div>
+                    <h4>Consultor de People &amp; Culture</h4>
+                    <p>Líder del eje Talento &amp; Cultura. Niveles: <b>CNI · JR · SR</b>.</p>
+                  </div>
+                  <div class="proj-card">
+                    <div class="pc-num">Iniciativa 03</div>
+                    <h4>Consultor Transformación Digital</h4>
+                    <p>Líder de la iniciativa Digital del proyecto.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Roles explicados -->
+            <section class="s-block" id="sec-roles">
+              <div class="s-block-label">04 · Roles · qué hace cada quién</div>
+              <h2>Lo que esperarías de cada <em>posición.</em></h2>
+
+              <ul class="roles-list">
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Liderazgo</div>
+                    <h3>CEO · Founder</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Marca el rumbo de la firma en México y representa a LCG ante el board global, clientes top y prospectos estratégicos. Decisiones de inversión, apertura de mercados y partnerships pasan por aquí.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Sales &amp; Operations</div>
+                    <h3>Director de Operaciones · Senior</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Sponsor ejecutivo de varios proyectos en paralelo. Es el contacto C-level con el cliente, asegura el cumplimiento de resultados comprometidos y desarrolla a los Gerentes de Proyecto. Suele tener bajo su línea a otro Director de Operaciones más junior.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Sales &amp; Operations</div>
+                    <h3>Director de Operaciones</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Misma responsabilidad que el rol Senior pero con cartera más enfocada y bajo el coaching de un DO Senior. Lleva el día a día de los proyectos asignados y la relación operativa con el cliente.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Equipos de proyecto</div>
+                    <h3>Gerente de Proyecto</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Vive <b>en sitio del cliente</b> durante el engagement. Es el primer responsable del Plan de Vuelo: cumplimiento de milestones, gestión del equipo de consultores, comunicación con el sponsor del cliente y reporte semanal al DO. Nada se mueve sin pasar por su tablero.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Equipos de proyecto</div>
+                    <h3>Consultor — 3 perfiles</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Cada proyecto se arma con tres líderes de iniciativa, según el alcance:</p>
+                    <ul style="list-style:none; padding-left:0; margin: 8px 0 12px;">
+                      <li style="margin-bottom:6px;">• <b>Operaciones</b> — diseño e implementación del modelo operativo (procesos, métricas, ejecución).</li>
+                      <li style="margin-bottom:6px;">• <b>People &amp; Culture</b> — eje Talento y Cultura, gestión del cambio, capacitación interna del cliente.</li>
+                      <li style="margin-bottom:6px;">• <b>Transformación Digital</b> — iniciativa digital del proyecto: dashboards, automatización, integraciones.</li>
+                    </ul>
+                    <p>Existen tres niveles según experiencia, definidos por el rol que se asume dentro de la iniciativa:</p>
+                    <div class="ladder">
+                      <div class="step"><b>CNI</b>Consultor en Iniciación · arranca, aprende del campo</div>
+                      <div class="step"><b>JR</b>Junior · ejecuta de forma autónoma</div>
+                      <div class="step"><b>SR</b>Senior · lidera la iniciativa de punta a punta</div>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Sales &amp; Operations</div>
+                    <h3>Coordinador Comercial</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Hace prospección, califica leads y arma propuestas comerciales con el equipo de Operaciones. Anclado a una sede regional (MTY, GDL) para dar cobertura territorial.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Sales &amp; Operations</div>
+                    <h3>Gerente People &amp; Culture</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Diseña la experiencia de talento de la firma en México: atracción, onboarding, desarrollo, evaluación y cultura. Trabaja cerca de los DO para asegurar que cada proyecto tenga al consultor correcto.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Support Services Structure</div>
+                    <h3>Gerente Finanzas, Legal y Administración</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Conduce la operación administrativa de LCG México: contabilidad, fiscal, cumplimiento legal, contratos con cliente y administración interna. Es la firma autorizada para temas legales y financieros.</p>
+                  </div>
+                </li>
+
+                <li class="role-item">
+                  <div class="role-head">
+                    <div class="r-cat">Support Services Structure</div>
+                    <h3>Analistas — Soporte interno</h3>
+                  </div>
+                  <div class="role-body">
+                    <p>Dos analistas dan soporte directo al Gerente de S&amp;S:</p>
+                    <ul style="list-style:none; padding-left:0; margin: 6px 0 0;">
+                      <li style="margin-bottom:4px;">• <b>Desarrollo Organizacional</b> — apoyo a P&amp;C, procesos internos, evaluaciones, comunicación.</li>
+                      <li>• <b>Control Administrativo y Financiero</b> — facturación, gastos, conciliaciones, viáticos, indicadores financieros.</li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <!-- 05 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">05 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Identifica al Director de Operaciones y al Gerente con quienes vas a trabajar tu primer proyecto. Anota sus nombres y dónde están físicamente — los usarás en el bloque de Bienvenida del Día 5.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="session-d1-b03-valores.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
+                  <span class="title">Valores y comportamientos</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-1-lunes.html">
+                  Siguiente · Políticas y conducta
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Aside -->
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 04 de 08 · Día 01</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>El modelo</a></li>
+                <li><a href="#sec-ceo"><span class="tick"></span>Liderazgo</a></li>
+                <li><a href="#sec-ramas"><span class="tick"></span>Las dos ramas</a></li>
+                <li><a href="#sec-roles"><span class="tick"></span>Roles · qué hace cada quién</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="manual-bienvenida-mx.html" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Manual de Bienvenida · MX<span class="r-meta">Slide 13–14 · Directores y Corporativo</span></div>
+                </a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ide-bg); border-color: var(--cat-ide);">
+              <h4 style="color: var(--cat-ide);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Sigue con <b>Políticas y Código de conducta</b>: el marco normativo
+                que aplica a todo el equipo en México.
+              </p>
+              <a href="day-1-lunes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ide);">Volver al Día 01 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd1-b04-estructura';
+
+  function loadStore(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
