@@ -101,7 +101,7 @@ const SIDEBAR_DAYS = [
     sessions: [
       { name: "Bienvenida ejecutiva",           href: "session-d1-b01-bienvenida-ejecutiva.html", sid: "d1-b01-bienvenida-ejecutiva" },
       { name: "Accesos & firma",                href: "session-d1-bienvenida.html",               sid: "__accesos__" },
-      { name: "Cultura y valores",              href: "#", sid: "d1-b03-cultura" },
+      { name: "Valores y comportamientos",      href: "session-d1-b03-valores.html", sid: "d1-b03-valores" },
       { name: "Estructura organizacional",      href: "#", sid: "d1-b04-estructura" },
       { name: "Políticas y Código de conducta", href: "#", sid: "d1-b05-politicas" },
       { name: "Administración & reembolsos",    href: "#", sid: "d1-b06-admin" },
