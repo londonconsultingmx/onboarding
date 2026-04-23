@@ -205,11 +205,73 @@ function initSidebarCollapse(){
   });
 }
 
+// ---------- Global progress ----------
+// Session-level checkboxes on individual pages write to localStorage under
+// key lcg-onb-sessions-v1 as a map {sessionId: true}. "Accesos & firma"
+// uses a separate internal checklist (lcg-onb-d1-bienvenida-v1) with 8
+// items — we count that session as complete only when all 8 are checked.
+const TOTAL_SESSIONS = SIDEBAR_DAYS.reduce((n, d) => n + d.sessions.length, 0);
+
+function computeGlobalProgress(){
+  let completed = 0;
+  try {
+    const s = JSON.parse(localStorage.getItem('lcg-onb-sessions-v1') || '{}');
+    for (const id in s) if (s[id]) completed++;
+  } catch(e){}
+  try {
+    const b = JSON.parse(localStorage.getItem('lcg-onb-d1-bienvenida-v1') || '{}');
+    const required = ['doc-contrato','doc-aviso','doc-nom','doc-reembolso',
+                      'acc-m365','acc-power','acc-monday','acc-miro'];
+    if (required.every(k => b[k])) completed++;
+  } catch(e){}
+  const pct = TOTAL_SESSIONS ? Math.round(completed / TOTAL_SESSIONS * 100) : 0;
+  return { completed, total: TOTAL_SESSIONS, pct };
+}
+
+function updateSidebarProgress(){
+  const p = computeGlobalProgress();
+  const valEl  = document.querySelector('.sidebar .side-progress .val');
+  const barEl  = document.querySelector('.sidebar .side-progress .progress > span');
+  const metaEl = document.querySelector('.sidebar .side-progress .meta');
+  if (valEl){
+    valEl.innerHTML = p.pct + '<span style="font-size:20px; color:#8AF4E9;">%</span>';
+  }
+  if (barEl) barEl.style.width = p.pct + '%';
+  if (metaEl){
+    const status = p.completed === 0 ? 'Por iniciar'
+                 : p.completed === p.total ? 'Completado'
+                 : 'En curso';
+    metaEl.textContent = `${p.completed} de ${p.total} bloques · ${status}`;
+  }
+}
+
+// Hook localStorage.setItem so same-tab session toggles also refresh the
+// sidebar progress without needing changes in each session page.
+(function(){
+  const _origSet = Storage.prototype.setItem;
+  Storage.prototype.setItem = function(key, value){
+    _origSet.call(this, key, value);
+    if (key === 'lcg-onb-sessions-v1' || key === 'lcg-onb-d1-bienvenida-v1'){
+      window.dispatchEvent(new Event('lcg:progress-update'));
+    }
+  };
+})();
+
 function initSidebar(){
   // Render dynamic day list (if the page uses the shared placeholder)
   const container = document.querySelector('.sidebar [data-sidebar="days"]');
   if (container) renderSidebarDayList(container);
   // Wire click-to-expand on whatever day-list is present
   initSidebarCollapse();
+  // Compute and render the global progress strip
+  updateSidebarProgress();
+  // Same-tab updates via the custom event (hooked above)
+  window.addEventListener('lcg:progress-update', updateSidebarProgress);
+  // Cross-tab updates
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'lcg-onb-sessions-v1' || e.key === 'lcg-onb-d1-bienvenida-v1') {
+      updateSidebarProgress();
+    }
+  });
 }
 document.addEventListener('DOMContentLoaded', initSidebar);
