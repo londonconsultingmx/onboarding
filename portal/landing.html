@@ -561,8 +561,8 @@
               — y un caso integrado de cierre.
             </p>
             <div class="hero-cta">
-              <a class="btn btn-primary btn-lg" href="session.html">
-                Retomar sesión actual
+              <a class="btn btn-primary btn-lg" href="day-1-lunes.html" data-cta="resume">
+                <span data-cta-label>Empezar onboarding</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
               </a>
               <a class="btn btn-secondary btn-lg" href="progress.html">Ver mi progreso</a>
@@ -574,15 +574,15 @@
               </div>
               <div class="hero-stat">
                 <span class="label">Bloques</span>
-                <span class="val">24</span>
+                <span class="val">30</span>
               </div>
               <div class="hero-stat">
                 <span class="label">Completado</span>
-                <span class="val">34<sup>%</sup></span>
+                <span class="val" data-hero-stat="completed">0<sup>%</sup></span>
               </div>
               <div class="hero-stat">
                 <span class="label">Horas totales</span>
-                <span class="val">34<sup>h</sup></span>
+                <span class="val">36<sup>h</sup></span>
               </div>
             </div>
           </div>
@@ -616,7 +616,7 @@
 
           <div class="pillars pillars-5">
             <!-- Eje 1 — Identidad -->
-            <article class="pillar pillar-sm">
+            <article class="pillar pillar-sm" data-pillar-day="1">
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-ide)"></span>
@@ -625,14 +625,14 @@
                 <h3>Quiénes somos y cómo operamos.</h3>
                 <p>Bienvenida, accesos M365, historia y propuesta de valor LCG, organigrama, valores, London Balance y marco normativo completo.</p>
                 <div class="pillar-meta">
-                  <span>6 bloques · 5h</span>
-                  <span class="u-mono">100%</span>
+                  <span>8 bloques · 6h 25m</span>
+                  <span class="u-mono" data-day-pct-text>0%</span>
                 </div>
               </div>
             </article>
 
             <!-- Eje 2 — Metodología -->
-            <article class="pillar pillar-sm">
+            <article class="pillar pillar-sm" data-pillar-day="2">
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-met)"></span>
@@ -642,29 +642,29 @@
                 <p>PASER, PreDx, Análisis Exhaustivo, Gemba Walks, Estudios Analíticos, Plan de Vuelo, Value Stream, MEF y Business Shaper.</p>
                 <div class="pillar-meta">
                   <span>7 bloques · 6h 30m</span>
-                  <span class="u-mono">100%</span>
+                  <span class="u-mono" data-day-pct-text>0%</span>
                 </div>
               </div>
             </article>
 
             <!-- Eje 3 — Industria -->
-            <article class="pillar pillar-sm is-current">
+            <article class="pillar pillar-sm" data-pillar-day="3">
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-ind)"></span>
-                  <span class="cat-name">Día 3 · Industria <span class="dot-live"></span></span>
+                  <span class="cat-name">Día 3 · Industria</span>
                 </div>
                 <h3>Dónde juega LCG México.</h3>
                 <p>Mapa de verticales LCG — industrias donde operamos — más Supply SCM, Lean 4.0 y Excelencia Comercial con casos representativos.</p>
                 <div class="pillar-meta">
                   <span>4 bloques · 8h</span>
-                  <span class="u-mono">42%</span>
+                  <span class="u-mono" data-day-pct-text>0%</span>
                 </div>
               </div>
             </article>
 
             <!-- Eje 4 — Herramientas & AI -->
-            <article class="pillar pillar-sm pillar-ai">
+            <article class="pillar pillar-sm pillar-ai" data-pillar-day="4">
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-ai)"></span>
@@ -674,13 +674,13 @@
                 <p>Power BI y Monday/Miro comprimidos; el ecosistema Claude (Claude.ai, Code, Cowork, API) expandido a 4h 30m con laboratorio práctico.</p>
                 <div class="pillar-meta">
                   <span>7 bloques · 7h</span>
-                  <span class="u-mono">0%</span>
+                  <span class="u-mono" data-day-pct-text>0%</span>
                 </div>
               </div>
             </article>
 
             <!-- Eje 5 — Aplicación -->
-            <article class="pillar pillar-sm">
+            <article class="pillar pillar-sm" data-pillar-day="5">
               <div class="pillar-body">
                 <div class="pillar-head">
                   <span class="cat-dot" style="background: var(--cat-apl)"></span>
@@ -690,7 +690,7 @@
                 <p>Caso end-to-end con Claude, retro de la semana, Plan Individual de Desarrollo firmado y handoff formal al equipo de proyecto.</p>
                 <div class="pillar-meta">
                   <span>4 bloques · 8h</span>
-                  <span class="u-mono">0%</span>
+                  <span class="u-mono" data-day-pct-text>0%</span>
                 </div>
               </div>
             </article>
@@ -714,45 +714,44 @@
           </div>
 
           <div class="week">
-            <a class="day-card is-done" href="day-1-lunes.html">
+            <a class="day-card" href="day-1-lunes.html" data-week-day="1">
               <span class="day-idx">Día 01 · Lun</span>
               <h3>Identidad</h3>
               <div class="day-sub">Inducción corporativa LCG</div>
-              <div class="day-bar"><span style="width:100%"></span></div>
+              <div class="day-bar"><span style="width:0%"></span></div>
               <div class="sessions-row">
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
               </div>
               <div class="footer-row"><span>8 bloques</span><b>6h 25m</b></div>
             </a>
-            <a class="day-card is-done" href="day-2-martes.html">
+            <a class="day-card" href="day-2-martes.html" data-week-day="2">
               <span class="day-idx">Día 02 · Mar</span>
               <h3>Metodología</h3>
               <div class="day-sub">PASER, PreDx, Gemba, VSA</div>
-              <div class="day-bar"><span style="width:100%"></span></div>
+              <div class="day-bar"><span style="width:0%"></span></div>
               <div class="sessions-row">
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span><span class="sess-tick done"></span>
-                <span class="sess-tick done"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
+                <span class="sess-tick"></span>
               </div>
               <div class="footer-row"><span>7 bloques</span><b>6h 30m</b></div>
             </a>
-            <a class="day-card is-current" href="day.html">
-              <span class="day-idx">Día 03 · Mié · hoy</span>
+            <a class="day-card" href="day.html" data-week-day="3">
+              <span class="day-idx">Día 03 · Mié</span>
               <h3>Industria</h3>
               <div class="day-sub">Verticales · SCM · Lean 4.0 · Comercial</div>
-              <div class="day-bar"><span style="width:42%"></span></div>
+              <div class="day-bar"><span style="width:0%"></span></div>
               <div class="sessions-row">
-                <span class="sess-tick done"></span>
-                <span class="sess-tick doing"></span>
+                <span class="sess-tick"></span><span class="sess-tick"></span>
                 <span class="sess-tick"></span><span class="sess-tick"></span>
               </div>
               <div class="footer-row"><span>4 bloques</span><b>8h</b></div>
             </a>
-            <a class="day-card" href="day-4-jueves.html" style="position:relative">
+            <a class="day-card" href="day-4-jueves.html" style="position:relative" data-week-day="4">
               <span class="day-idx" style="color:var(--cat-ai); font-weight:700">Día 04 · Jue · AI</span>
               <h3>Herramientas & AI</h3>
               <div class="day-sub">Power BI · Monday · Claude end-to-end</div>
@@ -765,7 +764,7 @@
               </div>
               <div class="footer-row"><span>7 bloques</span><b>7h</b></div>
             </a>
-            <a class="day-card" href="day-5-viernes.html">
+            <a class="day-card" href="day-5-viernes.html" data-week-day="5">
               <span class="day-idx">Día 05 · Vie</span>
               <h3>Aplicación</h3>
               <div class="day-sub">Caso integrado, PID y asignación</div>
@@ -786,103 +785,32 @@
           <div class="section-head">
             <div>
               <span class="section-num">03 · Continuar</span>
-              <h2>Retomar donde te quedaste.</h2>
+              <h2 data-nextup="section-title">Empieza por la primera sesión.</h2>
             </div>
           </div>
 
           <div class="nextup">
             <!-- Left: current card -->
             <div class="nextup-card">
-              <div class="kicker"><span class="dot"></span> En curso · Día 3 · Bloque 2 de 4</div>
-              <h2>Supply SCM — diagnóstico integral de cadena de suministro.</h2>
+              <div class="kicker"><span class="dot"></span> <span data-nextup="kicker">Sin iniciar · Día 1 · Bloque 1 de 8</span></div>
+              <h2 data-nextup="title">Bienvenida ejecutiva</h2>
               <div class="nextup-meta">
                 <span class="m">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                  2h
-                </span>
-                <span class="m">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-                  Facilita · Especialista Supply Chain
-                </span>
-                <span class="m">
-                  <span style="width:8px; height:8px; background:var(--cat-ind); border-radius:50%; display:inline-block;"></span>
-                  Día 3 · Industria
+                  <span data-nextup="cat-dot" style="width:8px; height:8px; background:var(--cat-ide); border-radius:50%; display:inline-block;"></span>
+                  <span data-nextup="cat-label">Día 1 · Identidad</span>
                 </span>
               </div>
               <div class="nextup-cta">
-                <a class="btn btn-primary btn-lg" href="session.html">
-                  Continuar sesión
+                <a class="btn btn-primary btn-lg" href="session-d1-b01-bienvenida-ejecutiva.html" data-nextup="cta">
+                  <span data-nextup="cta-label">Empezar primera sesión</span>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 9-14 9Z"/></svg>
                 </a>
-                <a class="btn btn-secondary btn-lg" href="day.html">Ver día completo</a>
+                <a class="btn btn-secondary btn-lg" href="day-1-lunes.html" data-nextup="day-cta">Ver día completo</a>
               </div>
             </div>
 
-            <!-- Right: up-next list -->
-            <div class="nextup-side">
-              <a class="up-item" href="session.html">
-                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
-                  <defs><linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8AF4E9"/><stop offset="1" stop-color="#03B585"/></linearGradient></defs>
-                  <g transform="translate(32,34)">
-                    <polygon points="0,-14 16,-6 16,10 0,18 -16,10 -16,-6" fill="none" stroke="url(#mg1)" stroke-width="1.1"/>
-                    <polygon points="0,-14 16,-6 0,2 -16,-6" fill="rgba(138,244,233,.2)" stroke="#8AF4E9" stroke-width="1"/>
-                    <line x1="0" y1="-14" x2="0" y2="18" stroke="#8AF4E9" stroke-width=".6" opacity=".5"/>
-                    <line x1="-16" y1="-6" x2="16" y2="-6" stroke="#8AF4E9" stroke-width=".6" opacity=".5"/>
-                  </g>
-                </svg></div>
-                <div class="up-body">
-                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ind);border-radius:50%;display:inline-block;"></span> Industria · Día 3 · Bloque 3</div>
-                  <h4>Lean 4.0 — fundamentos, herramientas y tecnología</h4>
-                  <p>2h · Especialista Lean</p>
-                </div>
-                <div class="up-cta">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </div>
-              </a>
-
-              <a class="up-item" href="session.html">
-                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
-                  <g transform="translate(32,34)">
-                    <circle cx="0" cy="0" r="10" fill="none" stroke="#8AF4E9" stroke-width="1"/>
-                    <circle cx="0" cy="0" r="6" fill="#03B585" opacity=".6"/>
-                    <g stroke="#8AF4E9" stroke-width="1">
-                      <line x1="-14" y1="0" x2="-10" y2="0"/><line x1="10" y1="0" x2="14" y2="0"/>
-                      <line x1="0" y1="-14" x2="0" y2="-10"/><line x1="0" y1="10" x2="0" y2="14"/>
-                      <line x1="-10" y1="-10" x2="-7" y2="-7"/><line x1="7" y1="7" x2="10" y2="10"/>
-                      <line x1="10" y1="-10" x2="7" y2="-7"/><line x1="-10" y1="10" x2="-7" y2="7"/>
-                    </g>
-                  </g>
-                </svg></div>
-                <div class="up-body">
-                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ind);border-radius:50%;display:inline-block;"></span> Industria · Día 3 · Bloque 4</div>
-                  <h4>Excelencia Comercial — pipeline, CRM e indicadores</h4>
-                  <p>2h · Especialista Comercial</p>
-                </div>
-                <div class="up-cta">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </div>
-              </a>
-
-              <a class="up-item" href="session.html">
-                <div class="mini-iso"><svg viewBox="0 0 64 64" aria-hidden="true">
-                  <g transform="translate(32,34)">
-                    <rect x="-18" y="-12" width="36" height="24" rx="2" fill="none" stroke="#8AF4E9" stroke-width="1"/>
-                    <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#8AF4E9" stroke-width=".6"/>
-                    <line x1="-6" y1="-12" x2="-6" y2="12" stroke="#8AF4E9" stroke-width=".6"/>
-                    <line x1="6" y1="-12" x2="6" y2="12" stroke="#8AF4E9" stroke-width=".6"/>
-                    <rect x="-5" y="-3" width="10" height="6" fill="#03B585" opacity=".7"/>
-                  </g>
-                </svg></div>
-                <div class="up-body">
-                  <div class="caption"><span style="width:6px;height:6px;background:var(--cat-ai);border-radius:50%;display:inline-block;"></span> AI · Día 4 · Bloque AI-2</div>
-                  <h4>Ecosistema Claude en LCG — las 4 formas de usarlo</h4>
-                  <p>1h 15m · Transformación Digital</p>
-                </div>
-                <div class="up-cta">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </div>
-              </a>
-            </div>
+            <!-- Right: up-next list (rendered dynamically) -->
+            <div class="nextup-side" data-nextup="side"></div>
           </div>
         </div>
       </section>
@@ -1020,7 +948,7 @@
   </div>
 </div>
 
-<script src="shared/app.js?v=9"></script>
+<script src="shared/app.js?v=10"></script>
 <script>
   // Build hero DNA helix
   window.addEventListener('DOMContentLoaded', ()=>{
