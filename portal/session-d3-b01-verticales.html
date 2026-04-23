@@ -75,15 +75,19 @@
 /* Map grid — 9 verticales tiles */
 .v-map{
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  grid-auto-rows: 1fr;
   list-style: none; padding: 0; margin: 0;
 }
+.v-map li{ display: flex; }
 .v-map li a{
   display: flex; flex-direction: column; gap: 4px;
+  flex: 1;
   padding: 18px 20px; border: 1px solid var(--hairline);
   border-radius: var(--r-md); background: var(--surface);
   text-decoration: none; color: inherit;
   transition: border-color .15s, background .15s, transform .12s;
 }
+.v-map li .tag{ margin-top: auto; padding-top: 8px; }
 .v-map li a:hover{
   border-color: var(--cat-ind); background: var(--cat-ind-bg);
   transform: translateY(-1px);
@@ -100,7 +104,7 @@
 }
 .v-map li .tag{
   font-size: 12px; color: var(--ink-3); line-height: 1.35;
-  margin-top: 4px;
+  margin-top: auto; padding-top: 8px;
 }
 
 /* Vertical detail card */
