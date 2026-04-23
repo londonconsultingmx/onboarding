@@ -91,45 +91,61 @@
 
 /* Values grid — 7 cards */
 .v-grid{
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
   list-style: none; padding: 0; margin: 0;
   grid-auto-rows: 1fr;
 }
 .v-grid li{ display: flex; }
 .v-grid .v-card{
   flex: 1;
-  display: grid; grid-template-columns: 52px 1fr; gap: 18px;
-  padding: 22px 24px;
-  border: 1px solid var(--hairline); border-radius: var(--r-md);
-  background: var(--surface);
-  transition: border-color .15s, transform .12s, box-shadow .15s;
+  display: grid; grid-template-columns: 56px 1fr; gap: 20px;
+  padding: 24px 26px;
+  border: 1px solid rgba(58,117,97,.18);
+  border-radius: var(--r-md);
+  background:
+    linear-gradient(165deg, var(--cat-ide-bg) 0%, var(--surface) 70%);
+  text-decoration: none; color: inherit;
+  position: relative; overflow: hidden;
+  transition: border-color .15s, transform .12s, box-shadow .2s, background .2s;
+}
+.v-grid .v-card::before{
+  content: ""; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cat-ide); opacity: .55;
+  transition: opacity .2s;
 }
 .v-grid .v-card:hover{
   border-color: var(--cat-ide);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-2);
+  box-shadow: 0 12px 28px rgba(8,94,84,.12);
+  background:
+    linear-gradient(165deg, var(--cat-ide-bg) 0%, var(--cat-ide-bg) 100%);
 }
+.v-grid .v-card:hover::before{ opacity: 1; }
 .v-grid .v-ico{
-  width: 52px; height: 52px; border-radius: 14px;
-  background: var(--cat-ide-bg); color: var(--cat-ide);
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #fff; color: var(--cat-ide);
   display: flex; align-items: center; justify-content: center;
   position: relative;
+  border: 1px solid rgba(58,117,97,.2);
+  box-shadow: 0 4px 14px rgba(8,94,84,.06);
 }
-.v-grid .v-ico svg{ width: 26px; height: 26px; }
+.v-grid .v-ico svg{ width: 28px; height: 28px; }
 .v-grid .v-num{
-  position: absolute; top: -8px; right: -6px;
-  background: var(--ink); color: #fff;
-  width: 22px; height: 22px; border-radius: 50%;
+  position: absolute; top: -8px; right: -8px;
+  background: var(--cat-ide); color: #fff;
+  width: 24px; height: 24px; border-radius: 50%;
   display:flex; align-items:center; justify-content:center;
   font-family: ui-monospace, Menlo, monospace;
   font-size: 10px; font-weight: 700; letter-spacing: .04em;
-  border: 2px solid var(--surface);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(8,94,84,.25);
 }
 .v-grid .v-body{ display: flex; flex-direction: column; }
 .v-grid .v-name{
   font-family: var(--serif); font-weight: 400;
-  font-size: 22px; line-height: 1.1; letter-spacing: -.015em;
-  color: var(--ink); margin: 0 0 4px;
+  font-size: 23px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 4px;
 }
 .v-grid .v-tagline{
   font-size: 12.5px; color: var(--cat-ide);
@@ -142,15 +158,76 @@
   margin: 0;
 }
 
+/* Feature card — Respeto por el Individuo (full-width 7th) */
+.v-grid .v-feature{
+  grid-template-columns: 240px 1fr;
+  padding: 36px 44px;
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 60%, #0E8278 100%);
+  border-color: transparent;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.v-grid .v-feature::before{ height: 0; }
+.v-grid .v-feature::after{
+  content: "“"; position: absolute;
+  top: 8px; right: 32px;
+  font-family: var(--serif); font-style: italic;
+  font-size: 220px; line-height: 1;
+  color: rgba(138,244,233,.18);
+  pointer-events: none;
+}
+.v-grid .v-feature:hover{
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 60%, #0E8278 100%);
+  box-shadow: 0 18px 40px rgba(8,94,84,.25);
+  border-color: transparent;
+}
+.v-grid .v-feature .v-ico{
+  width: 110px; height: 110px; border-radius: 22px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(138,244,233,.25);
+  color: var(--lcg-mint);
+  box-shadow: none;
+}
+.v-grid .v-feature .v-ico svg{ width: 56px; height: 56px; }
+.v-grid .v-feature .v-num{
+  width: 30px; height: 30px;
+  font-size: 11px;
+  background: var(--lcg-mint); color: var(--lcg-dark);
+  border-color: #074D46;
+}
+.v-grid .v-feature .v-body{ justify-content: center; gap: 4px; padding-right: 80px; position: relative; z-index: 1; }
+.v-grid .v-feature .v-name{
+  font-size: clamp(34px, 3.6vw, 46px);
+  line-height: 1; letter-spacing: -.02em;
+  color: #fff; margin-bottom: 12px;
+}
+.v-grid .v-feature .v-tagline{
+  font-size: 18px; color: var(--lcg-mint);
+  margin-bottom: 14px;
+  font-weight: 400;
+}
+.v-grid .v-feature .v-desc{
+  font-size: 15px; color: rgba(242,238,232,.86); line-height: 1.55;
+  max-width: 640px;
+}
+
 /* Behaviors — per-value expanded list */
 .beh-list{ list-style: none; padding: 0; margin: 0; }
 .beh-item{
-  padding: 24px 0;
+  padding: 22px 0;
   border-top: 1px solid var(--hairline);
-  display: grid; grid-template-columns: 220px 1fr; gap: 40px;
+  display: grid; grid-template-columns: 240px 1fr; gap: 40px;
+  align-items: start;
 }
 .beh-item:first-child{ border-top: 0; padding-top: 0; }
-.beh-head{ display: flex; flex-direction: column; gap: 10px; }
+.beh-head{
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, var(--cat-ide-bg) 0%, rgba(228,238,232,.4) 100%);
+  border-radius: var(--r-md);
+  border-left: 3px solid var(--cat-ide);
+}
 .beh-head .beh-num{
   font-family: ui-monospace, Menlo, monospace;
   font-size: 11px; color: var(--cat-ide);
@@ -158,15 +235,15 @@
 }
 .beh-head h3{
   font-family: var(--serif); font-weight: 400;
-  font-size: 24px; line-height: 1.1; letter-spacing: -.015em;
-  color: var(--ink); margin: 0;
+  font-size: 24px; line-height: 1.05; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0;
 }
 .beh-head .beh-tag{
   font-size: 12.5px; color: var(--cat-ide); font-style: italic;
   line-height: 1.4; margin: 0;
 }
 .beh-bullets{
-  list-style: none; padding: 0; margin: 0;
+  list-style: none; padding: 6px 0 0; margin: 0;
   display: flex; flex-direction: column; gap: 10px;
 }
 .beh-bullets li{
@@ -174,23 +251,36 @@
   font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
 }
 .beh-bullets li::before{
-  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
   background: var(--cat-ide); margin-top: 8px; margin-left: 6px;
+  box-shadow: 0 0 0 3px rgba(58,117,97,.12);
 }
 
 /* Reflection callout */
 .reflect{
-  padding: 24px 28px; border-radius: var(--r-md);
-  background: var(--lcg-cream); border: 1px solid #E9E1CC;
-  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
 }
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
 .reflect .ref-icon{
   width: 54px; height: 54px; border-radius: 14px;
-  background: var(--lcg-dark); color: #fff;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
   display:flex; align-items:center; justify-content:center;
 }
-.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
-.reflect p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
 
 /* Complete bar */
 .complete-bar{
@@ -521,17 +611,17 @@
                   </a>
                 </li>
 
-                <!-- 7. Respeto por el Individuo — full width on 3-col grid -->
+                <!-- 7. Respeto por el Individuo — full-width feature card -->
                 <li style="grid-column: 1 / span 3;">
-                  <a class="v-card" href="#beh-07">
+                  <a class="v-card v-feature" href="#beh-07">
                     <div class="v-ico">
                       <span class="v-num">07</span>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="7" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="18" cy="7" r="2.5"/><path d="M2 20c0-3 2-5 4-5s4 2 4 5"/><path d="M8 20c0-3 2-5 4-5s4 2 4 5"/><path d="M14 20c0-3 2-5 4-5s4 2 4 5"/></svg>
                     </div>
                     <div class="v-body">
-                      <h3 class="v-name">Respeto por el Individuo</h3>
+                      <h3 class="v-name">Respeto por el <em style="font-style:italic;">Individuo</em>.</h3>
                       <p class="v-tagline">Reconocemos lo valioso de cada persona.</p>
-                      <p class="v-desc">Fomentamos el trato digno y respetamos las diferencias. Generamos espacios donde todas las voces puedan ser escuchadas y apreciadas.</p>
+                      <p class="v-desc">Fomentamos el trato digno y respetamos las diferencias de cada uno. Generamos espacios participativos donde todas las voces puedan ser escuchadas y apreciadas — porque todos somos iguales.</p>
                     </div>
                   </a>
                 </li>
