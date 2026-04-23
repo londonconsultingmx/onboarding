@@ -125,16 +125,16 @@ const SIDEBAR_DAYS = [
     num: 3, name: "Día 03 · Industria", short: "Industria", href: "day.html", cat: "ind",
     sessions: [
       { name: "Verticales LCG · overview",    href: "session-d3-b01-verticales.html", sid: "d3-b01-verticales" },
-      { name: "Supply SCM · diagnóstico",     href: "session.html",                   sid: "d3-b02-supply-scm" },
-      { name: "Lean 4.0 · fundamentos",       href: "day.html",                       sid: "d3-b03-lean-40" },
-      { name: "Excelencia Comercial",         href: "day.html",                       sid: "d3-b04-excelencia-comercial" }
+      { name: "Supply SCM · diagnóstico",     href: "#",                              sid: "d3-b02-supply-scm" },
+      { name: "Lean 4.0 · fundamentos",       href: "#",                              sid: "d3-b03-lean-40" },
+      { name: "Excelencia Comercial",         href: "#",                              sid: "d3-b04-excelencia-comercial" }
     ]
   },
   {
     num: 4, name: "Día 04 · Herramientas & AI", short: "Herramientas & AI", href: "day-4-jueves.html", cat: "ai",
     sessions: [
       { name: "Power BI",                     href: "#", sid: "d4-b01-power-bi" },
-      { name: "Monday & Miro",                href: "#", sid: "d4-b02-monday-miro" },
+      { name: "Monday & Miro",                href: "session-d4-b02-monday-miro.html", sid: "d4-b02-monday-miro" },
       { name: "AI-1 · Fundamentos Claude",    href: "#", sid: "d4-b03-ai1-fundamentos" },
       { name: "AI-2 · Claude.ai día a día",   href: "#", sid: "d4-b04-ai2-claude" },
       { name: "AI-3 · Integraciones LCG",     href: "#", sid: "d4-b05-ai3-integraciones" },
