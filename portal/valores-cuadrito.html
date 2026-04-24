@@ -47,8 +47,7 @@
 
   .sq {
     width: 100%;
-    flex: 1 1 auto;
-    min-height: 0;
+    aspect-ratio: 16 / 10;
     position: relative;
     overflow: hidden;
     border-radius: 6px;
@@ -93,41 +92,41 @@
 
   .sq .body {
     position: absolute; inset: 0;
-    padding: 11cqh 5cqw 13cqh;
+    padding: 11cqh 5cqi 13cqh;
     display: flex; flex-direction: column; justify-content: space-between;
     z-index: 3;
   }
   .sq .eyebrow {
-    font-size: clamp(11px, 2.2cqh, 13px); font-weight: 600; text-transform: uppercase;
+    font-size: clamp(11px, 1.4cqi, 14px); font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.2em; color: var(--lcg-green);
   }
   .sq .title {
     font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(54px, 17cqh, 130px);
+    font-size: clamp(50px, 8.5cqi, 110px);
     line-height: 0.94; letter-spacing: -0.035em;
     color: var(--lcg-dark); margin: 14px 0 0;
     word-break: normal; hyphens: none;
   }
   .sq .title em { font-style: italic; color: var(--lcg-green); font-weight: 300; }
   .sq .phrase {
-    margin-top: 24px;
+    margin-top: 18px;
     font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(18px, 4.5cqh, 32px);
+    font-size: clamp(16px, 2.4cqi, 28px);
     line-height: 1.35; letter-spacing: -0.01em;
     color: var(--lcg-ink);
-    max-width: 70%;
+    max-width: 60%;
     font-style: italic;
   }
   .sq .counter {
-    position: absolute; right: 5cqw; bottom: 11cqh;
+    position: absolute; right: 5cqi; bottom: 12cqh;
     font-family: 'Fraunces', serif; font-weight: 200; font-style: italic;
-    font-size: clamp(140px, 42cqh, 280px);
+    font-size: clamp(120px, 22cqi, 260px);
     line-height: 0.8; letter-spacing: -0.04em;
     color: rgba(8,94,84,0.08);
     z-index: 2;
   }
   .sq .ticker {
-    position: absolute; left: 5cqw; right: 5cqw; bottom: 9cqh;
+    position: absolute; left: 5cqi; right: 5cqi; bottom: 9cqh;
     height: 1px; background: var(--lcg-line); z-index: 3;
   }
   .sq .ticker::before {
