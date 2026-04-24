@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Políticas y Código de conducta · Día 1 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero — single-column (like Accesos & Valores) */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F4F9F6 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--cat-ide-bg); color: var(--cat-ide);
+  font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0;
+  letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-ide); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+/* Two-col body */
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-ide); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Policy card — generic block */
+.pol-card{
+  padding: 24px 28px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-ide-bg) 0%, rgba(228,238,232,.4) 100%);
+  border-left: 3px solid var(--cat-ide);
+  margin-bottom: 14px;
+}
+.pol-card h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 22px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 12px;
+}
+.pol-card ul{
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pol-card li{
+  display: grid; grid-template-columns: 18px 1fr; gap: 10px;
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+}
+.pol-card li::before{
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cat-ide); margin-top: 8px; margin-left: 6px;
+  box-shadow: 0 0 0 3px rgba(58,117,97,.12);
+}
+.pol-card li b{ color: var(--ink); font-weight: 600; }
+.pol-card p{ font-size: 14.5px; margin: 0 0 8px; line-height: 1.55; color: var(--ink-2); }
+.pol-card p:last-child{ margin-bottom: 0; }
+
+/* Vestir grid: Hombres / Mujeres / Nunca */
+.vestir-grid{
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px;
+}
+.vestir-col{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+}
+.vestir-col.is-no{
+  background: linear-gradient(180deg, #FFF1EE 0%, var(--surface) 100%);
+  border-color: rgba(184,74,57,.25);
+}
+.vestir-col h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 20px; margin: 0 0 6px; color: var(--lcg-dark);
+}
+.vestir-col.is-no h4{ color: #B84A39; }
+.vestir-col .vc-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 12px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--hairline);
+}
+.vestir-col h5{
+  font-family: var(--sans); font-weight: 700; font-size: 11.5px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--cat-ide);
+  margin: 14px 0 6px;
+}
+.vestir-col h5:first-of-type{ margin-top: 0; }
+.vestir-col.is-no h5{ color: #B84A39; }
+.vestir-col ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+.vestir-col li{ font-size: 13px; color: var(--ink-2); line-height: 1.5; padding-left: 14px; position: relative; }
+.vestir-col li::before{
+  content: ""; position: absolute; left: 2px; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cat-ide);
+}
+.vestir-col.is-no li::before{ background: #B84A39; }
+
+/* Important callout — confidencialidad */
+.important-call{
+  margin: 0 0 20px;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.important-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.important-call > *{ position: relative; z-index: 1; }
+.important-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.important-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 26px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.important-call p{ margin: 0 0 10px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.important-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.important-call li{
+  display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+  font-size: 14px; color: #F2EEE8; line-height: 1.5;
+}
+.important-call li::before{
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--lcg-mint); margin-top: 8px; margin-left: 5px;
+}
+
+/* Warning callout — comportamientos inaceptables */
+.warning-call{
+  margin: 0 0 20px;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #5C1F15 0%, #862B1E 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(92,31,21,.22);
+}
+.warning-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(255,205,180,.18), transparent 70%);
+  pointer-events: none;
+}
+.warning-call > *{ position: relative; z-index: 1; }
+.warning-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(255,205,180,.15);
+  border: 1px solid rgba(255,205,180,.32);
+  color: #FFD3C4;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.warning-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 26px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.warning-call p{ margin: 0 0 10px; font-size: 14.5px; color: #FFE8DD; line-height: 1.55; max-width: 640px; }
+.warning-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+.warning-call li{
+  display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+  font-size: 14px; color: #fff; font-weight: 600; line-height: 1.4;
+}
+.warning-call li::before{
+  content: "✕"; font-family: ui-monospace, Menlo, monospace;
+  color: #FFD3C4; font-size: 14px; line-height: 1; margin-top: 2px;
+}
+
+/* Two-col policy row (e.g. Diagnóstico / Proyecto for hospedaje) */
+.split-row{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.split-row .pol-card{ margin-bottom: 0; }
+
+/* Reflection callout — same gradient as feature */
+.reflect{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside / right rail */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--lcg-dark); background: var(--lcg-cream); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ide); background: var(--cat-ide-bg); }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ide-bg); color: var(--cat-ide); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ide); background: linear-gradient(180deg, var(--cat-ide-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ide); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ide); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ide); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ide); background: var(--surface); color: var(--cat-ide); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ide-bg); }
+.sess-toggle.is-done{ background: var(--cat-ide); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ide); border-bottom:2px solid var(--cat-ide); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">RD</div>
+      <div class="side-user-meta">
+        <strong>Rodrigo Dieck</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones · Día 1 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <!-- Main -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-1-lunes.html" style="color:inherit; text-decoration:none;">Lunes</a>
+        <span style="opacity:.4">/</span>
+        <b>Políticas y Código de conducta</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ide-bg); color: var(--cat-ide); border-color: transparent;">
+        <span class="pill-dot"></span> Identidad
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Identidad</span>
+            <span class="pill"><span style="opacity:.5">Día 01</span>&nbsp;·&nbsp;Bloque 05 de 08</span>
+          </div>
+          <h1>Políticas y <em>código de conducta.</em></h1>
+          <p class="s-hero-sub">
+            Cómo nos comportamos con clientes, con compañeros y en asignación.
+            Las reglas operativas del día a día — desde confidencialidad hasta
+            rotaciones — y las cuatro líneas rojas que no se cruzan.
+          </p>
+
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">60</span> min</span></div>
+            <div class="item"><span class="label">Capítulos</span><span class="val"><span class="u-mono">05</span></span></div>
+            <div class="item"><span class="label">Documentos</span><span class="val"><span class="u-mono">02</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-ide); color:#fff;">JG</div>
+                <div>
+                  <div class="val">Jorge González</div>
+                  <div class="sub">Gerente Finanzas, Legal y Administración</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <!-- Main content -->
+          <article>
+
+            <!-- 01 · Por qué -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Por qué estas reglas</div>
+              <h2>Reglas claras, equipo <em>libre.</em></h2>
+              <p class="lead">
+                Las políticas no están para vigilarte. Están para que sepas qué
+                esperamos sin que tengas que adivinarlo y para proteger tres
+                cosas a la vez: la información de los clientes, la calidad de
+                vida del equipo y la reputación de London.
+              </p>
+              <p>
+                Lo que sigue es la versión operativa que aplica al día a día.
+                Si necesitas la versión formal —la jurídica, con artículos y
+                todo— ese es el <b>Reglamento Interior de Trabajo</b> que
+                puedes consultar en el panel lateral de Recursos.
+              </p>
+            </section>
+
+            <!-- 02 · Conducta y comunicación -->
+            <section class="s-block" id="sec-conducta">
+              <div class="s-block-label">02 · Conducta y comunicación</div>
+              <h2>Cómo hablamos del cliente.</h2>
+
+              <div class="important-call">
+                <div class="ic-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div>
+                  <h3>Confidencialidad — el principio número uno.</h3>
+                  <p>Todo lo relacionado con el cliente es confidencial. No se discute en elevadores, restaurantes, pasillos, baños, taxis ni aviones. Los datos del cliente no se comparten salvo cuando es estrictamente indispensable.</p>
+                  <ul>
+                    <li>Si te buscan personas interesadas en LCG, redirígelas con el <b>Director Regional</b> de tu zona en lugar de hablar tú.</li>
+                    <li>Evita reuniones con cliente fuera de la oficina; siempre valida con tu Gerente / DO / DR.</li>
+                    <li>Cuida tu huella en redes sociales — la imagen de London también se proyecta ahí.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · Imagen -->
+            <section class="s-block" id="sec-imagen">
+              <div class="s-block-label">03 · Imagen y código de vestir</div>
+              <h2>Cómo nos presentamos.</h2>
+              <p>
+                La regla detrás de todas las reglas: <b>limpieza y discreción</b>.
+                El equipo de protección que te entregue el cliente (lentes,
+                zapatos, casco, bata) cuenta como vestimenta apropiada.
+              </p>
+
+              <div class="vestir-grid">
+                <div class="vestir-col">
+                  <div class="vc-tag">Hombres</div>
+                  <h5>Formal</h5>
+                  <ul>
+                    <li>Traje sastre azul marino, gris oxford o negro</li>
+                    <li>Camisa lisa de manga larga azul, rosa claro o blanca; estampados discretos</li>
+                    <li>Zapatos de vestir y corbata formal</li>
+                  </ul>
+                  <h5>Business casual</h5>
+                  <ul>
+                    <li>Camisa lisa o estampado discreto en color claro</li>
+                    <li>Combinación de saco con pantalón</li>
+                    <li>Uñas, peinados y accesorios discretos</li>
+                  </ul>
+                </div>
+
+                <div class="vestir-col">
+                  <div class="vc-tag">Mujeres</div>
+                  <h5>Formal</h5>
+                  <ul>
+                    <li>Traje sastre de falda o pantalón</li>
+                    <li>Blusas y vestidos formales</li>
+                    <li>Zapatos formales</li>
+                  </ul>
+                  <h5>Business casual</h5>
+                  <ul>
+                    <li>Pantalón, falda o vestido</li>
+                    <li>Blusa en colores claros o estampado discreto; manga corta sí, tirantes no</li>
+                    <li>Maquillaje, uñas, peinados y accesorios discretos</li>
+                  </ul>
+                </div>
+
+                <div class="vestir-col is-no">
+                  <div class="vc-tag">Nunca</div>
+                  <h5>Hombres</h5>
+                  <ul>
+                    <li>Camisas de manga corta</li>
+                    <li>Jeans</li>
+                    <li>Colores fosforescentes</li>
+                    <li>Joyería ostentosa</li>
+                    <li>Camisas con más de dos botones abiertos</li>
+                  </ul>
+                  <h5>Mujeres</h5>
+                  <ul>
+                    <li>Pupilentes de color</li>
+                    <li>Jeans, pantalones cortos, minifaldas</li>
+                    <li>Joyería ostentosa o excesiva</li>
+                    <li>Tenis, sandalias, escotes</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Tiempo y permisos -->
+            <section class="s-block" id="sec-tiempo">
+              <div class="s-block-label">04 · Tiempo y permisos</div>
+              <h2>Días libres, permisos, pasaporte.</h2>
+
+              <div class="pol-card">
+                <h3>Días de descanso</h3>
+                <ul>
+                  <li><b>3 semanas al año</b>, no acumulables. La <b>semana de Navidad</b> es fija y la define London.</li>
+                  <li>Los días son proporcionales a la fecha de ingreso y vencen el <b>31 de diciembre</b>.</li>
+                  <li>Solicita con <b>mínimo 8 semanas de anticipación</b> y valida con Corporativo + Región.</li>
+                  <li>Puedes tomar hasta <b>2 semanas seguidas</b>; nada de días sueltos a mitad de semana.</li>
+                  <li>En Semana Santa, si el cliente labora, se trabaja remoto los días no santos. Si no labora, ajustas rotación.</li>
+                  <li>Después de la última asignación previa a Navidad, las semanas extra antes/después se piden con la región.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Permisos especiales</h3>
+                <ul>
+                  <li><b>5 días</b> hábiles adicionales por <b>fallecimiento</b> de familiar cercano (abuelos, padres, hijos, hermanos, cónyuge).</li>
+                  <li><b>5 días</b> por <b>boda</b> — formaliza desde el inicio de la asignación con Región y RH.</li>
+                  <li><b>5 días</b> por <b>nacimiento de hijos</b>.</li>
+                  <li><b>1 semana</b> de descanso por cada <b>6 semanas continuas en diagnóstico</b>, siempre que no vuelvas a casa en ese lapso.</li>
+                  <li>Boda y nacimiento <b>cuentan dentro de la rotación</b> porque son programables.</li>
+                  <li>Cualquier enfermedad: validar con RH y con Gerente / DO de la asignación.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Pasaporte y visa</h3>
+                <ul>
+                  <li>Mantén tu <b>pasaporte vigente con mínimo 6 meses</b>. Idealmente renueva cuando le queden 12 meses.</li>
+                  <li>Pasaporte y visa de turista corren <b>por tu cuenta</b>.</li>
+                  <li>Cuando renueves, se te concede <b>un día más en la rotación</b> para hacer el trámite.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 05 · Vida en asignación -->
+            <section class="s-block" id="sec-asignacion">
+              <div class="s-block-label">05 · Vida en asignación</div>
+              <h2>Rotación, hospedaje, traslados.</h2>
+
+              <div class="pol-card">
+                <h3>Rotación</h3>
+                <ul>
+                  <li>Una rotación = <b>4 días</b> (2 de viaje + 2 de descanso).</li>
+                  <li>Cada <b>8 semanas</b> cuando estás fuera de tu base. A los 2 años de antigüedad y para Senior/Gerente: cada <b>6 semanas</b>.</li>
+                  <li>Solo rota un Consultor a la vez. Nada de rotaciones en las 2 primeras semanas ni en la penúltima del proyecto.</li>
+                  <li>Frecuencia mínima entre rotaciones: <b>5 semanas</b>.</li>
+                  <li>Puedes rotar a un destino distinto a tu base si lo avisas con 1 mes y pagas la diferencia tarifaria.</li>
+                  <li>Equipaje: 1 maleta de <b>23 kg</b>. Si la aerolínea no la incluye, paga y solicita reembolso.</li>
+                  <li>Esquema de casado: sin rotaciones — viaje pagado en Navidad y al fin de la asignación para ti y tu familia.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Liberación de asignaciones</h3>
+                <ul>
+                  <li>Consultor soltero en proyecto: regresa a casa los <b>jueves</b> al final de la asignación.</li>
+                  <li>Consultor casado: se libera <b>viernes</b> para viajar directo a la siguiente asignación.</li>
+                  <li>Diagnóstico: liberación <b>sábado</b> si son 2 semanas, <b>jueves</b> si son 3+ semanas.</li>
+                </ul>
+              </div>
+
+              <div class="split-row">
+                <div class="pol-card">
+                  <h3>Hospedaje · Diagnóstico</h3>
+                  <ul>
+                    <li>En hotel. Cualquier servicio extra (mini-bar, lavandería, etc.) corre por tu cuenta.</li>
+                    <li>Consultores y Gerente <b>comparten habitación</b>.</li>
+                    <li>Consultores casados viajan en <b>esquema de solteros</b>.</li>
+                  </ul>
+                </div>
+                <div class="pol-card">
+                  <h3>Hospedaje · Proyecto</h3>
+                  <ul>
+                    <li>Departamento amueblado. Solteros comparten depa con cuarto independiente y, idealmente, baño propio.</li>
+                    <li>Si hay que compartir baño, lo hacen los del mismo género en mayoría.</li>
+                    <li>Consultores casados pueden rentar departamento independiente para vivir con la familia.</li>
+                    <li>Servicios (agua, luz, gas) los cubren los Consultores que habitan el departamento.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="pol-card">
+                <h3>Uso de vehículos</h3>
+                <ul>
+                  <li>Nunca rentes ni recibas autos del cliente que <b>no estén asegurados</b>.</li>
+                  <li>La renta o recepción se hace <b>a nombre del que conduce</b>.</li>
+                  <li>Mantén en orden licencia y documentos del auto. Infracciones, colisiones o robo: responsabilidad del conductor.</li>
+                  <li>Casetas, estacionamientos y gasolina se cubren <b>solo si el auto se usa para trabajo</b>.</li>
+                  <li>Tener vehículo anula el pago de taxis para quienes lo compartan.</li>
+                  <li>Cero tolerancia a conducir bajo estado de ebriedad.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 06 · Administración -->
+            <section class="s-block" id="sec-admin">
+              <div class="s-block-label">06 · Administración financiera</div>
+              <h2>Recibos, reembolsos, equipo.</h2>
+
+              <div class="pol-card">
+                <h3>Recibos de honorarios</h3>
+                <ul>
+                  <li>Envía los recibos a Contabilidad la <b>semana siguiente</b> al pago.</li>
+                  <li>Adjunta los <b>dos archivos del CFDI</b> en el mismo correo (de lo contrario, no es válido).</li>
+                  <li>Si no entregas a tiempo, se <b>retiene la siguiente catorcena</b> hasta regularizar.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Extra per diem</h3>
+                <ul>
+                  <li>Cubre transportación casa-oficina, visas de trabajo, impuestos de entrada/salida, hospedaje y boletos comprados por ti que apliquen.</li>
+                  <li>Entrega el <b>formato de extra per diem + comprobantes</b> (facturas o tickets) — alinea con el DO el procedimiento.</li>
+                  <li>Todos los taxis necesitan comprobante. Para ciudades lejanas del aeropuerto, regla por defecto: <b>autobús</b>.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Seguro médico</h3>
+                <ul>
+                  <li>Seguro de <b>gastos médicos mayores</b> con cobertura LATAM, USA y Canadá. Aplica a cónyuge e hijos.</li>
+                  <li>Trámites de reembolso son <b>tu responsabilidad</b> con la aseguradora.</li>
+                  <li>Si tienes uno propio, coordina con Corporativo: a 6 meses se reembolsa la mitad y a 12 meses el total.</li>
+                  <li>Dudas: <b>melissa.vazquez@londoncg.com</b>.</li>
+                </ul>
+              </div>
+
+              <div class="pol-card">
+                <h3>Equipo de cómputo</h3>
+                <ul>
+                  <li>El Consultor se presenta a la asignación con <b>laptop propia</b>.</li>
+                  <li>Gerentes y Directores de Diagnóstico reciben equipo asignado.</li>
+                  <li>Tope autorizado: <b>USD $1,000</b> con impuestos. Quieres un equipo más caro: pagas la diferencia.</li>
+                  <li>Solicita autorización al DR vía mail con copia a <b>sistemas@londoncg.com</b>. El DR autoriza la asignación; Sistemas autoriza el modelo.</li>
+                  <li>Vida útil: <b>3 años</b>. Después pasa a tu propiedad. Si te vas antes, devuelves o pagas diferencia.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 07 · Comportamientos inaceptables -->
+            <section class="s-block" id="sec-redlines">
+              <div class="s-block-label">07 · Líneas rojas</div>
+              <h2>Lo que no se cruza.</h2>
+              <div class="warning-call">
+                <div class="ic-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div>
+                  <h3>Comportamientos inaceptables.</h3>
+                  <p>Cualquiera de estos cuatro pone en riesgo tu permanencia en London. No hay zonas grises.</p>
+                  <ul>
+                    <li>Consumo de bebidas alcohólicas y/o drogas en asignación.</li>
+                    <li>Falta de cumplimiento a cualquiera de las políticas anteriores.</li>
+                    <li>Acciones que pongan en peligro la continuidad de la asignación.</li>
+                    <li>Relacionarse con el cliente en un ámbito personal y fuera de lo laboral.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">08 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Descarga el Reglamento Interior y guárdalo en tus archivos personales. La firma de "enterado" la revisarás más adelante con Jorge directamente.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="session-d1-b04-estructura.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
+                  <span class="title">Estructura organizacional</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-1-lunes.html">
+                  Siguiente · Administración &amp; reembolsos
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Aside -->
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 05 de 08 · Día 01</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Por qué estas reglas</a></li>
+                <li><a href="#sec-conducta"><span class="tick"></span>Conducta y comunicación</a></li>
+                <li><a href="#sec-imagen"><span class="tick"></span>Imagen y código de vestir</a></li>
+                <li><a href="#sec-tiempo"><span class="tick"></span>Tiempo y permisos</a></li>
+                <li><a href="#sec-asignacion"><span class="tick"></span>Vida en asignación</a></li>
+                <li><a href="#sec-admin"><span class="tick"></span>Administración financiera</a></li>
+                <li><a href="#sec-redlines"><span class="tick"></span>Líneas rojas</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="https://getmorelcgmx.sharepoint.com/:w:/s/LCGCapitalHumanoMx/IQAq5Nt2QcYARqkbaTMNILPZASEY2-_Lvn8PCvxpFKRx-Sk?e=gF1vjC" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Políticas · documento completo<span class="r-meta">Word · SharePoint LCG</span></div>
+                </a></li>
+                <li><a href="https://getmorelcgmx.sharepoint.com/:b:/s/LCGCapitalHumanoMx/IQAjjRZ2vPl2R5Z1xowHKFKZAfR7KmoO2peBXSDWY8o-dss?e=RxsWJe" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Reglamento Interior de Trabajo<span class="r-meta">PDF · GET MORE FROM YOUR BUSINESS, S.A. de C.V.</span></div>
+                </a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ide-bg); border-color: var(--cat-ide);">
+              <h4 style="color: var(--cat-ide);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Sigue con <b>Administración &amp; reembolsos</b>: cómo se hace
+                el extra per diem en la práctica y los flujos de aprobación.
+              </p>
+              <a href="day-1-lunes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ide);">Volver al Día 01 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd1-b05-politicas';
+
+  function loadStore(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
