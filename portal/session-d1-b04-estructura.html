@@ -141,7 +141,7 @@
 
 /* Branch headers */
 .branch-row{
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px;
   margin: 24px 0 10px;
 }
 .branch-pill{
@@ -153,6 +153,9 @@
   font-size: 11.5px; font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase;
 }
+.branch-pill.is-comercial{
+  background: var(--lcg-cream); color: var(--lcg-dark); border-color: #E9E1CC;
+}
 .branch-pill.is-support{
   background: var(--surface); color: var(--ink); border-color: var(--hairline);
 }
@@ -163,7 +166,7 @@
 
 /* People grid (per branch) */
 .org-row{
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px;
   align-items: stretch;
 }
 .org-col{
@@ -173,6 +176,7 @@
   background: var(--surface);
 }
 .org-col.is-primary{ border-color: var(--cat-ide); background: linear-gradient(180deg, rgba(228,238,232,.4) 0%, var(--surface) 80%); }
+.org-col.is-comercial{ border-color: #E9E1CC; background: linear-gradient(180deg, rgba(245,236,220,.35) 0%, var(--surface) 80%); }
 .people-grid{
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
 }
@@ -397,14 +401,16 @@
             </div>
             <h1>Estructura <em>organizacional.</em></h1>
             <p class="s-hero-sub">
-              CEO al frente, dos ramas — Sales &amp; Operations y Support Services
-              Structure — y los equipos de proyecto que se forman para cada cliente.
-              Quién es quién, qué hace, dónde está y a quién reporta.
+              CEO al frente, tres áreas — Sales &amp; Operations, Equipo Comercial
+              y Support Services Structure — y los equipos de proyecto que se forman
+              para cada cliente. Quién es quién, qué hace, dónde está y a quién reporta.
             </p>
 
             <div class="s-hero-meta">
               <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">30</span> min</span></div>
               <div class="item"><span class="label">Personas</span><span class="val"><span class="u-mono">10</span></span></div>
+              <!-- 1 CEO + 4 DOs + 2 Comercial + 3 Support = 10 -->
+
               <div class="item"><span class="label">Sedes</span><span class="val"><span class="u-mono">04</span></span></div>
               <div class="item">
                 <span class="label">Facilita</span>
@@ -502,10 +508,11 @@
               <div class="s-block-label">01 · El modelo</div>
               <h2>Una firma chica, <em>una operación clara.</em></h2>
               <p class="lead">
-                LCG México opera con una estructura plana: un CEO al frente, dos
-                ramas — la operativa que conecta con cliente y la corporativa que
-                sostiene la firma — y equipos de proyecto que se forman a la
-                medida del cliente con un Gerente y tres líderes de iniciativa.
+                LCG México opera con una estructura plana: un CEO al frente, tres
+                áreas — la operativa que conecta con cliente, la comercial que
+                abre cartera y la corporativa que sostiene la firma — y equipos
+                de proyecto que se forman a la medida del cliente con un Gerente
+                y tres líderes de iniciativa.
               </p>
               <p>
                 Conocer el organigrama te ahorra tiempo: sabes a quién escribir
@@ -531,20 +538,25 @@
               </div>
             </section>
 
-            <!-- 03 · Las dos ramas -->
+            <!-- 03 · Las tres áreas -->
             <section class="s-block" id="sec-ramas">
-              <div class="s-block-label">03 · Las dos ramas</div>
+              <div class="s-block-label">03 · Las tres áreas</div>
               <h2>Cómo se organizan los equipos.</h2>
               <p>
-                Bajo el CEO, dos áreas con propósitos distintos: <b>Sales &amp; Operations</b>
-                ejecuta proyectos con cliente y <b>Support Services Structure</b> sostiene
-                la operación interna (finanzas, legal, administración, talento).
+                Bajo el CEO, tres áreas con propósitos distintos: <b>Sales &amp; Operations</b>
+                ejecuta proyectos con cliente, el <b>Equipo Comercial</b> abre y nutre la cartera
+                y <b>Support Services Structure</b> sostiene la operación interna (finanzas, legal,
+                administración).
               </p>
 
               <div class="branch-row">
                 <span class="branch-pill">
                   Sales &amp; Operations
-                  <span class="b-count">7 · S&amp;OP / SALES / P&amp;C</span>
+                  <span class="b-count">4 · S&amp;OP</span>
+                </span>
+                <span class="branch-pill is-comercial">
+                  Equipo Comercial
+                  <span class="b-count">2 · SALES</span>
                 </span>
                 <span class="branch-pill is-support">
                   Support Services Structure
@@ -553,7 +565,7 @@
               </div>
 
               <div class="org-row">
-                <!-- LEFT: Sales & Operations -->
+                <!-- COL 1: Sales & Operations (4 DOs) -->
                 <div class="org-col is-primary">
                   <div class="people-grid">
                     <div class="p-card is-senior">
@@ -596,16 +608,12 @@
                       </div>
                       <div class="p-meta"><span class="chip">GDL</span><span class="chip">S&amp;OP</span></div>
                     </div>
-                    <div class="p-card">
-                      <div class="p-row1">
-                        <div class="p-av">FQ</div>
-                        <div>
-                          <div class="p-name">Francisco Quezada</div>
-                          <p class="p-role">Gerente People &amp; Culture</p>
-                        </div>
-                      </div>
-                      <div class="p-meta"><span class="chip">LEÓN</span><span class="chip">P&amp;C</span></div>
-                    </div>
+                  </div>
+                </div>
+
+                <!-- COL 2: Equipo Comercial -->
+                <div class="org-col is-comercial">
+                  <div class="people-grid cols-1">
                     <div class="p-card">
                       <div class="p-row1">
                         <div class="p-av">JM</div>
@@ -626,20 +634,10 @@
                       </div>
                       <div class="p-meta"><span class="chip">MTY</span><span class="chip">SALES</span></div>
                     </div>
-                    <div class="p-card is-vacant">
-                      <div class="p-row1">
-                        <div class="p-av">+</div>
-                        <div>
-                          <div class="p-name">Vacante · Hiring</div>
-                          <p class="p-role">Coordinador Comercial</p>
-                        </div>
-                      </div>
-                      <div class="p-meta"><span class="chip">MTY</span><span class="chip">SALES</span></div>
-                    </div>
                   </div>
                 </div>
 
-                <!-- RIGHT: Support Services Structure -->
+                <!-- COL 3: Support Services Structure -->
                 <div class="org-col">
                   <div class="people-grid cols-1">
                     <div class="p-card is-senior">
@@ -880,7 +878,7 @@
               <ul class="outline">
                 <li><a class="active" href="#sec-intro"><span class="tick"></span>El modelo</a></li>
                 <li><a href="#sec-ceo"><span class="tick"></span>Liderazgo</a></li>
-                <li><a href="#sec-ramas"><span class="tick"></span>Las dos ramas</a></li>
+                <li><a href="#sec-ramas"><span class="tick"></span>Las tres áreas</a></li>
                 <li><a href="#sec-roles"><span class="tick"></span>Roles · qué hace cada quién</a></li>
                 <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
               </ul>
