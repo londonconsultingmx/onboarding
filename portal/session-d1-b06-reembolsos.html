@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Administración & reembolsos · Día 1 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero — single-column */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F4F9F6 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--cat-ide-bg); color: var(--cat-ide);
+  font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0;
+  letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-ide); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+/* Two-col body */
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-ide); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Side-by-side concept cards (PerDiem vs ExtraPerDiem) */
+.concepts{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin: 14px 0 4px;
+}
+.concept-card{
+  padding: 28px 30px; border-radius: var(--r-md);
+  background: linear-gradient(165deg, var(--cat-ide-bg) 0%, var(--surface) 75%);
+  border: 1px solid rgba(58,117,97,.18);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.concept-card::before{
+  content: ""; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cat-ide); opacity: .55;
+}
+.concept-card .cc-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--cat-ide); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 8px;
+}
+.concept-card h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 30px; line-height: 1; letter-spacing: -.02em;
+  color: var(--lcg-dark); margin: 0 0 6px;
+}
+.concept-card .cc-tag{
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.5;
+  margin: 0 0 18px;
+}
+.concept-card .cc-stat{
+  margin-top: auto; padding-top: 18px;
+  border-top: 1px solid rgba(58,117,97,.18);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+}
+.concept-card .cc-stat .val{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 28px; line-height: 1; color: var(--lcg-dark); letter-spacing: -.015em;
+}
+.concept-card .cc-stat .lbl{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* Policy card (reused) */
+.pol-card{
+  padding: 24px 28px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-ide-bg) 0%, rgba(228,238,232,.4) 100%);
+  border-left: 3px solid var(--cat-ide);
+  margin-bottom: 14px;
+}
+.pol-card h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 22px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 12px;
+}
+.pol-card ul{
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pol-card li{
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+}
+.pol-card li::before{
+  content: ""; position: absolute;
+  left: 6px; top: 9px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cat-ide);
+  box-shadow: 0 0 0 3px rgba(58,117,97,.12);
+}
+.pol-card li b{ color: var(--ink); font-weight: 600; }
+.pol-card p{ font-size: 14.5px; margin: 0 0 8px; line-height: 1.55; color: var(--ink-2); }
+
+/* Limit table — clean numeric layout for ExtraPerDiem */
+.limits{
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  overflow: hidden; background: var(--surface);
+  margin-top: 4px;
+}
+.limits .row{
+  display: grid; grid-template-columns: 1.4fr 1fr 1.6fr;
+  align-items: baseline;
+  padding: 14px 22px; border-bottom: 1px solid var(--hairline);
+}
+.limits .row:last-child{ border-bottom: 0; }
+.limits .row.hd{
+  background: var(--surface-2);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 700;
+}
+.limits .row .name{ font-family: var(--serif); font-size: 18px; color: var(--lcg-dark); letter-spacing: -.01em; }
+.limits .row .lim{
+  font-family: ui-monospace, Menlo, monospace; font-size: 14px;
+  color: var(--ink); font-weight: 600;
+}
+.limits .row .lim .free{ color: var(--cat-ide); }
+.limits .row .note{ font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+
+/* Fiscal data card — Cédula Fiscal */
+.fiscal-card{
+  padding: 28px 32px; border-radius: var(--r-md);
+  background: var(--lcg-cream); border: 1px solid #E9E1CC;
+  margin-top: 6px;
+}
+.fiscal-card .fc-tag{
+  font-family: ui-monospace, Menlo, monospace; font-size: 10.5px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--lcg-dark); font-weight: 700; margin-bottom: 8px;
+}
+.fiscal-card h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 26px; line-height: 1.1; letter-spacing: -.02em;
+  color: var(--lcg-dark); margin: 0 0 16px;
+}
+.fiscal-grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px;
+}
+.fiscal-row{ display: flex; flex-direction: column; }
+.fiscal-row .lbl{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--ink-4); letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 600; margin-bottom: 4px;
+}
+.fiscal-row .val{
+  font-size: 14px; color: var(--ink); font-weight: 600;
+  font-family: var(--sans); line-height: 1.4;
+}
+.fiscal-row .val.is-mono{ font-family: ui-monospace, Menlo, monospace; }
+
+/* Catálogo de conceptos — chip grid */
+.concept-chips{
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
+}
+.concept-chips .chip{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--cat-ide-bg); color: var(--cat-ide);
+  font-size: 13px; font-weight: 600;
+  border: 1px solid rgba(58,117,97,.2);
+}
+
+/* Workflow steps for "Carga de facturas" */
+.steps{
+  list-style: none; padding: 0; margin: 14px 0 0;
+  counter-reset: step;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.steps li{
+  counter-increment: step;
+  display: grid; grid-template-columns: 38px 1fr; gap: 18px;
+  padding: 16px 20px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.steps li::before{
+  content: counter(step, decimal-leading-zero);
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--cat-ide); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px; font-weight: 700; letter-spacing: .04em;
+}
+.steps li h4{
+  margin: 0 0 4px; font-family: var(--sans); font-weight: 700;
+  font-size: 15px; color: var(--ink);
+}
+.steps li p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.steps li code{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12.5px; padding: 2px 6px; border-radius: 4px;
+  background: var(--surface-2); color: var(--lcg-dark);
+  border: 1px solid var(--hairline);
+}
+
+/* Important callout (mint-on-dark green) — reused */
+.important-call{
+  margin: 0 0 20px;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.important-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.important-call > *{ position: relative; z-index: 1; }
+.important-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.important-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 26px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.important-call p{ margin: 0 0 10px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.important-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.important-call li{
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px; color: #F2EEE8; line-height: 1.5;
+}
+.important-call li::before{
+  content: ""; position: absolute;
+  left: 5px; top: 8px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--lcg-mint);
+}
+
+/* Warning callout — rejection list */
+.warning-call{
+  margin: 0 0 20px;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #5C1F15 0%, #862B1E 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(92,31,21,.22);
+}
+.warning-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(255,205,180,.18), transparent 70%);
+  pointer-events: none;
+}
+.warning-call > *{ position: relative; z-index: 1; }
+.warning-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(255,205,180,.15);
+  border: 1px solid rgba(255,205,180,.32);
+  color: #FFD3C4;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.warning-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 26px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.warning-call p{ margin: 0 0 14px; font-size: 14.5px; color: #FFE8DD; line-height: 1.55; max-width: 640px; }
+.warning-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; }
+.warning-call li{
+  position: relative;
+  padding-left: 22px;
+  font-size: 13.5px; color: #fff; font-weight: 500; line-height: 1.4;
+}
+.warning-call li::before{
+  content: "✕"; position: absolute;
+  left: 0; top: 1px;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #FFD3C4; font-size: 13px; line-height: 1;
+}
+.warning-call .footnote{
+  font-size: 13px; color: #FFE8DD; margin-top: 16px;
+  padding-top: 14px; border-top: 1px solid rgba(255,205,180,.18);
+}
+.warning-call .footnote b{ color: #fff; font-weight: 700; }
+
+/* Reflection callout */
+.reflect{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside / right rail */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--lcg-dark); background: var(--lcg-cream); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--hairline); text-decoration:none;
+  background: var(--surface); transition: border-color .15s, background .15s;
+}
+.res-list a:hover{ border-color: var(--cat-ide); background: var(--cat-ide-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ide-bg); color: var(--cat-ide); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ide); background: linear-gradient(180deg, var(--cat-ide-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ide); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ide); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ide); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ide); background: var(--surface); color: var(--cat-ide); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ide-bg); }
+.sess-toggle.is-done{ background: var(--cat-ide); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ide); border-bottom:2px solid var(--cat-ide); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">RD</div>
+      <div class="side-user-meta">
+        <strong>Rodrigo Dieck</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones · Día 1 en curso</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <!-- Main -->
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-1-lunes.html" style="color:inherit; text-decoration:none;">Lunes</a>
+        <span style="opacity:.4">/</span>
+        <b>Administración &amp; reembolsos</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ide-bg); color: var(--cat-ide); border-color: transparent;">
+        <span class="pill-dot"></span> Identidad
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Identidad</span>
+            <span class="pill"><span style="opacity:.5">Día 01</span>&nbsp;·&nbsp;Bloque 06 de 08</span>
+          </div>
+          <h1>Administración &amp; <em>reembolsos.</em></h1>
+          <p class="s-hero-sub">
+            Cómo te reembolsamos los viáticos. Qué cubre PerDiem, qué cubre
+            ExtraPerDiem, los topes, las herramientas para cargar tus facturas
+            y los plazos que no se mueven.
+          </p>
+
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">45</span> min</span></div>
+            <div class="item"><span class="label">Tope quincenal</span><span class="val">$<span class="u-mono">8,150</span> MXN</span></div>
+            <div class="item"><span class="label">Conceptos</span><span class="val"><span class="u-mono">11</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-ide); color:#fff;">JG</div>
+                <div>
+                  <div class="val">Jorge González</div>
+                  <div class="sub">Gerente Finanzas, Legal y Administración</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <!-- Main content -->
+          <article>
+
+            <!-- 01 · Por qué -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Por qué te toca saber esto</div>
+              <h2>Tu dinero, tu responsabilidad.</h2>
+              <p class="lead">
+                Cuando estás en asignación, London cubre tus viáticos vía
+                reembolso. El sistema funciona si cada Consultor entrega a
+                tiempo, con factura válida y dentro de los topes. Lo que no
+                cumple, no se reembolsa — y no hay vuelta atrás.
+              </p>
+              <p>
+                Esta sesión es el quick-start operativo. Para la versión formal
+                con todos los detalles, anexos y cédula fiscal, ve al panel
+                lateral de Recursos.
+              </p>
+            </section>
+
+            <!-- 02 · Los dos conceptos -->
+            <section class="s-block" id="sec-conceptos">
+              <div class="s-block-label">02 · Los dos conceptos</div>
+              <h2>PerDiem y <em>ExtraPerDiem.</em></h2>
+              <p>
+                Todos los reembolsos de London México caen en uno de dos cubos.
+                Identifica primero a cuál pertenece tu gasto antes de cargarlo.
+              </p>
+
+              <div class="concepts">
+                <div class="concept-card">
+                  <div class="cc-label">Cubo 01</div>
+                  <h3>PerDiem</h3>
+                  <p class="cc-tag">Viáticos del Consultor por trabajo fuera de su base. 90% en alimentación; el resto, eventualmente, en aseo personal y artículos básicos de cocina o limpieza del hogar.</p>
+                  <div class="cc-stat">
+                    <span><span class="val">$8,150</span> <span class="lbl">MXN / quincena</span></span>
+                    <span class="lbl">Despensa · Alimentos</span>
+                  </div>
+                </div>
+                <div class="concept-card">
+                  <div class="cc-label">Cubo 02</div>
+                  <h3>ExtraPerDiem</h3>
+                  <p class="cc-tag">Transportación domicilio↔proyecto, hospedaje pagado por el Consultor cuando aplique, y conceptos atípicos del proyecto. Siempre con autorización del Gerente o Director de Operaciones.</p>
+                  <div class="cc-stat">
+                    <span><span class="val">Por concepto</span></span>
+                    <span class="lbl">Requiere autorización</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · PerDiem -->
+            <section class="s-block" id="sec-perdiem">
+              <div class="s-block-label">03 · PerDiem</div>
+              <h2>Cómo funciona el quincenal.</h2>
+
+              <div class="pol-card">
+                <h3>Topes y reglas</h3>
+                <ul>
+                  <li>Periodo de corte <b>quincenal</b>. Tope <b>$8,150 MXN</b> por quincena.</li>
+                  <li>Reembolso en pesos vía <b>SPEI</b>, después del pago del periodo correspondiente.</li>
+                  <li>Cada CFDI de <b>Alimentos</b> está topado a <b>$750 MXN + IVA</b>. Lo que exceda, se paga sólo hasta el límite.</li>
+                  <li><b>Despensa</b> no tiene tope por CFDI individual.</li>
+                  <li>Si no llegas al tope quincenal, el saldo <b>no es acumulable</b>. Sólo se reembolsa lo gastado y comprobado.</li>
+                  <li>Los traslados Asignación↔Aeropuerto en rotación entran en tu PerDiem, <b>no</b> como ExtraPerDiem.</li>
+                  <li>Los días de vacaciones <b>se restan</b> del presupuesto PerDiem del periodo.</li>
+                  <li>Sin CFDI válido (.pdf + .xml) no hay reembolso. <b>No hay excepciones</b>.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 04 · ExtraPerDiem -->
+            <section class="s-block" id="sec-extra">
+              <div class="s-block-label">04 · ExtraPerDiem</div>
+              <h2>Límites por concepto.</h2>
+
+              <div class="limits">
+                <div class="row hd">
+                  <span>Concepto</span>
+                  <span>Límite</span>
+                  <span>Nota</span>
+                </div>
+                <div class="row">
+                  <span class="name">Renta de vehículo</span>
+                  <span class="lim">$850 MXN / día</span>
+                  <span class="note">Tope diario duro.</span>
+                </div>
+                <div class="row">
+                  <span class="name">Transporte terrestre</span>
+                  <span class="lim"><span class="free">Sin límite</span></span>
+                  <span class="note">Bajo estricta justificación del motivo.</span>
+                </div>
+                <div class="row">
+                  <span class="name">Peajes</span>
+                  <span class="lim"><span class="free">Sin límite</span></span>
+                  <span class="note">Relacionados con la asignación.</span>
+                </div>
+                <div class="row">
+                  <span class="name">Gasolina</span>
+                  <span class="lim"><span class="free">Sin límite</span></span>
+                  <span class="note">Asignación únicamente — no aplica para viajes recreativos.</span>
+                </div>
+                <div class="row">
+                  <span class="name">Otros</span>
+                  <span class="lim"><span class="free">Sin límite</span></span>
+                  <span class="note">Previa autorización del Director de Operaciones.</span>
+                </div>
+              </div>
+
+              <div class="pol-card" style="margin-top: 14px;">
+                <h3>"Integración" con cliente</h3>
+                <p>Para que el gasto cuente como Integración, el Gerente del Proyecto debe documentar y compartir:</p>
+                <ul>
+                  <li><b>Nombre del cliente</b></li>
+                  <li><b>Fecha y lugar</b> del evento</li>
+                  <li><b>Participantes</b></li>
+                </ul>
+                <p style="margin-top: 12px;">Sin CFDI válido tampoco hay reembolso de ExtraPerDiem. Ninguna excepción.</p>
+              </div>
+            </section>
+
+            <!-- 05 · Facturación -->
+            <section class="s-block" id="sec-facturacion">
+              <div class="s-block-label">05 · Facturación</div>
+              <h2>El CFDI manda.</h2>
+              <p>
+                Cada gasto necesita CFDI válido con <b>ambos archivos</b>
+                (.pdf + .xml). Sin CFDI no hay reembolso. Es responsabilidad
+                tuya solicitar la factura al hacer la compra. Si el monto del
+                gasto excede los <b>$2,000 MXN</b>, el pago debe ser con medio
+                electrónico (tarjeta o transferencia) — nunca efectivo.
+              </p>
+
+              <div class="fiscal-card">
+                <div class="fc-tag">Cédula Fiscal</div>
+                <h3>Datos para emitir el CFDI</h3>
+                <div class="fiscal-grid">
+                  <div class="fiscal-row">
+                    <span class="lbl">Razón social</span>
+                    <span class="val">GET MORE FROM YOUR BUSINESS, S.A. de C.V.</span>
+                  </div>
+                  <div class="fiscal-row">
+                    <span class="lbl">RFC</span>
+                    <span class="val is-mono">GMF1109145W5</span>
+                  </div>
+                  <div class="fiscal-row">
+                    <span class="lbl">Régimen fiscal</span>
+                    <span class="val">General de Ley Personas Morales</span>
+                  </div>
+                  <div class="fiscal-row">
+                    <span class="lbl">Uso de CFDI</span>
+                    <span class="val is-mono">G03 · Gastos generales</span>
+                  </div>
+                  <div class="fiscal-row">
+                    <span class="lbl">Método de pago</span>
+                    <span class="val">Pago en una sola exhibición</span>
+                  </div>
+                  <div class="fiscal-row">
+                    <span class="lbl">Domicilio fiscal</span>
+                    <span class="val">Av. del Roble 660, Piso 3 Of. 405,<br/>Valle del Campestre, San Pedro Garza García,<br/>Nuevo León, CP 66265</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pol-card" style="margin-top: 14px;">
+                <h3>Gastos en el extranjero</h3>
+                <p>Si gastas fuera de México, el comprobante puede ser un <b>"Invoice"</b> en lugar de CFDI siempre que cumpla:</p>
+                <ul>
+                  <li>Lleve textualmente el título <b>"Invoice"</b> (o "Factura") — nunca "Recibo", "Comprobante" o "Ticket".</li>
+                  <li>Tenga nombre, domicilio y <b>Tax ID</b> del emisor.</li>
+                  <li>Lleve nombre y RFC del receptor: <b>GET MORE FROM YOUR BUSINESS, S.A. de C.V. — GMF1109145W5</b>.</li>
+                  <li>Tenga descripción de los conceptos facturados.</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 06 · Herramientas -->
+            <section class="s-block" id="sec-herramientas">
+              <div class="s-block-label">06 · Herramientas</div>
+              <h2>Dónde cargas tus facturas.</h2>
+              <p>
+                Dos herramientas vivas en SharePoint. Ambas requieren que las
+                abras al menos una vez para activar tu acceso. Si tienes
+                problemas con el acceso, escribe al Administrador de Nómina.
+              </p>
+
+              <div class="pol-card">
+                <h3>Carpeta de Reembolsos · SharePoint</h3>
+                <p>Ruta: <b>Reembolsos-México · Documentos · PerDiem ExtPerDiem2022P1</b>. Cada Consultor tiene su propia subcarpeta con permiso de "Puede editar". Diferencia entre PerDiem y ExtraPerDiem al subir.</p>
+              </div>
+
+              <div class="pol-card">
+                <h3>Excel de Registro</h3>
+                <p>Archivo: <b>00. Registro - Reembolsos México 2026.xlsx</b>. Una tabla con una columna por tipo de gasto. Cada Consultor declara <b>un renglón por periodo</b>. La columna de la derecha es de uso exclusivo del Director de Operaciones para su visto bueno sobre gastos atípicos.</p>
+              </div>
+
+              <h3 style="font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; color: var(--lcg-dark); margin: 24px 0 4px;">Catálogo de conceptos</h3>
+              <p>Usa estos nombres exactos al cargar y registrar:</p>
+              <div class="concept-chips">
+                <span class="chip">Alimentos</span>
+                <span class="chip">Despensa</span>
+                <span class="chip">Combustibles y lubricantes</span>
+                <span class="chip">Transporte terrestre</span>
+                <span class="chip">Peaje</span>
+                <span class="chip">Software</span>
+                <span class="chip">Papelería y oficina</span>
+                <span class="chip">Hospedaje</span>
+                <span class="chip">Renta de autos</span>
+                <span class="chip">Mensajería y paquetería</span>
+                <span class="chip">Diversos</span>
+              </div>
+            </section>
+
+            <!-- 07 · Carga de facturas -->
+            <section class="s-block" id="sec-carga">
+              <div class="s-block-label">07 · Carga de facturas</div>
+              <h2>El flujo paso a paso.</h2>
+
+              <ol class="steps">
+                <li>
+                  <div>
+                    <h4>Solicita tu factura al pagar</h4>
+                    <p>Es responsabilidad del Consultor pedir el CFDI en el momento de la compra. Si la fecha de emisión no coincide con la fecha de consumo, adjunta también el ticket.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Súbela a tu carpeta personal</h4>
+                    <p>Carga ambos archivos (.pdf y .xml) en par. <b>No</b> subas archivos .zip.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Nómbrala con la convención</h4>
+                    <p>Formato: <code>FechaDeConsumo_ConceptoDeGasto</code>. Ejemplo: <code>15Ago_Despensa.pdf</code> y <code>15Ago_Despensa.xml</code>.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Regístrala en el Excel</h4>
+                    <p>Un renglón por periodo. Clasifica el monto en la columna correcta del catálogo.</p>
+                  </div>
+                </li>
+              </ol>
+            </section>
+
+            <!-- 08 · Corte y plazos -->
+            <section class="s-block" id="sec-corte">
+              <div class="s-block-label">08 · Corte y plazos</div>
+              <h2>Cuándo se cierra el periodo.</h2>
+
+              <div class="important-call">
+                <div class="ic-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <h3>Fecha límite — sin prórroga automática.</h3>
+                  <p>Tanto la carga de CFDIs como el llenado del Excel cierran el día hábil <b>posterior</b> al pago de nómina, a las <b>12:00 CST</b>. La carpeta de la quincena en curso está disponible desde el inicio de la quincena — puedes ir cargando en cuanto factures cada gasto.</p>
+                  <ul>
+                    <li>Si un imprevisto justificado te impide cumplir, da aviso oportuno al Administrador de Nómina y acuerda una prórroga.</li>
+                    <li>Cargar en el último momento es mala idea: cualquier rechazo te deja sin tiempo para corregir.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 09 · Motivos de rechazo -->
+            <section class="s-block" id="sec-rechazo">
+              <div class="s-block-label">09 · Motivos de rechazo</div>
+              <h2>Lo que <em>no</em> se reembolsa.</h2>
+              <p>
+                El PerDiem cubre 90% en alimentación. El resto puede ir a
+                aseo personal y artículos básicos de cocina o limpieza. Cualquier
+                CFDI que contenga alguno de estos conceptos se rechaza por completo:
+              </p>
+
+              <div class="warning-call">
+                <div class="ic-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                </div>
+                <div>
+                  <h3>Conceptos que invalidan la factura.</h3>
+                  <p>Si la factura contiene <b>cualquiera</b> de estos artículos, se rechaza en su <b>totalidad</b> — no hay validez parcial.</p>
+                  <ul>
+                    <li>Bebidas alcohólicas</li>
+                    <li>Tabaco, vape, e-liquids</li>
+                    <li>Alimentos o accesorios para mascotas</li>
+                    <li>Cosméticos, belleza, cuidado de la piel</li>
+                    <li>Recargas de tiempo aire o plan telefónico</li>
+                    <li>Suplementos, vitaminas, BCAA's, probióticos</li>
+                    <li>Lavandería y tintorería</li>
+                    <li>Decorativos: lámparas, floreros, espejos, velas</li>
+                    <li>Electrodomésticos: cafeteras, microondas, ventiladores, TV</li>
+                    <li>Cualquier prenda o vestimenta</li>
+                    <li>Medicamentos y herramientas de monitoreo de salud</li>
+                    <li>Lentes de contacto u oftálmicos</li>
+                    <li>Artículos para bebé</li>
+                    <li>Seguros o mantenimientos de vehículo</li>
+                    <li>Cualquier artículo fuera del catálogo PerDiem</li>
+                  </ul>
+                  <div class="footnote">
+                    También se rechazan: <b>CFDIs duplicados</b> (mismo Folio Fiscal/UUID ya reembolsado), <b>CFDIs en efectivo &gt; $2,000 MXN</b>, y <b>CFDIs cuya fecha no coincida con el periodo</b>.
+                  </div>
+                </div>
+              </div>
+
+              <p style="margin-top: 16px;">
+                Para reembolso de medicamentos, no uses PerDiem — comunícate
+                directamente con el <b>SGMM</b> proporcionado por la empresa
+                (ver sesión de Políticas y Conducta).
+              </p>
+            </section>
+
+            <!-- 10 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">10 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Abre por primera vez el link al Excel de Registro y al SharePoint para activar tu acceso. Si algo falla, escribe directo al Administrador de Nómina antes de tu primera quincena en proyecto.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="session-d1-b05-politicas.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
+                  <span class="title">Políticas y Código de conducta</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-1-lunes.html">
+                  Siguiente · SharePoint &amp; M365
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Aside -->
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 06 de 08 · Día 01</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Por qué te toca saber esto</a></li>
+                <li><a href="#sec-conceptos"><span class="tick"></span>Los dos conceptos</a></li>
+                <li><a href="#sec-perdiem"><span class="tick"></span>PerDiem</a></li>
+                <li><a href="#sec-extra"><span class="tick"></span>ExtraPerDiem</a></li>
+                <li><a href="#sec-facturacion"><span class="tick"></span>Facturación</a></li>
+                <li><a href="#sec-herramientas"><span class="tick"></span>Herramientas</a></li>
+                <li><a href="#sec-carga"><span class="tick"></span>Carga de facturas</a></li>
+                <li><a href="#sec-corte"><span class="tick"></span>Corte y plazos</a></li>
+                <li><a href="#sec-rechazo"><span class="tick"></span>Motivos de rechazo</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="https://getmorelcgmx.sharepoint.com/:w:/s/LCGCapitalHumanoMx/IQAP413WnAQ5TbaJ3KafPU8MAbIVjjp251fEqSsdx10YjW8?e=lEZgWJ" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Política de Reembolso 2026<span class="r-meta">Word · SharePoint LCG</span></div>
+                </a></li>
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+                  <div class="r-name">Carpeta Reembolsos-México<span class="r-meta">Tu acceso personal · pídelo al Administrador de Nómina</span></div>
+                </div></li>
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+                  <div class="r-name">00. Registro · Reembolsos 2026<span class="r-meta">Excel compartido · ábrelo una vez para activar acceso</span></div>
+                </div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ide-bg); border-color: var(--cat-ide);">
+              <h4 style="color: var(--cat-ide);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Sigue con <b>SharePoint &amp; M365</b>: dónde vive todo lo
+                anterior — y todo lo del proyecto — en el ecosistema Microsoft.
+              </p>
+              <a href="day-1-lunes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ide);">Volver al Día 01 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd1-b06-admin';
+
+  function loadStore(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
