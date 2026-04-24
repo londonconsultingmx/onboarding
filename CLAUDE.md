@@ -9,7 +9,7 @@ Knowledge base para iteración continua del programa de onboarding con Claude Co
 Este repositorio contiene el material oficial del programa de onboarding de **London Consulting Group México**. El programa es una semana (5 días) presencial en San Pedro Garza García, diseñado para todo nuevo ingreso sin importar el rol.
 
 **Owner:** People & Culture (Mafer).
-**Patrocinador técnico / AI:** Transformación Digital (Fray, Director de Operaciones).
+**Patrocinador técnico / AI:** Transformación Digital (Alfredo Chávez, Director de Operaciones).
 **Alcance:** general LCG, aplicable a consultores, gerentes y roles de soporte.
 
 El proyecto tiene **dos productos paralelos que se mantienen sincronizados**:
@@ -226,7 +226,7 @@ No requiere build — es HTML/CSS/JS plano.
 | Políticas y admin | Jorge González | Día 1 (políticas, viáticos, SharePoint) |
 | Sistemas y Digital MX | Alfredo Chávez | Día 1 (SharePoint & M365), Día 4 (herramientas técnicas, AI) |
 | Bienvenida / casos | Luis Ortiz (Director) | Día 1, Día 5 |
-| Contenido AI | Fray (TD) + equipo | Día 4 (bloques AI-1 a AI-5) |
+| Contenido AI | Alfredo Chávez (TD) + equipo | Día 4 (bloques AI-1 a AI-5) |
 | Gerente de proyecto asignado | Variable por ingreso | Día 5 (intro proyecto) |
 | Directores senior | Variable | Día 2 (metodologías), Día 3 (verticales) |
 
@@ -274,7 +274,7 @@ No requiere build — es HTML/CSS/JS plano.
 
 ### Para cambios mayores (nuevo día, rediseño de bloque)
 
-1. Discutir el cambio con Mafer (owner) y con Fray (AI/TD).
+1. Discutir el cambio con Mafer (owner) y con Alfredo Chávez (AI/TD).
 2. Reflejar el cambio primero en `ONBOARDING.md`.
 3. Actualizar `generate_docx.js` para regenerar el Word.
 4. Crear/ajustar HTMLs del portal (mantener consistencia con design tokens).
@@ -319,4 +319,4 @@ No requiere build — es HTML/CSS/JS plano.
 ---
 
 **Última actualización:** abril 2026 · v1.0
-**Mantenedor:** Fray (Transformación Digital) + Mafer (P&C)
+**Mantenedor:** Alfredo Chávez (Transformación Digital) + Mafer (P&C)

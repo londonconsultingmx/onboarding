@@ -626,7 +626,7 @@ const anexo = [
   BULLET_MIX("Administración (Jorge): ", "bloques de políticas, viáticos, SharePoint, marco normativo."),
   BULLET_MIX("Sistemas y Digital MX (Alfredo Chávez): ", "setup técnico, accesos, demos de herramientas internas."),
   BULLET_MIX("Dirección general / Directores: ", "bienvenida, casos de uso, panel de cierre."),
-  BULLET_MIX("Transformación Digital (Fray): ", "contenido AI, Academia Claude, Framework de Competencia AI."),
+  BULLET_MIX("Transformación Digital (Alfredo Chávez): ", "contenido AI, Academia Claude, Framework de Competencia AI."),
   BULLET_MIX("Gerentes de proyecto: ", "presentación de proyecto asignado, handoff formal al equipo."),
 
   H2("Indicadores de éxito del programa"),

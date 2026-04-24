@@ -304,7 +304,7 @@ Para cada nivel, expectativas específicas en Operaciones, Transformación Digit
 - **Administración (Jorge):** políticas, viáticos, SharePoint, marco normativo.
 - **Sistemas y Digital MX (Alfredo Chávez):** setup técnico, accesos, demos de herramientas internas.
 - **Dirección general / Directores:** bienvenida, casos de uso, panel de cierre.
-- **Transformación Digital (Fray):** contenido AI, Academia Claude, Framework de Competencia AI.
+- **Transformación Digital (Alfredo Chávez):** contenido AI, Academia Claude, Framework de Competencia AI.
 - **Gerentes de proyecto:** presentación de proyecto asignado, handoff al equipo.
 
 ### Indicadores de éxito

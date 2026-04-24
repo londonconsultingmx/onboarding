@@ -91,5 +91,5 @@ Abre Claude Code en la raíz de la carpeta. Claude leerá automáticamente `CLAU
 
 ## Mantenedores
 
-- **Fray** — Director de Operaciones / Transformación Digital.
+- **Alfredo Chávez** — Director de Operaciones / Transformación Digital.
 - **Mafer** — People & Culture (owner del programa).
