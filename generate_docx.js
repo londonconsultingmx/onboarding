@@ -456,7 +456,7 @@ const dia4 = [
   P("Las 4 formas de usar Claude en la operación LCG:", { bold: true }),
 
   BULLET_MIX("Claude.ai (web/app) — caballo de batalla diario: ", "Proyectos, Estilos, Memoria, Artifacts, búsqueda web integrada, creación de archivos (Word, Excel, PPT, PDF), código y visualizaciones."),
-  BULLET_MIX("Claude Code — terminal para desarrollo: ", "uso por perfiles técnicos (Ricardo, Platform). Delegación de tareas de código. Conexión con London-bo."),
+  BULLET_MIX("Claude Code — terminal para desarrollo: ", "uso por perfiles técnicos (Alfredo Chávez, Sistemas y Digital MX). Delegación de tareas de código. Conexión con London-bo."),
   BULLET_MIX("Cowork — automatización de escritorio: ", "organización de archivos, tareas repetitivas, automatización de flujos locales. Muy útil para operaciones y administración."),
   BULLET_MIX("API y Managed Agents — infraestructura: ", "cómo London-bo opera sobre la API de Claude. Concepto de agente autónomo."),
 
@@ -624,7 +624,7 @@ const anexo = [
   H2("Roles y responsabilidades"),
   BULLET_MIX("People & Culture (Mafer): ", "owner del programa. Agenda, facilitadores, materiales, feedback loop."),
   BULLET_MIX("Administración (Jorge): ", "bloques de políticas, viáticos, SharePoint, marco normativo."),
-  BULLET_MIX("Platform / IT (Ricardo): ", "setup técnico, accesos, demos de herramientas internas."),
+  BULLET_MIX("Sistemas y Digital MX (Alfredo Chávez): ", "setup técnico, accesos, demos de herramientas internas."),
   BULLET_MIX("Dirección general / Directores: ", "bienvenida, casos de uso, panel de cierre."),
   BULLET_MIX("Transformación Digital (Fray): ", "contenido AI, Academia Claude, Framework de Competencia AI."),
   BULLET_MIX("Gerentes de proyecto: ", "presentación de proyecto asignado, handoff formal al equipo."),

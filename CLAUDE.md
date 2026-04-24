@@ -139,7 +139,7 @@ El **Día 4** fue rediseñado. Versión anterior: Power BI (4h) + Monday/Miro (2
 ### Productos Claude disponibles en LCG
 
 - **Claude.ai** — chat (web y app). Proyectos, Estilos, Memoria, Artifacts, búsqueda web, creación de archivos.
-- **Claude Code** — CLI para desarrollo. En uso por Ricardo y equipo Platform.
+- **Claude Code** — CLI para desarrollo. En uso por Alfredo Chávez y equipo Sistemas y Digital MX.
 - **Cowork** — automatización de escritorio (archivos, tareas repetitivas).
 - **Claude API** — base de integraciones propias (London-bo).
 - **Managed Agents** — agentes autónomos sobre la API.
@@ -224,7 +224,7 @@ No requiere build — es HTML/CSS/JS plano.
 |---|---|---|
 | Owner del programa | Mafer (P&C) | Coordinación general |
 | Políticas y admin | Jorge González | Día 1 (políticas, viáticos, SharePoint) |
-| Platform / IT | Ricardo | Día 4 (herramientas técnicas) |
+| Sistemas y Digital MX | Alfredo Chávez | Día 1 (SharePoint & M365), Día 4 (herramientas técnicas, AI) |
 | Bienvenida / casos | Luis Ortiz (Director) | Día 1, Día 5 |
 | Contenido AI | Fray (TD) + equipo | Día 4 (bloques AI-1 a AI-5) |
 | Gerente de proyecto asignado | Variable por ingreso | Día 5 (intro proyecto) |

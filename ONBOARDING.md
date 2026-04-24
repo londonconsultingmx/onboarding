@@ -41,7 +41,7 @@ El Día 4 se rediseña de "Herramientas" a **"Herramientas & AI"**. Se comprime 
 | 04 | Estructura organizacional | 30m | P&C (Mafer) |
 | 05 | Políticas y Código de conducta | 1h | Admin (Jorge González) |
 | 06 | Administración & reembolsos | 45m | Admin (Jorge González) |
-| 07 | SharePoint & M365 | 40m | IT / Platform (Ricardo) |
+| 07 | SharePoint & M365 | 40m | Sistemas y Digital MX (Alfredo Chávez) |
 | 08 | Networking virtual | 1h | P&C + mentor asignado |
 
 **Total:** 6h 25m de contenido + breaks + lunch.
@@ -184,7 +184,7 @@ Conceptos base que todo consultor LCG debe dominar **antes** de tocar una herram
 **Las 4 formas de usar Claude en la operación LCG:**
 
 - **Claude.ai (web/app)** — caballo de batalla diario. Proyectos, Estilos, Memoria, Artifacts, búsqueda web integrada, creación de archivos (Word, Excel, PPT, PDF), código y visualizaciones.
-- **Claude Code** — terminal para desarrollo. Uso por perfiles técnicos (Ricardo, Platform). Delegación de tareas de código. Conexión con London-bo.
+- **Claude Code** — terminal para desarrollo. Uso por perfiles técnicos (Alfredo Chávez, Sistemas y Digital MX). Delegación de tareas de código. Conexión con London-bo.
 - **Cowork** — automatización de escritorio. Organización de archivos, tareas repetitivas. Muy útil para operaciones y administración.
 - **API y Managed Agents** — infraestructura. Cómo London-bo opera sobre la API de Claude. Concepto de agente autónomo.
 
@@ -302,7 +302,7 @@ Para cada nivel, expectativas específicas en Operaciones, Transformación Digit
 
 - **People & Culture (Mafer):** owner del programa. Agenda, facilitadores, materiales, feedback loop.
 - **Administración (Jorge):** políticas, viáticos, SharePoint, marco normativo.
-- **Platform / IT (Ricardo):** setup técnico, accesos, demos de herramientas internas.
+- **Sistemas y Digital MX (Alfredo Chávez):** setup técnico, accesos, demos de herramientas internas.
 - **Dirección general / Directores:** bienvenida, casos de uso, panel de cierre.
 - **Transformación Digital (Fray):** contenido AI, Academia Claude, Framework de Competencia AI.
 - **Gerentes de proyecto:** presentación de proyecto asignado, handoff al equipo.
