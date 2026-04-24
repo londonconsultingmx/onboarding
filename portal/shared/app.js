@@ -105,8 +105,8 @@ const SIDEBAR_DAYS = [
       { name: "Estructura organizacional",      href: "session-d1-b04-estructura.html", sid: "d1-b04-estructura" },
       { name: "Políticas y Código de conducta", href: "session-d1-b05-politicas.html", sid: "d1-b05-politicas" },
       { name: "Administración & reembolsos",    href: "session-d1-b06-reembolsos.html", sid: "d1-b06-admin" },
-      { name: "SharePoint & M365",              href: "#", sid: "d1-b07-sharepoint" },
-      { name: "Networking virtual",             href: "#", sid: "d1-b08-networking" }
+      { name: "SharePoint & M365",              href: "session-d1-b07-sharepoint.html", sid: "d1-b07-sharepoint" },
+      { name: "Networking virtual",             href: "session-d1-b08-networking.html", sid: "d1-b08-networking" }
     ]
   },
   {
