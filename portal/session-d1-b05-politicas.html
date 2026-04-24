@@ -80,12 +80,15 @@
   display: flex; flex-direction: column; gap: 8px;
 }
 .pol-card li{
-  display: grid; grid-template-columns: 18px 1fr; gap: 10px;
+  position: relative;
+  padding-left: 26px;
   font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
 }
 .pol-card li::before{
-  content: ""; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--cat-ide); margin-top: 8px; margin-left: 6px;
+  content: ""; position: absolute;
+  left: 6px; top: 9px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cat-ide);
   box-shadow: 0 0 0 3px rgba(58,117,97,.12);
 }
 .pol-card li b{ color: var(--ink); font-weight: 600; }
@@ -163,12 +166,15 @@
 .important-call p{ margin: 0 0 10px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
 .important-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
 .important-call li{
-  display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+  position: relative;
+  padding-left: 22px;
   font-size: 14px; color: #F2EEE8; line-height: 1.5;
 }
 .important-call li::before{
-  content: ""; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--lcg-mint); margin-top: 8px; margin-left: 5px;
+  content: ""; position: absolute;
+  left: 5px; top: 8px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--lcg-mint);
 }
 
 /* Warning callout — comportamientos inaceptables */
@@ -203,12 +209,15 @@
 .warning-call p{ margin: 0 0 10px; font-size: 14.5px; color: #FFE8DD; line-height: 1.55; max-width: 640px; }
 .warning-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
 .warning-call li{
-  display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+  position: relative;
+  padding-left: 22px;
   font-size: 14px; color: #fff; font-weight: 600; line-height: 1.4;
 }
 .warning-call li::before{
-  content: "✕"; font-family: ui-monospace, Menlo, monospace;
-  color: #FFD3C4; font-size: 14px; line-height: 1; margin-top: 2px;
+  content: "✕"; position: absolute;
+  left: 0; top: 1px;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #FFD3C4; font-size: 14px; line-height: 1;
 }
 
 /* Two-col policy row (e.g. Diagnóstico / Proyecto for hospedaje) */
