@@ -29,11 +29,11 @@
   }
 
   .wrap {
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 14px;
     align-items: center; justify-content: center;
     /* Fit both width and height of the host iframe.
-       Reserves ~84px for label (16) + 2 gaps (24) + ctrls (32) + padding (12). */
-    width: min(640px, calc(100% - 16px), calc(100vh - 84px));
+       Reserves ~96px for label (18) + 2 gaps (28) + ctrls (36) + padding (14). */
+    width: min(720px, calc(100% - 16px), calc(100vh - 96px));
     height: 100%;
     padding: 8px 0;
   }
@@ -103,16 +103,16 @@
   }
   .sq .title {
     font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(44px, 11.5cqw, 100px);
+    font-size: clamp(50px, 12.5cqw, 120px);
     line-height: 0.94; letter-spacing: -0.035em;
     color: var(--lcg-dark); margin: 12px 0 0;
     word-break: normal; hyphens: none;
   }
   .sq .title em { font-style: italic; color: var(--lcg-green); font-weight: 300; }
   .sq .phrase {
-    margin-top: 20px;
+    margin-top: 24px;
     font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(16px, 3.2cqw, 26px);
+    font-size: clamp(18px, 3.5cqw, 30px);
     line-height: 1.35; letter-spacing: -0.01em;
     color: var(--lcg-ink);
     max-width: 88%;
@@ -121,7 +121,7 @@
   .sq .counter {
     position: absolute; right: 6%; bottom: 12%;
     font-family: 'Fraunces', serif; font-weight: 200; font-style: italic;
-    font-size: clamp(120px, 30cqw, 220px);
+    font-size: clamp(140px, 32cqw, 260px);
     line-height: 0.8; letter-spacing: -0.04em;
     color: rgba(8,94,84,0.08);
     z-index: 2;
