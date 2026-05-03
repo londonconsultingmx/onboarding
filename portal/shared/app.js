@@ -112,7 +112,7 @@ const SIDEBAR_DAYS = [
   {
     num: 2, name: "Día 02 · Metodología", short: "Metodología", href: "day-2-martes.html", cat: "met",
     sessions: [
-      { name: "Plan de Vuelo",                href: "#", sid: "d2-b01-plan-vuelo" },
+      { name: "Plan de Vuelo",                href: "session-d2-b01-plan-vuelo.html", sid: "d2-b01-plan-vuelo" },
       { name: "Performance Analysis",         href: "#", sid: "d2-b02-performance" },
       { name: "Value Stream Analysis (VSA)",  href: "#", sid: "d2-b03-vsa" },
       { name: "MEF · Evaluación Financiera",  href: "#", sid: "d2-b04-mef" },
