@@ -101,13 +101,13 @@
 .stage-row.is-cascade{ background: linear-gradient(90deg, var(--cat-met-bg) 0%, var(--surface) 50%); }
 .stage-row.is-agile{   background: linear-gradient(90deg, var(--lcg-cream) 0%, var(--surface) 50%); }
 
-/* Two methods side-by-side */
+/* Three methods side-by-side */
 .methods{
-  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
   margin-top: 6px;
 }
 .method-card{
-  padding: 28px 30px; border-radius: var(--r-md);
+  padding: 26px 28px; border-radius: var(--r-md);
   position: relative; overflow: hidden;
   display: flex; flex-direction: column;
 }
@@ -119,13 +119,18 @@
   background: linear-gradient(165deg, var(--lcg-cream) 0%, var(--surface) 75%);
   border: 1px solid #E9E1CC;
 }
+.method-card.is-hybrid{
+  background: linear-gradient(165deg, rgba(138,244,233,.18) 0%, var(--surface) 75%);
+  border: 1px solid rgba(3,181,133,.22);
+}
 .method-card::before{
   content: ""; position: absolute;
   top: 0; left: 0; right: 0; height: 3px;
-  opacity: .55;
+  opacity: .65;
 }
 .method-card.is-cascade::before{ background: var(--cat-met); }
 .method-card.is-agile::before{ background: var(--lcg-dark); }
+.method-card.is-hybrid::before{ background: var(--lcg-green); }
 .method-card .mc-tag{
   font-family: ui-monospace, Menlo, monospace;
   font-size: 11px; letter-spacing: .14em;
@@ -133,19 +138,24 @@
 }
 .method-card.is-cascade .mc-tag{ color: var(--cat-met); }
 .method-card.is-agile .mc-tag{ color: var(--lcg-dark); }
+.method-card.is-hybrid .mc-tag{ color: var(--lcg-green); }
 .method-card h3{
   font-family: var(--serif); font-weight: 400;
-  font-size: 28px; line-height: 1; letter-spacing: -.02em;
-  color: var(--lcg-dark); margin: 0 0 12px;
+  font-size: 26px; line-height: 1; letter-spacing: -.02em;
+  color: var(--lcg-dark); margin: 0 0 8px;
 }
-.method-card p{ font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 0 0 14px; }
+.method-card .mc-sub{
+  font-size: 12.5px; color: var(--ink-3);
+  font-style: italic; margin: 0 0 14px;
+}
+.method-card p{ font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin: 0 0 12px; }
 .method-card ul{
   list-style: none; padding: 0; margin: 0;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 6px;
 }
 .method-card li{
-  position: relative; padding-left: 22px;
-  font-size: 13.5px; color: var(--ink-2); line-height: 1.5;
+  position: relative; padding-left: 20px;
+  font-size: 13px; color: var(--ink-2); line-height: 1.5;
 }
 .method-card li::before{
   content: ""; position: absolute;
@@ -154,7 +164,208 @@
 }
 .method-card.is-cascade li::before{ background: var(--cat-met); }
 .method-card.is-agile li::before{ background: var(--lcg-dark); }
+.method-card.is-hybrid li::before{ background: var(--lcg-green); }
 .method-card li b{ color: var(--ink); font-weight: 600; }
+.method-card .mc-best{
+  margin-top: auto; padding-top: 14px;
+  border-top: 1px solid rgba(0,0,0,.06);
+  font-size: 12px; color: var(--ink-3); line-height: 1.5;
+}
+.method-card .mc-best b{
+  display:block; font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  font-weight: 700; color: var(--ink-4); margin-bottom: 4px;
+}
+
+/* Method visualizations — small SVG diagrams */
+.method-visuals{
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+  margin-top: 12px;
+}
+.method-vis{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+  text-align: center;
+}
+.method-vis .mv-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 12px;
+  display: block;
+}
+.method-vis svg{ width: 100%; height: 110px; display: block; margin: 0 auto; }
+.method-vis .mv-cap{
+  font-size: 12px; color: var(--ink-3); margin-top: 10px;
+  line-height: 1.45;
+}
+
+/* Examples grid — Scrum / Kanban / DevOps / etc. */
+.examples{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-top: 14px;
+}
+.ex-card{
+  padding: 22px 24px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ex-card.is-cascade{ border-color: rgba(8,94,84,.22); background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 80%); }
+.ex-card.is-agile{   border-color: #E9E1CC; background: linear-gradient(180deg, var(--lcg-cream) 0%, var(--surface) 80%); }
+.ex-card.is-hybrid{  border-color: rgba(3,181,133,.25); background: linear-gradient(180deg, rgba(138,244,233,.16) 0%, var(--surface) 80%); }
+.ex-card .ex-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700;
+}
+.ex-card.is-cascade .ex-tag{ color: var(--cat-met); }
+.ex-card.is-agile .ex-tag{ color: var(--lcg-dark); }
+.ex-card.is-hybrid .ex-tag{ color: var(--lcg-green); }
+.ex-card h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 22px; line-height: 1.05; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0;
+}
+.ex-card .ex-origin{
+  font-size: 11px; color: var(--ink-4);
+  font-family: ui-monospace, Menlo, monospace;
+  letter-spacing: .08em;
+}
+.ex-card p{ font-size: 13px; color: var(--ink-2); line-height: 1.5; margin: 4px 0 0; }
+.ex-card .ex-meta{
+  margin-top: auto; padding-top: 10px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.ex-card .ex-chip{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; padding: 3px 8px; border-radius: 4px;
+  background: var(--surface-2); color: var(--ink-3);
+  border: 1px solid var(--hairline);
+  letter-spacing: .04em;
+}
+
+/* AI · Project Management — section */
+.ai-hero{
+  padding: 32px 36px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #1A2F2A 0%, #074D46 60%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  margin-top: 6px;
+  box-shadow: 0 12px 32px rgba(8,94,84,.20);
+}
+.ai-hero::after{
+  content: ""; position: absolute;
+  top: -30%; right: -8%; width: 360px; height: 360px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.ai-hero > *{ position: relative; z-index: 1; }
+.ai-hero .ai-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--lcg-mint); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 8px;
+}
+.ai-hero h3{
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(28px, 3vw, 38px); line-height: 1.05; letter-spacing: -.02em;
+  color: #fff; margin: 0 0 10px;
+}
+.ai-hero h3 em{ font-style: italic; color: var(--lcg-mint); font-weight: 400; }
+.ai-hero p{ margin: 0; font-size: 15px; color: rgba(242,238,232,.86); line-height: 1.55; max-width: 720px; }
+
+/* AI value areas — 5 cards */
+.ai-areas{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-top: 18px;
+}
+.ai-area{
+  padding: 18px 22px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+}
+.ai-area .aa-num{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--lcg-green); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 4px;
+}
+.ai-area h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 18px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 4px;
+}
+.ai-area p{ font-size: 13px; color: var(--ink-2); line-height: 1.5; margin: 0; }
+.ai-area p b{ color: var(--ink); font-weight: 600; }
+
+/* AI maturity ladder */
+.ai-ladder{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-top: 14px;
+}
+.ai-ladder .step{
+  padding: 18px 20px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 80%);
+  border: 1px solid rgba(8,94,84,.18);
+  position: relative;
+}
+.ai-ladder .step.is-now{ border-color: var(--lcg-green); border-width: 1.5px; }
+.ai-ladder .step .st-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--cat-met); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ai-ladder .step.is-now .st-tag::after{
+  content: "Hoy"; padding: 2px 8px; border-radius: 999px;
+  background: var(--lcg-green); color: #fff; font-size: 9px;
+  letter-spacing: .12em; font-weight: 700;
+}
+.ai-ladder .step h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 19px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 6px;
+}
+.ai-ladder .step p{ font-size: 12.5px; color: var(--ink-2); line-height: 1.5; margin: 0; }
+
+/* Warning callout for AI cuidados */
+.warning-call{
+  margin: 14px 0 0;
+  padding: 26px 30px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #5C1F15 0%, #862B1E 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(92,31,21,.22);
+}
+.warning-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(255,205,180,.18), transparent 70%);
+  pointer-events: none;
+}
+.warning-call > *{ position: relative; z-index: 1; }
+.warning-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(255,205,180,.15);
+  border: 1px solid rgba(255,205,180,.32);
+  color: #FFD3C4;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.warning-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 24px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.warning-call ul{ list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.warning-call li{
+  position: relative;
+  padding-left: 22px;
+  font-size: 13.5px; color: #FFE8DD; line-height: 1.5;
+}
+.warning-call li::before{
+  content: "!"; position: absolute;
+  left: 5px; top: 0; width: 14px; text-align: center;
+  font-family: ui-monospace, Menlo, monospace;
+  color: #FFD3C4; font-size: 13px; font-weight: 700; line-height: 1.5;
+}
+.warning-call li b{ color: #fff; }
 
 /* Design Sprint 5-step */
 .sprint{
@@ -485,34 +696,232 @@
               </div>
             </section>
 
-            <!-- 03 · Las dos lógicas -->
+            <!-- 03 · Las tres lógicas -->
             <section class="s-block" id="sec-metodo">
-              <div class="s-block-label">03 · Las dos lógicas</div>
-              <h2>Cascada para la columna, ágil para iterar.</h2>
+              <div class="s-block-label">03 · Las tres lógicas</div>
+              <h2>Cascada, ágil <em>y</em> el híbrido que usamos.</h2>
+              <p>
+                LCG combina las dos grandes escuelas de gestión de proyectos —
+                cascada y ágil — en un modelo <b>híbrido</b>. La cascada da la
+                columna y el compromiso con cliente; el ágil entrega valor en
+                ciclos cortos dentro de cada etapa.
+              </p>
 
               <div class="methods">
                 <div class="method-card is-cascade">
-                  <div class="mc-tag">Cascada</div>
-                  <h3>Para la columna del proyecto</h3>
-                  <p>Las etapas pesadas se ejecutan en orden: cada una alimenta a la siguiente. La cascada garantiza que el Análisis informe el Diseño, que el Diseño informe la Implementación, y que la Capacitación habilite la Documentación.</p>
+                  <div class="mc-tag">Cascada · Waterfall</div>
+                  <h3>Predictivo, secuencial.</h3>
+                  <p class="mc-sub">Royce, 1970 · industria pesada y software inicial.</p>
+                  <p>Cada etapa se planifica al inicio y se ejecuta en orden estricto. Cada fase produce un entregable que sirve de input para la siguiente.</p>
                   <ul>
-                    <li><b>Análisis Exhaustivo</b> antes de Diseño</li>
-                    <li><b>Diseño</b> antes de Implementación</li>
-                    <li><b>Implementación</b> antes de Documentación</li>
-                    <li>Cumplimiento estricto de <b>fechas de etapa</b></li>
+                    <li><b>Plan completo</b> antes de empezar</li>
+                    <li>Avance lineal con <b>gates</b> entre etapas</li>
+                    <li>Cambios costosos una vez iniciada la fase</li>
+                    <li>Buen fit para <b>alcance estable</b></li>
                   </ul>
+                  <div class="mc-best">
+                    <b>Mejor cuando</b>
+                    El alcance está claro desde el día 1, hay regulación o auditoría pesada, y el costo del cambio sube en cada fase.
+                  </div>
                 </div>
 
                 <div class="method-card is-agile">
-                  <div class="mc-tag">Despliegues Ágiles</div>
-                  <h3>Para iterar diseños y Quick Wins</h3>
-                  <p>Dentro de Diseño y Quick Wins usamos <b>Design Sprints</b>: ciclos cortos de 5 pasos para resolver problemas concretos. La metodología sí se lleva a cabo bajo un esquema y un límite de tiempo.</p>
+                  <div class="mc-tag">Ágil · Iterativo</div>
+                  <h3>Adaptativo, incremental.</h3>
+                  <p class="mc-sub">Manifiesto Ágil, 2001 · 17 firmantes (Beck, Cunningham, et al.).</p>
+                  <p>Entrega valor en ciclos cortos (sprints, iteraciones). El alcance evoluciona con la retroalimentación del usuario al final de cada ciclo.</p>
                   <ul>
-                    <li>Ciclos cortos con <b>límite de tiempo</b></li>
-                    <li>Enfocado en cómo se solucionan problemas</li>
-                    <li>Talleres con usuarios clave</li>
-                    <li>Prototipo y testeo antes de implementar</li>
+                    <li>Entregas <b>parciales y frecuentes</b></li>
+                    <li>Backlog priorizado, ajustable cada sprint</li>
+                    <li>Equipo multidisciplinario con autonomía</li>
+                    <li>Cambios bienvenidos hasta tarde</li>
                   </ul>
+                  <div class="mc-best">
+                    <b>Mejor cuando</b>
+                    El alcance es exploratorio, hay incertidumbre técnica, o el cliente necesita validar al ver — no al leer un documento.
+                  </div>
+                </div>
+
+                <div class="method-card is-hybrid">
+                  <div class="mc-tag">Híbrido · LCG</div>
+                  <h3>Lo mejor de ambos.</h3>
+                  <p class="mc-sub">Wagile / Hybrid · práctica estándar en consultoría operativa.</p>
+                  <p>Cascada para la columna del proyecto (etapas largas, contratos, milestones con cliente). Ágil dentro de las etapas que requieren iteración: <b>Diseño</b> y <b>Quick Wins</b>.</p>
+                  <ul>
+                    <li><b>Etapas en cascada</b> con compromiso fijo de fechas</li>
+                    <li><b>Sprints ágiles</b> dentro de Diseño y Quick Wins</li>
+                    <li>Plan de Vuelo gobierna ambos niveles desde Monday</li>
+                    <li>Ritual semanal: <b>Junta Semanal de Avance</b></li>
+                  </ul>
+                  <div class="mc-best">
+                    <b>Por qué LCG lo usa</b>
+                    El cliente necesita certeza de fechas y costos (cascada) pero el diseño operativo se construye iterando con quien lo va a operar (ágil).
+                  </div>
+                </div>
+              </div>
+
+              <!-- Visual diagrams of the three logics -->
+              <div class="method-visuals">
+                <div class="method-vis">
+                  <span class="mv-tag">Cascada · forma</span>
+                  <svg viewBox="0 0 200 110" aria-hidden="true">
+                    <g fill="none" stroke="#085E54" stroke-width="2" stroke-linecap="round">
+                      <rect x="10" y="14" width="46" height="18" rx="3" fill="rgba(8,94,84,.12)"/>
+                      <rect x="50" y="36" width="46" height="18" rx="3" fill="rgba(8,94,84,.12)"/>
+                      <rect x="92" y="58" width="46" height="18" rx="3" fill="rgba(8,94,84,.12)"/>
+                      <rect x="134" y="80" width="46" height="18" rx="3" fill="rgba(8,94,84,.12)"/>
+                      <path d="M56 23 L 50 36 M96 45 L 92 58 M138 67 L 134 80" stroke-width="1.4" opacity=".7"/>
+                    </g>
+                  </svg>
+                  <p class="mv-cap">Cada etapa cae a la siguiente en cascada — sin retorno.</p>
+                </div>
+
+                <div class="method-vis">
+                  <span class="mv-tag">Ágil · forma</span>
+                  <svg viewBox="0 0 200 110" aria-hidden="true">
+                    <g fill="none" stroke="#3A7561" stroke-width="2" stroke-linecap="round">
+                      <circle cx="35" cy="55" r="22" stroke-dasharray="3 4"/>
+                      <circle cx="100" cy="55" r="22" stroke-dasharray="3 4"/>
+                      <circle cx="165" cy="55" r="22" stroke-dasharray="3 4"/>
+                      <path d="M57 55 L 78 55 M122 55 L 143 55" stroke-width="1.4"/>
+                      <text x="35" y="59" font-family="ui-monospace, Menlo, monospace" font-size="9" text-anchor="middle" fill="#3A7561">Sprint 01</text>
+                      <text x="100" y="59" font-family="ui-monospace, Menlo, monospace" font-size="9" text-anchor="middle" fill="#3A7561">Sprint 02</text>
+                      <text x="165" y="59" font-family="ui-monospace, Menlo, monospace" font-size="9" text-anchor="middle" fill="#3A7561">Sprint 03</text>
+                    </g>
+                  </svg>
+                  <p class="mv-cap">Sprints cortos que iteran sobre lo aprendido.</p>
+                </div>
+
+                <div class="method-vis">
+                  <span class="mv-tag">Híbrido · forma</span>
+                  <svg viewBox="0 0 200 110" aria-hidden="true">
+                    <g fill="none" stroke-linecap="round">
+                      <rect x="10" y="20" width="38" height="22" rx="3" fill="rgba(8,94,84,.12)" stroke="#085E54" stroke-width="1.6"/>
+                      <rect x="56" y="20" width="78" height="22" rx="3" fill="rgba(3,181,133,.12)" stroke="#03B585" stroke-width="1.6"/>
+                      <rect x="142" y="20" width="44" height="22" rx="3" fill="rgba(8,94,84,.12)" stroke="#085E54" stroke-width="1.6"/>
+                      <circle cx="74" cy="74" r="11" fill="none" stroke="#03B585" stroke-width="1.6" stroke-dasharray="2 3"/>
+                      <circle cx="98" cy="74" r="11" fill="none" stroke="#03B585" stroke-width="1.6" stroke-dasharray="2 3"/>
+                      <circle cx="122" cy="74" r="11" fill="none" stroke="#03B585" stroke-width="1.6" stroke-dasharray="2 3"/>
+                      <path d="M95 42 L 74 63 M95 42 L 98 63 M95 42 L 122 63" stroke="#03B585" stroke-width="1" opacity=".6"/>
+                    </g>
+                  </svg>
+                  <p class="mv-cap">Etapas en cascada; sprints ágiles dentro de Diseño y Quick Wins.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03b · Ejemplos de marcos -->
+            <section class="s-block" id="sec-frameworks">
+              <div class="s-block-label">03b · Marcos por familia</div>
+              <h2>Los nombres que vas a escuchar.</h2>
+              <p>
+                Cada familia tiene marcos concretos con sus propios rituales,
+                roles y artefactos. Estos son los que más vas a oír en cliente
+                y en LCG.
+              </p>
+
+              <div class="examples">
+                <div class="ex-card is-cascade">
+                  <span class="ex-tag">Cascada</span>
+                  <h4>Waterfall clásico</h4>
+                  <span class="ex-origin">Origen · Royce 1970</span>
+                  <p>5 fases secuenciales: Requerimientos → Diseño → Implementación → Verificación → Mantenimiento. Cada fase entrega un documento firmado antes de pasar a la siguiente.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Construcción</span>
+                    <span class="ex-chip">Regulado</span>
+                    <span class="ex-chip">Auditoría</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-cascade">
+                  <span class="ex-tag">Cascada</span>
+                  <h4>PRINCE2</h4>
+                  <span class="ex-origin">Origen · Reino Unido 1996</span>
+                  <p>Project management estructurado en etapas con roles definidos (Project Board, PM, Team Manager). Foco en governance y entregables verificables.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Sector público</span>
+                    <span class="ex-chip">Governance</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-agile">
+                  <span class="ex-tag">Ágil</span>
+                  <h4>Scrum</h4>
+                  <span class="ex-origin">Origen · Schwaber & Sutherland 1995</span>
+                  <p>Sprints de 2-4 semanas con roles fijos (Product Owner, Scrum Master, Equipo). Ceremonias: Planning, Daily, Review, Retro. Backlog priorizado por valor.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Software</span>
+                    <span class="ex-chip">Producto</span>
+                    <span class="ex-chip">El más popular</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-agile">
+                  <span class="ex-tag">Ágil</span>
+                  <h4>Kanban</h4>
+                  <span class="ex-origin">Origen · Toyota 1947 · adaptado a software 2007</span>
+                  <p>Flujo continuo visualizado en tablero (To Do · Doing · Done). Sin sprints fijos; se gestiona por <b>WIP limit</b> (máximo de tareas en paralelo).</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Operación</span>
+                    <span class="ex-chip">Soporte</span>
+                    <span class="ex-chip">Marketing</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-agile">
+                  <span class="ex-tag">Ágil</span>
+                  <h4>Design Sprint</h4>
+                  <span class="ex-origin">Origen · Google Ventures 2010</span>
+                  <p>Sprint de 5 días para resolver un problema concreto: Definir → Buscar → Elegir → Prototipar → Testear. <b>Lo que LCG usa en Diseño.</b></p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">UX</span>
+                    <span class="ex-chip">Innovación</span>
+                    <span class="ex-chip">LCG</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-agile">
+                  <span class="ex-tag">Ágil</span>
+                  <h4>DevOps</h4>
+                  <span class="ex-origin">Origen · Patrick Debois 2009</span>
+                  <p>Cultura + práctica que une desarrollo y operaciones para entregar continuo (CI/CD). Métricas DORA: deployment frequency, lead time, MTTR, change failure rate.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Software</span>
+                    <span class="ex-chip">Infraestructura</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-hybrid">
+                  <span class="ex-tag">Híbrido</span>
+                  <h4>SAFe</h4>
+                  <span class="ex-origin">Scaled Agile Framework · Leffingwell 2011</span>
+                  <p>Ágil escalado a empresa: equipos Scrum coordinados en "Agile Release Trains" con planeación trimestral (PI Planning) tipo cascada al nivel programa.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Empresa grande</span>
+                    <span class="ex-chip">Múltiples equipos</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-hybrid">
+                  <span class="ex-tag">Híbrido</span>
+                  <h4>Disciplined Agile (DA)</h4>
+                  <span class="ex-origin">PMI · Ambler 2009</span>
+                  <p>Toolkit que combina prácticas de Scrum, Kanban, XP y cascada. El equipo elige qué prácticas aplicar según contexto, en lugar de seguir un marco rígido.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">PMI</span>
+                    <span class="ex-chip">Pragmático</span>
+                  </div>
+                </div>
+
+                <div class="ex-card is-hybrid">
+                  <span class="ex-tag">Híbrido</span>
+                  <h4>Plan de Vuelo LCG</h4>
+                  <span class="ex-origin">Práctica interna · 40 sem típicas</span>
+                  <p>Cascada para las 6 etapas con compromiso fijo de fechas con cliente. Design Sprints dentro de Diseño y Quick Wins. Ritual semanal: Junta Semanal de Avance con el DO.</p>
+                  <div class="ex-meta">
+                    <span class="ex-chip">Consultoría</span>
+                    <span class="ex-chip">LCG</span>
+                  </div>
                 </div>
               </div>
             </section>
@@ -602,9 +1011,181 @@
               </ol>
             </section>
 
-            <!-- 06 · Cierre -->
+            <!-- 06 · AI en planes de proyecto -->
+            <section class="s-block" id="sec-ai">
+              <div class="s-block-label">06 · AI en gestión de proyectos</div>
+              <h2>Cómo la IA cambia <em>el cómo</em>, no el qué.</h2>
+
+              <div class="ai-hero">
+                <div class="ai-tag">Estado actual · 2026</div>
+                <h3>La IA en project management ya no es promesa: <em>es operación.</em></h3>
+                <p>Pero su valor se concentra en tareas específicas — no reemplaza al PM ni al consultor. Donde aporta ROI medible: planeación y estimación con histórico, detección temprana de riesgos, documentación operativa, capacity planning y síntesis de decisiones.</p>
+              </div>
+
+              <div class="ai-areas">
+                <div class="ai-area">
+                  <div class="aa-num">Área 01</div>
+                  <h4>Planeación y estimación</h4>
+                  <p>La IA analiza histórico de proyectos similares para sugerir <b>duraciones, dependencias y recursos</b>. Monday AI, Asana Intelligence o ClickUp Brain ya generan WBS preliminares desde un brief.</p>
+                </div>
+                <div class="ai-area">
+                  <div class="aa-num">Área 02</div>
+                  <h4>Detección temprana de riesgos</h4>
+                  <p>ML entrenado con histórico detecta patrones de <b>slippage, scope creep o dependencias en riesgo</b> antes de que se materialicen. Alto ROI en portafolios grandes.</p>
+                </div>
+                <div class="ai-area">
+                  <div class="aa-num">Área 03</div>
+                  <h4>Documentación y comunicación</h4>
+                  <p>Minutas, status reports, follow-ups, RAID logs. Lo que tomaba <b>2-3 horas semanales por PM</b> se reduce a minutos. ROI inmediato.</p>
+                </div>
+                <div class="ai-area">
+                  <div class="aa-num">Área 04</div>
+                  <h4>Capacity planning</h4>
+                  <p>Cruzar disponibilidad real vs. demanda proyectada. En LCG aplica directo al <b>Tracker de Semanas</b> y al modelo consultor-semana.</p>
+                </div>
+                <div class="ai-area" style="grid-column: 1 / span 2;">
+                  <div class="aa-num">Área 05</div>
+                  <h4>Asistencia en toma de decisiones</h4>
+                  <p>No decide — sintetiza opciones, contrasta escenarios y aporta marco analítico. Ideal para <b>steering committees</b> y revisiones de portafolio donde necesitas comparar varias rutas con datos consistentes.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 07 · AI por ceremonia ágil -->
+            <section class="s-block" id="sec-ai-agile">
+              <div class="s-block-label">07 · AI en ceremonias ágiles</div>
+              <h2>Por dónde entra la IA <em>en cada ritual.</em></h2>
+              <p>
+                En metodologías ágiles el rol de la IA cambia según la ceremonia.
+                Esto es lo que hoy ya es práctica común en equipos maduros.
+              </p>
+
+              <ol class="steps">
+                <li>
+                  <div>
+                    <h4>Backlog refinement &amp; user stories</h4>
+                    <p>Redacta borradores de user stories desde descripciones funcionales, sugiere criterios de aceptación INVEST, detecta historias mal formuladas o duplicadas, y estima puntos de historia comparando con sprints previos.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Sprint planning</h4>
+                    <p>Sugiere composición del sprint considerando capacidad histórica, dependencias y prioridad. <b>No reemplaza la conversación del equipo</b> — llega con propuesta base que acelera la sesión.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Daily stand-ups</h4>
+                    <p>Resúmenes automáticos desde commits, tickets y mensajes. Detecta blockers implícitos (PRs sin review, tickets sin movimiento). <b>Cuidado:</b> no canibalizar la conversación humana — el daily existe para alinear personas, no para reportar status.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Retrospectivas</h4>
+                    <p>Análisis de patrones <b>a través de múltiples sprints</b>: qué bloqueos recurren, dónde se concentra el rework, qué hipótesis de mejora movieron métricas. La IA brilla en la serie de tiempo que el equipo no recuerda.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Métricas y forecasting</h4>
+                    <p>Predicción de velocity, burn-down probabilístico (Monte Carlo asistido), forecast de release con intervalos de confianza. Reemplaza estimaciones determinísticas que históricamente generaron fricción con stakeholders.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Product discovery</h4>
+                    <p>Síntesis de research de usuario, análisis de feedback cualitativo a escala, generación de hipótesis de producto. Útil en el front-end del proceso ágil donde se define <b>qué construir</b>.</p>
+                  </div>
+                </li>
+              </ol>
+            </section>
+
+            <!-- 08 · Modelo de madurez -->
+            <section class="s-block" id="sec-ai-modelo">
+              <div class="s-block-label">08 · Tres modelos de integración</div>
+              <h2>Dónde estamos, dónde podemos ir.</h2>
+              <p>
+                Tres niveles de madurez para integrar IA en gestión de proyectos.
+                La mayoría de organizaciones está entre el <b>1 y el 2</b>.
+                Saltar al 3 sin consolidar los anteriores suele fracasar.
+              </p>
+
+              <div class="ai-ladder">
+                <div class="step is-now">
+                  <div class="st-tag">Modelo 01 · Copiloto</div>
+                  <h4>IA asiste al PM</h4>
+                  <p>La IA ayuda en tareas específicas (redactar, sintetizar, analizar). El PM mantiene control y juicio total. <b>Más maduro · menor riesgo · aplicable hoy.</b></p>
+                </div>
+                <div class="step">
+                  <div class="st-tag">Modelo 02 · Agente</div>
+                  <h4>IA en el flujo</h4>
+                  <p>Ejecuta tareas autónomas dentro de límites definidos: actualiza estados, genera reportes, escala alertas, mueve tickets según reglas. Requiere infra: integraciones, gobernanza, observabilidad. <b>Aquí apuntan los Managed Agents.</b></p>
+                </div>
+                <div class="step">
+                  <div class="step is-future"></div>
+                  <div class="st-tag">Modelo 03 · Decisión</div>
+                  <h4>IA en gobernanza</h4>
+                  <p>Participa en decisiones de portafolio, priorización y asignación. La <b>gobernanza importa más que la tecnología</b> — quién decide qué decide la IA y bajo qué reglas.</p>
+                </div>
+              </div>
+
+              <div class="warning-call">
+                <div class="ic-icon">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div>
+                  <h3>Lo que el hype no dice.</h3>
+                  <ul>
+                    <li>La IA <b>no entiende contexto político ni stakeholders</b>. Un plan es 30% técnico y 70% político — la IA optimiza el 30%.</li>
+                    <li>El <b>sesgo histórico se replica</b>. Si tus proyectos pasados se subestimaron, la IA aprenderá a subestimar. Validar contra criterio humano.</li>
+                    <li>Riesgo de <b>"automatización del teatro"</b>. Generar más reports automáticos no equivale a mejor gestión: si nadie los lee, solo se multiplica la basura.</li>
+                    <li>La <b>calidad del input determina todo</b>. Sin tickets bien clasificados, métricas consistentes y taxonomía coherente, la IA produce resultados decorativos.</li>
+                    <li>El equipo necesita <b>criterio para usarla</b>. Una IA que sugiere mal con un equipo que acepta sin cuestionar es peor que no tener IA.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 09 · Aplicación LCG -->
+            <section class="s-block" id="sec-ai-lcg">
+              <div class="s-block-label">09 · AI aplicada al Plan de Vuelo</div>
+              <h2>Dónde aporta valor <em>en proyectos LCG.</em></h2>
+
+              <div class="methods">
+                <div class="method-card is-cascade">
+                  <div class="mc-tag">Sí aporta valor</div>
+                  <h3>En proyectos LCG</h3>
+                  <p>Donde el contenido se puede sintetizar, estructurar o analizar contra histórico:</p>
+                  <ul>
+                    <li><b>Análisis Exhaustivo</b> previo: síntesis de Gemba Walks</li>
+                    <li>Estructuración de <b>Performance Analysis</b></li>
+                    <li>Drafts de entregables (manuales, políticas, indicadores)</li>
+                    <li>Seguimiento de <b>milestones contractuales</b></li>
+                    <li>Forecasting de Sprint 01 con histórico de proyectos</li>
+                  </ul>
+                </div>
+
+                <div class="method-card is-agile" style="grid-column: span 2;">
+                  <div class="mc-tag">No aporta valor (todavía)</div>
+                  <h3>Lo que sigue siendo trabajo humano</h3>
+                  <p>Donde la lectura del cliente, el juicio profesional y el peso de la relación importan más que cualquier dato:</p>
+                  <ul>
+                    <li><b>Lectura política</b> del cliente: quién apoya el cambio, quién lo bloquea</li>
+                    <li><b>Dinámica de cambio organizacional</b>: cuándo presionar, cuándo soltar</li>
+                    <li>Decisiones de <b>escalamiento</b> al sponsor o al CEO</li>
+                    <li>Coaching vertical hombro a hombro con el colaborador del cliente</li>
+                  </ul>
+                  <div class="mc-best">
+                    <b>Regla LCG</b>
+                    AI es copiloto. El juicio profesional es tuyo y tu responsabilidad. (Día 4 · Bloque AI-1.)
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 10 · Cierre -->
             <section class="s-block" id="sec-cierre">
-              <div class="s-block-label">06 · Cierre</div>
+              <div class="s-block-label">10 · Cierre</div>
               <div class="reflect">
                 <div class="ref-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -655,9 +1236,14 @@
               <ul class="outline">
                 <li><a class="active" href="#sec-intro"><span class="tick"></span>El Plan de Vuelo</a></li>
                 <li><a href="#sec-etapas"><span class="tick"></span>Las seis etapas</a></li>
-                <li><a href="#sec-metodo"><span class="tick"></span>Cascada vs ágil</a></li>
+                <li><a href="#sec-metodo"><span class="tick"></span>Cascada · ágil · híbrido</a></li>
+                <li><a href="#sec-frameworks"><span class="tick"></span>Marcos por familia</a></li>
                 <li><a href="#sec-sprint"><span class="tick"></span>Design Sprint · 5 pasos</a></li>
                 <li><a href="#sec-qw"><span class="tick"></span>Quick Wins</a></li>
+                <li><a href="#sec-ai"><span class="tick"></span>AI en gestión de proyectos</a></li>
+                <li><a href="#sec-ai-agile"><span class="tick"></span>AI en ceremonias ágiles</a></li>
+                <li><a href="#sec-ai-modelo"><span class="tick"></span>Tres modelos de integración</a></li>
+                <li><a href="#sec-ai-lcg"><span class="tick"></span>AI aplicada al Plan de Vuelo</a></li>
                 <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
               </ul>
             </div>
