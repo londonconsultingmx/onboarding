@@ -113,7 +113,7 @@ const SIDEBAR_DAYS = [
     num: 2, name: "Día 02 · Metodología", short: "Metodología", href: "day-2-martes.html", cat: "met",
     sessions: [
       { name: "Plan de Vuelo",                href: "session-d2-b01-plan-vuelo.html", sid: "d2-b01-plan-vuelo" },
-      { name: "PreDx & Análisis Exhaustivo",  href: "#", sid: "d2-b02-predx" },
+      { name: "PreDx & Análisis Exhaustivo",  href: "session-d2-b02-predx.html", sid: "d2-b02-predx" },
       { name: "Value Stream Analysis (VSA)",  href: "#", sid: "d2-b03-vsa" },
       { name: "MEF · Evaluación Financiera",  href: "#", sid: "d2-b04-mef" },
       { name: "PASER",                        href: "#", sid: "d2-b05-paser" },

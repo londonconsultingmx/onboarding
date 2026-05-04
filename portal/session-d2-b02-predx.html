@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>PreDx & Análisis Exhaustivo · Día 2 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* Session hero — Día 02 (cat-met) */
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F2F7F5 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--cat-met-bg); color: var(--cat-met);
+  font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0;
+  letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-met); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-met); }
+.s-block h3.sub{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 24px; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 28px 0 12px;
+}
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* CMM ladder — 5 nivel cards */
+.cmm-ladder{
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+  margin-top: 14px;
+}
+.cmm-step{
+  padding: 22px 20px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-top: 3px solid currentColor;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.cmm-step.is-1{ color: #B84A39; background: linear-gradient(180deg, #FFF1EE 0%, var(--surface) 80%); }
+.cmm-step.is-2{ color: #C68A3E; background: linear-gradient(180deg, #FFF6E8 0%, var(--surface) 80%); }
+.cmm-step.is-3{ color: #B59A3D; background: linear-gradient(180deg, #FFFCEC 0%, var(--surface) 80%); }
+.cmm-step.is-4{ color: #3A7561; background: linear-gradient(180deg, #E4F1EC 0%, var(--surface) 80%); }
+.cmm-step.is-5{ color: var(--lcg-dark); background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 80%); }
+.cmm-step .num{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 36px; line-height: 1; letter-spacing: -.02em;
+}
+.cmm-step .name{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  font-weight: 700;
+}
+.cmm-step p{ font-size: 12.5px; color: var(--ink-2); line-height: 1.5; margin: 6px 0 0; }
+
+/* Dimension table */
+.dim-table{
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  overflow: hidden; background: var(--surface);
+  margin-top: 14px;
+}
+.dim-row{
+  display: grid; grid-template-columns: 64px 200px 1fr 240px;
+  gap: 24px; padding: 16px 22px;
+  border-bottom: 1px solid var(--hairline);
+  align-items: baseline;
+}
+.dim-row:last-child{ border-bottom: 0; }
+.dim-row.hd{
+  background: var(--cat-met); color: #fff;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  font-weight: 700;
+}
+.dim-row .dim-id{ font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; color: var(--cat-met); }
+.dim-row .dim-name{ font-family: var(--serif); font-size: 16px; color: var(--lcg-dark); letter-spacing: -.01em; }
+.dim-row .dim-what{ font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.dim-row .dim-std{ font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--ink-3); }
+
+/* Phase card — for the 4 PreDx phases */
+.phase-card{
+  padding: 28px 32px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-met-bg) 0%, rgba(228,238,232,.4) 100%);
+  border-left: 3px solid var(--cat-met);
+  margin-bottom: 14px;
+}
+.phase-card .ph-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--cat-met); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 8px;
+}
+.phase-card h3{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 26px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 8px;
+}
+.phase-card .ph-sub{
+  font-size: 13.5px; color: var(--ink-3); font-style: italic;
+  margin: 0 0 16px;
+}
+.phase-card p{ font-size: 14.5px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+.phase-card p:last-child{ margin-bottom: 0; }
+.phase-card h4{
+  font-family: var(--sans); font-weight: 700;
+  font-size: 13px; letter-spacing: .04em; color: var(--lcg-dark);
+  margin: 18px 0 8px; text-transform: uppercase;
+}
+.phase-card ul{
+  list-style: none; padding: 0; margin: 6px 0 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.phase-card li{
+  position: relative; padding-left: 24px;
+  font-size: 14px; color: var(--ink-2); line-height: 1.55;
+}
+.phase-card li::before{
+  content: ""; position: absolute;
+  left: 6px; top: 9px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cat-met);
+}
+.phase-card li b{ color: var(--ink); font-weight: 600; }
+
+/* Activity block (sub-cards inside a phase) */
+.activity{
+  margin-top: 14px; padding: 18px 22px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+.activity h5{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 18px; line-height: 1.1; letter-spacing: -.01em;
+  color: var(--lcg-dark); margin: 0 0 8px;
+}
+.activity p{ font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin: 0 0 8px; }
+.activity p:last-child{ margin-bottom: 0; }
+
+/* AE pillars — 6 cards from slide 31 */
+.ae-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-top: 14px;
+}
+.ae-card{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 80%);
+  border: 1px solid rgba(8,94,84,.2);
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative;
+}
+.ae-card .ae-num{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--cat-met); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700;
+}
+.ae-card h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 19px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 4px;
+}
+.ae-card p{ font-size: 13px; color: var(--ink-2); line-height: 1.5; margin: 0; }
+.ae-card ul{
+  list-style: none; padding: 0; margin: 6px 0 0;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ae-card li{ font-size: 12.5px; color: var(--ink-3); line-height: 1.45; padding-left: 14px; position: relative; }
+.ae-card li::before{
+  content: ""; position: absolute; left: 2px; top: 8px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cat-met);
+}
+
+/* Important callout */
+.important-call{
+  margin: 14px 0;
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.important-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.important-call > *{ position: relative; z-index: 1; }
+.important-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.important-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 24px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.important-call p{ margin: 0; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+
+/* Reflect */
+.reflect{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-met); background: var(--cat-met-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--hairline); text-decoration:none;
+  background: var(--surface); transition: border-color .15s, background .15s;
+}
+.res-list a:hover{ border-color: var(--cat-met); background: var(--cat-met-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-met-bg); color: var(--cat-met); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-met); background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-met); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-met); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-met); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-met); background: var(--surface); color: var(--cat-met); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-met-bg); }
+.sess-toggle.is-done{ background: var(--cat-met); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-met); border-bottom:2px solid var(--cat-met); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">AH</div>
+      <div class="side-user-meta">
+        <strong>Ángel Hernández</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-2-martes.html" style="color:inherit; text-decoration:none;">Martes</a>
+        <span style="opacity:.4">/</span>
+        <b>PreDx &amp; Análisis Exhaustivo</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-met-bg); color: var(--cat-met); border-color: transparent;">
+        <span class="pill-dot"></span> Metodología
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Metodología</span>
+            <span class="pill"><span style="opacity:.5">Día 02</span>&nbsp;·&nbsp;Bloque 02 de 06</span>
+          </div>
+          <h1>PreDx &amp; <em>Análisis Exhaustivo.</em></h1>
+          <p class="s-hero-sub">
+            La etapa que convierte una preocupación directiva en un
+            compromiso de inversión. Antes de proyecto: el <b>PreDx</b>
+            (Estudio de Factibilidad) en 4 fases. Ya en proyecto, el
+            <b>Análisis Exhaustivo</b> de las semanas 1–4 que alimenta
+            todo el Plan de Vuelo.
+          </p>
+
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">55</span> min</span></div>
+            <div class="item"><span class="label">Fases PreDx</span><span class="val"><span class="u-mono">04</span></span></div>
+            <div class="item"><span class="label">Pilares AE</span><span class="val"><span class="u-mono">06</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-met); color:#fff;">DO</div>
+                <div>
+                  <div class="val">Director de Operaciones</div>
+                  <div class="sub">Según disponibilidad · o video</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Body -->
+      <div class="container">
+        <div class="s-body">
+
+          <article>
+
+            <!-- 01 · El modelo de madurez -->
+            <section class="s-block" id="sec-cmm">
+              <div class="s-block-label">01 · Marco de madurez</div>
+              <h2>Modelo de Madurez Organizacional <em>(CMM).</em></h2>
+              <p class="lead">
+                LCG arranca cada PreDx anclado a un <b>Capability Maturity
+                Model</b> — adaptación del CMMI de Carnegie Mellon —
+                enriquecido con principios Lean y estándares
+                internacionales relevantes para la industria del cliente.
+              </p>
+              <p>
+                El modelo se calibra <b>por industria</b>: lo que evalúa el
+                CMM de un desarrollador inmobiliario es distinto a lo que
+                evalúa el CMM de un retailer o de una manufactura. Lo que
+                no cambia son los <b>5 niveles</b> ni las <b>5 dimensiones</b>.
+              </p>
+
+              <h3 class="sub">Los 5 niveles de madurez</h3>
+              <div class="cmm-ladder">
+                <div class="cmm-step is-1">
+                  <span class="num">1</span>
+                  <span class="name">Inicial</span>
+                  <p>Procesos en etapa inicial. Resultados dependen de individuos clave. Documentación, repetibilidad y medición pendientes.</p>
+                </div>
+                <div class="cmm-step is-2">
+                  <span class="num">2</span>
+                  <span class="name">Emergente</span>
+                  <p>Se reconoce la necesidad. Esfuerzos aislados pero no consistentes. Existen formatos pero no se usan sistemáticamente.</p>
+                </div>
+                <div class="cmm-step is-3">
+                  <span class="num">3</span>
+                  <span class="name">Definido</span>
+                  <p>Procesos documentados y estandarizados. Se aplican regularmente con dueño claro. Equivalente a una organización con ISO 9001 y un PMO funcional.</p>
+                </div>
+                <div class="cmm-step is-4">
+                  <span class="num">4</span>
+                  <span class="name">Gestionado</span>
+                  <p>Gestión por datos y flujo. KPIs definidos con metas y seguimiento. Principios Lean aplicados (Last Planner, EVM, Target Value Delivery).</p>
+                </div>
+                <div class="cmm-step is-5">
+                  <span class="num">5</span>
+                  <span class="name">Optimizado</span>
+                  <p>Mejora continua sistemática (PHVA / Kaizen). Last Planner maduro con PPC &gt; 85%. Cultura Lean arraigada y benchmarking activo.</p>
+                </div>
+              </div>
+
+              <h3 class="sub">Las 5 dimensiones de evaluación</h3>
+              <div class="dim-table">
+                <div class="dim-row hd">
+                  <span>Dim.</span>
+                  <span>Nombre</span>
+                  <span>Qué evalúa</span>
+                  <span>Estándar de referencia</span>
+                </div>
+                <div class="dim-row">
+                  <span class="dim-id">E1</span>
+                  <span class="dim-name">Estructura</span>
+                  <span class="dim-what">Roles claros, responsabilidades definidas, capacidad instalada, tramo de control adecuado.</span>
+                  <span class="dim-std">PMBOK 7a ed., ISO 21502</span>
+                </div>
+                <div class="dim-row">
+                  <span class="dim-id">E2</span>
+                  <span class="dim-name">Procesos</span>
+                  <span class="dim-what">Flujo documentado, repetible, con dueño. Planeación colaborativa, restricciones gestionadas.</span>
+                  <span class="dim-std">ISO 9001:2015, Last Planner System</span>
+                </div>
+                <div class="dim-row">
+                  <span class="dim-id">E3</span>
+                  <span class="dim-name">Eficiencia &amp; Costos</span>
+                  <span class="dim-what">Asertividad presupuestal, eliminación de desperdicios (7+1 Lean), eficiencia en compras y ejecución.</span>
+                  <span class="dim-std">Target Value Delivery, EVM (PMI)</span>
+                </div>
+                <div class="dim-row">
+                  <span class="dim-id">E4</span>
+                  <span class="dim-name">Gestión &amp; Indicadores</span>
+                  <span class="dim-what">KPIs definidos, visibilidad en tiempo real, dashboards. PPC, CNC, curva S, CPI/SPI.</span>
+                  <span class="dim-std">EVM (ANSI 748), Balanced Scorecard</span>
+                </div>
+                <div class="dim-row">
+                  <span class="dim-id">E5</span>
+                  <span class="dim-name">Calidad</span>
+                  <span class="dim-what">Estándares, Jidoka (calidad en origen), Poka-Yoke, PHVA, protocolos de prueba y entrega.</span>
+                  <span class="dim-std">ISO 9001:2015, Lean (Jidoka/Poka-Yoke)</span>
+                </div>
+              </div>
+
+              <div class="important-call">
+                <div class="ic-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div>
+                  <h3>El default es conservador.</h3>
+                  <p>Cuando hay contradicción entre fuentes, registramos la calificación más conservadora. La <b>ausencia de evidencia no se interpreta como funcionamiento correcto</b> — eso protege al cliente y mantiene el rigor del diagnóstico.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 · Las 4 fases del PreDx -->
+            <section class="s-block" id="sec-predx">
+              <div class="s-block-label">02 · PreDx · cuatro fases</div>
+              <h2>De preocupación directiva a <em>compromiso de inversión.</em></h2>
+              <p>
+                El PreDx es el <b>Estudio de Factibilidad</b>: ocurre
+                <b>antes</b> de firmar el proyecto. Su misión es producir
+                una propuesta cuantificada que convierta hipótesis del
+                sponsor en un caso de negocio.
+              </p>
+
+              <!-- Fase 1 -->
+              <div class="phase-card" id="ph-1">
+                <div class="ph-tag">Fase 01 · 10% del esfuerzo · 40% del impacto</div>
+                <h3>Alcance y Estrategia del Estudio.</h3>
+                <p class="ph-sub">La fase más subestimada — y la que más determina el éxito del PreDx.</p>
+                <p>
+                  Un alcance mal definido condena al ejercicio a producir hallazgos genéricos. La conversación inicial no parte de los procesos del cliente; parte de las preocupaciones de su accionista o director general.
+                </p>
+
+                <div class="activity">
+                  <h5>Entendimiento de retos estratégicos</h5>
+                  <p>Cuatro capas a extraer en la primera sesión, idealmente con dos consultores (uno conduce, uno observa):</p>
+                  <ul>
+                    <li><b>Ambición declarada</b> — qué quiere lograr la empresa en 3-5 años: crecimiento, expansión, sucesión, venta, capitalización.</li>
+                    <li><b>Obstáculos percibidos</b> — qué cree el sponsor que le impide llegar. Útil pero con escepticismo: los ejecutivos aciertan al diagnosticar síntomas y erran al diagnosticar causas raíz.</li>
+                    <li><b>Eventos detonantes</b> — qué pasó recientemente que motivó la conversación. Es donde está el verdadero centro de gravedad.</li>
+                    <li><b>Restricciones no negociables</b> — qué temas están fuera de mesa, qué personas no se tocan. No se preguntan; se infieren de pausas y silencios.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Definición de alcance · 3 dimensiones</h5>
+                  <ul>
+                    <li><b>Funcional (áreas)</b> — qué procesos se incluyen. Identificar 3-5 macroprocesos críticos y profundizar; resistir la tentación de "revisar todo".</li>
+                    <li><b>Organizacional (responsables)</b> — qué directivos y mandos medios entran. Excluir a alguien relevante genera resistencia política posterior.</li>
+                    <li><b>Geográfica (ubicaciones)</b> — visitar al menos una operación representativa de cada modelo. Las diferencias regionales suelen ser fuente de hallazgos críticos.</li>
+                  </ul>
+                  <p>El producto: documento de alcance de 1-2 páginas firmado por el sponsor.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Tres roles del sponsor que conviene distinguir</h5>
+                  <ul>
+                    <li><b>Sponsor ejecutivo</b> — autoriza el ejercicio y recibe el entregable (DG, accionista, presidente de consejo).</li>
+                    <li><b>Contacto operativo</b> — coordina logística y abre puertas. Sin un buen contacto, el PreDx pierde 30% de su velocidad.</li>
+                    <li><b>Asesor calibrador</b> — visión amplia, juicio crítico, confianza del sponsor. Caja de resonancia que previene errores antes de la presentación final.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Modelo de Gobierno</h5>
+                  <p>Mapear la <b>arquitectura real</b> de toma de decisiones — que rara vez coincide con el organigrama. ¿Quién decide qué? ¿Hay socios activos y pasivos? ¿Tensiones intergeneracionales? ¿Consejeros independientes con peso real?</p>
+                  <p>Es crítico porque define las restricciones de viabilidad de las recomendaciones y la <b>estrategia de presentación final</b>: quién debe estar en la sala, en qué orden hablar, qué temas tratar con cuidado político.</p>
+                </div>
+              </div>
+
+              <!-- Fase 2 -->
+              <div class="phase-card" id="ph-2">
+                <div class="ph-tag">Fase 02 · Base documental</div>
+                <h3>Recolección de Información Básica.</h3>
+                <p class="ph-sub">La disciplina aquí marca la diferencia entre afirmaciones fundamentadas y opiniones vestidas de análisis.</p>
+
+                <div class="activity">
+                  <h5>NDA</h5>
+                  <p>Se firma <b>antes</b> de cualquier intercambio sensible. Marca simbólicamente el inicio del ejercicio. Plantillas LCG con flexibilidad razonable, pero nunca aceptar términos que limiten el uso interno de aprendizajes anonimizados.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Inducción · Presentación general</h5>
+                  <p>60-90 min con el sponsor o ejecutivo designado: historia, modelo de negocio, productos, mercados, accionistas, hitos recientes, planes futuros. Prepararla con preguntas específicas — las áreas más débiles suelen ser <b>economía unitaria</b>, estructura de costos, dinámica competitiva real y decisiones estratégicas pendientes.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Organigramas</h5>
+                  <ul>
+                    <li><b>Formal vigente</b> — el de presentaciones corporativas.</li>
+                    <li><b>Operativo real</b> — quién reporta a quién en la práctica, líneas punteadas, estructuras matriciales informales.</li>
+                    <li><b>Headcount detallado</b> — personas por área, niveles, antigüedad, vacantes. Permite identificar áreas sub o sobre-dimensionadas vs. volumen.</li>
+                    <li><b>Cambios recientes (12-24 meses)</b> — reestructuras frecuentes son una señal; ausencia total de movimientos en empresa creciente es otra. Ambas son hallazgos.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Estados Financieros · 4 lecturas</h5>
+                  <p>No sustituye un trabajo contable o due diligence — extrae la lectura de negocio:</p>
+                  <ul>
+                    <li><b>Tendencia</b> — evolución de ingresos, márgenes, gastos. Las inflexiones son siempre dignas de explicación.</li>
+                    <li><b>Estructura</b> — fijo vs variable, peso de líneas de gasto, distribución de margen entre productos.</li>
+                    <li><b>Capital de trabajo</b> — días de inventario, cobro, pago, ciclo de conversión. Aquí se esconde la mayor oportunidad de liberación de valor sin tocar la operación core.</li>
+                    <li><b>Calidad de información</b> — qué tan rápido se cierra el mes. Una empresa que cierra a 25 días está operativamente <b>ciega</b> casi un mes.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>KPIs y juntas operativas</h5>
+                  <p>La radiografía del aparato de toma de decisiones:</p>
+                  <ul>
+                    <li>Existencia y vigencia · cobertura de dimensiones críticas</li>
+                    <li>Calidad de definición · fórmula, fuente, responsable, meta</li>
+                    <li><b>Uso real en juntas</b> · ¿se discuten o son ornamento? ¿generan acciones trazables?</li>
+                    <li>Conexión entre niveles · ¿agregan los operativos a los ejecutivos?</li>
+                  </ul>
+                  <p>La brecha entre el <b>cuadro de mando declarado</b> y el <b>cuadro de mando vivido</b> es uno de los hallazgos más impactantes del PreDx.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Manuales y sistemas de calidad</h5>
+                  <p>Dos propósitos: insumos de análisis y, sobre todo, evaluar la <b>madurez documental</b>. Las preguntas clave: ¿están vigentes o de hace 7 años? ¿la gente operativa los usa? ¿reflejan cómo se trabaja hoy o cómo se trabajaba? ¿hay gobernanza documental? En empresas con ISO, revisar también las <b>no conformidades</b> recientes — son hallazgos pre-validados que el cliente ya reconoce.</p>
+                </div>
+              </div>
+
+              <!-- Fase 3 -->
+              <div class="phase-card" id="ph-3">
+                <div class="ph-tag">Fase 03 · Donde el ejercicio toma vida</div>
+                <h3>Comunicación y Entrevistas.</h3>
+                <p class="ph-sub">Levantamiento de la mayor parte de la evidencia.</p>
+
+                <div class="activity">
+                  <h5>Plan de entrevistas</h5>
+                  <ul>
+                    <li><b>Entre 15 y 25 entrevistas</b> · ~30% líderes, ~50% mandos medios, ~20% personal operativo o especialistas.</li>
+                    <li><b>Secuencia</b> · líderes funcionales → mandos medios → personal de campo. Volver a algunos líderes al final con preguntas más afiladas suele ser muy productivo.</li>
+                    <li><b>Agenda por entrevistado</b> · cada sesión con guía propia anclada en hipótesis. Las guías genéricas producen entrevistas genéricas.</li>
+                    <li><b>Logística</b> · 60-90 min, presencial preferido, sala neutral con mandos medios, dos consultores cuando sea posible.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Kick Off oficial</h5>
+                  <p>Evento de comunicación, no junta técnica. 45-60 min con todos los entrevistados. Componentes:</p>
+                  <ul>
+                    <li><b>Mensaje del sponsor</b> · participación visible no negociable; sin ella el ejercicio se percibe como iniciativa de un área.</li>
+                    <li><b>Presentación del equipo consultor</b> · construye credibilidad y reduce fricción inicial.</li>
+                    <li><b>Aclarar lo que NO es</b> · no es auditoría, no evalúa desempeño individual, no busca culpables. Reduce la actitud defensiva.</li>
+                    <li><b>Factores de éxito</b> · disponibilidad, apertura, honestidad, respeto a tiempos. Compromisos públicos para invocar después si aparece resistencia.</li>
+                    <li><b>Cronograma</b> · qué viene, cuándo se presentan resultados, qué entregables se producen.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Técnica de entrevista</h5>
+                  <ul>
+                    <li><b>Apertura de bajo umbral</b> — primeras preguntas fáciles: trayectoria, rol, actividades. Construye rapport.</li>
+                    <li><b>Profundización progresiva</b> — del qué al cómo al por qué. Saltar al análisis genera defensa.</li>
+                    <li><b>Triangulación</b> — preguntar lo mismo desde tres ángulos: cómo debería ser, cómo es, qué pasa cuando falla. Las brechas son <b>oro analítico</b>.</li>
+                    <li><b>Día en la vida</b> — pedir un día típico o el caso reciente más complicado. Materia prima para los momentos más impactantes de la presentación.</li>
+                    <li><b>Cierre con red</b> — "¿qué más debería preguntarte?" y "¿con quién más deberíamos hablar?".</li>
+                    <li><b>Documentación inmediata</b> — la nota se procesa el mismo día, ojalá en las 2 horas siguientes. La memoria se degrada rápido.</li>
+                  </ul>
+                </div>
+
+                <div class="activity">
+                  <h5>Validación de oportunidades</h5>
+                  <p>Antes de presentar al sponsor, las oportunidades se validan con los responsables funcionales correspondientes. <b>El propósito no es pedir permiso</b> — es calibrar precisión, ajustar dimensionamiento y anticipar objeciones.</p>
+                  <p>Se ajustan números y se matiza lenguaje, pero <b>no se elimina un hallazgo válido porque incomode</b>. La credibilidad del PreDx depende de que el sponsor reciba la lectura honesta — no la versión consensuada con la línea media.</p>
+                </div>
+              </div>
+
+              <!-- Fase 4 -->
+              <div class="phase-card" id="ph-4">
+                <div class="ph-tag">Fase 04 · Producto comercial</div>
+                <h3>Propuesta de Proyecto.</h3>
+                <p class="ph-sub">Convierte el diagnóstico en compromiso de proyecto. Cinco ángulos de un mismo argumento.</p>
+
+                <div class="activity">
+                  <h5>Oportunidades</h5>
+                  <p>Matriz de impacto económico × complejidad de implementación. Quick wins separados de transformaciones estructurales. Cada oportunidad con ficha estandarizada: problema, causa raíz, solución, beneficio estimado, requerimientos, horizonte temporal.</p>
+                  <p>Lo que distingue una buena presentación: mostrar cómo las oportunidades <b>se conectan entre sí</b>. Aisladas suman; articuladas multiplican.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Beneficios · 3 horizontes</h5>
+                  <ul>
+                    <li><b>Beneficio total potencial</b> — lo que se podría capturar.</li>
+                    <li><b>Beneficio comprometido</b> — lo que LCG asume capturar dentro del alcance.</li>
+                    <li><b>Beneficio incremental post-proyecto</b> — lo que el cliente puede seguir capturando con las capacidades instaladas.</li>
+                  </ul>
+                  <p>Siempre en términos económicos directos: pesos al año, capital de trabajo liberado, costo evitado. <b>Prometer rangos defendibles, no cifras infladas.</b> La sobrepromesa es la causa más frecuente de proyectos que entran torcidos.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Metodología de Implementación</h5>
+                  <p>El "cómo" del proyecto: módulos de trabajo, marcos aplicados (Davisa central, sectoriales según corresponda), herramientas, equipo conjunto cliente-LCG y gobernanza. Da dos confianzas: <b>técnica</b> (sí sabemos cómo) y <b>ejecutiva</b> (sí lo vamos a hacer disciplinadamente).</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Cronograma</h5>
+                  <p>Macro-fases con duración total y entregables clave. La precisión semanal no es necesaria en propuesta — eso es planeación detallada al inicio del proyecto. Lo crítico: ritmo de captura de valor — cuándo aparecen los <b>primeros quick wins</b>, cuándo las mejoras estructurales, cuándo el cierre.</p>
+                </div>
+
+                <div class="activity">
+                  <h5>Inversión y ROI</h5>
+                  <p>Honorarios fijos, variables ligados a captura, o mixtos. ROI sobre beneficio comprometido, expresado idealmente como múltiplo: "<b>por cada peso invertido, captura 3 en el primer año, 6 en el segundo</b>". El cierre persuasivo más efectivo: comparar contra el <b>costo de la inacción</b>.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · Análisis Exhaustivo (slide 31) -->
+            <section class="s-block" id="sec-ae">
+              <div class="s-block-label">03 · Análisis Exhaustivo · Sem 1-4</div>
+              <h2>El levantamiento que <em>alimenta el Plan de Vuelo.</em></h2>
+              <p class="lead">
+                El Análisis Exhaustivo es la primera etapa <b>ya dentro del proyecto</b> (semanas 1-4). Lo que el PreDx esbozó como hipótesis, aquí se convierte en evidencia de detalle por área y proceso.
+              </p>
+              <p>
+                Seis pilares se trabajan en paralelo. Cada uno produce inputs que alimentan el Diseño en las semanas 5-15.
+              </p>
+
+              <div class="ae-grid">
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 01</div>
+                  <h4>Nivel de Madurez Organizacional</h4>
+                  <p>Aplicar el CMM por industria y producir la <b>radiografía estructurada</b> del estado actual con hoja de ruta hacia excelencia operativa.</p>
+                  <ul>
+                    <li>Calificación por las 5 dimensiones (E1-E5)</li>
+                    <li>Evidencia multi-fuente: entrevistas, datos, visita</li>
+                    <li>Default conservador ante contradicción</li>
+                  </ul>
+                </div>
+
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 02</div>
+                  <h4>Value Stream Mapping (VSM)</h4>
+                  <p>Mapeo del <b>flujo de valor end-to-end</b> de los procesos críticos. Tiempos de ciclo, lead time, value-add vs no value-add, puntos de espera.</p>
+                  <ul>
+                    <li>Una VSM por macroproceso priorizado</li>
+                    <li>Identificación de los <b>7+1 desperdicios</b> Lean</li>
+                    <li>Hipótesis de rediseño para Sem 5-15</li>
+                  </ul>
+                </div>
+
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 03</div>
+                  <h4>Analítica de Datos Operativo</h4>
+                  <p>Extracción de bases reales (ERP, sistemas de operación) y construcción de <b>tableros base</b> que descubren patrones que la gente no ve día a día.</p>
+                  <ul>
+                    <li>Series de tiempo · estacionalidad · outliers</li>
+                    <li>Pareto de fallos / clientes / productos / costos</li>
+                    <li>Brechas plan vs. real cuantificadas</li>
+                  </ul>
+                </div>
+
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 04</div>
+                  <h4>Análisis Estructura y Capacidad Instalada</h4>
+                  <p>Cruce entre estructura organizacional, capacidad real (m², máquinas, personas) y demanda proyectada. Identifica <b>cuellos de botella</b> y áreas sub/sobre-dimensionadas.</p>
+                  <ul>
+                    <li>Capacidad teórica vs. capacidad efectiva</li>
+                    <li>Tramo de control por nivel jerárquico</li>
+                    <li>Mapa de turnos / utilización por recurso clave</li>
+                  </ul>
+                </div>
+
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 05</div>
+                  <h4>Gemba Walks</h4>
+                  <p>"Ir al lugar donde ocurre el trabajo." Visitas estructuradas a planta, oficina o site de cliente para <b>ver lo que las entrevistas y los datos no cuentan</b>.</p>
+                  <ul>
+                    <li>Observación de día típico real</li>
+                    <li>Conversaciones cortas con operadores</li>
+                    <li>Detección de workarounds y rituales informales</li>
+                  </ul>
+                </div>
+
+                <div class="ae-card">
+                  <div class="ae-num">Pilar 06</div>
+                  <h4>Análisis Talento, Mindset y Madurez Digital</h4>
+                  <p>Lectura de capital humano y tecnológico: perfil de líderes, brechas de competencias, cultura, y madurez digital de los sistemas de gestión.</p>
+                  <ul>
+                    <li>Perfil de los puestos clave vs. lo que el rol requiere</li>
+                    <li>Compensaciones vs. mercado · retención</li>
+                    <li>Inventario de sistemas · grado de uso · integración</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="important-call">
+                <div class="ic-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <div>
+                  <h3>El producto: el Backlog de Historias.</h3>
+                  <p>El Análisis Exhaustivo no entrega un reporte; entrega un <b>backlog de historias</b> — situaciones concretas que ejemplifican las áreas de oportunidad. Ese backlog es el input del que parten los Design Sprints en la etapa de Diseño (Sem 5-15).</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">04 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Si te toca apoyar un PreDx en tu primera asignación, tu valor en Fase 02 (información básica) y Fase 03 (notas de entrevistas) es enorme — son las fases más intensivas en horas. Llega con guías preparadas y procesa notas el mismo día.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="session-d2-b01-plan-vuelo.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
+                  <span class="title">Plan de Vuelo</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-2-martes.html">
+                  Siguiente · Value Stream Analysis
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 02 de 06 · Día 02</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-cmm"><span class="tick"></span>Marco de madurez · CMM</a></li>
+                <li><a href="#sec-predx"><span class="tick"></span>PreDx · 4 fases</a></li>
+                <li><a href="#ph-1"><span class="tick"></span>F1 · Alcance</a></li>
+                <li><a href="#ph-2"><span class="tick"></span>F2 · Información básica</a></li>
+                <li><a href="#ph-3"><span class="tick"></span>F3 · Entrevistas</a></li>
+                <li><a href="#ph-4"><span class="tick"></span>F4 · Propuesta</a></li>
+                <li><a href="#sec-ae"><span class="tick"></span>Análisis Exhaustivo</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Marcos referenciados</h4>
+              <ul class="res-list">
+                <li><a href="https://cmmiinstitute.com/cmmi" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+                  <div class="r-name">CMMI · Carnegie Mellon<span class="r-meta">Capability Maturity Model Integration</span></div>
+                </a></li>
+                <li><a href="https://www.iso.org/standard/62085.html" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">ISO 9001:2015<span class="r-meta">Sistemas de gestión de calidad</span></div>
+                </a></li>
+                <li><a href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">PMBOK 7a Ed. · PMI<span class="r-meta">Standard de project management</span></div>
+                </a></li>
+                <li><a href="https://leanconstruction.org/lean-topics/last-planner-system/" target="_blank" rel="noopener noreferrer">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></div>
+                  <div class="r-name">Last Planner System<span class="r-meta">Lean Construction Institute</span></div>
+                </a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-met-bg); border-color: var(--cat-met);">
+              <h4 style="color: var(--cat-met);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Sigue con <b>Value Stream Analysis</b>: cómo se mapea el flujo de valor de un proceso end-to-end.
+              </p>
+              <a href="day-2-martes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-met);">Volver al Día 02 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd2-b02-predx';
+
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
