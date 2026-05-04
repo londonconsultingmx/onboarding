@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>MEF · Método de Evaluación Financiera · Día 2 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F2F7F5 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--cat-met-bg); color: var(--cat-met);
+  font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0;
+  letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-met); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-met); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Approval flow — 3 roles in sequence */
+.flow{
+  display: grid; grid-template-columns: 1fr 24px 1fr 24px 1fr; gap: 0;
+  align-items: stretch; margin-top: 14px;
+}
+.flow-step{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 80%);
+  border: 1px solid rgba(8,94,84,.18);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.flow-step.is-final{
+  background: linear-gradient(180deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border-color: transparent;
+}
+.flow-step .fs-tag{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--cat-met); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700;
+}
+.flow-step.is-final .fs-tag{ color: var(--lcg-mint); }
+.flow-step h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 19px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0;
+}
+.flow-step.is-final h4{ color: #fff; }
+.flow-step p{ font-size: 13px; color: var(--ink-2); line-height: 1.5; margin: 4px 0 0; }
+.flow-step.is-final p{ color: rgba(242,238,232,.86); }
+.flow-arrow{
+  display:flex; align-items:center; justify-content:center;
+  color: var(--cat-met); opacity: .6;
+}
+
+/* Component cards (4 components) */
+.comp-grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.comp-card{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-left: 3px solid var(--cat-met);
+}
+.comp-card .cc-num{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--cat-met); letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 6px;
+}
+.comp-card h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 20px; line-height: 1.1; letter-spacing: -.015em;
+  color: var(--lcg-dark); margin: 0 0 8px;
+}
+.comp-card p{ font-size: 13.5px; color: var(--ink-2); line-height: 1.5; margin: 0; }
+.comp-card p b{ color: var(--ink); font-weight: 600; }
+
+/* Concept callout (Periodo Base) */
+.concept-call{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+  margin: 14px 0;
+}
+.concept-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.concept-call h3{
+  margin: 0 0 8px;
+  font-family: var(--serif); font-weight: 400; font-size: 24px;
+  letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Komitees ágiles — 4 cards */
+.comites{
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;
+  margin-top: 14px;
+}
+.comite-card{
+  padding: 20px 22px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--lcg-cream) 0%, var(--surface) 80%);
+  border: 1px solid #E9E1CC;
+  text-align: center;
+}
+.comite-card .cm-icon{
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--lcg-dark); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.comite-card h4{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 17px; line-height: 1.1; letter-spacing: -.01em;
+  color: var(--lcg-dark); margin: 0;
+}
+
+/* Steps numbered list */
+.steps{
+  list-style: none; padding: 0; margin: 14px 0 0;
+  counter-reset: step;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.steps li{
+  counter-increment: step;
+  display: grid; grid-template-columns: 38px 1fr; gap: 18px;
+  padding: 16px 20px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.steps li::before{
+  content: counter(step, decimal-leading-zero);
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--cat-met); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px; font-weight: 700; letter-spacing: .04em;
+}
+.steps li h4{
+  margin: 0 0 4px; font-family: var(--sans); font-weight: 700;
+  font-size: 15px; color: var(--ink);
+}
+.steps li p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+
+/* Reflect callout */
+.reflect{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-met); background: var(--cat-met-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--hairline); text-decoration:none;
+  background: var(--surface); transition: border-color .15s, background .15s;
+}
+.res-list a:hover{ border-color: var(--cat-met); background: var(--cat-met-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-met-bg); color: var(--cat-met); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-met); background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-met); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-met); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-met); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-met); background: var(--surface); color: var(--cat-met); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-met-bg); }
+.sess-toggle.is-done{ background: var(--cat-met); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-met); border-bottom:2px solid var(--cat-met); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">AH</div>
+      <div class="side-user-meta">
+        <strong>Ángel Hernández</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-2-martes.html" style="color:inherit; text-decoration:none;">Martes</a>
+        <span style="opacity:.4">/</span>
+        <b>MEF · Método de Evaluación Financiera</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-met-bg); color: var(--cat-met); border-color: transparent;">
+        <span class="pill-dot"></span> Metodología
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Metodología</span>
+            <span class="pill"><span style="opacity:.5">Día 02</span>&nbsp;·&nbsp;Bloque 04 de 06</span>
+          </div>
+          <h1>MEF · <em>Método de Evaluación Financiera.</em></h1>
+          <p class="s-hero-sub">
+            El instrumento que convierte el proyecto en un caso de negocio
+            medible. Cuantifica los <b>beneficios financieros</b> y define
+            los parámetros de seguimiento desde el <b>Periodo Base</b> —
+            de modo que el ROI no es promesa, es número auditable.
+          </p>
+
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">55</span> min</span></div>
+            <div class="item"><span class="label">Etapa</span><span class="val">Sem <span class="u-mono">08–10</span></span></div>
+            <div class="item"><span class="label">Componentes</span><span class="val"><span class="u-mono">04</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-met); color:#fff;">DO</div>
+                <div>
+                  <div class="val">Director de Operaciones</div>
+                  <div class="sub">Según disponibilidad · o video</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+
+          <article>
+
+            <!-- 01 · Propósito -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Propósito</div>
+              <h2>El proyecto, traducido a <em>pesos.</em></h2>
+              <p class="lead">
+                Cada iniciativa de un proyecto LCG tiene una hipótesis de
+                valor. El <b>MEF</b> es el ejercicio que transforma esa
+                hipótesis en un compromiso financiero medible: cuánto se
+                ahorra o se genera, cómo se mide, contra qué se compara,
+                quién lo valida.
+              </p>
+              <p>
+                Sin MEF, los beneficios son anécdotas. Con MEF, los
+                beneficios son <b>cifras auditables</b> — y el ROI del
+                proyecto deja de ser un argumento de venta para
+                convertirse en evidencia de cierre.
+              </p>
+            </section>
+
+            <!-- 02 · Periodo Base -->
+            <section class="s-block" id="sec-base">
+              <div class="s-block-label">02 · Periodo Base</div>
+              <h2>El concepto que <em>ancla todo el cálculo.</em></h2>
+
+              <div class="concept-call">
+                <div class="ic-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </div>
+                <div>
+                  <h3>Periodo Base = la línea contra la cual se mide.</h3>
+                  <p>Antes de prometer ahorros o ingresos incrementales, se fija una <b>fotografía cuantitativa</b> del estado actual: gastos, ingresos, productividad, indicadores operativos durante un periodo representativo (típicamente 3-12 meses anteriores).</p>
+                  <p>Toda mejora se calcula como <b>delta vs. Periodo Base</b>. Sin línea base, no hay forma honesta de demostrar que el proyecto generó el resultado.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · Componentes clave -->
+            <section class="s-block" id="sec-componentes">
+              <div class="s-block-label">03 · Componentes clave</div>
+              <h2>Los cuatro <em>building blocks.</em></h2>
+              <p>
+                Cada MEF se construye con los mismos cuatro componentes,
+                en orden estricto. Saltarse uno compromete la solidez
+                del cálculo.
+              </p>
+
+              <div class="comp-grid">
+                <div class="comp-card">
+                  <div class="cc-num">Componente 01</div>
+                  <h4>Identificación de áreas e indicadores</h4>
+                  <p>Mapear las áreas <b>impactadas</b> por el proyecto y los indicadores clave que reflejan el desempeño actual y futuro de cada una. La granularidad correcta: ni tan agregada que diluya, ni tan fina que no se pueda medir.</p>
+                </div>
+                <div class="comp-card">
+                  <div class="cc-num">Componente 02</div>
+                  <h4>Diseño de indicadores en BI</h4>
+                  <p>Construcción de los KPIs en <b>Power BI</b> con la mecánica de cálculo, fuente de datos, frecuencia y responsable. Los ahorros proyectados se modelan ahí mismo para que la medición sea idéntica al diseño.</p>
+                </div>
+                <div class="comp-card">
+                  <div class="cc-num">Componente 03</div>
+                  <h4>Validación y Periodo Base</h4>
+                  <p>Validación de datos financieros con <b>Finanzas del cliente</b> y establecimiento formal del Periodo Base. Este momento es el que blinda el resto del MEF — sin firma de Finanzas, los ahorros son discutibles después.</p>
+                </div>
+                <div class="comp-card">
+                  <div class="cc-num">Componente 04</div>
+                  <h4>Mediciones periódicas y JSA</h4>
+                  <p>Mediciones con la frecuencia definida y seguimiento en las <b>Juntas Semanales de Avance</b>. Cada JSA abre con la cifra del MEF: avance del beneficio capturado vs. comprometido.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Flujo de aprobación -->
+            <section class="s-block" id="sec-flow">
+              <div class="s-block-label">04 · Flujo de aprobación</div>
+              <h2>Tres firmas, ninguna opcional.</h2>
+              <p>
+                El MEF tiene un flujo de gobernanza explícito. La
+                separación entre quien diseña, quien revisa y quien
+                aprueba evita el sesgo del optimismo en proyecto.
+              </p>
+
+              <div class="flow">
+                <div class="flow-step">
+                  <span class="fs-tag">Diseña</span>
+                  <h4>Gerente de Proyecto</h4>
+                  <p>Identifica áreas, propone indicadores y construye la primera versión del modelo.</p>
+                </div>
+                <div class="flow-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flow-step">
+                  <span class="fs-tag">Revisa</span>
+                  <h4>Director del Área</h4>
+                  <p>Calibra supuestos, valida la magnitud del beneficio proyectado y ajusta el rango defendible.</p>
+                </div>
+                <div class="flow-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </div>
+                <div class="flow-step is-final">
+                  <span class="fs-tag">Aprueba</span>
+                  <h4>Director de Finanzas</h4>
+                  <p>Firma del cliente. Sin esta aprobación, el MEF no es oficial — y los ahorros declarados no aplican.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 05 · Resultado -->
+            <section class="s-block" id="sec-resultado">
+              <div class="s-block-label">05 · Resultado</div>
+              <h2>Por qué importa.</h2>
+              <p>
+                El MEF garantiza <b>alineación financiera y operativa</b> del
+                proyecto. Operativa, porque cada iniciativa está conectada
+                a un indicador concreto que se mide. Financiera, porque
+                cada indicador está traducido a pesos validados por el
+                Director de Finanzas del cliente.
+              </p>
+              <p>
+                El producto final es la <b>medición del ROI del proyecto</b>:
+                cuánto generó vs. cuánto costó. Esta cifra es la que cierra
+                el ciclo del Plan de Vuelo y la que permite, en el siguiente
+                proyecto, presentarse con casos de éxito numéricos en lugar
+                de testimoniales.
+              </p>
+            </section>
+
+            <!-- 06 · Comités Ágiles -->
+            <section class="s-block" id="sec-comites">
+              <div class="s-block-label">06 · Comités Ágiles · práctica complementaria</div>
+              <h2>Donde el MEF <em>se vive</em> con el cliente.</h2>
+              <p>
+                Una vez aprobado el MEF, el seguimiento sistemático del
+                beneficio se hace en <b>foros multifuncionales</b>. Los
+                Comités Ágiles son sesiones cortas, recurrentes y con
+                propósito cuantitativo — buscan <b>eficiencia y
+                rentabilidad</b> con métrica visible.
+              </p>
+
+              <div class="comites">
+                <div class="comite-card">
+                  <div class="cm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  </div>
+                  <h4>Comité de Gastos</h4>
+                </div>
+                <div class="comite-card">
+                  <div class="cm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  </div>
+                  <h4>Comité de S&amp;OP</h4>
+                </div>
+                <div class="comite-card">
+                  <div class="cm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  </div>
+                  <h4>Comité de Mano de Obra</h4>
+                </div>
+                <div class="comite-card">
+                  <div class="cm-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                  </div>
+                  <h4>Comité de Cierre Contable</h4>
+                </div>
+              </div>
+
+              <h3 style="font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px;">Cómo se implementa un Comité</h3>
+              <ol class="steps">
+                <li>
+                  <div>
+                    <h4>ABC y estrategias del rubro</h4>
+                    <p>Identificar rubros <b>"impactables"</b>, tendencia de gasto, factores de crecimiento o decrecimiento, tipo de gasto. Diseñar campañas de concientización, sinergias, negociación, racionalización, compras alternativas.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Alinear Periodos Base y objetivos</h4>
+                    <p>Definir el Periodo Base del rubro y los <b>objetivos de reducción</b> (porcentaje, monto, plazo). El comité opera contra ese ancla.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Implementar el Comité</h4>
+                    <p>Definir <b>integrantes</b>, <b>frecuencia de reunión</b> (semanal o quincenal según el rubro) y nombrar <b>guardianes de cuenta</b> — responsables de cada partida que rinden cuentas en cada sesión.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Indicadores y mecánica de seguimiento</h4>
+                    <p>Definir indicadores y mecánica. Garantizar criterios y políticas de ejecución de gastos. Establecer la relación entre cada gasto y el funcionario autorizado, con políticas y niveles de autorización claros.</p>
+                  </div>
+                </li>
+              </ol>
+            </section>
+
+            <!-- 07 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">07 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Cuando llegues a tu primera asignación, busca el MEF del proyecto en SharePoint y abre el dashboard de Power BI asociado. Esa es la cifra que el Director de Operaciones revisa cada lunes — y la que tu trabajo del día empuja.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="day-2-martes.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span>
+                  <span class="title">Día 02 · Metodología</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-2-martes.html">
+                  Siguiente · PASER
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 04 de 06 · Día 02</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Propósito</a></li>
+                <li><a href="#sec-base"><span class="tick"></span>Periodo Base</a></li>
+                <li><a href="#sec-componentes"><span class="tick"></span>Componentes clave</a></li>
+                <li><a href="#sec-flow"><span class="tick"></span>Flujo de aprobación</a></li>
+                <li><a href="#sec-resultado"><span class="tick"></span>Resultado</a></li>
+                <li><a href="#sec-comites"><span class="tick"></span>Comités Ágiles</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+                  <div class="r-name">Plantilla MEF<span class="r-meta">SharePoint del proyecto · pídela a tu Gerente</span></div>
+                </div></li>
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                  <div class="r-name">Dashboard Power BI<span class="r-meta">Modelo del MEF · acceso al asignarte el proyecto</span></div>
+                </div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-met-bg); border-color: var(--cat-met);">
+              <h4 style="color: var(--cat-met);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Sigue con <b>PASER</b>: Planeación, Análisis, Solución, Ejecución, Resultados — el ciclo completo de un engagement LCG.
+              </p>
+              <a href="day-2-martes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-met);">Volver al Día 02 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd2-b04-mef';
+
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

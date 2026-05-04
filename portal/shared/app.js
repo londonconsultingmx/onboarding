@@ -115,7 +115,7 @@ const SIDEBAR_DAYS = [
       { name: "Plan de Vuelo",                href: "session-d2-b01-plan-vuelo.html", sid: "d2-b01-plan-vuelo" },
       { name: "PreDx & Análisis Exhaustivo",  href: "session-d2-b02-predx.html", sid: "d2-b02-predx" },
       { name: "Value Stream Analysis (VSA)",  href: "#", sid: "d2-b03-vsa" },
-      { name: "MEF · Evaluación Financiera",  href: "#", sid: "d2-b04-mef" },
+      { name: "MEF · Evaluación Financiera",  href: "session-d2-b04-mef.html", sid: "d2-b04-mef" },
       { name: "PASER",                        href: "#", sid: "d2-b05-paser" },
       { name: "Diseño e Implementación",      href: "#", sid: "d2-b06-diseno" }
     ]
