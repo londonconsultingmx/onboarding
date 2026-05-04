@@ -117,7 +117,7 @@ const SIDEBAR_DAYS = [
       { name: "Value Stream Analysis (VSA)",  href: "#", sid: "d2-b03-vsa" },
       { name: "MEF · Evaluación Financiera",  href: "session-d2-b04-mef.html", sid: "d2-b04-mef" },
       { name: "PASER",                        href: "#", sid: "d2-b05-paser" },
-      { name: "Diseño e Implementación",      href: "#", sid: "d2-b06-diseno" }
+      { name: "Diseño e Implementación",      href: "session-d2-b06-diseno.html", sid: "d2-b06-diseno" }
     ]
   },
   {

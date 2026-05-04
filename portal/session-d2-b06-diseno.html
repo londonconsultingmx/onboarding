@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Diseño & Implementación · Día 2 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+.s-hero{
+  position: relative; overflow:hidden;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(180deg, #F2F7F5 0%, transparent 100%);
+}
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--cat-met-bg); color: var(--cat-met);
+  font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase;
+}
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{
+  font-family:var(--serif); font-weight:400;
+  font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0;
+  letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink);
+}
+.s-hero h1 em{ font-style: italic; color: var(--cat-met); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+
+.s-block{ margin-bottom: 56px; }
+.s-block-label{
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.s-block h2{
+  font-family: var(--serif); font-weight: 400;
+  font-size: 34px; line-height: 1.08; letter-spacing: -.02em;
+  margin: 0 0 20px;
+}
+.s-block h2 em{ font-style: italic; color: var(--cat-met); }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Lifecycle map — full project timeline */
+.lifecycle{
+  margin: 18px 0 8px;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  background: var(--surface); overflow: hidden;
+}
+.lifecycle-head{
+  display: grid; grid-template-columns: 140px 1fr; gap: 18px;
+  padding: 14px 22px; background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline);
+}
+.lifecycle-head .lh-l{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); align-self: center; }
+.lifecycle-axis{
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  height: 18px; position: relative;
+  font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4);
+}
+.lifecycle-axis span{ display: flex; align-items: center; justify-content: flex-start; border-left: 1px solid transparent; }
+.lifecycle-axis span.tick{ border-left-color: var(--hairline); padding-left: 4px; }
+.lifecycle-rows{ padding: 14px 22px 22px; }
+.lc-row{
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 18px; align-items: center; padding: 8px 0;
+  border-bottom: 1px dashed var(--hairline);
+}
+.lc-row:last-child{ border-bottom: 0; }
+.lc-row .lc-name{
+  font-size: 12px; font-weight: 700;
+  font-family: ui-monospace, Menlo, monospace; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink);
+}
+.lc-row .lc-name .lc-sub{
+  display: block; margin-top: 2px;
+  font-family: var(--sans); font-weight: 500; font-size: 10.5px;
+  color: var(--ink-4); letter-spacing: 0; text-transform: none;
+}
+.lc-row .lc-track{
+  position: relative; height: 28px; background: var(--surface-2); border-radius: 999px; overflow: hidden;
+}
+.lc-row .lc-bar{
+  position: absolute; top: 0; bottom: 0;
+  background: var(--cat-met); border-radius: 999px;
+  display: flex; align-items: center; padding: 0 12px;
+  color: #fff; font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+}
+.lc-row .lc-bar.tone-1{ background: var(--cat-met); opacity:.95; }
+.lc-row .lc-bar.tone-2{ background: var(--cat-met); opacity:.78; }
+.lc-row .lc-bar.tone-3{ background: var(--cat-met); opacity:.62; }
+.lc-row .lc-bar.tone-4{ background: var(--cat-met); opacity:.50; }
+.lc-row .lc-bar.tone-5{ background: var(--cat-met); opacity:.42; }
+.lc-row.is-current .lc-name{ color: var(--cat-met); }
+.lc-row.is-current .lc-track{ background: var(--cat-met-bg); }
+.lifecycle-foot{
+  padding: 12px 22px; background: var(--cream, var(--lcg-cream));
+  font-size: 12px; color: var(--ink-2); border-top: 1px solid var(--hairline);
+  display: flex; gap: 22px; align-items: center;
+}
+.lifecycle-foot b{ color: var(--lcg-dark); }
+
+/* Phase cards (deliverables grids) */
+.deliv-grid{
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.deliv-card{
+  padding: 18px 20px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.deliv-card .dv-icon{
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--cat-met-bg); color: var(--cat-met);
+  display:flex; align-items:center; justify-content:center; margin-bottom: 4px;
+}
+.deliv-card h4{
+  margin: 0; font-family: var(--sans); font-weight: 700; font-size: 14px;
+  color: var(--ink); line-height: 1.25;
+}
+.deliv-card p{ margin: 4px 0 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* Inventario destacado (PASER y entregables transversales) */
+.inv-call{
+  padding: 22px 26px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+  margin: 18px 0 6px;
+}
+.inv-call::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%);
+  pointer-events: none;
+}
+.inv-call > *{ position: relative; z-index: 1; }
+.inv-call h4{
+  margin: 0 0 4px; font-family: var(--sans); font-weight: 700;
+  font-size: 11px; color: var(--lcg-mint); letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.inv-call h3{
+  margin: 0 0 14px; font-family: var(--serif); font-weight: 400;
+  font-size: 22px; letter-spacing: -.015em; color: #fff; line-height: 1.15;
+}
+.inv-chips{
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.inv-chips span{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px; letter-spacing: .04em; color: #F2EEE8;
+}
+.inv-chips span.is-key{ background: rgba(138,244,233,.18); border-color: rgba(138,244,233,.35); color: #fff; font-weight: 700; }
+
+/* Design Sprint — 5 steps horizontal */
+.sprint{
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+  margin-top: 14px;
+}
+.sprint-step{
+  position: relative; padding: 16px 14px 18px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-top: 3px solid var(--cat-met); border-radius: var(--r-md);
+  text-align: left;
+}
+.sprint-step .ss-num{
+  font-family: ui-monospace, Menlo, monospace; font-size: 11px;
+  color: var(--cat-met); letter-spacing: .12em; font-weight: 700;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.sprint-step h5{
+  margin: 0 0 4px; font-family: var(--sans); font-weight: 700;
+  font-size: 13.5px; color: var(--ink); line-height: 1.2;
+}
+.sprint-step p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* Quick Wins steps — vertical numbered */
+.qw-steps{
+  list-style: none; padding: 0; margin: 14px 0 0;
+  counter-reset: step;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.qw-steps li{
+  counter-increment: step;
+  display: grid; grid-template-columns: 38px 1fr; gap: 18px;
+  padding: 14px 18px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.qw-steps li::before{
+  content: counter(step, decimal-leading-zero);
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--cat-met); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px; font-weight: 700; letter-spacing: .04em;
+}
+.qw-steps li h4{
+  margin: 0 0 3px; font-family: var(--sans); font-weight: 700;
+  font-size: 14.5px; color: var(--ink);
+}
+.qw-steps li p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+/* Implementación — niveles */
+.levels{
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.level{
+  padding: 22px 22px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 90%);
+  border: 1px solid rgba(8,94,84,.18);
+}
+.level .lv-tag{
+  font-family: ui-monospace, Menlo, monospace; font-size: 10.5px;
+  color: var(--cat-met); letter-spacing: .14em; font-weight: 700;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.level h4{
+  margin: 0 0 8px; font-family: var(--serif); font-weight: 400;
+  font-size: 18px; color: var(--lcg-dark); line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.level p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+/* Capacitación — proceso paser-style chips */
+.cap-steps{
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+  margin: 14px 0;
+}
+.cap-step{
+  padding: 12px 14px; border-radius: 8px;
+  background: var(--surface-2); border: 1px solid var(--hairline);
+  text-align: center;
+}
+.cap-step .cs-letter{
+  font-family: var(--serif); font-weight: 400; font-size: 22px;
+  color: var(--cat-met); line-height: 1; letter-spacing: -.02em;
+}
+.cap-step .cs-name{
+  display: block; margin-top: 4px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; color: var(--ink-3);
+  letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+}
+.cert-grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.cert-card{
+  padding: 18px 22px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-left: 3px solid var(--cat-met);
+}
+.cert-card h4{
+  margin: 0 0 6px; font-family: var(--sans); font-weight: 700;
+  font-size: 14px; color: var(--ink);
+}
+.cert-card p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* Documentación — split */
+.doc-split{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.doc-card{
+  padding: 22px 24px; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--lcg-cream) 0%, var(--surface) 80%);
+  border: 1px solid #E9E1CC;
+}
+.doc-card .dc-tag{
+  font-family: ui-monospace, Menlo, monospace; font-size: 10.5px;
+  color: var(--lcg-dark); letter-spacing: .14em; font-weight: 700;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.doc-card h4{
+  margin: 0 0 6px; font-family: var(--serif); font-weight: 400;
+  font-size: 19px; color: var(--lcg-dark); line-height: 1.15;
+  letter-spacing: -.015em;
+}
+.doc-card p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+/* Reflect callout */
+.reflect{
+  padding: 26px 32px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #074D46 0%, #0A6B60 100%);
+  color: #fff; border: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(8,94,84,.18);
+}
+.reflect::after{
+  content: ""; position: absolute;
+  top: -40%; right: -10%; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(138,244,233,.25), transparent 70%);
+  pointer-events: none;
+}
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{
+  width: 54px; height: 54px; border-radius: 14px;
+  background: rgba(138,244,233,.15);
+  border: 1px solid rgba(138,244,233,.35);
+  color: var(--lcg-mint);
+  display:flex; align-items:center; justify-content:center;
+}
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--lcg-mint); letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
+  gap: 16px;
+}
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-met); background: var(--cat-met-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--hairline); text-decoration:none;
+  background: var(--surface); transition: border-color .15s, background .15s;
+}
+.res-list a:hover{ border-color: var(--cat-met); background: var(--cat-met-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-met-bg); color: var(--cat-met); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+/* Session completion */
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-met); background: linear-gradient(180deg, var(--cat-met-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-met); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-met); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-met); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-met); background: var(--surface); color: var(--cat-met); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-met-bg); }
+.sess-toggle.is-done{ background: var(--cat-met); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-met); border-bottom:2px solid var(--cat-met); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
+      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
+    </a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user">
+      <div class="avatar">AH</div>
+      <div class="side-user-meta">
+        <strong>Ángel Hernández</strong>
+        <span>Consultor Asociado</span>
+      </div>
+    </div>
+    <div class="side-progress">
+      <span class="label">Progreso global</span>
+      <span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span>
+      <div class="progress"><span style="width:0%"></span></div>
+      <div class="meta">0 de 28 sesiones</div>
+    </div>
+    <div>
+      <div class="nav-section-label">Semana 1</div>
+      <ul class="day-list" data-sidebar="days"></ul>
+    </div>
+    <div>
+      <div class="nav-section-label">General</div>
+      <ul class="day-list">
+        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-2-martes.html" style="color:inherit; text-decoration:none;">Martes</a>
+        <span style="opacity:.4">/</span>
+        <b>Diseño &amp; Implementación</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-met-bg); color: var(--cat-met); border-color: transparent;">
+        <span class="pill-dot"></span> Metodología
+      </span>
+      <button class="iconbtn" title="Compartir">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </header>
+
+    <main class="session-main">
+
+      <!-- Hero -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Metodología</span>
+            <span class="pill"><span style="opacity:.5">Día 02</span>&nbsp;·&nbsp;Bloque 06 de 06</span>
+          </div>
+          <h1>Diseño <em>&amp; Implementación.</em></h1>
+          <p class="s-hero-sub">
+            Después de entender, <b>construir y activar</b>. Las cinco
+            etapas que llevan al proyecto desde la solución diseñada en
+            taller hasta la operación con el cliente: <b>Diseño</b>,
+            <b>Quick Wins</b>, <b>Implementación</b>, <b>Capacitación</b>
+            y <b>Documentación</b>.
+          </p>
+
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">60</span> min</span></div>
+            <div class="item"><span class="label">Etapas</span><span class="val"><span class="u-mono">05</span></span></div>
+            <div class="item"><span class="label">Horizonte</span><span class="val">Sem <span class="u-mono">05–40</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-met); color:#fff;">DO</div>
+                <div>
+                  <div class="val">Director de Operaciones</div>
+                  <div class="sub">Según disponibilidad · o video</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+
+          <article>
+
+            <!-- 01 · Propósito -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Propósito</div>
+              <h2>De entender, a <em>construir y activar.</em></h2>
+              <p class="lead">
+                El <b>Análisis Exhaustivo</b> deja claro qué tiene que
+                cambiar. A partir de la semana 5, el proyecto cambia de
+                modo: deja de mapear y comienza a <b>diseñar la operación
+                futura, probarla en pequeño, implantarla en planta,
+                capacitar y dejarla documentada</b> para que sobreviva al
+                cliente que la operará una vez que LCG salga.
+              </p>
+              <p>
+                Estas cinco etapas se solapan en el tiempo. La habilidad
+                de un Gerente LCG es coreografiarlas — no esperar a que
+                Diseño termine para empezar Quick Wins, ni dejar
+                Documentación para el final cuando ya nadie recuerda los
+                acuerdos.
+              </p>
+            </section>
+
+            <!-- 02 · Mapa del lifecycle -->
+            <section class="s-block" id="sec-mapa">
+              <div class="s-block-label">02 · Mapa del proyecto</div>
+              <h2>Las seis etapas, vistas <em>en horizonte.</em></h2>
+              <p>
+                Un proyecto LCG estándar corre <b>40 semanas</b>. Cada
+                etapa tiene su ventana, pero el solapamiento es la regla,
+                no la excepción.
+              </p>
+
+              <div class="lifecycle">
+                <div class="lifecycle-head">
+                  <div class="lh-l">Semana</div>
+                  <div class="lifecycle-axis">
+                    <span class="tick">01</span>
+                    <span></span><span></span><span></span>
+                    <span class="tick">05</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">10</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">15</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">20</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">25</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">30</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">35</span>
+                    <span></span><span></span><span></span><span></span>
+                    <span class="tick">40</span>
+                  </div>
+                </div>
+                <div class="lifecycle-rows">
+                  <div class="lc-row">
+                    <div class="lc-name">Análisis Exhaustivo<span class="lc-sub">VSMs · Gemba · Estructura</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-1" style="left: 0%; width: 10%;">Sem 01–04</div>
+                    </div>
+                  </div>
+                  <div class="lc-row is-current">
+                    <div class="lc-name">Diseño<span class="lc-sub">Modelos · KPI · Pre-manuales</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-2" style="left: 10%; width: 27.5%;">Sem 05–15</div>
+                    </div>
+                  </div>
+                  <div class="lc-row is-current">
+                    <div class="lc-name">Quick Wins<span class="lc-sub">Iniciativas alto impacto · 8–12 sem</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-3" style="left: 22.5%; width: 25%;">Sem 10–20</div>
+                    </div>
+                  </div>
+                  <div class="lc-row is-current">
+                    <div class="lc-name">Implementación<span class="lc-sub">Hombro a hombro · Coaching</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-2" style="left: 35%; width: 57.5%;">Sem 15–38</div>
+                    </div>
+                  </div>
+                  <div class="lc-row is-current">
+                    <div class="lc-name">Capacitación<span class="lc-sub">Pre-manuales · Certificación</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-4" style="left: 47.5%; width: 7.5%;">Sem 20–22</div>
+                    </div>
+                  </div>
+                  <div class="lc-row is-current">
+                    <div class="lc-name">Documentación<span class="lc-sub">Matriz auditoría · Procesos</span></div>
+                    <div class="lc-track">
+                      <div class="lc-bar tone-5" style="left: 95%; width: 5%;">39–40</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="lifecycle-foot">
+                  <span><b>Continuidad transversal:</b> Curva ROI &amp; Sistema · Juntas Semanales de Avance · seguimiento de Continuidad post-cierre.</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · Diseño -->
+            <section class="s-block" id="sec-diseno">
+              <div class="s-block-label">03 · Diseño · Sem 05–15</div>
+              <h2>Construir el <em>cómo</em> opera el cliente mañana.</h2>
+              <p>
+                Diseñar es resolver — no documentar lo que hay. Los VSM
+                del Análisis enseñan dónde está la fricción; en Diseño se
+                construye el flujo de valor que la elimina, alineando
+                cada proceso a mejores prácticas y priorizando lo que
+                más impacta a la <b>excelencia operacional</b>, la
+                <b>experiencia del cliente</b> y la <b>experiencia del
+                usuario</b>.
+              </p>
+
+              <div class="deliv-grid">
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                  <h4>Modelos operativos</h4>
+                  <p>Cómo se ejecuta cada proceso punta a punta — entradas, salidas, owner, cadencia.</p>
+                </div>
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+                  <h4>Indicadores (KPIs)</h4>
+                  <p>Métricas que reflejan desempeño actual y futuro de cada área. Insumo del MEF y del Power BI.</p>
+                </div>
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+                  <h4>Herramientas digitales</h4>
+                  <p>Apps, formatos y dashboards que dejan vivir el modelo — no PDFs estáticos.</p>
+                </div>
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <h4>Días típicos · puestos clave</h4>
+                  <p>Cómo se ve el día a día del puesto bajo el nuevo modelo: bloques de tiempo, foros, decisiones.</p>
+                </div>
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <h4>Políticas</h4>
+                  <p>Reglas explícitas de operación, autorización y excepción. Lo que no se vota en cada caso.</p>
+                </div>
+                <div class="deliv-card">
+                  <div class="dv-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                  <h4>Pre-Manuales</h4>
+                  <p>Manuales digitales que sirven de capacitación y, después, de referencia operativa diaria.</p>
+                </div>
+              </div>
+
+              <div class="inv-call">
+                <h4>Inventario general de entregables</h4>
+                <h3>El Diseño se entrega como un paquete coherente, no piezas sueltas.</h3>
+                <div class="inv-chips">
+                  <span class="is-key">PASER</span>
+                  <span>Modelos conceptuales</span>
+                  <span>Políticas</span>
+                  <span>Apps · Herramientas · Formatos</span>
+                  <span>Indicadores (KPI's)</span>
+                  <span>Vivencia del usuario</span>
+                  <span>Checklist de coaching</span>
+                </div>
+              </div>
+
+              <h3 style="font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 6px;">Design Sprint · cómo se diseña</h3>
+              <p>
+                LCG usa <b>Design Sprint</b> como protocolo para diseñar
+                bajo esquema y límite de tiempo. La regla: cada VSM nuevo
+                tiene que <b>corregir una historia</b> documentada en el
+                Análisis Exhaustivo — si no, el sprint no se abre.
+              </p>
+
+              <div class="sprint">
+                <div class="sprint-step">
+                  <div class="ss-num">01</div>
+                  <h5>Definir reto</h5>
+                  <p>Enunciar el problema con claridad y la historia que lo evidencia.</p>
+                </div>
+                <div class="sprint-step">
+                  <div class="ss-num">02</div>
+                  <h5>Buscar soluciones</h5>
+                  <p>Generar opciones — divergir antes de decidir.</p>
+                </div>
+                <div class="sprint-step">
+                  <div class="ss-num">03</div>
+                  <h5>Elegir solución</h5>
+                  <p>Priorizar la opción con mejor relación impacto / esfuerzo.</p>
+                </div>
+                <div class="sprint-step">
+                  <div class="ss-num">04</div>
+                  <h5>Realizar prototipo</h5>
+                  <p>Construir la versión jugable del proceso, app o formato.</p>
+                </div>
+                <div class="sprint-step">
+                  <div class="ss-num">05</div>
+                  <h5>Testeo de usuarios</h5>
+                  <p>Validar con quien opera. Si falla, vuelve a 02.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Quick Wins -->
+            <section class="s-block" id="sec-qw">
+              <div class="s-block-label">04 · Quick Wins · Sem 10–20</div>
+              <h2>Resultados <em>antes</em> de terminar el rediseño.</h2>
+              <p>
+                Los <b>Quick Wins</b> son iniciativas de <b>alto impacto y
+                bajo esfuerzo</b> que se implementan en <b>8 a 12 semanas</b>
+                paralelamente al Diseño. Generan resultados visibles
+                temprano — y financian el momentum político del proyecto
+                ante el cliente.
+              </p>
+
+              <ol class="qw-steps">
+                <li>
+                  <div>
+                    <h4>Diagnóstico integral</h4>
+                    <p>Identificación de brechas y fricciones operativas mediante análisis del estado actual.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Talleres focalizados</h4>
+                    <p>Sesiones dirigidas con usuarios clave para mapear pain points críticos.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Consolidación de insights</h4>
+                    <p>Integración de hallazgos del diagnóstico, entrevistas y sesiones colaborativas.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Priorización estratégica</h4>
+                    <p>Valoración de iniciativas según impacto, viabilidad y esfuerzo.</p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Activación de Quick Wins</h4>
+                    <p>Definición del reto central y ejecución inmediata de soluciones de alto retorno.</p>
+                  </div>
+                </li>
+              </ol>
+            </section>
+
+            <!-- 05 · Implementación -->
+            <section class="s-block" id="sec-impl">
+              <div class="s-block-label">05 · Implementación · Sem 15–38</div>
+              <h2>Acompañamiento <em>hombro a hombro.</em></h2>
+              <p>
+                Implementar en LCG no es entregar un manual y salir. Es
+                <b>estar en la operación con el cliente</b> mientras los
+                nuevos modelos se vuelven hábito. Cada coaching tiene
+                <b>seguimiento individual con retroalimentación vertical</b>:
+                detalle al colaborador, al jefe directo y al Director del
+                área. Eso es lo que permite especificar los planes de
+                acción y, con ellos, la <b>madurez del perfil</b> y los
+                <b>resultados</b>.
+              </p>
+
+              <div class="levels">
+                <div class="level">
+                  <div class="lv-tag">Nivel 01</div>
+                  <h4>Implementación de procesos</h4>
+                  <p>Ejecutar el modelo nuevo en el flujo real, ajustar lo que no funciona en planta y cerrar las brechas con políticas y herramientas.</p>
+                </div>
+                <div class="level">
+                  <div class="lv-tag">Nivel 02</div>
+                  <h4>Implementación digital</h4>
+                  <p>Activar las herramientas y formatos diseñados — dashboards, apps, formatos — y validar que se usan, no solo que existen.</p>
+                </div>
+                <div class="level">
+                  <div class="lv-tag">Nivel 03</div>
+                  <h4>Coaching</h4>
+                  <p>Acompañar al colaborador en su día típico nuevo. Retroalimentación vertical al jefe directo y al Director del área.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 06 · Capacitación -->
+            <section class="s-block" id="sec-cap">
+              <div class="s-block-label">06 · Capacitación · Sem 20–22</div>
+              <h2>Transferir el <em>conocimiento y la responsabilidad.</em></h2>
+              <p>
+                La capacitación formal involucra a todos los responsables
+                directos del proceso. Se hace a través de <b>Pre-Manuales
+                digitales</b> — el mismo entregable de Diseño se vuelve
+                el material de capacitación, asegurando que lo que se
+                enseña es exactamente lo que se va a operar.
+              </p>
+
+              <div class="cap-steps">
+                <div class="cap-step"><div class="cs-letter">P</div><span class="cs-name">Planeación</span></div>
+                <div class="cap-step"><div class="cs-letter">A</div><span class="cs-name">Asignación</span></div>
+                <div class="cap-step"><div class="cs-letter">S</div><span class="cs-name">Seguimiento</span></div>
+                <div class="cap-step"><div class="cs-letter">E</div><span class="cs-name">Evaluación</span></div>
+                <div class="cap-step"><div class="cs-letter">R</div><span class="cs-name">Retroalim.</span></div>
+              </div>
+              <p style="font-size: 13px; color: var(--ink-3); margin-top: 4px;">
+                La capacitación corre bajo el ciclo PASER — el mismo
+                que rige el resto del engagement. Coherencia metodológica
+                entre cómo se gestiona el proyecto y cómo se enseña la
+                operación nueva.
+              </p>
+
+              <div class="cert-grid">
+                <div class="cert-card">
+                  <h4>Certificación teórica</h4>
+                  <p>El colaborador demuestra que entiende el modelo, las políticas y los indicadores diseñados para su puesto.</p>
+                </div>
+                <div class="cert-card">
+                  <h4>Certificación práctica</h4>
+                  <p>El colaborador opera el proceso nuevo en su día típico durante un periodo definido, con coach al lado.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 07 · Documentación -->
+            <section class="s-block" id="sec-doc">
+              <div class="s-block-label">07 · Documentación · Sem 39–40</div>
+              <h2>Lo que <em>queda</em> cuando LCG sale.</h2>
+              <p>
+                La documentación no es un PDF de cierre. Es el paquete
+                que permite al cliente <b>auditarse a sí mismo</b> y al
+                siguiente proyecto LCG empezar más alto. Las dos piezas
+                centrales:
+              </p>
+
+              <div class="doc-split">
+                <div class="doc-card">
+                  <div class="dc-tag">Pieza 01</div>
+                  <h4>Matriz de auditoría</h4>
+                  <p>Para cada proceso implementado, los criterios objetivos contra los cuales se audita el cumplimiento. Lo que el cliente revisa después de que LCG sale para asegurar que el modelo sigue vivo.</p>
+                </div>
+                <div class="doc-card">
+                  <div class="dc-tag">Pieza 02</div>
+                  <h4>Procesos implementados</h4>
+                  <p>Inventario consolidado de los modelos operativos, políticas, indicadores y herramientas que efectivamente se activaron — diferente del diseño original cuando hubo iteraciones en planta.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 08 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">08 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                </div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Cuando entres a tu primer proyecto, ubica en qué semana estás dentro del mapa: ¿Diseño en taller, Quick Win por activar, coaching en planta, o cierre documental? Esa coordenada define qué entregable te toca producir hoy.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Complete bar -->
+            <div class="complete-bar">
+              <a class="prev" href="day-2-martes.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <div>
+                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span>
+                  <span class="title">Día 02 · Metodología</span>
+                </div>
+              </a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="day-3-miercoles.html">
+                  Siguiente · Día 03
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row">
+                <span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span>
+                <span class="sess-pct-lbl">Sesión 06 de 06 · Día 02</span>
+              </div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false">
+                <span class="sess-chk" aria-hidden="true"></span>
+                <span class="sess-txt">Marcar como completada</span>
+              </button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Propósito</a></li>
+                <li><a href="#sec-mapa"><span class="tick"></span>Mapa del proyecto</a></li>
+                <li><a href="#sec-diseno"><span class="tick"></span>Diseño</a></li>
+                <li><a href="#sec-qw"><span class="tick"></span>Quick Wins</a></li>
+                <li><a href="#sec-impl"><span class="tick"></span>Implementación</a></li>
+                <li><a href="#sec-cap"><span class="tick"></span>Capacitación</a></li>
+                <li><a href="#sec-doc"><span class="tick"></span>Documentación</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div class="r-name">Etapas de Proyecto<span class="r-meta">PPT marco · SharePoint Operaciones</span></div>
+                </div></li>
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                  <div class="r-name">Inventario de entregables<span class="r-meta">Plantilla por área del proyecto</span></div>
+                </div></li>
+                <li><div class="static">
+                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                  <div class="r-name">Pre-Manual digital<span class="r-meta">Ejemplo del último engagement</span></div>
+                </div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-met-bg); border-color: var(--cat-met);">
+              <h4 style="color: var(--cat-met);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
+                Cierras el Día 02 con la metodología completa. Mañana, <b>Día 03</b>, conoces las verticales LCG México: Supply SCM, Lean 4.0 y Excelencia Comercial.
+              </p>
+              <a href="day-2-martes.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-met);">Volver al Día 02 →</a>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd2-b06-diseno';
+
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+
+  toggle.addEventListener('click', () => {
+    const store = loadStore();
+    store[SESSION_ID] = !store[SESSION_ID];
+    saveStore(store);
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
