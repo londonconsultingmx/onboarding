@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="shared/iso.css?v=6" />
 <style>
 .session-main{ padding-bottom: 80px; }
-
 .s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
 .s-hero-inner{ padding: 56px 0 64px; }
 .s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
@@ -35,18 +34,39 @@
 .s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
 .s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
 
+/* Pyramid (op / tac / est) */
+.pyramid{ margin-top: 14px; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.pyr-row{ display: grid; grid-template-columns: 200px 1fr; gap: 18px; padding: 18px 22px; border-radius: var(--r-md); align-items: center; }
+.pyr-row.l-est{ background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; width: 100%; }
+.pyr-row.l-tac{ background: var(--cat-ai-bg); color: var(--ink); width: 90%; align-self: center; }
+.pyr-row.l-op{ background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline); width: 80%; align-self: center; }
+.pyr-row .pyr-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; opacity: .85; margin-bottom: 4px; }
+.pyr-row .pyr-name{ font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: -.015em; line-height: 1.1; }
+.pyr-row .pyr-meta{ font-size: 13px; line-height: 1.5; opacity: .9; }
+.pyr-row .pyr-ex{ display: block; margin-top: 4px; font-size: 12px; font-family: ui-monospace, Menlo, monospace; opacity: .75; letter-spacing: .02em; }
+
+/* Use case grid (across areas) */
+.area-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.area-card{ padding: 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid var(--cat-ai); }
+.area-card .ac-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.area-card h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.area-card ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.area-card ul li{ position: relative; padding-left: 14px; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+.area-card ul li::before{ content: ""; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: var(--cat-ai); }
+.area-card ul li b{ color: var(--ink); font-weight: 600; }
+
 /* Stack diagram */
 .stack{ display: grid; grid-template-columns: 1fr; gap: 6px; margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 14px; background: var(--surface); }
-.stack-layer{ padding: 12px 18px; border-radius: 8px; display: grid; grid-template-columns: 110px 1fr 100px; gap: 16px; align-items: center; }
+.stack-layer{ padding: 12px 18px; border-radius: 8px; display: grid; grid-template-columns: 110px 1fr 160px; gap: 16px; align-items: center; }
 .stack-layer.l-1{ background: var(--cat-ai); color: #fff; }
 .stack-layer.l-2{ background: var(--cat-ai-bg); color: var(--cat-ai); }
 .stack-layer.l-3{ background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline); }
 .stack-layer.l-4{ background: var(--lcg-cream); color: var(--lcg-dark); border: 1px solid #E9E1CC; }
 .stack-layer .sl-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
 .stack-layer .sl-name{ font-family: var(--serif); font-weight: 400; font-size: 18px; letter-spacing: -.01em; }
-.stack-layer .sl-meta{ font-size: 11.5px; opacity: .75; text-align: right; }
+.stack-layer .sl-meta{ font-size: 11.5px; opacity: .75; text-align: right; font-family: ui-monospace, Menlo, monospace; }
 
-/* Schema diagram (model star) */
+/* Schema diagram */
 .schema{ margin-top: 14px; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: stretch; }
 .schema-fact{ grid-column: 2; padding: 18px; background: var(--cat-ai); color: #fff; border-radius: var(--r-md); text-align: center; }
 .schema-fact .sf-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; opacity: .85; text-transform: uppercase; }
@@ -56,6 +76,13 @@
 .schema-dim .sd-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; }
 .schema-dim h5{ margin: 4px 0 6px; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--ink); }
 .schema-dim ul{ list-style: none; padding: 0; margin: 0; font-size: 11px; line-height: 1.55; color: var(--ink-3); font-family: ui-monospace, Menlo, monospace; }
+
+/* Connector grid */
+.conn-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.conn-card{ padding: 14px 18px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); }
+.conn-card .cc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.conn-card h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13.5px; color: var(--ink); }
+.conn-card p{ margin: 0; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
 
 /* Code block */
 pre.code{ margin: 12px 0; padding: 18px 22px; background: #1A1A1A; color: #E8E5DD; border-radius: var(--r-md); font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.6; overflow-x: auto; border: 1px solid #2A2A2A; }
@@ -72,7 +99,7 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
 .dax-card p{ margin: 0 0 8px; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
 .dax-card pre{ margin: 0; padding: 12px 14px; background: #1A1A1A; color: #E8E5DD; border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; line-height: 1.5; overflow-x: auto; }
 
-/* Concept call (purple) */
+/* Concept call */
 .concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
 .concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
 .concept-call > *{ position: relative; z-index: 1; }
@@ -81,7 +108,7 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
 .concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
 .concept-call p:last-child{ margin-bottom: 0; }
 
-/* Layout grid (dashboard mockup) */
+/* Dashboard mock */
 .dash-mock{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 60px 120px 120px; gap: 8px; margin-top: 14px; padding: 14px; background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--r-md); }
 .dm{ background: var(--surface); border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-3); letter-spacing: .04em; display: flex; align-items: flex-start; }
 .dm.dm-h{ grid-column: 1 / 5; background: var(--cat-ai); color: #fff; align-items: center; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -92,7 +119,7 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
 .dm.dm-chart .dm-bar{ flex: 1; background: linear-gradient(180deg, var(--cat-ai-bg) 0%, transparent 100%); border-radius: 4px; position: relative; }
 .dm.dm-chart .dm-bar::after{ content: ""; position: absolute; left: 8%; right: 8%; bottom: 8px; height: 2px; background: var(--cat-ai); border-radius: 2px; }
 
-/* Steps numbered */
+/* Steps */
 .steps{ list-style: none; padding: 0; margin: 14px 0 0; counter-reset: step; display: flex; flex-direction: column; gap: 10px; }
 .steps li{ counter-increment: step; display: grid; grid-template-columns: 38px 1fr; gap: 18px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
 .steps li::before{ content: counter(step, decimal-leading-zero); width: 38px; height: 38px; border-radius: 50%; background: var(--cat-ai); color: #fff; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
@@ -113,7 +140,7 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
 .bp.is-do ul li::before{ content: "+"; color: var(--cat-ai); }
 .bp.is-avoid ul li::before{ content: "−"; color: #B5564E; }
 
-/* Reflect callout */
+/* Reflect */
 .reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
 .reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
 .reflect > *{ position: relative; z-index: 1; }
@@ -121,14 +148,12 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
 .reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
 .reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
 
-/* Complete bar */
 .complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
 .complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
 .complete-bar .prev:hover{ color: var(--ink); }
 .complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
 .complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
 
-/* Aside */
 .s-aside{ position: sticky; top: 92px; align-self: start; }
 .aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
 .aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
@@ -197,16 +222,16 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
           </div>
           <h1>Power <em>BI.</em></h1>
           <p class="s-hero-sub">
-            El instrumento de medición del proyecto LCG. Desde la
-            conexión a SharePoint hasta el dashboard que el Director de
-            Operaciones revisa cada lunes en la JSA. <b>Power BI es donde
-            el MEF deja de ser un Excel y se vuelve la cifra que rige la
-            semana.</b>
+            La capa de <b>indicadores</b> de LCG. Conecta la data del
+            cliente — operativa, táctica y estratégica — a <b>insights
+            reales que cambian decisiones</b>. Desde el OEE de la línea
+            hasta el cuadro de mando del CEO, todo lo que LCG mide se
+            visualiza aquí.
           </p>
           <div class="s-hero-meta">
             <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">1h 30</span></span></div>
-            <div class="item"><span class="label">Capa</span><span class="val">Stack <span class="u-mono">02</span></span></div>
-            <div class="item"><span class="label">Salida</span><span class="val">Dashboard JSA</span></div>
+            <div class="item"><span class="label">Niveles</span><span class="val">Op · Tac · Est</span></div>
+            <div class="item"><span class="label">Áreas</span><span class="val">Cualquiera</span></div>
             <div class="item">
               <span class="label">Facilita</span>
               <div class="facilitator" style="margin-top:4px;">
@@ -222,201 +247,334 @@ pre.code .c-com{ color: #6A6A6A; font-style: italic; }
         <div class="s-body">
           <article>
 
-            <!-- 01 · Por qué Power BI en LCG -->
+            <!-- 01 · Power BI en LCG -->
             <section class="s-block" id="sec-intro">
-              <div class="s-block-label">01 · El rol de Power BI en un engagement</div>
-              <h2>El instrumento de <em>medición</em> del proyecto.</h2>
+              <div class="s-block-label">01 · El rol de Power BI en LCG</div>
+              <h2>La <em>capa de indicadores</em> del engagement.</h2>
               <p class="lead">
-                Power BI no es "una herramienta de visualización" en
-                LCG. Es la capa que transforma el MEF de un modelo
-                conceptual en una <b>cifra que se mide cada semana</b>.
-                Cuando el Director de Operaciones abre la Junta Semanal
-                de Avance, el primer slide es un dashboard de Power BI.
+                LCG mide. Todo. Producción, ventas, supply, talento,
+                calidad, finanzas — al nivel donde cada decisión se
+                toma. <b>Power BI es la capa donde esa medición se
+                vuelve visible</b> para el operador, el supervisor, el
+                gerente y el director del cliente.
               </p>
               <p>
-                Cada engagement LCG produce <b>uno o más reportes</b>
-                publicados al workspace del cliente, conectados al
-                modelo del MEF y refrescados con la frecuencia
-                comprometida en el Componente 02 del MEF.
+                Cada proyecto construye <b>uno o más dashboards</b>
+                conectados a la data real del cliente (ERP, CRM, MES,
+                hojas de cálculo operativas). El consultor LCG no
+                "saca reportes" — construye el sistema donde los KPIs
+                viven, se actualizan solos y disparan conversaciones
+                de mejora.
+              </p>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h3>"Si no se mide, no se gestiona."</h3>
+                  <p>Cualquier set de indicadores que LCG diseña — KPIs de proceso, métricas de Quick Wins, cuadro de mando ejecutivo, tracking de capacitación, balance scorecard — termina materializado en Power BI. <b>Es el lenguaje común con el que el cliente ve lo que LCG construye</b>.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 · Tres niveles -->
+            <section class="s-block" id="sec-niveles">
+              <div class="s-block-label">02 · Indicadores a tres niveles</div>
+              <h2>Un Power BI por <em>nivel de decisión.</em></h2>
+              <p>
+                LCG diseña con la pirámide de indicadores como
+                referencia. El mismo modelo de datos sirve a los tres
+                niveles — cambia la <b>granularidad, la frecuencia y la
+                audiencia</b>:
+              </p>
+
+              <div class="pyramid">
+                <div class="pyr-row l-est">
+                  <div>
+                    <div class="pyr-tag">Nivel estratégico</div>
+                    <div class="pyr-name">CEO &amp; Comité Directivo</div>
+                  </div>
+                  <div>
+                    <div class="pyr-meta">Cuadro de mando ejecutivo. Pocos KPIs, alta agregación, foco en <b>resultado de negocio</b>: rentabilidad, market share, ROI del proyecto, posición competitiva, indicadores de continuidad post-LCG.</div>
+                    <span class="pyr-ex">Ejemplos · EBITDA · NPS · participación de mercado · curva ROI del engagement · % cumplimiento PASER</span>
+                  </div>
+                </div>
+                <div class="pyr-row l-tac">
+                  <div>
+                    <div class="pyr-tag">Nivel táctico</div>
+                    <div class="pyr-name">Gerentes &amp; Directores de área</div>
+                  </div>
+                  <div>
+                    <div class="pyr-meta">Dashboards por área del cliente con KPIs de su <b>desempeño semanal y mensual</b>. Aquí viven el MEF, la matriz de cumplimiento por área, los Comités Ágiles y el seguimiento de iniciativas del Diseño.</div>
+                    <span class="pyr-ex">Ejemplos · OEE planta · margen por línea · DSO de cartera · % adherencia a plan · cumplimiento de comités · rotación / clima</span>
+                  </div>
+                </div>
+                <div class="pyr-row l-op">
+                  <div>
+                    <div class="pyr-tag">Nivel operativo</div>
+                    <div class="pyr-name">Supervisores &amp; Operadores</div>
+                  </div>
+                  <div>
+                    <div class="pyr-meta">Dashboards de planta, sala o tienda. KPIs de <b>tiempo real o por turno</b>, accionables en el momento. Soportan los <b>Días Típicos</b> diseñados y las Juntas de Inicio de Turno.</div>
+                    <span class="pyr-ex">Ejemplos · producción por turno · paros con causa raíz · check-list de calidad · pedidos atendidos · cumplimiento de programa</span>
+                  </div>
+                </div>
+              </div>
+
+              <p style="margin-top: 18px;">
+                Un consultor LCG bien formado <b>nunca diseña un único
+                dashboard</b>. Diseña el <b>set de indicadores
+                completo</b>: cómo se ven al operador, cómo se agregan al
+                gerente, cómo se sintetizan al director. La regla
+                práctica: empieza por el nivel operativo (es el más
+                difícil) y construye hacia arriba.
+              </p>
+            </section>
+
+            <!-- 03 · Casos por área -->
+            <section class="s-block" id="sec-areas">
+              <div class="s-block-label">03 · Casos por área</div>
+              <h2>Power BI corre <em>en todas las áreas.</em></h2>
+              <p>
+                Dependiendo del engagement, Power BI se construye en
+                una o varias áreas del cliente. Estos son los casos
+                que verás más frecuentes en LCG México:
+              </p>
+
+              <div class="area-grid">
+                <div class="area-card">
+                  <div class="ac-tag">Área 01</div>
+                  <h4>Producción / Operaciones</h4>
+                  <ul>
+                    <li><b>OEE</b>, disponibilidad, performance, calidad por línea y turno</li>
+                    <li><b>Paros</b>: minutos, causa, área de origen</li>
+                    <li><b>Cumplimiento de programa</b> vs. plan diario</li>
+                    <li>Mermas, scrap, reprocesos</li>
+                    <li>Indicadores de mantenimiento (MTBF / MTTR)</li>
+                  </ul>
+                </div>
+                <div class="area-card">
+                  <div class="ac-tag">Área 02</div>
+                  <h4>Cadena de Suministro</h4>
+                  <ul>
+                    <li>Días de inventario, rotaciones, faltantes</li>
+                    <li><b>Fill rate</b>, OTIF, lead times por proveedor</li>
+                    <li>Cobertura crítica de SKUs</li>
+                    <li>Costo de inventario y costo de no-tener</li>
+                    <li>Tiempos del ciclo Plan-Procura-Entrega</li>
+                  </ul>
+                </div>
+                <div class="area-card">
+                  <div class="ac-tag">Área 03</div>
+                  <h4>Comercial &amp; Ventas</h4>
+                  <ul>
+                    <li>Pipeline por etapa y stage velocity</li>
+                    <li><b>Conversion rate</b> por canal y vendedor</li>
+                    <li>Cumplimiento de cuota, mix de productos</li>
+                    <li>CAC, LTV, churn</li>
+                    <li>Pricing realization vs. lista</li>
+                  </ul>
+                </div>
+                <div class="area-card">
+                  <div class="ac-tag">Área 04</div>
+                  <h4>Finanzas</h4>
+                  <ul>
+                    <li>P&amp;L vs. presupuesto, drivers de desviación</li>
+                    <li>Working capital (DSO, DPO, DIO)</li>
+                    <li>Margen bruto / contribución por línea</li>
+                    <li>Flujo de caja proyectado</li>
+                    <li>Cumplimiento de comités (gastos, S&amp;OP)</li>
+                  </ul>
+                </div>
+                <div class="area-card">
+                  <div class="ac-tag">Área 05</div>
+                  <h4>Talento &amp; P&amp;C</h4>
+                  <ul>
+                    <li>Headcount activo, vacantes, time-to-fill</li>
+                    <li>Rotación voluntaria / involuntaria por área</li>
+                    <li>Pulso de clima y eNPS</li>
+                    <li>Cumplimiento de capacitación, certificaciones</li>
+                    <li>Distribución salarial vs. mercado</li>
+                  </ul>
+                </div>
+                <div class="area-card">
+                  <div class="ac-tag">Área 06</div>
+                  <h4>Calidad &amp; Customer Experience</h4>
+                  <ul>
+                    <li><b>Defectos</b> internos y reclamos del cliente</li>
+                    <li>NPS / CSAT con drivers</li>
+                    <li>Tiempo de respuesta a quejas</li>
+                    <li>Tasa de retorno y razones</li>
+                    <li>Indicadores SLA / acuerdos de servicio</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · Stack y conexiones -->
+            <section class="s-block" id="sec-stack">
+              <div class="s-block-label">04 · Stack de datos &amp; conexiones</div>
+              <h2>De la fuente del cliente al <em>insight.</em></h2>
+              <p>
+                Power BI no genera data — la consume. El consultor LCG
+                tiene que entender de dónde viene cada KPI, cómo se
+                actualiza y qué hacer cuando la fuente cambia. El stack
+                estándar es de cuatro capas:
               </p>
 
               <div class="stack">
                 <div class="stack-layer l-1">
                   <span class="sl-tag">Capa 04 · Decisión</span>
-                  <span class="sl-name">Junta Semanal de Avance</span>
-                  <span class="sl-meta">lunes, Director Ops</span>
+                  <span class="sl-name">Foros del cliente</span>
+                  <span class="sl-meta">JSA · Comités · Daily</span>
                 </div>
                 <div class="stack-layer l-2">
                   <span class="sl-tag">Capa 03 · Visualización</span>
                   <span class="sl-name">Power BI Service · workspace cliente</span>
-                  <span class="sl-meta">refresh diario</span>
+                  <span class="sl-meta">refresh por cadencia</span>
                 </div>
                 <div class="stack-layer l-3">
                   <span class="sl-tag">Capa 02 · Modelo</span>
-                  <span class="sl-name">Modelo de datos PBIX · MEF</span>
-                  <span class="sl-meta">.pbix en SharePoint</span>
+                  <span class="sl-name">.pbix · modelo dimensional + DAX</span>
+                  <span class="sl-meta">SharePoint del proyecto</span>
                 </div>
                 <div class="stack-layer l-4">
-                  <span class="sl-tag">Capa 01 · Datos</span>
-                  <span class="sl-name">SharePoint · Excel · ERP cliente</span>
-                  <span class="sl-meta">fuente cruda</span>
+                  <span class="sl-tag">Capa 01 · Fuentes</span>
+                  <span class="sl-name">ERP · CRM · MES · Excel · APIs</span>
+                  <span class="sl-meta">data real del cliente</span>
                 </div>
+              </div>
+
+              <h3>Conectores que vas a usar</h3>
+              <p>El modelo de cualquier engagement combina típicamente entre 3 y 8 fuentes. Estos son los más comunes en LCG:</p>
+
+              <div class="conn-grid">
+                <div class="conn-card"><div class="cc-tag">ERP</div><h5>SAP, Oracle, Dynamics 365</h5><p>P&amp;L, inventarios, órdenes, costos. Conector directo o via SQL Server intermedio.</p></div>
+                <div class="conn-card"><div class="cc-tag">CRM</div><h5>HubSpot, Salesforce, Dynamics CRM</h5><p>Pipeline, deals, contactos, actividades. Conector nativo Power BI.</p></div>
+                <div class="conn-card"><div class="cc-tag">MES</div><h5>Wonderware, Ignition, ERP módulo MES</h5><p>OEE, paros, producción por turno. Suele requerir SQL del cliente.</p></div>
+                <div class="conn-card"><div class="cc-tag">SQL Server</div><h5>On-prem o Azure SQL</h5><p>El "data lake" del cliente. Requiere Data Gateway si es on-prem.</p></div>
+                <div class="conn-card"><div class="cc-tag">Excel / OneDrive</div><h5>Hojas vivas operativas</h5><p>Reportes manuales que el cliente sigue llenando. <b>Objetivo: eliminar progresivamente.</b></p></div>
+                <div class="conn-card"><div class="cc-tag">SharePoint</div><h5>Listas y bibliotecas</h5><p>Datos del propio proyecto: bitácora de Quick Wins, registro de coaching, evaluaciones.</p></div>
+                <div class="conn-card"><div class="cc-tag">API</div><h5>REST endpoints</h5><p>Plataformas SaaS sin conector nativo. Construido con Power Query.</p></div>
+                <div class="conn-card"><div class="cc-tag">CSV / FTP</div><h5>Carga periódica</h5><p>Para fuentes legadas que solo entregan archivo. Se monta como flujo con refresh programado.</p></div>
               </div>
             </section>
 
-            <!-- 02 · Setup técnico -->
-            <section class="s-block" id="sec-setup">
-              <div class="s-block-label">02 · Setup técnico</div>
-              <h2>Lo que necesitas instalado el día 1.</h2>
-              <p>
-                LCG tiene licencia <b>Power BI Pro</b> para todo el
-                equipo de Operaciones, vinculada a tu cuenta M365.
-                El stack de tu laptop debe quedar así:
-              </p>
-
-              <ol class="steps">
-                <li><div>
-                  <h4>Power BI Desktop</h4>
-                  <p>Aplicación local donde construyes el modelo y los reportes. Descarga desde <i>Microsoft Store</i> (versión auto-actualizable, recomendada). Solo Windows — en Mac se trabaja por Parallels o RDP a una VM corporativa.</p>
-                </div></li>
-                <li><div>
-                  <h4>Power BI Service</h4>
-                  <p>Acceso web en <code>app.powerbi.com</code> con tu cuenta @londoncg.mx. Aquí publicas los .pbix y se asignan permisos por workspace.</p>
-                </div></li>
-                <li><div>
-                  <h4>Power BI Mobile</h4>
-                  <p>App iOS/Android para revisar dashboards en cliente. Útil cuando estás en planta y no tienes laptop a la mano.</p>
-                </div></li>
-                <li><div>
-                  <h4>On-premises Data Gateway</h4>
-                  <p>Solo cuando el cliente tiene fuentes locales (SQL Server, ERP on-prem). Lo coordinas con el equipo de TI del cliente — TD/Sistemas LCG ayuda con la configuración inicial.</p>
-                </div></li>
-                <li><div>
-                  <h4>DAX Studio &amp; Tabular Editor</h4>
-                  <p>Herramientas de productividad gratuitas. DAX Studio para auditar fórmulas pesadas; Tabular Editor para editar el modelo más rápido que en Desktop.</p>
-                </div></li>
-              </ol>
-            </section>
-
-            <!-- 03 · Modelo de datos LCG estándar -->
+            <!-- 05 · Modelo dimensional -->
             <section class="s-block" id="sec-modelo">
-              <div class="s-block-label">03 · Modelo de datos LCG</div>
-              <h2>Esquema en estrella, siempre.</h2>
+              <div class="s-block-label">05 · Modelo dimensional</div>
+              <h2>Estrella, siempre. Sin importar el caso.</h2>
               <p>
-                LCG usa modelo en estrella con una <b>tabla de hechos</b>
-                central (KPIs medidos por área, periodo y proyecto) y
-                tablas de dimensión que describen el contexto. Esta
-                forma asegura que el mismo modelo sirve para varios
-                dashboards sin tener que reescribir DAX.
+                Modelo en <b>estrella</b>: una tabla de hechos (la
+                métrica que se mide) y tablas de dimensión que dan
+                contexto. Esta forma sirve para producción, ventas,
+                supply, talento — la naturaleza del fact cambia, la
+                estructura no.
               </p>
 
               <div class="schema">
                 <div class="schema-dim" style="grid-column: 1; grid-row: 1;">
                   <div class="sd-tag">Dim 01</div>
                   <h5>dim_periodo</h5>
-                  <ul><li>fecha</li><li>semana_iso</li><li>mes</li><li>q</li><li>año</li><li>es_periodo_base</li></ul>
+                  <ul><li>fecha</li><li>turno</li><li>semana_iso</li><li>mes / q / año</li><li>periodo_fiscal</li></ul>
                 </div>
                 <div class="schema-fact" style="grid-row: 1;">
                   <div class="sf-tag">Tabla de hechos</div>
-                  <span class="sf-name">fact_kpi_proyecto</span>
-                  <ul><li>id_proyecto</li><li>id_area</li><li>id_indicador</li><li>id_periodo</li><li>valor</li><li>meta</li><li>peso</li></ul>
+                  <span class="sf-name">fact_medicion</span>
+                  <ul><li>id_indicador</li><li>id_area</li><li>id_periodo</li><li>id_responsable</li><li>valor</li><li>meta</li><li>unidad</li></ul>
                 </div>
                 <div class="schema-dim" style="grid-column: 3; grid-row: 1;">
                   <div class="sd-tag">Dim 02</div>
                   <h5>dim_area</h5>
-                  <ul><li>id_area</li><li>area</li><li>director_area</li><li>vertical_lcg</li></ul>
+                  <ul><li>id_area</li><li>nombre_área</li><li>director / gerente</li><li>planta / ubicación</li><li>vertical</li></ul>
                 </div>
                 <div class="schema-dim" style="grid-column: 1;">
                   <div class="sd-tag">Dim 03</div>
                   <h5>dim_indicador</h5>
-                  <ul><li>id_indicador</li><li>indicador</li><li>unidad</li><li>tipo (eficiencia/ahorro)</li><li>peso_mef</li></ul>
+                  <ul><li>id_indicador</li><li>nombre KPI</li><li>fórmula / cálculo</li><li>unidad &amp; formato</li><li>nivel (op / tac / est)</li><li>frecuencia</li><li>familia (eficiencia, calidad, financiero...)</li></ul>
                 </div>
                 <div class="schema-dim" style="grid-column: 2;">
                   <div class="sd-tag">Dim 04</div>
-                  <h5>dim_proyecto</h5>
-                  <ul><li>id_proyecto</li><li>cliente</li><li>gerente_proyecto</li><li>director_ops</li><li>fecha_inicio</li><li>fecha_fin</li></ul>
+                  <h5>dim_responsable</h5>
+                  <ul><li>id_responsable</li><li>nombre</li><li>rol</li><li>área</li><li>nivel jerárquico</li></ul>
                 </div>
                 <div class="schema-dim" style="grid-column: 3;">
                   <div class="sd-tag">Dim 05</div>
-                  <h5>dim_responsable</h5>
-                  <ul><li>id_responsable</li><li>nombre</li><li>rol</li><li>area</li></ul>
+                  <h5>dim_proyecto_iniciativa</h5>
+                  <ul><li>id_iniciativa</li><li>tipo (QW / diseño / mejora)</li><li>status</li><li>fecha compromiso</li><li>impacto esperado</li></ul>
                 </div>
               </div>
 
-              <h3>Relaciones</h3>
-              <p>
-                Todas las dimensiones se conectan al fact por su <code>id</code>
-                con cardinalidad <b>1 → muchos</b> y dirección de filtro
-                <b>simple</b>. Nunca filtros bidireccionales — generan
-                ambigüedades en DAX y son la causa #1 de mediciones
-                "raras" en dashboards LCG.
+              <p style="margin-top: 18px;">
+                <b>Relaciones:</b> dimensión → fact con cardinalidad
+                <code>1 → muchos</code>, dirección de filtro
+                <b>simple</b>. Nunca filtros bidireccionales — son la
+                causa #1 de mediciones inconsistentes en dashboards
+                LCG.
               </p>
             </section>
 
-            <!-- 04 · DAX esencial -->
+            <!-- 06 · DAX esencial -->
             <section class="s-block" id="sec-dax">
-              <div class="s-block-label">04 · DAX esencial para consultor LCG</div>
-              <h2>Las cinco fórmulas que cubren <em>el 80%.</em></h2>
+              <div class="s-block-label">06 · DAX esencial</div>
+              <h2>Cinco patrones que cubren <em>el 80%.</em></h2>
               <p>
                 No necesitas ser experto en DAX. Necesitas dominar
-                cinco patrones que cubren la mayoría de cálculos en
-                un dashboard de proyecto: <b>cumplimiento, delta vs.
-                Periodo Base, ratios ponderados, year-to-date</b> y
-                <b>moving average</b>.
+                cinco patrones que aparecen en casi todo dashboard
+                LCG, sin importar el área:
               </p>
 
               <div class="dax-grid">
                 <div class="dax-card">
                   <div class="dc-tag">Patrón 01</div>
                   <h4>% Cumplimiento vs. meta</h4>
-                  <p>El KPI base de cada indicador del MEF.</p>
+                  <p>Útil para cualquier KPI con meta: OEE, ventas, cumplimiento de plan, fill rate.</p>
 <pre>% Cumplimiento =
 DIVIDE(
-  SUM(fact_kpi_proyecto[valor]),
-  SUM(fact_kpi_proyecto[meta]),
+  SUM(fact_medicion[valor]),
+  SUM(fact_medicion[meta]),
   0
 )</pre>
                 </div>
                 <div class="dax-card">
                   <div class="dc-tag">Patrón 02</div>
-                  <h4>Delta vs. Periodo Base</h4>
-                  <p>El corazón del MEF — beneficio capturado.</p>
-<pre>Delta vs. Base =
-VAR base =
+                  <h4>Delta vs. periodo de referencia</h4>
+                  <p>Comparar contra Periodo Base (MEF) o contra el mismo periodo del año anterior. Sirve para ahorro, mejora de OEE, crecimiento de ventas.</p>
+<pre>Delta vs. Ref =
+VAR ref =
   CALCULATE(
-    SUM(fact_kpi_proyecto[valor]),
-    dim_periodo[es_periodo_base] = TRUE
+    SUM(fact_medicion[valor]),
+    dim_periodo[es_periodo_ref] = TRUE
   )
-RETURN SUM(fact_kpi_proyecto[valor]) - base</pre>
+RETURN SUM(fact_medicion[valor]) - ref</pre>
                 </div>
                 <div class="dax-card">
                   <div class="dc-tag">Patrón 03</div>
                   <h4>Cumplimiento ponderado</h4>
-                  <p>Avance global del proyecto, ponderado por peso del indicador en el MEF.</p>
+                  <p>Cuando varios indicadores se agregan a un solo número (Balanced Scorecard, MEF, índice de mejora).</p>
 <pre>Cumpl. Ponderado =
 SUMX(
   dim_indicador,
-  [% Cumplimiento] * dim_indicador[peso_mef]
+  [% Cumplimiento] * dim_indicador[peso]
 )</pre>
                 </div>
                 <div class="dax-card">
                   <div class="dc-tag">Patrón 04</div>
                   <h4>YTD acumulado</h4>
-                  <p>Para el reporte mensual al cliente.</p>
+                  <p>Reportes mensuales, cierres, comités. Ventas YTD, gasto YTD, paros YTD.</p>
 <pre>Valor YTD =
 TOTALYTD(
-  SUM(fact_kpi_proyecto[valor]),
+  SUM(fact_medicion[valor]),
   dim_periodo[fecha]
 )</pre>
                 </div>
               </div>
 
-              <h3>Moving average de 4 semanas</h3>
+              <h3>Moving average · suavizar ruido</h3>
               <p>
-                Útil para suavizar ruido semanal en indicadores
-                volátiles (ventas, pedidos atendidos, OEE).
+                Indicadores volátiles (ventas diarias, OEE, pedidos)
+                se entienden mejor con MA de 4 semanas o 28 días.
               </p>
-<pre class="code"><span class="c-com">// MA 4 semanas — suaviza ruido y resalta tendencia</span>
+<pre class="code"><span class="c-com">// MA 4S — útil para ver tendencia sin ruido del día</span>
 <span class="c-key">MA 4S</span> =
 <span class="c-key">VAR</span> ult_fecha = <span class="c-fn">MAX</span>(dim_periodo[fecha])
 <span class="c-key">VAR</span> rango = <span class="c-fn">DATESINPERIOD</span>(dim_periodo[fecha], ult_fecha, -<span class="c-str">28</span>, <span class="c-key">DAY</span>)
@@ -427,114 +585,117 @@ TOTALYTD(
   )</pre>
             </section>
 
-            <!-- 05 · Plantilla LCG y diseño -->
+            <!-- 07 · Plantilla y diseño -->
             <section class="s-block" id="sec-plantilla">
-              <div class="s-block-label">05 · Plantilla LCG · diseño</div>
-              <h2>Una sola plantilla, en <em>todos los proyectos.</em></h2>
+              <div class="s-block-label">07 · Plantilla LCG · diseño</div>
+              <h2>Una plantilla por nivel.</h2>
               <p>
-                LCG mantiene una plantilla maestra <code>LCG_Dashboard_v3.pbix</code>
-                en el SharePoint de Sistemas y Digital MX. Toda nueva
-                construcción <b>parte de ahí</b> — colores brand
-                aplicados, theme JSON cargado, layouts predefinidos.
+                LCG mantiene tres plantillas maestras en el SharePoint
+                de Sistemas y Digital MX — una por nivel de la
+                pirámide:
               </p>
 
+              <ol class="steps">
+                <li><div><h4><code>LCG_Tablero_Operativo_v3.pbix</code></h4><p>Diseñado para pantallas de planta / sala / tienda. Tipografía grande, semaforización inmediata, refresh por turno. Pocos filtros — el operador no debe pensar, solo ver.</p></div></li>
+                <li><div><h4><code>LCG_Dashboard_Tactico_v3.pbix</code></h4><p>Para gerentes y directores de área. KPIs ponderados, comparativos vs. plan y vs. periodo anterior, drill-through al detalle operativo. Refresh diario.</p></div></li>
+                <li><div><h4><code>LCG_Cuadro_Mando_Ejecutivo_v3.pbix</code></h4><p>Para CEO + Comité Directivo. Una sola página, máximo 9 visuales, foco en resultados de negocio. Refresh semanal pre-comité.</p></div></li>
+              </ol>
+
+              <h3>Layout estándar (4 páginas en cada plantilla)</h3>
               <div class="dash-mock">
                 <div class="dm dm-h">Header · Logo cliente + LCG · Periodo · Última actualización</div>
-                <div class="dm dm-kpi"><span>% Avance</span><b>72%</b></div>
-                <div class="dm dm-kpi"><span>Ahorro acum.</span><b>$8.2M</b></div>
-                <div class="dm dm-kpi"><span>vs. meta</span><b>+4 pp</b></div>
-                <div class="dm dm-kpi"><span>Iniciativas</span><b>14/18</b></div>
-                <div class="dm dm-chart"><span class="dm-title">Cumplimiento por área</span><div class="dm-bar"></div></div>
-                <div class="dm dm-chart"><span class="dm-title">Delta vs. Periodo Base · semanal</span><div class="dm-bar"></div></div>
+                <div class="dm dm-kpi"><span>% Cumplimiento</span><b>87%</b></div>
+                <div class="dm dm-kpi"><span>Δ vs. periodo</span><b>+3 pp</b></div>
+                <div class="dm dm-kpi"><span>Top driver</span><b>Línea 2</b></div>
+                <div class="dm dm-kpi"><span>Iniciativas</span><b>9/12</b></div>
+                <div class="dm dm-chart"><span class="dm-title">Tendencia por semana</span><div class="dm-bar"></div></div>
+                <div class="dm dm-chart"><span class="dm-title">Cumplimiento por unidad</span><div class="dm-bar"></div></div>
               </div>
-
-              <h3>Estructura estándar (4 páginas)</h3>
-              <ol class="steps">
-                <li><div><h4>01 · Resumen ejecutivo</h4><p>KPIs maestros + cumplimiento ponderado + delta vs. base. Lo que el Director Ops ve en la JSA.</p></div></li>
-                <li><div><h4>02 · Detalle por área</h4><p>Una página por área del MEF. Indicadores individuales, tendencias, top issues.</p></div></li>
-                <li><div><h4>03 · Iniciativas</h4><p>Estatus de cada iniciativa (en curso, riesgo, completada) con responsable y fecha compromiso.</p></div></li>
-                <li><div><h4>04 · Datos &amp; metodología</h4><p>Glosario de indicadores, fuentes, fórmulas. Audit trail para Finanzas del cliente.</p></div></li>
-              </ol>
 
               <div class="concept-call">
                 <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
                 <div>
                   <h3>El theme JSON LCG es no negociable.</h3>
-                  <p>Carga <code>lcg-theme-v3.json</code> al primer abrir un .pbix nuevo. Te aplica paleta brand (verdes LCG + neutros), tipografía Manrope/Fraunces fallback y estilos consistentes para tarjetas, gráficos y textos. <b>Sin theme cargado, el dashboard no se publica al workspace cliente.</b></p>
+                  <p>Carga <code>lcg-theme-v3.json</code> al primer abrir un .pbix nuevo. Aplica paleta brand (verdes LCG + neutros), tipografía Manrope/Fraunces fallback y estilos consistentes. <b>Sin theme cargado, el dashboard no se publica al workspace cliente.</b></p>
                 </div>
               </div>
             </section>
 
-            <!-- 06 · Publicación y permisos -->
+            <!-- 08 · Publicación y permisos -->
             <section class="s-block" id="sec-pub">
-              <div class="s-block-label">06 · Publicación &amp; permisos</div>
+              <div class="s-block-label">08 · Publicación &amp; permisos</div>
               <h2>Workspace por cliente, RLS por rol.</h2>
               <p>
-                Cada engagement tiene su propio workspace en Power BI
-                Service: <code>LCG · {cliente}</code>. Permisos limitados
-                a equipo del proyecto + Director del área cliente +
-                Top Client. Publicar fuera de un workspace formal está
-                prohibido por política de seguridad.
+                Cada engagement tiene su workspace en Power BI Service:
+                <code>LCG · {cliente}</code>. Permisos limitados a
+                equipo del proyecto + roles autorizados del cliente.
+                Publicar fuera de un workspace formal está prohibido
+                por política de seguridad LCG.
               </p>
 
               <h3>Row-Level Security (RLS)</h3>
               <p>
-                Cuando el dashboard se comparte con varias personas del
-                cliente y cada una solo debe ver su área, se configura
-                RLS en el modelo. Patrón estándar:
+                Cuando un mismo dashboard se comparte con varios
+                niveles (un director ve todo, un gerente solo su área,
+                un supervisor solo su línea), se configura RLS en el
+                modelo:
               </p>
 <pre class="code"><span class="c-com">// Rol "Director de Área" — ve solo su área</span>
-<span class="c-key">[Filtro]</span> = dim_area[director_area] = <span class="c-fn">USERPRINCIPALNAME</span>()</pre>
+<span class="c-key">[Filtro]</span> = dim_area[director_email] = <span class="c-fn">USERPRINCIPALNAME</span>()
 
-              <h3>Frecuencia de refresh</h3>
-              <p>
-                <b>Diario a las 06:00 hora CDMX</b> es la cadencia
-                estándar para que la JSA del lunes encuentre datos
-                frescos. Cuando el cliente requiere monitoreo cercano
-                (Excelencia Comercial con dashboards de venta diaria),
-                se pasa a <b>cada 4 horas</b>.
-              </p>
+<span class="c-com">// Rol "Supervisor de Línea" — ve solo su línea</span>
+<span class="c-key">[Filtro]</span> = dim_area[supervisor_email] = <span class="c-fn">USERPRINCIPALNAME</span>()</pre>
+
+              <h3>Frecuencia de refresh por nivel</h3>
+              <ul style="font-size: 14px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li><b>Operativo</b> · cada turno (3 veces/día) o tiempo real con DirectQuery donde aplique.</li>
+                <li><b>Táctico</b> · diario, típicamente <b>06:00 hora cliente</b> para que el daily/JSA encuentre datos frescos.</li>
+                <li><b>Estratégico</b> · semanal, pre-Comité Directivo del cliente.</li>
+              </ul>
             </section>
 
-            <!-- 07 · Buenas prácticas -->
+            <!-- 09 · Buenas prácticas -->
             <section class="s-block" id="sec-bp">
-              <div class="s-block-label">07 · Buenas prácticas</div>
+              <div class="s-block-label">09 · Buenas prácticas</div>
               <h2>Lo que separa un PBIX limpio de uno <em>quemado.</em></h2>
 
               <div class="bp-grid">
                 <div class="bp is-do">
                   <h4>Hacer</h4>
                   <ul>
+                    <li>Empezar por el nivel operativo, construir hacia arriba.</li>
+                    <li>Validar la fuente con el dueño del dato antes de modelar.</li>
                     <li>Nombrar tablas con prefijo: <code>fact_</code>, <code>dim_</code>.</li>
-                    <li>Crear medidas en una tabla "Medidas" sin columnas, no en tablas de hechos.</li>
-                    <li>Usar <code>DIVIDE()</code> en vez del operador <code>/</code> — maneja división por cero.</li>
-                    <li>Cargar el theme LCG antes de poner el primer visual.</li>
-                    <li>Documentar fórmulas complejas con comentario inline (<code>// ...</code>).</li>
-                    <li>Versionar el .pbix en SharePoint con sufijo <code>_v01, _v02</code>.</li>
+                    <li>Crear medidas en tabla "Medidas" sin columnas.</li>
+                    <li>Usar <code>DIVIDE()</code> en lugar de <code>/</code> — maneja /0.</li>
+                    <li>Cargar el theme LCG antes del primer visual.</li>
+                    <li>Documentar fórmulas complejas con comentario inline.</li>
+                    <li>Versionar el .pbix en SharePoint (<code>_v01</code>, <code>_v02</code>).</li>
                   </ul>
                 </div>
                 <div class="bp is-avoid">
                   <h4>Evitar</h4>
                   <ul>
-                    <li>Cargar tablas con miles de columnas que no usas — pesa y ralentiza refresh.</li>
-                    <li>Filtros bidireccionales entre dimensión y fact (ambigüedades DAX).</li>
-                    <li>Calcular en el visual con "Quick Measures" sin saber qué fórmula generaron.</li>
-                    <li>Publicar el .pbix con queries apuntando a tu carpeta local <code>C:\Users\...</code>.</li>
-                    <li>Subir el .pbix con datos del cliente al repo de Sistemas (sin anonimizar).</li>
+                    <li>Diseñar el dashboard ejecutivo sin haber resuelto los operativos.</li>
+                    <li>Cargar tablas con miles de columnas que no usas.</li>
+                    <li>Filtros bidireccionales (ambigüedades DAX).</li>
+                    <li>"Quick Measures" sin entender qué generaron.</li>
+                    <li>Publicar el .pbix con queries apuntando a <code>C:\Users\...</code>.</li>
                     <li>Compartir reportes por link público — siempre por workspace.</li>
+                    <li>Indicadores sin owner — todo KPI tiene dueño en <code>dim_responsable</code>.</li>
                   </ul>
                 </div>
               </div>
             </section>
 
-            <!-- 08 · Cierre -->
+            <!-- 10 · Cierre -->
             <section class="s-block" id="sec-cierre">
-              <div class="s-block-label">08 · Cierre</div>
+              <div class="s-block-label">10 · Cierre</div>
               <div class="reflect">
                 <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
                 <div>
                   <h4>Antes de pasar al siguiente bloque</h4>
-                  <p>Cuando entres a tu primer proyecto, abre el workspace del cliente en Power BI Service y revisa el .pbix activo. Identifica las tablas de hechos, las dimensiones y dónde está el cálculo del MEF. Esa lectura te ahorra dos semanas de preguntar.</p>
+                  <p>Cuando entres a tu primer proyecto, abre el workspace del cliente en Power BI Service y mapea los dashboards activos contra la pirámide: ¿qué tenemos a nivel operativo, táctico, estratégico? Los huecos son donde tu trabajo aporta valor inmediato.</p>
                 </div>
               </div>
             </section>
@@ -559,9 +720,11 @@ TOTALYTD(
             <div class="aside-box">
               <h4>Contenido</h4>
               <ul class="outline">
-                <li><a class="active" href="#sec-intro"><span class="tick"></span>El rol de Power BI</a></li>
-                <li><a href="#sec-setup"><span class="tick"></span>Setup técnico</a></li>
-                <li><a href="#sec-modelo"><span class="tick"></span>Modelo de datos</a></li>
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Rol de Power BI</a></li>
+                <li><a href="#sec-niveles"><span class="tick"></span>Tres niveles</a></li>
+                <li><a href="#sec-areas"><span class="tick"></span>Casos por área</a></li>
+                <li><a href="#sec-stack"><span class="tick"></span>Stack &amp; conexiones</a></li>
+                <li><a href="#sec-modelo"><span class="tick"></span>Modelo dimensional</a></li>
                 <li><a href="#sec-dax"><span class="tick"></span>DAX esencial</a></li>
                 <li><a href="#sec-plantilla"><span class="tick"></span>Plantilla LCG</a></li>
                 <li><a href="#sec-pub"><span class="tick"></span>Publicación &amp; permisos</a></li>
@@ -573,9 +736,10 @@ TOTALYTD(
             <div class="aside-box">
               <h4>Recursos</h4>
               <ul class="res-list">
-                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div><div class="r-name">LCG_Dashboard_v3.pbix<span class="r-meta">SharePoint · Sistemas y Digital MX</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div><div class="r-name">3 plantillas LCG_v3<span class="r-meta">Operativo · Táctico · Ejecutivo</span></div></div></li>
                 <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="r-name">lcg-theme-v3.json<span class="r-meta">Theme oficial · paleta + tipografía</span></div></div></li>
                 <li><a href="https://app.powerbi.com" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div><div class="r-name">Power BI Service<span class="r-meta">app.powerbi.com</span></div></a></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">Catálogo KPIs LCG<span class="r-meta">SharePoint · por área e industria</span></div></div></li>
               </ul>
             </div>
 
