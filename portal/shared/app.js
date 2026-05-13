@@ -132,13 +132,13 @@ const SIDEBAR_DAYS = [
   {
     num: 4, name: "Día 04 · Herramientas & AI", short: "Herramientas & AI", href: "day-4-jueves.html", cat: "ai",
     sessions: [
-      { name: "Power BI",                     href: "#", sid: "d4-b01-power-bi" },
+      { name: "Power BI",                     href: "session-d4-b01-power-bi.html", sid: "d4-b01-power-bi" },
       { name: "Monday & Miro",                href: "session-d4-b02-monday-miro.html", sid: "d4-b02-monday-miro" },
-      { name: "AI-1 · Fundamentos Claude",    href: "#", sid: "d4-b03-ai1-fundamentos" },
-      { name: "AI-2 · Claude.ai día a día",   href: "#", sid: "d4-b04-ai2-claude" },
-      { name: "AI-3 · Integraciones LCG",     href: "#", sid: "d4-b05-ai3-integraciones" },
-      { name: "AI-4 · Stack complementario",  href: "#", sid: "d4-b06-ai4-stack" },
-      { name: "AI-5 · Framework Competencia", href: "#", sid: "d4-b07-ai5-framework" }
+      { name: "AI-1 · Fundamentos Claude",    href: "session-d4-b03-ai1-fundamentos.html", sid: "d4-b03-ai1-fundamentos" },
+      { name: "AI-2 · Claude.ai día a día",   href: "session-d4-b04-ai2-claude.html", sid: "d4-b04-ai2-claude" },
+      { name: "AI-3 · Integraciones LCG",     href: "session-d4-b05-ai3-integraciones.html", sid: "d4-b05-ai3-integraciones" },
+      { name: "AI-4 · Stack complementario",  href: "session-d4-b06-ai4-stack.html", sid: "d4-b06-ai4-stack" },
+      { name: "AI-5 · Framework Competencia", href: "session-d4-b07-ai5-framework.html", sid: "d4-b07-ai5-framework" }
     ]
   },
   {

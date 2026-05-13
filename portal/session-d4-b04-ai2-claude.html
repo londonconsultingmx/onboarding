@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>AI-2 · Claude.ai día a día · Día 4 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Feature anatomy — UI mockup */
+.anatomy{ margin-top: 14px; padding: 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--surface); display: grid; grid-template-columns: 200px 1fr; gap: 16px; }
+.anatomy-side{ background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.anatomy-side .as-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .12em; text-transform: uppercase; font-weight: 700; padding-bottom: 6px; border-bottom: 1px solid var(--hairline); }
+.anatomy-side .as-item{ font-size: 12px; color: var(--ink-2); padding: 6px 8px; border-radius: 4px; background: var(--surface); }
+.anatomy-side .as-item.is-active{ background: var(--cat-ai); color: #fff; font-weight: 600; }
+.anatomy-main{ background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 8px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
+.anatomy-main .am-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .12em; text-transform: uppercase; font-weight: 700; padding-bottom: 6px; border-bottom: 1px solid var(--hairline); }
+.anatomy-main .am-msg{ padding: 10px 12px; border-radius: 8px; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+.anatomy-main .am-msg.is-user{ background: var(--cat-ai-bg); color: var(--ink); align-self: flex-end; max-width: 70%; }
+.anatomy-main .am-msg.is-claude{ background: var(--surface); border: 1px solid var(--hairline); max-width: 80%; }
+.anatomy-main .am-msg.is-artifact{ background: #1A1A1A; color: #E8E5DD; font-family: ui-monospace, Menlo, monospace; font-size: 11px; }
+
+/* Feature deep-dive */
+.feat-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.feat{ padding: 22px 24px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-left: 3px solid var(--cat-ai); }
+.feat .ft-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.feat h4{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); }
+.feat p{ margin: 0 0 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.feat .ft-when{ font-size: 12px; color: var(--ink-3); padding: 8px 12px; background: var(--surface-2); border-radius: 6px; margin-top: 8px; }
+.feat .ft-when b{ color: var(--cat-ai); }
+
+/* Project setup table */
+.proj-table{ margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.proj-row{ display: grid; grid-template-columns: 220px 1fr; padding: 14px 22px; border-bottom: 1px solid var(--hairline); align-items: start; gap: 18px; }
+.proj-row:last-child{ border-bottom: 0; }
+.proj-row.is-header{ background: var(--surface-2); font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.proj-row .p-key{ font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.proj-row .p-val{ font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.proj-row .p-val code{ background: var(--surface-2); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--cat-ai); }
+
+/* Code block */
+pre.code{ margin: 12px 0; padding: 18px 22px; background: #1A1A1A; color: #E8E5DD; border-radius: var(--r-md); font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.6; overflow-x: auto; border: 1px solid #2A2A2A; }
+pre.code .c-com{ color: #6A6A6A; font-style: italic; }
+pre.code .c-tag{ color: #C29CF8; font-weight: 600; }
+pre.code .c-str{ color: #F5C56C; }
+
+/* Use cases stack */
+.uc-list{ list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.uc-list li{ padding: 16px 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 80px 1fr; gap: 18px; align-items: start; }
+.uc-list .uc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; padding: 4px 8px; background: var(--cat-ai-bg); border-radius: 4px; text-align: center; align-self: start; }
+.uc-list h4{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 14.5px; color: var(--ink); }
+.uc-list p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.uc-list p code{ background: var(--surface-2); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+/* Concept call (purple) */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Reflect */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a><span style="opacity:.4">/</span><b>AI-2 · Claude.ai día a día</b></div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> AI Expandido</span>
+    </header>
+
+    <main class="session-main">
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker"><span class="pill-cat">AI Expandido</span><span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;AI-2 de AI-5</span></div>
+          <h1>Claude.ai en el <em>día a día.</em></h1>
+          <p class="s-hero-sub">
+            Anatomía de la herramienta y los seis features que la hacen
+            distinta de un chat común: <b>Proyectos, Estilos, Memoria,
+            Artifacts, búsqueda web y creación de archivos</b>. Cada uno
+            con casos LCG concretos y plantillas de cómo configurarlos.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">60</span> min</span></div>
+            <div class="item"><span class="label">Features</span><span class="val"><span class="u-mono">06</span></span></div>
+            <div class="item"><span class="label">Casos</span><span class="val"><span class="u-mono">06</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div><div><div class="val">Alfredo Chávez</div><div class="sub">Transformación Digital</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <section class="s-block" id="sec-anatomia">
+              <div class="s-block-label">01 · Anatomía de la interfaz</div>
+              <h2>Lo que ves cuando abres <em>claude.ai.</em></h2>
+              <p class="lead">
+                Tres zonas: el <b>sidebar izquierdo</b> con tus
+                Proyectos y conversaciones recientes, el <b>panel
+                central</b> con la conversación activa, y el <b>panel
+                derecho</b> que aparece cuando Claude genera Artifacts.
+              </p>
+
+              <div class="anatomy">
+                <div class="anatomy-side">
+                  <div class="as-tag">Sidebar</div>
+                  <div class="as-item">+ Nueva conversación</div>
+                  <div class="as-item is-active">📁 Cliente Aura · PreDx</div>
+                  <div class="as-item">📁 VSA Suministro</div>
+                  <div class="as-item">📁 Plantilla MEF</div>
+                  <div class="as-item" style="opacity:.6;">Recientes</div>
+                  <div class="as-item" style="opacity:.6;">⚙ Estilos</div>
+                </div>
+                <div class="anatomy-main">
+                  <div class="am-tag">Conversación · Proyecto Aura · Modelo Sonnet 4.6</div>
+                  <div class="am-msg is-user">Resume estas 12 entrevistas del VSA en 5 hallazgos por área.</div>
+                  <div class="am-msg is-claude">He revisado las 12 entrevistas. Te dejo los hallazgos en un Artifact estructurado por área...</div>
+                  <div class="am-msg is-artifact">📄 sintesis-vsa-suministro.md (Artifact)</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-proyectos">
+              <div class="s-block-label">02 · Proyectos · Feature 01</div>
+              <h2>Donde el <em>contexto</em> vive.</h2>
+              <p>
+                Un <b>Proyecto</b> en Claude.ai es un contenedor con
+                instrucciones permanentes y archivos de referencia. Toda
+                conversación dentro del Proyecto hereda ese contexto —
+                no tienes que re-explicar quién eres ni qué cliente es.
+              </p>
+
+              <p>Para cada engagement LCG, crea <b>un Proyecto</b> con esta estructura:</p>
+
+              <div class="proj-table">
+                <div class="proj-row is-header">
+                  <div>Campo</div>
+                  <div>Qué poner</div>
+                </div>
+                <div class="proj-row">
+                  <div class="p-key">Nombre</div>
+                  <div class="p-val"><code>{Cliente} · {Tipo de proyecto}</code> — ej. <code>Aura · Excelencia Comercial</code></div>
+                </div>
+                <div class="proj-row">
+                  <div class="p-key">Custom Instructions</div>
+                  <div class="p-val">Tu rol (Consultor LCG), el cliente y vertical, los 5 indicadores principales del MEF, glosario de siglas internas del cliente, voz LCG ("respuestas estructuradas, sin marketing-speak").</div>
+                </div>
+                <div class="proj-row">
+                  <div class="p-key">Project Knowledge</div>
+                  <div class="p-val">Sube: contrato anonimizado, MEF aprobado, organigrama, Plan de Vuelo. Máximo ~50 archivos, 200MB total.</div>
+                </div>
+                <div class="proj-row">
+                  <div class="p-key">Quién accede</div>
+                  <div class="p-val">El Proyecto es personal. Para compartir contexto con el equipo, exporta los archivos a SharePoint y crea Proyectos paralelos con el mismo material.</div>
+                </div>
+              </div>
+
+              <p style="margin-top: 18px;"><b>Plantilla LCG de Custom Instructions:</b></p>
+<pre class="code"><span class="c-com">// Pega esto en Custom Instructions y rellena los <span class="c-tag">{...}</span></span>
+
+Eres mi copiloto en un proyecto LCG con <span class="c-tag">{cliente}</span>, vertical
+<span class="c-tag">{vertical}</span>. Mi rol es <span class="c-tag">{Consultor / Gerente}</span>.
+
+CONTEXTO DEL PROYECTO
+- Tipo: <span class="c-tag">{Excelencia Comercial / Lean 4.0 / Supply SCM}</span>
+- Etapa: <span class="c-tag">{Análisis Exhaustivo / Diseño / Implementación}</span>
+- Indicadores MEF: <span class="c-tag">{lista 3-5 KPIs principales}</span>
+
+VOZ Y FORMATO
+- Respuestas estructuradas, sin marketing-speak ni superlativos.
+- Bullets cuando aplica; tablas para comparaciones; código para fórmulas.
+- Si no estás seguro, dilo. No alucines cifras.
+
+REGLAS LCG
+- Nunca asumas data del cliente que no esté en este Proyecto.
+- Cita siempre el archivo de Project Knowledge cuando uses sus contenidos.</pre>
+            </section>
+
+            <section class="s-block" id="sec-estilos">
+              <div class="s-block-label">03 · Estilos · Feature 02</div>
+              <h2>La voz, separada del contexto.</h2>
+              <p>
+                Los <b>Estilos</b> definen cómo Claude se comunica
+                contigo — formal, conversacional, técnico, ejecutivo.
+                Útiles cuando alternas entre redactar para el Top Client
+                (formal) y notas internas (conversacional).
+              </p>
+
+              <div class="feat-grid">
+                <div class="feat">
+                  <div class="ft-tag">Estilo 01</div>
+                  <h4>LCG Ejecutivo</h4>
+                  <p>Formal, en español neutro, frases cortas, sin jerga AI. Usa "el cliente" no "tu cliente". Ejecutivo del Top Client lo entiende en una pasada.</p>
+                  <div class="ft-when"><b>Cuándo:</b> propuestas, slides para Top Client, minutas formales.</div>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">Estilo 02</div>
+                  <h4>LCG Trabajo</h4>
+                  <p>Coloquial pero profesional, español de México, OK abreviar. Default para iteración rápida con tu Gerente o equipo.</p>
+                  <div class="ft-when"><b>Cuándo:</b> notas de trabajo, drafts, conversaciones con el equipo.</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-memoria">
+              <div class="s-block-label">04 · Memoria · Feature 03</div>
+              <h2>Lo que Claude <em>recuerda</em> entre sesiones.</h2>
+              <p>
+                La <b>Memoria</b> es el conjunto de hechos persistentes
+                sobre ti que Claude usa en cualquier conversación: tu
+                rol, tus preferencias de formato, los clientes con los
+                que trabajas. <b>Activa Memoria desde la configuración
+                de tu cuenta</b> al inicio.
+              </p>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                <div>
+                  <h3>Memoria ≠ Project Knowledge.</h3>
+                  <p>Memoria son hechos sobre ti (transversales). Project Knowledge son archivos del proyecto (específicos). <b>Lo confidencial del cliente va en Project Knowledge, no en Memoria</b> — Memoria persiste en toda tu cuenta y se aplica a otros proyectos.</p>
+                </div>
+              </div>
+
+              <p style="margin-top: 14px;"><b>Lo que conviene poner en Memoria como consultor LCG:</b></p>
+              <ul style="font-size: 14px; line-height: 1.7; color: var(--ink-2); padding-left: 22px;">
+                <li>Tu nombre, rol, vertical principal.</li>
+                <li>Cómo te gustan las respuestas (formato, longitud, tono default).</li>
+                <li>Glosario LCG estable (PASER, MEF, Plan de Vuelo, JSA) para que no tengas que explicarlo cada vez.</li>
+                <li><b>NO:</b> nombres de clientes activos, datos confidenciales, métricas de proyectos.</li>
+              </ul>
+            </section>
+
+            <section class="s-block" id="sec-artifacts">
+              <div class="s-block-label">05 · Artifacts · Feature 04</div>
+              <h2>Outputs <em>editables.</em></h2>
+              <p>
+                Los <b>Artifacts</b> son outputs que aparecen en un panel
+                lateral editable — código, documentos largos, tablas,
+                componentes HTML/SVG. Diferencia clave: puedes <b>iterar
+                sobre el mismo artifact</b> sin que Claude reescriba todo
+                cada vez.
+              </p>
+
+              <div class="feat-grid">
+                <div class="feat">
+                  <div class="ft-tag">Tipo 01</div>
+                  <h4>Documento Markdown</h4>
+                  <p>Síntesis de hallazgos, draft de minuta, plantilla de Pre-Manual. Exportable a Word con formato.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">Tipo 02</div>
+                  <h4>Tabla / CSV</h4>
+                  <p>Lista de oportunidades cuantificadas, comparación de proveedores, mapa de stakeholders. Copy-paste a Excel.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">Tipo 03</div>
+                  <h4>Código (DAX, SQL, Python)</h4>
+                  <p>Fórmulas de Power BI, queries para extraer datos del ERP, scripts de procesamiento de Excels.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">Tipo 04</div>
+                  <h4>HTML / SVG / React</h4>
+                  <p>Mockups visuales de procesos, diagramas isométricos, prototipos de dashboards antes de pasarlos a Power BI.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-web">
+              <div class="s-block-label">06 · Búsqueda web · Feature 05</div>
+              <h2>Cuando necesitas algo que no está en el modelo.</h2>
+              <p>
+                Activa búsqueda web cuando preguntes por <b>noticias
+                recientes, regulación actualizada, benchmarks de
+                mercado, info pública del cliente o de su industria</b>.
+                Claude consulta fuentes y te trae los resultados con
+                links — <b>siempre verifica antes de citar</b> (regla 03).
+              </p>
+
+              <p><b>Cuándo NO usar búsqueda web:</b></p>
+              <ul style="font-size: 14px; line-height: 1.7; color: var(--ink-2); padding-left: 22px;">
+                <li>Razonamiento sobre data interna (Claude ya la tiene si está en el Proyecto).</li>
+                <li>Tareas creativas o estructurales (búsqueda lo hace más lento sin valor).</li>
+                <li>Cuando ya tienes la fuente — pega el texto directo, no la URL.</li>
+              </ul>
+            </section>
+
+            <section class="s-block" id="sec-archivos">
+              <div class="s-block-label">07 · Creación de archivos · Feature 06</div>
+              <h2>Word, Excel, PowerPoint <em>nativos.</em></h2>
+              <p>
+                Claude puede generar archivos descargables en formato
+                Microsoft. Útil para entregables que tienen que llegar
+                con look-and-feel oficial (no Markdown).
+              </p>
+
+              <div class="feat-grid">
+                <div class="feat">
+                  <div class="ft-tag">.docx</div>
+                  <h4>Documentos Word</h4>
+                  <p>Pre-Manual, política, propuesta. Pídele estilos LCG explícitos en el prompt para que use Fraunces / Manrope si quieres branding.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">.xlsx</div>
+                  <h4>Excel con fórmulas</h4>
+                  <p>Plantillas de seguimiento, modelos pre-MEF, listas de KPIs con fórmulas embebidas. Mejor que copy-paste de tabla.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">.pptx</div>
+                  <h4>PowerPoint estructurado</h4>
+                  <p>Drafts de slides para presentación al Top Client. Útil como esqueleto — el diseño final se pulir en Plantilla LCG.</p>
+                </div>
+                <div class="feat">
+                  <div class="ft-tag">.pdf</div>
+                  <h4>PDF compilados</h4>
+                  <p>Para anexos de propuesta o cierre de proyecto cuando necesitas formato no editable.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-casos">
+              <div class="s-block-label">08 · Casos LCG · cómo se ve en la práctica</div>
+              <h2>Seis flujos reales del consultor.</h2>
+              <p>Estos son flujos que verás repetir en tu primer engagement. Cada uno combina dos o tres features de Claude.ai:</p>
+
+              <ul class="uc-list">
+                <li>
+                  <span class="uc-tag">Caso 01</span>
+                  <div>
+                    <h4>Síntesis de 12 entrevistas VSA</h4>
+                    <p>Sube las transcripciones a Project Knowledge. Pídele a Claude (Sonnet) que extraiga 5 hallazgos por área, con frases textuales del entrevistado. Output: <code>Artifact Markdown</code> que pegas en el slide del VSA.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="uc-tag">Caso 02</span>
+                  <div>
+                    <h4>Análisis de Excel operativo del cliente</h4>
+                    <p>Sube el .xlsx (anonimizado o autorizado). Pídele patrones, picos, valles, comparativos por mes. Útil para identificar materialidad antes de la entrevista de validación.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="uc-tag">Caso 03</span>
+                  <div>
+                    <h4>Draft de propuesta comercial</h4>
+                    <p>Activa Estilo "LCG Ejecutivo" + búsqueda web. Pídele propuesta para vertical X siguiendo nuestra estructura. Salida en <code>.docx</code> que después se pasa a la plantilla oficial.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="uc-tag">Caso 04</span>
+                  <div>
+                    <h4>Fórmulas DAX para Power BI</h4>
+                    <p>Pégale el modelo de datos (nombres de tablas y columnas) y pídele las medidas que necesitas. Iteras en el Artifact hasta que pasen el syntax check.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="uc-tag">Caso 05</span>
+                  <div>
+                    <h4>Pre-Manual digital de un proceso</h4>
+                    <p>Estructura del proceso + reglas + capturas + checklist. Genera draft en Markdown, luego export a Word con la plantilla LCG.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="uc-tag">Caso 06</span>
+                  <div>
+                    <h4>Minuta de Junta Semanal de Avance</h4>
+                    <p>Pega notas de la sesión + decisiones acordadas. Salida estructurada por: avance vs. plan, decisiones, acciones (con responsable y fecha), bloqueos. Listo para enviar al equipo en 5 min.</p>
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">09 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Crea ahora mismo tu primer Proyecto en Claude.ai con la plantilla de Custom Instructions de arriba. Llámalo <code>LCG · Sandbox</code> y úsalo para experimentar antes de tu primera asignación real.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="day-4-jueves.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 04 · Herramientas &amp; AI</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="session-d4-b05-ai3-integraciones.html">Siguiente · AI-3<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 04 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-anatomia"><span class="tick"></span>Anatomía</a></li>
+                <li><a href="#sec-proyectos"><span class="tick"></span>Proyectos</a></li>
+                <li><a href="#sec-estilos"><span class="tick"></span>Estilos</a></li>
+                <li><a href="#sec-memoria"><span class="tick"></span>Memoria</a></li>
+                <li><a href="#sec-artifacts"><span class="tick"></span>Artifacts</a></li>
+                <li><a href="#sec-web"><span class="tick"></span>Búsqueda web</a></li>
+                <li><a href="#sec-archivos"><span class="tick"></span>Creación de archivos</a></li>
+                <li><a href="#sec-casos"><span class="tick"></span>Casos LCG</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="https://claude.ai" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">Claude.ai<span class="r-meta">claude.ai</span></div></a></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">Plantilla Custom Instructions LCG<span class="r-meta">SharePoint · TD</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">Prompt Library LCG<span class="r-meta">Academia Claude · 30+ prompts</span></div></div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Sigue con <b>AI-3 · Integraciones LCG</b>: Claude conectado a SharePoint, HubSpot, M365 y London-bo.</p>
+              <a href="session-d4-b05-ai3-integraciones.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Ir a AI-3 →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b04-ai2-claude';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

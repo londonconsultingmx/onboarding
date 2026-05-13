@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>AI-5 · Framework de Competencia AI · Día 4 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Levels horizontal */
+.levels{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+.level{ padding: 22px 24px; border-radius: var(--r-md); position: relative; overflow: hidden; }
+.level.l-1{ background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); border: 1px solid rgba(122,78,181,.22); }
+.level.l-2{ background: linear-gradient(180deg, #DCC9F2 0%, var(--surface) 90%); border: 1px solid rgba(122,78,181,.32); }
+.level.l-3{ background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.level .lv-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--cat-ai); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.level.l-3 .lv-tag{ color: #D6BFFF; }
+.level h4{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.1; letter-spacing: -.015em; color: var(--lcg-dark); }
+.level.l-3 h4{ color: #fff; }
+.level p{ margin: 0 0 12px; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.level.l-3 p{ color: #F2EEE8; }
+.level ul{ margin: 0; padding: 0 0 0 18px; font-size: 12.5px; color: var(--ink-3); line-height: 1.6; }
+.level.l-3 ul{ color: rgba(242,238,232,.85); }
+
+/* Matrix grid 3x3 */
+.matrix3{ margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.matrix3-row{ display: grid; grid-template-columns: 200px 1fr 1fr 1fr; }
+.matrix3-row.is-header{ background: var(--surface-2); }
+.matrix3-cell{ padding: 16px 20px; border-right: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.matrix3-cell:last-child{ border-right: 0; }
+.matrix3-row:last-child .matrix3-cell{ border-bottom: 0; }
+.matrix3-cell.is-row-h{ background: var(--surface-2); font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); display: flex; align-items: center; }
+.matrix3-cell.is-row-h span{ display: block; font-weight: 400; font-size: 11px; color: var(--ink-4); margin-top: 2px; }
+.matrix3-cell.is-col-h{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.matrix3-cell .mc-target{ font-family: var(--serif); font-weight: 400; font-size: 18px; color: var(--cat-ai); letter-spacing: -.01em; line-height: 1; }
+.matrix3-cell .mc-desc{ display: block; margin-top: 4px; font-size: 11.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* Self-assessment form mockup */
+.assess{ margin-top: 14px; padding: 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: var(--surface); }
+.assess-row{ display: grid; grid-template-columns: 1fr 220px; gap: 18px; padding: 12px 0; border-bottom: 1px solid var(--hairline); align-items: center; }
+.assess-row:last-child{ border-bottom: 0; }
+.assess-row .a-q{ font-size: 13.5px; color: var(--ink); line-height: 1.5; }
+.assess-row .a-q b{ color: var(--cat-ai); }
+.assess-scale{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.assess-scale .as-cell{ aspect-ratio: 1; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: center; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-3); font-weight: 700; }
+.assess-scale .as-cell.is-marked{ background: var(--cat-ai); color: #fff; border-color: var(--cat-ai); }
+
+/* 30-60-90 timeline */
+.plan906{ margin-top: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.plan-block{ padding: 22px 22px 24px; border-radius: var(--r-md); border: 1px solid var(--hairline); background: var(--surface); position: relative; }
+.plan-block::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--cat-ai); border-radius: var(--r-md) var(--r-md) 0 0; }
+.plan-block.p-30::before{ opacity: .55; }
+.plan-block.p-60::before{ opacity: .75; }
+.plan-block.p-90::before{ opacity: 1; }
+.plan-block .pb-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--cat-ai); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.plan-block h4{ margin: 0 0 12px; font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--lcg-dark); letter-spacing: -.015em; line-height: 1.1; }
+.plan-block ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.plan-block ul li{ position: relative; padding-left: 22px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.plan-block ul li::before{ content: ""; position: absolute; left: 0; top: 5px; width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--cat-ai); background: var(--surface); }
+.plan-block ul li b{ color: var(--ink); }
+
+/* Concept call (purple) */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Reflect */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a><span style="opacity:.4">/</span><b>AI-5 · Framework de Competencia AI</b></div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> AI Expandido</span>
+    </header>
+
+    <main class="session-main">
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker"><span class="pill-cat">AI Expandido</span><span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;AI-5 de AI-5</span></div>
+          <h1>Framework de <em>Competencia AI.</em></h1>
+          <p class="s-hero-sub">
+            La sesión que <b>aterriza todo lo del día</b> en tu desarrollo
+            personal. Tres niveles de competencia, matriz por rol y
+            área, autoevaluación honesta y plan 30-60-90 que construyes
+            ahora mismo y compartes con tu Gerente.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">40</span> min</span></div>
+            <div class="item"><span class="label">Niveles</span><span class="val"><span class="u-mono">03</span></span></div>
+            <div class="item"><span class="label">Plan</span><span class="val">30-60-90</span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div><div><div class="val">Alfredo Chávez</div><div class="sub">Transformación Digital</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Por qué un framework</div>
+              <h2>Para que <em>"saber AI"</em> deje de ser opinión.</h2>
+              <p class="lead">
+                Sin un framework, la competencia AI se vuelve narrativa
+                — "yo uso ChatGPT", "yo le sé a Claude". El framework
+                LCG <b>convierte esa narrativa en niveles medibles</b>
+                con criterios de evaluación, instrumento de
+                autoevaluación y plan de desarrollo asociado.
+              </p>
+              <p>
+                Lo gestiona <b>P&amp;C junto con TD</b>. Se evalúa al
+                cierre del onboarding y cada 6 meses como parte del PID
+                (Plan Individual de Desarrollo).
+              </p>
+            </section>
+
+            <section class="s-block" id="sec-niveles">
+              <div class="s-block-label">02 · Tres niveles de competencia</div>
+              <h2>Awareness · Application · Mastery.</h2>
+              <p>
+                Inspirado en el modelo Bloom, adaptado a uso práctico
+                de AI en consultoría:
+              </p>
+
+              <div class="levels">
+                <div class="level l-1">
+                  <div class="lv-tag">Nivel 01</div>
+                  <h4>Awareness</h4>
+                  <p>Sabes qué es y para qué sirve, pero no lo usas en tu día a día.</p>
+                  <ul>
+                    <li>Conoces los productos Claude vigentes</li>
+                    <li>Identificas las 5 reglas de oro LCG</li>
+                    <li>Sabes cuándo NO usar AI con datos del cliente</li>
+                    <li>Has hecho el onboarding y al menos 5 prompts</li>
+                  </ul>
+                </div>
+                <div class="level l-2">
+                  <div class="lv-tag">Nivel 02</div>
+                  <h4>Application</h4>
+                  <p>Lo usas con regularidad y obtienes valor en tareas concretas.</p>
+                  <ul>
+                    <li>Tienes Proyectos de Claude por engagement</li>
+                    <li>Decides modelo (Opus/Sonnet/Haiku) por tarea</li>
+                    <li>Activaste integraciones relevantes a tu rol</li>
+                    <li>Identificas cuándo cambiar a stack complementario</li>
+                    <li>Usas al menos 3 prompts validados de Academia Claude</li>
+                  </ul>
+                </div>
+                <div class="level l-3">
+                  <div class="lv-tag">Nivel 03</div>
+                  <h4>Mastery</h4>
+                  <p>Diseñas flujos AI nuevos y enseñas a otros. Generas valor neto medible.</p>
+                  <ul>
+                    <li>Construyes prompts complejos multi-paso</li>
+                    <li>Reconocido como referente AI en tu vertical</li>
+                    <li>Has creado workflows con n8n + Claude API</li>
+                    <li>Aportas prompts nuevos a la Library LCG</li>
+                    <li>Mentoras a Awareness/Application en tu equipo</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-matriz">
+              <div class="s-block-label">03 · Matriz nivel × rol × área</div>
+              <h2>El target depende del <em>rol y del área.</em></h2>
+              <p>
+                No todo el mundo tiene que llegar a Mastery. La meta
+                varía por rol (Director · Gerente · Consultor) y por
+                área de competencia (Operaciones · Transformación
+                Digital · People &amp; Culture). El target cierra el
+                primer año:
+              </p>
+
+              <div class="matrix3">
+                <div class="matrix3-row is-header">
+                  <div class="matrix3-cell is-col-h">Rol \ Área</div>
+                  <div class="matrix3-cell is-col-h">Operaciones</div>
+                  <div class="matrix3-cell is-col-h">Transformación Digital</div>
+                  <div class="matrix3-cell is-col-h">People &amp; Culture</div>
+                </div>
+                <div class="matrix3-row">
+                  <div class="matrix3-cell is-row-h">Director<span>de Operaciones / TD / P&amp;C</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Mastery</div><span class="mc-desc">Lidera adopción AI en su vertical y aprueba prompt patterns.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Mastery</div><span class="mc-desc">Owner del framework y del stack. Decide arquitectura.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Application+</div><span class="mc-desc">Usa AI para evaluación y plan de desarrollo del equipo.</span></div>
+                </div>
+                <div class="matrix3-row">
+                  <div class="matrix3-cell is-row-h">Gerente<span>de proyecto / cuenta / área</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Application+</div><span class="mc-desc">Usa AI en cada fase del proyecto y enseña al equipo.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Mastery</div><span class="mc-desc">Construye agentes y workflows. Es referente técnico.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Application</div><span class="mc-desc">Usa AI para sourcing, evaluación y planes 30-60-90.</span></div>
+                </div>
+                <div class="matrix3-row">
+                  <div class="matrix3-cell is-row-h">Consultor<span>asociado / senior</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Application</div><span class="mc-desc">Usa AI en VSA, MEF, Pre-Manuales. Default fluido.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Application+</div><span class="mc-desc">Construye prompts nuevos, valida flujos, adopta primero.</span></div>
+                  <div class="matrix3-cell"><div class="mc-target">Awareness+</div><span class="mc-desc">Conoce casos AI en P&amp;C; sabe invocar a TD cuando aplica.</span></div>
+                </div>
+              </div>
+
+              <p style="margin-top: 18px;">
+                El "+" significa "consolidado en ese nivel y trabajando
+                hacia el siguiente". El framework no premia subir
+                niveles porque sí — premia <b>generar valor en tu
+                rol</b>. Un Consultor en Application bien aplicado vale
+                más que un Consultor en Mastery superficial.
+              </p>
+            </section>
+
+            <section class="s-block" id="sec-autoeval">
+              <div class="s-block-label">04 · Autoevaluación</div>
+              <h2>Diez preguntas, escala 1–5.</h2>
+              <p>
+                Este es el instrumento que aplicarás <b>hoy mismo al
+                cierre del Día 04</b>. La idea no es sacar puntaje alto
+                — es identificar honestamente dónde estás para que el
+                plan 30-60-90 se enfoque en lo que falta.
+              </p>
+
+              <div class="assess">
+                <div class="assess-row">
+                  <div class="a-q">01 · Identifico los <b>productos Claude vigentes</b> y para qué se usa cada uno.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">02 · Sé cuándo usar <b>Opus, Sonnet o Haiku</b> en una tarea concreta.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">03 · Aplico las <b>5 reglas de oro LCG</b> en mi uso diario, sin excepciones.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">04 · Tengo <b>Proyectos en Claude.ai</b> configurados con Custom Instructions y Knowledge.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">05 · Uso <b>Artifacts</b> para iterar entregables (DAX, Markdown, código).</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">06 · Activé las <b>integraciones LCG</b> relevantes a mi rol.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">07 · Identifico <b>cuándo NO usar Claude</b> y qué del stack complementario aplica.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">08 · He usado al menos <b>3 prompts validados</b> de la Library LCG en casos reales.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">09 · Construyo <b>prompts complejos multi-paso</b> (no solo preguntas sueltas).</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+                <div class="assess-row">
+                  <div class="a-q">10 · Aporto prompts o flujos nuevos al equipo.</div>
+                  <div class="assess-scale"><div class="as-cell">1</div><div class="as-cell">2</div><div class="as-cell">3</div><div class="as-cell">4</div><div class="as-cell">5</div></div>
+                </div>
+              </div>
+
+              <h3>Cómo se interpreta el puntaje</h3>
+              <ul style="font-size: 14px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li><b>10–25 puntos</b> · estás en <b>Awareness</b>. Foco en aplicar los conceptos del Día 04 en tu primera asignación.</li>
+                <li><b>26–40 puntos</b> · estás en <b>Application</b>. Foco en consolidar (Proyectos, integraciones, modelos) e iniciar contribuciones.</li>
+                <li><b>41–50 puntos</b> · estás en <b>Mastery</b>. Foco en mentoría, contribuir a Library LCG y co-diseñar con TD.</li>
+              </ul>
+            </section>
+
+            <section class="s-block" id="sec-plan">
+              <div class="s-block-label">05 · Plan 30-60-90</div>
+              <h2>Tu plan AI <em>personal.</em></h2>
+              <p>
+                A partir de tu autoevaluación, defines acciones
+                específicas para tres ventanas de tiempo. La plantilla
+                que usarás (descargable desde el portal):
+              </p>
+
+              <div class="plan906">
+                <div class="plan-block p-30">
+                  <div class="pb-tag">Ventana 01 · Día 1–30</div>
+                  <h4>Activación</h4>
+                  <ul>
+                    <li><b>Setup completo</b> de Claude.ai (Memoria, Estilos, primer Proyecto).</li>
+                    <li><b>3 integraciones</b> activadas (mínimo SharePoint + M365).</li>
+                    <li>Módulo 01 de <b>Academia Claude</b> completado.</li>
+                    <li><b>5 casos reales</b> usando prompts de Library LCG.</li>
+                    <li>Reunión 1:1 con tu Gerente para validar plan.</li>
+                  </ul>
+                </div>
+                <div class="plan-block p-60">
+                  <div class="pb-tag">Ventana 02 · Día 31–60</div>
+                  <h4>Aplicación recurrente</h4>
+                  <ul>
+                    <li><b>Proyecto Claude</b> por cada engagement activo.</li>
+                    <li><b>Decisión consciente</b> de modelo en cada tarea.</li>
+                    <li>Asistir a <b>Office Hours TD</b> al menos 2 veces.</li>
+                    <li><b>10 prompts</b> propios documentados en tu carpeta personal.</li>
+                    <li>Identificar 1 oportunidad de automatización con n8n + TD.</li>
+                  </ul>
+                </div>
+                <div class="plan-block p-90">
+                  <div class="pb-tag">Ventana 03 · Día 61–90</div>
+                  <h4>Contribución</h4>
+                  <ul>
+                    <li><b>1 prompt validado</b> aportado a Library LCG.</li>
+                    <li><b>Mentoría</b> a 1 nuevo ingreso (lightning session).</li>
+                    <li>Re-tomar autoevaluación y comparar deltas.</li>
+                    <li>Caso AI presentado en <b>Junta semanal de equipo</b>.</li>
+                    <li>Plan 90+ acordado con Gerente y P&amp;C.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="concept-call" style="margin-top: 22px;">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                <div>
+                  <h3>El plan se firma, no se sugiere.</h3>
+                  <p>Tu plan 30-60-90 AI <b>se firma con tu Gerente y queda en el PID</b>. P&amp;C lo audita en la revisión semestral. No es ejercicio decorativo — el cumplimiento de las acciones es input formal del feedback de desempeño.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">06 · Cierre del Día 04</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div>
+                  <h4>Cierras el día</h4>
+                  <p>Saliste con el stack tecnológico de LCG y el marco AI completo. Mañana, <b>Día 05</b>, aplicas todo en un caso integrado y conoces a tu Gerente y primer proyecto. Trae tu plan 30-60-90 ya firmado para incorporarlo al PID.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="day-4-jueves.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 04 · Herramientas &amp; AI</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="day-4-jueves.html">Cerrar Día 04<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></a></div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 07 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Por qué un framework</a></li>
+                <li><a href="#sec-niveles"><span class="tick"></span>Tres niveles</a></li>
+                <li><a href="#sec-matriz"><span class="tick"></span>Matriz nivel × rol × área</a></li>
+                <li><a href="#sec-autoeval"><span class="tick"></span>Autoevaluación</a></li>
+                <li><a href="#sec-plan"><span class="tick"></span>Plan 30-60-90</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre Día 04</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">Plantilla Plan 30-60-90 AI<span class="r-meta">SharePoint · P&amp;C</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">Instrumento de autoevaluación<span class="r-meta">Form · respuesta a P&amp;C</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">Framework completo<span class="r-meta">Doc oficial · TD + P&amp;C</span></div></div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Cierras el Día 04. Mañana es el <b>Día 05 · Aplicación y cierre</b>: caso integrado y tu primer proyecto.</p>
+              <a href="day-4-jueves.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Volver al Día 04 →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b07-ai5-framework';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

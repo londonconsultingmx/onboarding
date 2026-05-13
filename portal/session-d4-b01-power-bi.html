@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Power BI · Día 4 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Stack diagram */
+.stack{ display: grid; grid-template-columns: 1fr; gap: 6px; margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 14px; background: var(--surface); }
+.stack-layer{ padding: 12px 18px; border-radius: 8px; display: grid; grid-template-columns: 110px 1fr 100px; gap: 16px; align-items: center; }
+.stack-layer.l-1{ background: var(--cat-ai); color: #fff; }
+.stack-layer.l-2{ background: var(--cat-ai-bg); color: var(--cat-ai); }
+.stack-layer.l-3{ background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline); }
+.stack-layer.l-4{ background: var(--lcg-cream); color: var(--lcg-dark); border: 1px solid #E9E1CC; }
+.stack-layer .sl-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+.stack-layer .sl-name{ font-family: var(--serif); font-weight: 400; font-size: 18px; letter-spacing: -.01em; }
+.stack-layer .sl-meta{ font-size: 11.5px; opacity: .75; text-align: right; }
+
+/* Schema diagram (model star) */
+.schema{ margin-top: 14px; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: stretch; }
+.schema-fact{ grid-column: 2; padding: 18px; background: var(--cat-ai); color: #fff; border-radius: var(--r-md); text-align: center; }
+.schema-fact .sf-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; opacity: .85; text-transform: uppercase; }
+.schema-fact .sf-name{ display: block; margin-top: 6px; font-family: var(--serif); font-size: 18px; letter-spacing: -.01em; }
+.schema-fact ul{ list-style: none; padding: 0; margin: 12px 0 0; font-size: 11.5px; line-height: 1.5; opacity: .9; font-family: ui-monospace, Menlo, monospace; }
+.schema-dim{ padding: 14px 16px; background: var(--cat-ai-bg); border: 1px solid rgba(122,78,181,.18); border-radius: 8px; }
+.schema-dim .sd-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; }
+.schema-dim h5{ margin: 4px 0 6px; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--ink); }
+.schema-dim ul{ list-style: none; padding: 0; margin: 0; font-size: 11px; line-height: 1.55; color: var(--ink-3); font-family: ui-monospace, Menlo, monospace; }
+
+/* Code block */
+pre.code{ margin: 12px 0; padding: 18px 22px; background: #1A1A1A; color: #E8E5DD; border-radius: var(--r-md); font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.6; overflow-x: auto; border: 1px solid #2A2A2A; }
+pre.code .c-key{ color: #C29CF8; font-weight: 600; }
+pre.code .c-fn{ color: #8AF4E9; }
+pre.code .c-str{ color: #F5C56C; }
+pre.code .c-com{ color: #6A6A6A; font-style: italic; }
+
+/* DAX cards */
+.dax-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.dax-card{ padding: 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-left: 3px solid var(--cat-ai); }
+.dax-card .dc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.dax-card h4{ margin: 0 0 8px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.dax-card p{ margin: 0 0 8px; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+.dax-card pre{ margin: 0; padding: 12px 14px; background: #1A1A1A; color: #E8E5DD; border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; line-height: 1.5; overflow-x: auto; }
+
+/* Concept call (purple) */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Layout grid (dashboard mockup) */
+.dash-mock{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 60px 120px 120px; gap: 8px; margin-top: 14px; padding: 14px; background: var(--surface-2); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.dm{ background: var(--surface); border: 1px solid var(--hairline); border-radius: 6px; padding: 10px 12px; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-3); letter-spacing: .04em; display: flex; align-items: flex-start; }
+.dm.dm-h{ grid-column: 1 / 5; background: var(--cat-ai); color: #fff; align-items: center; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.dm.dm-kpi{ background: var(--cat-ai-bg); color: var(--cat-ai); border-color: rgba(122,78,181,.18); flex-direction: column; gap: 4px; }
+.dm.dm-kpi b{ font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--cat-ai); letter-spacing: -.01em; }
+.dm.dm-chart{ grid-column: span 2; flex-direction: column; }
+.dm.dm-chart .dm-title{ font-weight: 700; color: var(--ink); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+.dm.dm-chart .dm-bar{ flex: 1; background: linear-gradient(180deg, var(--cat-ai-bg) 0%, transparent 100%); border-radius: 4px; position: relative; }
+.dm.dm-chart .dm-bar::after{ content: ""; position: absolute; left: 8%; right: 8%; bottom: 8px; height: 2px; background: var(--cat-ai); border-radius: 2px; }
+
+/* Steps numbered */
+.steps{ list-style: none; padding: 0; margin: 14px 0 0; counter-reset: step; display: flex; flex-direction: column; gap: 10px; }
+.steps li{ counter-increment: step; display: grid; grid-template-columns: 38px 1fr; gap: 18px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.steps li::before{ content: counter(step, decimal-leading-zero); width: 38px; height: 38px; border-radius: 50%; background: var(--cat-ai); color: #fff; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+.steps li h4{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
+.steps li p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+
+/* Best practices */
+.bp-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.bp{ padding: 22px 24px; border-radius: var(--r-md); border: 1px solid var(--hairline); background: var(--surface); }
+.bp.is-do{ border-left: 3px solid var(--cat-ai); }
+.bp.is-avoid{ border-left: 3px solid #B5564E; }
+.bp h4{ margin: 0 0 10px; font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.bp.is-do h4{ color: var(--cat-ai); }
+.bp.is-avoid h4{ color: #B5564E; }
+.bp ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.bp ul li{ position: relative; padding-left: 18px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.bp ul li::before{ position: absolute; left: 0; top: 0; font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; }
+.bp.is-do ul li::before{ content: "+"; color: var(--cat-ai); }
+.bp.is-avoid ul li::before{ content: "−"; color: #B5564E; }
+
+/* Reflect callout */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Complete bar */
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+/* Aside */
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a>
+        <span style="opacity:.4">/</span>
+        <b>Power BI</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> Herramientas</span>
+    </header>
+
+    <main class="session-main">
+
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Herramientas</span>
+            <span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;Bloque A1 de 07</span>
+          </div>
+          <h1>Power <em>BI.</em></h1>
+          <p class="s-hero-sub">
+            El instrumento de medición del proyecto LCG. Desde la
+            conexión a SharePoint hasta el dashboard que el Director de
+            Operaciones revisa cada lunes en la JSA. <b>Power BI es donde
+            el MEF deja de ser un Excel y se vuelve la cifra que rige la
+            semana.</b>
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">1h 30</span></span></div>
+            <div class="item"><span class="label">Capa</span><span class="val">Stack <span class="u-mono">02</span></span></div>
+            <div class="item"><span class="label">Salida</span><span class="val">Dashboard JSA</span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div>
+                <div><div class="val">Alfredo Chávez</div><div class="sub">Sistemas y Digital MX</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <!-- 01 · Por qué Power BI en LCG -->
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · El rol de Power BI en un engagement</div>
+              <h2>El instrumento de <em>medición</em> del proyecto.</h2>
+              <p class="lead">
+                Power BI no es "una herramienta de visualización" en
+                LCG. Es la capa que transforma el MEF de un modelo
+                conceptual en una <b>cifra que se mide cada semana</b>.
+                Cuando el Director de Operaciones abre la Junta Semanal
+                de Avance, el primer slide es un dashboard de Power BI.
+              </p>
+              <p>
+                Cada engagement LCG produce <b>uno o más reportes</b>
+                publicados al workspace del cliente, conectados al
+                modelo del MEF y refrescados con la frecuencia
+                comprometida en el Componente 02 del MEF.
+              </p>
+
+              <div class="stack">
+                <div class="stack-layer l-1">
+                  <span class="sl-tag">Capa 04 · Decisión</span>
+                  <span class="sl-name">Junta Semanal de Avance</span>
+                  <span class="sl-meta">lunes, Director Ops</span>
+                </div>
+                <div class="stack-layer l-2">
+                  <span class="sl-tag">Capa 03 · Visualización</span>
+                  <span class="sl-name">Power BI Service · workspace cliente</span>
+                  <span class="sl-meta">refresh diario</span>
+                </div>
+                <div class="stack-layer l-3">
+                  <span class="sl-tag">Capa 02 · Modelo</span>
+                  <span class="sl-name">Modelo de datos PBIX · MEF</span>
+                  <span class="sl-meta">.pbix en SharePoint</span>
+                </div>
+                <div class="stack-layer l-4">
+                  <span class="sl-tag">Capa 01 · Datos</span>
+                  <span class="sl-name">SharePoint · Excel · ERP cliente</span>
+                  <span class="sl-meta">fuente cruda</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 · Setup técnico -->
+            <section class="s-block" id="sec-setup">
+              <div class="s-block-label">02 · Setup técnico</div>
+              <h2>Lo que necesitas instalado el día 1.</h2>
+              <p>
+                LCG tiene licencia <b>Power BI Pro</b> para todo el
+                equipo de Operaciones, vinculada a tu cuenta M365.
+                El stack de tu laptop debe quedar así:
+              </p>
+
+              <ol class="steps">
+                <li><div>
+                  <h4>Power BI Desktop</h4>
+                  <p>Aplicación local donde construyes el modelo y los reportes. Descarga desde <i>Microsoft Store</i> (versión auto-actualizable, recomendada). Solo Windows — en Mac se trabaja por Parallels o RDP a una VM corporativa.</p>
+                </div></li>
+                <li><div>
+                  <h4>Power BI Service</h4>
+                  <p>Acceso web en <code>app.powerbi.com</code> con tu cuenta @londoncg.mx. Aquí publicas los .pbix y se asignan permisos por workspace.</p>
+                </div></li>
+                <li><div>
+                  <h4>Power BI Mobile</h4>
+                  <p>App iOS/Android para revisar dashboards en cliente. Útil cuando estás en planta y no tienes laptop a la mano.</p>
+                </div></li>
+                <li><div>
+                  <h4>On-premises Data Gateway</h4>
+                  <p>Solo cuando el cliente tiene fuentes locales (SQL Server, ERP on-prem). Lo coordinas con el equipo de TI del cliente — TD/Sistemas LCG ayuda con la configuración inicial.</p>
+                </div></li>
+                <li><div>
+                  <h4>DAX Studio &amp; Tabular Editor</h4>
+                  <p>Herramientas de productividad gratuitas. DAX Studio para auditar fórmulas pesadas; Tabular Editor para editar el modelo más rápido que en Desktop.</p>
+                </div></li>
+              </ol>
+            </section>
+
+            <!-- 03 · Modelo de datos LCG estándar -->
+            <section class="s-block" id="sec-modelo">
+              <div class="s-block-label">03 · Modelo de datos LCG</div>
+              <h2>Esquema en estrella, siempre.</h2>
+              <p>
+                LCG usa modelo en estrella con una <b>tabla de hechos</b>
+                central (KPIs medidos por área, periodo y proyecto) y
+                tablas de dimensión que describen el contexto. Esta
+                forma asegura que el mismo modelo sirve para varios
+                dashboards sin tener que reescribir DAX.
+              </p>
+
+              <div class="schema">
+                <div class="schema-dim" style="grid-column: 1; grid-row: 1;">
+                  <div class="sd-tag">Dim 01</div>
+                  <h5>dim_periodo</h5>
+                  <ul><li>fecha</li><li>semana_iso</li><li>mes</li><li>q</li><li>año</li><li>es_periodo_base</li></ul>
+                </div>
+                <div class="schema-fact" style="grid-row: 1;">
+                  <div class="sf-tag">Tabla de hechos</div>
+                  <span class="sf-name">fact_kpi_proyecto</span>
+                  <ul><li>id_proyecto</li><li>id_area</li><li>id_indicador</li><li>id_periodo</li><li>valor</li><li>meta</li><li>peso</li></ul>
+                </div>
+                <div class="schema-dim" style="grid-column: 3; grid-row: 1;">
+                  <div class="sd-tag">Dim 02</div>
+                  <h5>dim_area</h5>
+                  <ul><li>id_area</li><li>area</li><li>director_area</li><li>vertical_lcg</li></ul>
+                </div>
+                <div class="schema-dim" style="grid-column: 1;">
+                  <div class="sd-tag">Dim 03</div>
+                  <h5>dim_indicador</h5>
+                  <ul><li>id_indicador</li><li>indicador</li><li>unidad</li><li>tipo (eficiencia/ahorro)</li><li>peso_mef</li></ul>
+                </div>
+                <div class="schema-dim" style="grid-column: 2;">
+                  <div class="sd-tag">Dim 04</div>
+                  <h5>dim_proyecto</h5>
+                  <ul><li>id_proyecto</li><li>cliente</li><li>gerente_proyecto</li><li>director_ops</li><li>fecha_inicio</li><li>fecha_fin</li></ul>
+                </div>
+                <div class="schema-dim" style="grid-column: 3;">
+                  <div class="sd-tag">Dim 05</div>
+                  <h5>dim_responsable</h5>
+                  <ul><li>id_responsable</li><li>nombre</li><li>rol</li><li>area</li></ul>
+                </div>
+              </div>
+
+              <h3>Relaciones</h3>
+              <p>
+                Todas las dimensiones se conectan al fact por su <code>id</code>
+                con cardinalidad <b>1 → muchos</b> y dirección de filtro
+                <b>simple</b>. Nunca filtros bidireccionales — generan
+                ambigüedades en DAX y son la causa #1 de mediciones
+                "raras" en dashboards LCG.
+              </p>
+            </section>
+
+            <!-- 04 · DAX esencial -->
+            <section class="s-block" id="sec-dax">
+              <div class="s-block-label">04 · DAX esencial para consultor LCG</div>
+              <h2>Las cinco fórmulas que cubren <em>el 80%.</em></h2>
+              <p>
+                No necesitas ser experto en DAX. Necesitas dominar
+                cinco patrones que cubren la mayoría de cálculos en
+                un dashboard de proyecto: <b>cumplimiento, delta vs.
+                Periodo Base, ratios ponderados, year-to-date</b> y
+                <b>moving average</b>.
+              </p>
+
+              <div class="dax-grid">
+                <div class="dax-card">
+                  <div class="dc-tag">Patrón 01</div>
+                  <h4>% Cumplimiento vs. meta</h4>
+                  <p>El KPI base de cada indicador del MEF.</p>
+<pre>% Cumplimiento =
+DIVIDE(
+  SUM(fact_kpi_proyecto[valor]),
+  SUM(fact_kpi_proyecto[meta]),
+  0
+)</pre>
+                </div>
+                <div class="dax-card">
+                  <div class="dc-tag">Patrón 02</div>
+                  <h4>Delta vs. Periodo Base</h4>
+                  <p>El corazón del MEF — beneficio capturado.</p>
+<pre>Delta vs. Base =
+VAR base =
+  CALCULATE(
+    SUM(fact_kpi_proyecto[valor]),
+    dim_periodo[es_periodo_base] = TRUE
+  )
+RETURN SUM(fact_kpi_proyecto[valor]) - base</pre>
+                </div>
+                <div class="dax-card">
+                  <div class="dc-tag">Patrón 03</div>
+                  <h4>Cumplimiento ponderado</h4>
+                  <p>Avance global del proyecto, ponderado por peso del indicador en el MEF.</p>
+<pre>Cumpl. Ponderado =
+SUMX(
+  dim_indicador,
+  [% Cumplimiento] * dim_indicador[peso_mef]
+)</pre>
+                </div>
+                <div class="dax-card">
+                  <div class="dc-tag">Patrón 04</div>
+                  <h4>YTD acumulado</h4>
+                  <p>Para el reporte mensual al cliente.</p>
+<pre>Valor YTD =
+TOTALYTD(
+  SUM(fact_kpi_proyecto[valor]),
+  dim_periodo[fecha]
+)</pre>
+                </div>
+              </div>
+
+              <h3>Moving average de 4 semanas</h3>
+              <p>
+                Útil para suavizar ruido semanal en indicadores
+                volátiles (ventas, pedidos atendidos, OEE).
+              </p>
+<pre class="code"><span class="c-com">// MA 4 semanas — suaviza ruido y resalta tendencia</span>
+<span class="c-key">MA 4S</span> =
+<span class="c-key">VAR</span> ult_fecha = <span class="c-fn">MAX</span>(dim_periodo[fecha])
+<span class="c-key">VAR</span> rango = <span class="c-fn">DATESINPERIOD</span>(dim_periodo[fecha], ult_fecha, -<span class="c-str">28</span>, <span class="c-key">DAY</span>)
+<span class="c-key">RETURN</span>
+  <span class="c-fn">CALCULATE</span>(
+    <span class="c-fn">AVERAGEX</span>(<span class="c-fn">VALUES</span>(dim_periodo[semana_iso]), [<span class="c-fn">% Cumplimiento</span>]),
+    rango
+  )</pre>
+            </section>
+
+            <!-- 05 · Plantilla LCG y diseño -->
+            <section class="s-block" id="sec-plantilla">
+              <div class="s-block-label">05 · Plantilla LCG · diseño</div>
+              <h2>Una sola plantilla, en <em>todos los proyectos.</em></h2>
+              <p>
+                LCG mantiene una plantilla maestra <code>LCG_Dashboard_v3.pbix</code>
+                en el SharePoint de Sistemas y Digital MX. Toda nueva
+                construcción <b>parte de ahí</b> — colores brand
+                aplicados, theme JSON cargado, layouts predefinidos.
+              </p>
+
+              <div class="dash-mock">
+                <div class="dm dm-h">Header · Logo cliente + LCG · Periodo · Última actualización</div>
+                <div class="dm dm-kpi"><span>% Avance</span><b>72%</b></div>
+                <div class="dm dm-kpi"><span>Ahorro acum.</span><b>$8.2M</b></div>
+                <div class="dm dm-kpi"><span>vs. meta</span><b>+4 pp</b></div>
+                <div class="dm dm-kpi"><span>Iniciativas</span><b>14/18</b></div>
+                <div class="dm dm-chart"><span class="dm-title">Cumplimiento por área</span><div class="dm-bar"></div></div>
+                <div class="dm dm-chart"><span class="dm-title">Delta vs. Periodo Base · semanal</span><div class="dm-bar"></div></div>
+              </div>
+
+              <h3>Estructura estándar (4 páginas)</h3>
+              <ol class="steps">
+                <li><div><h4>01 · Resumen ejecutivo</h4><p>KPIs maestros + cumplimiento ponderado + delta vs. base. Lo que el Director Ops ve en la JSA.</p></div></li>
+                <li><div><h4>02 · Detalle por área</h4><p>Una página por área del MEF. Indicadores individuales, tendencias, top issues.</p></div></li>
+                <li><div><h4>03 · Iniciativas</h4><p>Estatus de cada iniciativa (en curso, riesgo, completada) con responsable y fecha compromiso.</p></div></li>
+                <li><div><h4>04 · Datos &amp; metodología</h4><p>Glosario de indicadores, fuentes, fórmulas. Audit trail para Finanzas del cliente.</p></div></li>
+              </ol>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                <div>
+                  <h3>El theme JSON LCG es no negociable.</h3>
+                  <p>Carga <code>lcg-theme-v3.json</code> al primer abrir un .pbix nuevo. Te aplica paleta brand (verdes LCG + neutros), tipografía Manrope/Fraunces fallback y estilos consistentes para tarjetas, gráficos y textos. <b>Sin theme cargado, el dashboard no se publica al workspace cliente.</b></p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 06 · Publicación y permisos -->
+            <section class="s-block" id="sec-pub">
+              <div class="s-block-label">06 · Publicación &amp; permisos</div>
+              <h2>Workspace por cliente, RLS por rol.</h2>
+              <p>
+                Cada engagement tiene su propio workspace en Power BI
+                Service: <code>LCG · {cliente}</code>. Permisos limitados
+                a equipo del proyecto + Director del área cliente +
+                Top Client. Publicar fuera de un workspace formal está
+                prohibido por política de seguridad.
+              </p>
+
+              <h3>Row-Level Security (RLS)</h3>
+              <p>
+                Cuando el dashboard se comparte con varias personas del
+                cliente y cada una solo debe ver su área, se configura
+                RLS en el modelo. Patrón estándar:
+              </p>
+<pre class="code"><span class="c-com">// Rol "Director de Área" — ve solo su área</span>
+<span class="c-key">[Filtro]</span> = dim_area[director_area] = <span class="c-fn">USERPRINCIPALNAME</span>()</pre>
+
+              <h3>Frecuencia de refresh</h3>
+              <p>
+                <b>Diario a las 06:00 hora CDMX</b> es la cadencia
+                estándar para que la JSA del lunes encuentre datos
+                frescos. Cuando el cliente requiere monitoreo cercano
+                (Excelencia Comercial con dashboards de venta diaria),
+                se pasa a <b>cada 4 horas</b>.
+              </p>
+            </section>
+
+            <!-- 07 · Buenas prácticas -->
+            <section class="s-block" id="sec-bp">
+              <div class="s-block-label">07 · Buenas prácticas</div>
+              <h2>Lo que separa un PBIX limpio de uno <em>quemado.</em></h2>
+
+              <div class="bp-grid">
+                <div class="bp is-do">
+                  <h4>Hacer</h4>
+                  <ul>
+                    <li>Nombrar tablas con prefijo: <code>fact_</code>, <code>dim_</code>.</li>
+                    <li>Crear medidas en una tabla "Medidas" sin columnas, no en tablas de hechos.</li>
+                    <li>Usar <code>DIVIDE()</code> en vez del operador <code>/</code> — maneja división por cero.</li>
+                    <li>Cargar el theme LCG antes de poner el primer visual.</li>
+                    <li>Documentar fórmulas complejas con comentario inline (<code>// ...</code>).</li>
+                    <li>Versionar el .pbix en SharePoint con sufijo <code>_v01, _v02</code>.</li>
+                  </ul>
+                </div>
+                <div class="bp is-avoid">
+                  <h4>Evitar</h4>
+                  <ul>
+                    <li>Cargar tablas con miles de columnas que no usas — pesa y ralentiza refresh.</li>
+                    <li>Filtros bidireccionales entre dimensión y fact (ambigüedades DAX).</li>
+                    <li>Calcular en el visual con "Quick Measures" sin saber qué fórmula generaron.</li>
+                    <li>Publicar el .pbix con queries apuntando a tu carpeta local <code>C:\Users\...</code>.</li>
+                    <li>Subir el .pbix con datos del cliente al repo de Sistemas (sin anonimizar).</li>
+                    <li>Compartir reportes por link público — siempre por workspace.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 08 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">08 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Cuando entres a tu primer proyecto, abre el workspace del cliente en Power BI Service y revisa el .pbix activo. Identifica las tablas de hechos, las dimensiones y dónde está el cálculo del MEF. Esa lectura te ahorra dos semanas de preguntar.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="day-4-jueves.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 04 · Herramientas &amp; AI</span></div></a>
+              <div class="next-group">
+                <a class="btn btn-primary btn-lg" href="session-d4-b02-monday-miro.html">Siguiente · Monday &amp; Miro<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a>
+              </div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 01 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>El rol de Power BI</a></li>
+                <li><a href="#sec-setup"><span class="tick"></span>Setup técnico</a></li>
+                <li><a href="#sec-modelo"><span class="tick"></span>Modelo de datos</a></li>
+                <li><a href="#sec-dax"><span class="tick"></span>DAX esencial</a></li>
+                <li><a href="#sec-plantilla"><span class="tick"></span>Plantilla LCG</a></li>
+                <li><a href="#sec-pub"><span class="tick"></span>Publicación &amp; permisos</a></li>
+                <li><a href="#sec-bp"><span class="tick"></span>Buenas prácticas</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div><div class="r-name">LCG_Dashboard_v3.pbix<span class="r-meta">SharePoint · Sistemas y Digital MX</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="r-name">lcg-theme-v3.json<span class="r-meta">Theme oficial · paleta + tipografía</span></div></div></li>
+                <li><a href="https://app.powerbi.com" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div><div class="r-name">Power BI Service<span class="r-meta">app.powerbi.com</span></div></a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Sigue con <b>Monday &amp; Miro</b>: gestión de proyecto y colaboración visual.</p>
+              <a href="session-d4-b02-monday-miro.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Ir a Monday &amp; Miro →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b01-power-bi';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

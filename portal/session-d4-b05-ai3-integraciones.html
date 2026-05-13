@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>AI-3 · Integraciones LCG · Día 4 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Architecture diagram - claude as hub */
+.hub{ margin-top: 14px; padding: 28px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: center; }
+.hub-spoke{ padding: 16px 18px; background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 8px; text-align: center; }
+.hub-spoke .hs-icon{ width: 40px; height: 40px; border-radius: 10px; background: var(--cat-ai-bg); color: var(--cat-ai); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+.hub-spoke h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.hub-spoke span{ font-size: 11px; color: var(--ink-4); font-family: ui-monospace, Menlo, monospace; letter-spacing: .04em; }
+.hub-center{ grid-column: 2; padding: 24px 20px; background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border-radius: 12px; text-align: center; box-shadow: 0 10px 28px rgba(122,78,181,.2); }
+.hub-center h4{ margin: 0; font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; }
+.hub-center span{ display: block; margin-top: 4px; font-size: 12px; color: #D6BFFF; font-family: ui-monospace, Menlo, monospace; letter-spacing: .08em; }
+
+/* Integration deep-dive section */
+.intg{ margin-top: 18px; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.intg-head{ display: grid; grid-template-columns: 88px 1fr auto; gap: 22px; padding: 22px 26px; background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; align-items: center; }
+.intg-head .ih-icon{ width: 56px; height: 56px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #D6BFFF; }
+.intg-head .ih-name{ font-family: var(--serif); font-weight: 400; font-size: 26px; letter-spacing: -.015em; line-height: 1.1; color: #fff; }
+.intg-head .ih-tag{ display: block; margin-top: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #D6BFFF; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
+.intg-head .ih-status{ font-size: 11px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.15); color: #fff; font-family: ui-monospace, Menlo, monospace; letter-spacing: .08em; font-weight: 700; }
+.intg-body{ padding: 24px 26px 26px; }
+.intg-body p:first-of-type{ margin-top: 0; }
+.intg-body p{ font-size: 14.5px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+.intg-body p b{ color: var(--ink); font-weight: 600; }
+
+/* Use case cards inside intg */
+.uc-mini{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.uc-mini-card{ padding: 14px 16px; background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 8px; }
+.uc-mini-card .uc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.uc-mini-card h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.uc-mini-card p{ margin: 0; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+
+/* Setup steps inside intg */
+.setup-steps{ list-style: none; padding: 0; margin: 14px 0 0; counter-reset: step; display: flex; flex-direction: column; gap: 8px; }
+.setup-steps li{ counter-increment: step; display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 10px 14px; background: var(--surface-2); border-radius: 6px; align-items: center; }
+.setup-steps li::before{ content: counter(step, decimal-leading-zero); width: 28px; height: 28px; border-radius: 50%; background: var(--cat-ai); color: #fff; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; }
+.setup-steps li p{ margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+.setup-steps li code{ background: var(--surface); padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: var(--cat-ai); }
+
+/* Concept call (purple) */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Reflect */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a><span style="opacity:.4">/</span><b>AI-3 · Integraciones LCG</b></div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> AI Expandido</span>
+    </header>
+
+    <main class="session-main">
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker"><span class="pill-cat">AI Expandido</span><span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;AI-3 de AI-5</span></div>
+          <h1>Integraciones <em>LCG.</em></h1>
+          <p class="s-hero-sub">
+            Claude no vive en un silo. En LCG está conectado a las
+            cuatro plataformas que mueven el negocio: <b>SharePoint</b>
+            (knowledge base), <b>HubSpot</b> (CRM &amp; pipeline),
+            <b>Microsoft 365</b> (Outlook, Teams, Word) y
+            <b>London-bo</b> (back-office propio). Esta sesión es cómo
+            se prenden y cómo se usan.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">55</span> min</span></div>
+            <div class="item"><span class="label">Integraciones</span><span class="val"><span class="u-mono">04</span></span></div>
+            <div class="item"><span class="label">Status</span><span class="val">Activas</span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div><div><div class="val">Alfredo Chávez</div><div class="sub">Transformación Digital</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <section class="s-block" id="sec-arch">
+              <div class="s-block-label">01 · Arquitectura · Claude como hub</div>
+              <h2>Una capa que <em>conecta</em> el stack.</h2>
+              <p class="lead">
+                LCG no usa Claude como app aislada. Lo configuró como
+                <b>capa de razonamiento conectada</b> a los sistemas de
+                trabajo. Cuando le pides a Claude algo sobre un cliente,
+                puede ir a buscar el documento en SharePoint, leer el
+                deal de HubSpot, revisar tu correo en Outlook, sin que
+                tú abras esas herramientas.
+              </p>
+
+              <div class="hub">
+                <div class="hub-spoke">
+                  <div class="hs-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                  <h5>SharePoint</h5>
+                  <span>knowledge base</span>
+                </div>
+                <div class="hub-center">
+                  <h4>Claude</h4>
+                  <span>razonamiento + acción</span>
+                </div>
+                <div class="hub-spoke">
+                  <div class="hs-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+                  <h5>HubSpot</h5>
+                  <span>CRM &amp; pipeline</span>
+                </div>
+                <div class="hub-spoke">
+                  <div class="hs-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                  <h5>M365</h5>
+                  <span>Outlook · Teams · Word</span>
+                </div>
+                <div></div>
+                <div class="hub-spoke">
+                  <div class="hs-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg></div>
+                  <h5>London-bo</h5>
+                  <span>back-office LCG</span>
+                </div>
+              </div>
+
+              <p style="margin-top: 18px;">
+                Las integraciones se activan en
+                <b>Configuración → Integraciones</b> dentro de Claude.ai.
+                Si no las ves disponibles, escribe a TD —
+                requiere que tu cuenta @londoncg.mx tenga el rol
+                <code>integrations:enabled</code> que se asigna por
+                solicitud.
+              </p>
+            </section>
+
+            <!-- 02 · SharePoint -->
+            <section class="s-block" id="sec-sharepoint">
+              <div class="s-block-label">02 · Integración 01 · SharePoint</div>
+              <div class="intg">
+                <div class="intg-head">
+                  <div class="ih-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+                  <div><div class="ih-name">Claude + SharePoint</div><span class="ih-tag">Knowledge base · Documentos</span></div>
+                  <span class="ih-status">● Activa</span>
+                </div>
+                <div class="intg-body">
+                  <p>
+                    Permite que Claude busque y lea archivos en los
+                    sites de SharePoint a los que tu cuenta @londoncg.mx
+                    tiene acceso. <b>No re-indexa todo</b> — busca on-demand
+                    cuando se lo pides.
+                  </p>
+
+                  <h3>Casos de uso típicos</h3>
+                  <div class="uc-mini">
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 01</div>
+                      <h5>Buscar un Pre-Manual</h5>
+                      <p>"Encuentra el Pre-Manual de Pedidos del cliente Aura y resume las políticas de autorización".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 02</div>
+                      <h5>Comparar dos VSAs</h5>
+                      <p>"Compara el VSA de Suministro de Aura con el de Cementos del Norte. ¿Qué patrones se repiten?"</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 03</div>
+                      <h5>Encontrar el último MEF</h5>
+                      <p>"Busca el MEF más reciente del proyecto Aura y dime los 5 indicadores principales".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 04</div>
+                      <h5>Auditar consistencia</h5>
+                      <p>"Lee los últimos 3 reportes mensuales del cliente y dime si los KPIs se calcularon igual".</p>
+                    </div>
+                  </div>
+
+                  <h3>Setup en 4 pasos</h3>
+                  <ol class="setup-steps">
+                    <li><p>Abre <b>Claude.ai → Configuración → Integraciones</b>.</p></li>
+                    <li><p>Click <b>Conectar SharePoint</b>. Se abre login M365 — usa tu cuenta @londoncg.mx.</p></li>
+                    <li><p>Acepta los permisos solicitados. Por política LCG aceptas <b>solo lectura</b>, no escritura.</p></li>
+                    <li><p>Vuelve a una conversación y prueba: <code>"busca en SharePoint el plan de vuelo de mi proyecto activo"</code></p></li>
+                  </ol>
+
+                  <div class="concept-call" style="margin-top: 18px;">
+                    <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div>
+                      <h3>Permisos del cliente, respetados.</h3>
+                      <p>Claude solo accede a lo que <b>tu cuenta ya tiene acceso</b>. Si no estás autorizado para ver un site del cliente, Claude tampoco. Esto evita filtración accidental — pero también significa que si pides algo y Claude dice "no encontré", probablemente sea problema de permisos, no del modelo.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · HubSpot -->
+            <section class="s-block" id="sec-hubspot">
+              <div class="s-block-label">03 · Integración 02 · HubSpot</div>
+              <div class="intg">
+                <div class="intg-head">
+                  <div class="ih-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                  <div><div class="ih-name">Claude + HubSpot</div><span class="ih-tag">CRM · Deals · Contacts · Pipeline</span></div>
+                  <span class="ih-status">● Activa</span>
+                </div>
+                <div class="intg-body">
+                  <p>
+                    Claude lee deals, contactos, companies, tickets y
+                    actividades de HubSpot. Para roles comerciales y
+                    Directores de proyecto es la integración con más
+                    impacto: <b>convierte el CRM en algo conversacional</b>.
+                  </p>
+
+                  <h3>Casos de uso típicos</h3>
+                  <div class="uc-mini">
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 01</div>
+                      <h5>Estado del pipeline</h5>
+                      <p>"Dame los deals abiertos &gt; $1M con close date este trimestre, agrupados por etapa".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 02</div>
+                      <h5>Brief antes de reunión</h5>
+                      <p>"Voy a reunirme con María García. Resúmeme su empresa, deals históricos, último contacto".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 03</div>
+                      <h5>Análisis de stalled deals</h5>
+                      <p>"Identifica deals sin actividad en 30+ días en etapa Proposal y dime qué tienen en común".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Caso 04</div>
+                      <h5>Crear o actualizar registros</h5>
+                      <p>"Crea un deal nuevo para Cementos del Norte, $850K, etapa Discovery, owner Luis Ortiz".</p>
+                    </div>
+                  </div>
+
+                  <h3>Roles HubSpot relevantes</h3>
+                  <p>
+                    En LCG, los Directores Comercial, Gerentes de
+                    Cuenta y P&amp;C tienen el rol completo. Los
+                    Consultores tienen acceso de lectura a deals de su
+                    proyecto activo. <b>Claude respeta ese scope</b> —
+                    no puedes pedirle deals de proyectos a los que no
+                    estás asignado.
+                  </p>
+
+                  <h3>HubSpot Breeze (AI nativa de HubSpot)</h3>
+                  <p>
+                    Breeze es la AI dentro de HubSpot. Convive con
+                    Claude pero <b>no se reemplazan</b>. Breeze es
+                    excelente para acciones in-platform (resumir un
+                    deal, generar email de follow-up). Claude es mejor
+                    cuando necesitas <b>cruzar HubSpot con SharePoint o
+                    M365</b> — eso Breeze no lo hace.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · M365 -->
+            <section class="s-block" id="sec-m365">
+              <div class="s-block-label">04 · Integración 03 · Microsoft 365</div>
+              <div class="intg">
+                <div class="intg-head">
+                  <div class="ih-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                  <div><div class="ih-name">Claude + M365</div><span class="ih-tag">Outlook · Teams · Word · Excel · OneDrive</span></div>
+                  <span class="ih-status">● Activa</span>
+                </div>
+                <div class="intg-body">
+                  <p>
+                    La integración más amplia. Claude lee correos,
+                    chats de Teams, archivos en OneDrive, y puede
+                    redactar correos o documentos en tu nombre (que tú
+                    revisas y envías).
+                  </p>
+
+                  <h3>Casos de uso por superficie</h3>
+                  <div class="uc-mini">
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Outlook</div>
+                      <h5>Triage de correos</h5>
+                      <p>"Resume los correos no leídos de hoy y agrupa por urgencia. Dime cuáles requieren respuesta y sugiere draft".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Outlook</div>
+                      <h5>Draft de respuesta</h5>
+                      <p>"Responde al correo del cliente Aura sobre el delay del MEF — usa tono formal, propón fecha alternativa el viernes".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Teams</div>
+                      <h5>Síntesis de canal</h5>
+                      <p>"Resume las decisiones tomadas en el canal del proyecto Aura esta semana".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Word</div>
+                      <h5>Edición de propuesta</h5>
+                      <p>"Revisa la propuesta v3 que está en OneDrive y mejora la sección de Approach con más concreción".</p>
+                    </div>
+                  </div>
+
+                  <div class="concept-call" style="margin-top: 18px;">
+                    <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg></div>
+                    <div>
+                      <h3>Microsoft Copilot vs. Claude.</h3>
+                      <p>Copilot es la AI nativa dentro de las apps M365 (botón en Word, Outlook, Teams). Es genial para acciones puntuales en la app activa. <b>Claude entra cuando necesitas razonamiento más profundo, cruce con SharePoint/HubSpot, o continuidad entre sesiones</b> (con Memoria/Proyectos). Verás más de esto en AI-4 · Stack complementario.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 05 · London-bo -->
+            <section class="s-block" id="sec-londonbo">
+              <div class="s-block-label">05 · Integración 04 · London-bo</div>
+              <div class="intg">
+                <div class="intg-head">
+                  <div class="ih-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg></div>
+                  <div><div class="ih-name">Claude + London-bo</div><span class="ih-tag">Plataforma back-office LCG · 10 módulos</span></div>
+                  <span class="ih-status">● Activa</span>
+                </div>
+                <div class="intg-body">
+                  <p>
+                    <b>London-bo</b> es la plataforma interna de LCG
+                    construida sobre Claude API. Cubre 10 módulos de
+                    back-office: Operaciones, P&amp;C, Finanzas,
+                    Comercial, Knowledge, Legal, Calidad, Indicadores,
+                    Talento y Reportería ejecutiva.
+                  </p>
+
+                  <p>
+                    Toda funcionalidad "inteligente" de London-bo
+                    (búsqueda semántica, generación de reportes,
+                    asistente de PASER) usa Claude por debajo. Cuando
+                    abres London-bo y le preguntas algo al asistente,
+                    estás conversando con Claude — solo con contexto LCG
+                    pre-cargado.
+                  </p>
+
+                  <h3>Casos de uso por módulo</h3>
+                  <div class="uc-mini">
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Operaciones</div>
+                      <h5>Estatus de proyectos activos</h5>
+                      <p>"Dame el avance de los 12 proyectos activos, ordenados por % cumplimiento del MEF".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">P&amp;C</div>
+                      <h5>Plan 30-60-90 de un nuevo ingreso</h5>
+                      <p>"Genera el plan 30-60-90 para un Consultor de la vertical Excelencia Comercial".</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Talento</div>
+                      <h5>Match consultor-proyecto</h5>
+                      <p>"¿Quién en el banco tiene experiencia en VSA Suministro y disponibilidad próxima?"</p>
+                    </div>
+                    <div class="uc-mini-card">
+                      <div class="uc-tag">Knowledge</div>
+                      <h5>Casos análogos</h5>
+                      <p>"Busca proyectos LCG similares a uno de Cemento con énfasis en Lean 4.0".</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 06 · Cuándo usar qué -->
+            <section class="s-block" id="sec-decision">
+              <div class="s-block-label">06 · Decisión · cuándo usar qué</div>
+              <h2>Una regla simple: <em>el contexto manda.</em></h2>
+              <p>
+                Si la respuesta requiere:
+              </p>
+              <ul style="font-size: 14.5px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li><b>Documentos del cliente</b> → activa <b>SharePoint</b> en la conversación.</li>
+                <li><b>Pipeline o relación comercial</b> → activa <b>HubSpot</b>.</li>
+                <li><b>Tu correo / agenda / chats</b> → activa <b>M365</b>.</li>
+                <li><b>Datos transversales LCG (talento, capacidad, knowledge)</b> → entra a <b>London-bo</b> directo.</li>
+              </ul>
+              <p style="margin-top: 14px;">
+                Puedes activar <b>varias integraciones a la vez</b>. Ejemplo:
+                "compara el deal de HubSpot con el VSA en SharePoint, y
+                redacta correo de seguimiento en Outlook" usa las
+                tres simultáneamente.
+              </p>
+            </section>
+
+            <!-- 07 · Cierre -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">07 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Activa hoy mismo SharePoint y M365 en tu cuenta de Claude.ai. HubSpot y London-bo se activan cuando te asignen proyecto y rol comercial — no es necesario hacerlo el día 1. En AI-4 verás el stack complementario para los casos donde Claude no es la mejor opción.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="day-4-jueves.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 04 · Herramientas &amp; AI</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="session-d4-b06-ai4-stack.html">Siguiente · AI-4<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 05 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-arch"><span class="tick"></span>Arquitectura</a></li>
+                <li><a href="#sec-sharepoint"><span class="tick"></span>SharePoint</a></li>
+                <li><a href="#sec-hubspot"><span class="tick"></span>HubSpot</a></li>
+                <li><a href="#sec-m365"><span class="tick"></span>M365</a></li>
+                <li><a href="#sec-londonbo"><span class="tick"></span>London-bo</a></li>
+                <li><a href="#sec-decision"><span class="tick"></span>Cuándo usar qué</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">Política de integraciones LCG<span class="r-meta">SharePoint · TD</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">London-bo<span class="r-meta">Plataforma back-office</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">Solicitar acceso de integraciones<span class="r-meta">Form · TD</span></div></div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Sigue con <b>AI-4 · Stack complementario</b>: cuándo Claude no es la mejor opción y qué herramienta sí.</p>
+              <a href="session-d4-b06-ai4-stack.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Ir a AI-4 →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b05-ai3-integraciones';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

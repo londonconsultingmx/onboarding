@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>AI-4 · Stack complementario · Día 4 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+
+/* Decision matrix table */
+.matrix{ margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.matrix-row{ display: grid; grid-template-columns: 220px 1fr 200px; padding: 14px 22px; border-bottom: 1px solid var(--hairline); align-items: center; gap: 18px; }
+.matrix-row:last-child{ border-bottom: 0; }
+.matrix-row.is-header{ background: var(--surface-2); font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.matrix-row .m-task{ font-family: var(--sans); font-weight: 700; font-size: 13.5px; color: var(--ink); }
+.matrix-row .m-task span{ display: block; font-weight: 400; font-size: 11.5px; color: var(--ink-4); margin-top: 2px; }
+.matrix-row .m-tool{ font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.matrix-row .m-tool b{ color: var(--cat-ai); }
+.matrix-row .m-rec{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--cat-ai); letter-spacing: .08em; padding: 6px 10px; background: var(--cat-ai-bg); border-radius: 6px; text-align: center; font-weight: 700; }
+
+/* Tool cards */
+.tools{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.tool{ padding: 22px 24px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid var(--cat-ai); }
+.tool-head{ display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center; margin-bottom: 12px; }
+.tool .t-icon{ width: 38px; height: 38px; border-radius: 10px; background: var(--cat-ai-bg); color: var(--cat-ai); display: flex; align-items: center; justify-content: center; }
+.tool h4{ margin: 0; font-family: var(--serif); font-weight: 400; font-size: 19px; letter-spacing: -.015em; color: var(--lcg-dark); }
+.tool .t-tag{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+.tool .t-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tool .t-cell{ padding: 10px 12px; background: var(--surface-2); border-radius: 6px; }
+.tool .t-cell .t-l{ font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; color: var(--ink-4); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.tool .t-cell p{ margin: 0; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+.tool .t-when{ margin-top: 10px; padding: 10px 12px; background: linear-gradient(180deg, var(--cat-ai-bg) 0%, transparent 100%); border-left: 2px solid var(--cat-ai); border-radius: 0 6px 6px 0; }
+.tool .t-when .t-l{ font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; color: var(--cat-ai); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.tool .t-when p{ margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+.tool .t-when p b{ color: var(--ink); }
+
+/* Concept call (purple) */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Rules of thumb */
+.rules-th{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.rule-th{ padding: 18px 20px; border-radius: var(--r-md); background: linear-gradient(180deg, var(--lcg-cream) 0%, var(--surface) 80%); border: 1px solid #E9E1CC; }
+.rule-th .rt-num{ font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--cat-ai); line-height: 1; letter-spacing: -.02em; }
+.rule-th h5{ margin: 8px 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13.5px; color: var(--ink); }
+.rule-th p{ margin: 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+/* Reflect */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+
+.s-aside{ position: sticky; top: 92px; align-self: start; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a><span style="opacity:.4">/</span><b>AI-4 · Stack complementario</b></div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> AI Expandido</span>
+    </header>
+
+    <main class="session-main">
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker"><span class="pill-cat">AI Expandido</span><span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;AI-4 de AI-5</span></div>
+          <h1>Stack <em>complementario.</em></h1>
+          <p class="s-hero-sub">
+            Claude es la base, pero no es la única herramienta AI en
+            LCG. Hay <b>siete productos complementarios</b> que cubren
+            casos donde Claude no es la mejor opción: research con
+            citas, AI nativa de CRM, prospección, automatización de
+            workflows. Saber cuándo usar cada uno es lo que diferencia
+            al consultor competente.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">45</span> min</span></div>
+            <div class="item"><span class="label">Productos</span><span class="val"><span class="u-mono">07</span></span></div>
+            <div class="item"><span class="label">Reglas</span><span class="val"><span class="u-mono">03</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div><div><div class="val">Alfredo Chávez</div><div class="sub">Transformación Digital</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Por qué stack complementario</div>
+              <h2>Cada herramienta tiene su <em>terreno fuerte.</em></h2>
+              <p class="lead">
+                LCG es <b>Claude-first, no Claude-only</b>. Hay tareas
+                donde otra herramienta es objetivamente mejor — research
+                con fuentes citadas (Perplexity), acciones nativas en
+                Excel/Word (Copilot), prospección comercial en LinkedIn
+                (Sales Navigator), orquestación de workflows entre
+                sistemas (n8n).
+              </p>
+              <p>
+                <b>La regla práctica:</b> Claude es tu default. Cambias
+                a otra herramienta solo cuando hay una razón clara —
+                no por novedad. Esta sesión es la guía de decisión.
+              </p>
+            </section>
+
+            <section class="s-block" id="sec-tools">
+              <div class="s-block-label">02 · Las siete herramientas complementarias</div>
+              <h2>Cada una con su <em>nicho.</em></h2>
+
+              <div class="tools">
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><h4>ChatGPT</h4><span class="t-tag">OpenAI · chat alternativo</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Plugins, voice mode, generación de imágenes integrada (DALL-E).</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>Sin integraciones a SharePoint/HubSpot. Salida puede ser genérica vs. Claude.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p>Necesitas <b>imágenes generadas</b> rápidas, voice mode, o un plugin específico que no existe en Claude. Para razonamiento complejo, vuelve a Claude.</p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div><h4>Microsoft Copilot</h4><span class="t-tag">M365 · AI in-app</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Integrado nativamente en Word, Excel, PowerPoint, Outlook, Teams. Acciones puntuales sin salir de la app.</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>Razonamiento más superficial. No tiene Proyectos, Memoria ni Artifacts persistentes.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p>Edición rápida en Word ("hazme este párrafo más conciso"), fórmulas Excel ad-hoc, resumen de reunión en Teams. <b>Quick wins en la app activa.</b></p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div><h4>Perplexity</h4><span class="t-tag">Research con citas</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Cada respuesta viene con <b>fuentes citadas</b> (links). Modo Pro hace búsqueda profunda multi-fuente.</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>No razona tan profundo como Claude. Sin proyectos persistentes ni integraciones LCG.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p><b>Research de mercado, regulación, benchmarks</b> donde la fuente importa más que el razonamiento. Antes de un PreDx, mapea la industria del cliente con Perplexity Pro.</p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><h4>HubSpot Breeze</h4><span class="t-tag">AI nativa del CRM</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Integrado en cada vista de HubSpot. Genera emails, resume deals, sugiere next-step desde el record activo.</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>Solo HubSpot. No cruza con SharePoint ni razona fuera del registro activo.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p>Acciones <b>desde un deal o contacto en HubSpot</b>: email de follow-up, summary del deal, sugerencia de next step. Si vas a cruzar con docs externos, mejor Claude + integración HubSpot.</p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div><div><h4>Sales Navigator AI</h4><span class="t-tag">LinkedIn · Prospección</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Búsqueda avanzada de prospects, alerts de cambio de cargo, account mapping. AI sugiere leads y account expansion.</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>Solo LinkedIn. La data debe pasar a HubSpot manualmente o vía Zapier/n8n.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p><b>Equipo Comercial.</b> Prospección activa, mapeo de buying committee, alertas de cambios en cuentas key. Para Consultores de Operaciones, no aplica directamente.</p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><line x1="18" y1="9" x2="18" y2="15"/><line x1="9" y1="6" x2="15" y2="6"/></svg></div><div><h4>n8n</h4><span class="t-tag">Orquestación de workflows</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Conecta sistemas (HubSpot, SharePoint, Slack, ERP cliente) en flujos visuales. Usa Claude API como nodo de razonamiento.</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>Requiere mentalidad de "automatizador". Curva de aprendizaje.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p><b>Automatizar un flujo recurrente</b>: cada lunes 06:00, lee el dashboard del MEF, genera resumen con Claude API y lo postea en Teams. Lo construye TD, lo consume el equipo del proyecto.</p></div>
+                </div>
+
+                <div class="tool">
+                  <div class="tool-head"><div class="t-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div><div><h4>Manus AI</h4><span class="t-tag">Agente autónomo · en evaluación</span></div></div>
+                  <div class="t-grid">
+                    <div class="t-cell"><div class="t-l">Fortaleza</div><p>Agente que ejecuta tareas multi-paso sin supervisión continua (research extenso, draft + revisión + envío).</p></div>
+                    <div class="t-cell"><div class="t-l">Limitación LCG</div><p>En evaluación por TD. No certificado para data del cliente todavía.</p></div>
+                  </div>
+                  <div class="t-when"><div class="t-l">Cuándo usar</div><p>Solo en sandboxes — TD lo está evaluando contra Claude Managed Agents. <b>Espera el visto bueno antes de usar en data real del cliente.</b></p></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-matriz">
+              <div class="s-block-label">03 · Matriz de decisión</div>
+              <h2>Si tu tarea es <em>X</em>, usa <em>Y.</em></h2>
+              <p>Esta es la guía rápida que el equipo de TD comparte con todo nuevo ingreso. Pégala en tu cuaderno.</p>
+
+              <div class="matrix">
+                <div class="matrix-row is-header"><div>Tarea</div><div>Razonamiento detrás</div><div>Herramienta</div></div>
+                <div class="matrix-row">
+                  <div class="m-task">Análisis VSA · síntesis<span>profundo, multi-fuente</span></div>
+                  <div class="m-tool">Razonamiento profundo + cruce con SharePoint/HubSpot. <b>Claude</b> con Project + integraciones.</div>
+                  <div class="m-rec">Claude Opus 4.7</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Edición rápida en Word<span>una propuesta abierta</span></div>
+                  <div class="m-tool">Acción puntual sin salir de la app. <b>Copilot</b> es lo más rápido.</div>
+                  <div class="m-rec">M365 Copilot</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Research de mercado<span>con fuentes verificables</span></div>
+                  <div class="m-tool">Citas obligatorias. <b>Perplexity Pro</b> entrega con links que el cliente puede auditar.</div>
+                  <div class="m-rec">Perplexity</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Email de follow-up de un deal<span>desde HubSpot</span></div>
+                  <div class="m-tool">Acción in-CRM. <b>Breeze</b> usa el contexto del deal sin que pegues nada.</div>
+                  <div class="m-rec">HubSpot Breeze</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Mapeo de buying committee<span>nuevo prospecto enterprise</span></div>
+                  <div class="m-tool">Datos de LinkedIn + alertas. <b>Sales Navigator</b> es la única opción seria.</div>
+                  <div class="m-rec">Sales Navigator</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Reporte automático cada lunes<span>con razonamiento + envío</span></div>
+                  <div class="m-tool">Workflow recurrente conectado a varios sistemas. <b>n8n + Claude API</b>, configurado por TD.</div>
+                  <div class="m-rec">n8n + Claude API</div>
+                </div>
+                <div class="matrix-row">
+                  <div class="m-task">Generar imagen para presentación<span>concepto visual rápido</span></div>
+                  <div class="m-tool">Claude no genera imágenes. <b>ChatGPT con DALL-E</b> o herramienta de diseño.</div>
+                  <div class="m-rec">ChatGPT</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-reglas">
+              <div class="s-block-label">04 · Tres reglas de elección</div>
+              <h2>Para cuando dudas.</h2>
+
+              <div class="rules-th">
+                <div class="rule-th">
+                  <div class="rt-num">01</div>
+                  <h5>Default a Claude</h5>
+                  <p>Si no tienes razón clara para usar otra cosa, abre Claude. Cambias solo cuando notas que Claude no es la mejor opción.</p>
+                </div>
+                <div class="rule-th">
+                  <div class="rt-num">02</div>
+                  <h5>El contexto manda</h5>
+                  <p>Si la data está en una app (Word, HubSpot), usa el AI nativo de esa app. Si la data está dispersa, usa Claude con integraciones.</p>
+                </div>
+                <div class="rule-th">
+                  <div class="rt-num">03</div>
+                  <h5>Verifica antes de proliferar</h5>
+                  <p>Antes de adoptar una nueva herramienta para tu día a día, valida con TD que esté certificada para data del cliente.</p>
+                </div>
+              </div>
+
+              <div class="concept-call" style="margin-top: 22px;">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div>
+                  <h3>Stack ≠ buffet.</h3>
+                  <p>Tener siete herramientas no significa usarlas todas. Un consultor LCG productivo típicamente usa <b>tres</b> en su día a día: Claude (default), Copilot (edición in-app) y una tercera según rol — Perplexity para research, Breeze para Comercial, Sales Navigator para BD. Más herramientas suele ser señal de que no decidiste cuál es la principal.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">05 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Identifica las tres herramientas que vas a usar día a día según tu rol y cliente asignado. Anota en tu plan 30-60-90 (que verás en AI-5) en qué semana te haces fluido en cada una.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="day-4-jueves.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 04 · Herramientas &amp; AI</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="session-d4-b07-ai5-framework.html">Siguiente · AI-5<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 06 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Por qué stack</a></li>
+                <li><a href="#sec-tools"><span class="tick"></span>Las 7 herramientas</a></li>
+                <li><a href="#sec-matriz"><span class="tick"></span>Matriz de decisión</a></li>
+                <li><a href="#sec-reglas"><span class="tick"></span>Tres reglas</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Recursos</h4>
+              <ul class="res-list">
+                <li><a href="https://chat.openai.com" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">ChatGPT<span class="r-meta">chat.openai.com</span></div></a></li>
+                <li><a href="https://copilot.microsoft.com" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/></svg></div><div class="r-name">Microsoft Copilot<span class="r-meta">copilot.microsoft.com</span></div></a></li>
+                <li><a href="https://perplexity.ai" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="r-name">Perplexity<span class="r-meta">perplexity.ai · solicita Pro a TD</span></div></a></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/></svg></div><div class="r-name">Matriz de decisión LCG<span class="r-meta">SharePoint · TD</span></div></div></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Cierras el Día 04 con <b>AI-5 · Framework de Competencia AI</b>: autoevaluación + plan 30-60-90 personal.</p>
+              <a href="session-d4-b07-ai5-framework.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Ir a AI-5 →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b06-ai4-stack';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

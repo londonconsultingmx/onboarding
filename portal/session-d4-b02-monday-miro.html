@@ -3,540 +3,514 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=1440" />
-<title>Monday · Gestión de casos · Día 4 — Portal LCG</title>
+<title>Monday &amp; Miro · Día 4 — Portal LCG</title>
 <link rel="stylesheet" href="shared/tokens.css?v=6" />
 <link rel="stylesheet" href="shared/iso.css?v=6" />
 <style>
 .session-main{ padding-bottom: 80px; }
-
-/* Session hero */
-.s-hero{
-  position: relative; overflow:hidden;
-  border-bottom: 1px solid var(--hairline);
-  background: linear-gradient(180deg, #F7F5F0 0%, transparent 100%);
-}
-.s-hero-inner{
-  display: grid; grid-template-columns: 1.1fr .9fr;
-  gap: 48px; padding: 44px 0 56px; align-items: center;
-}
-.s-hero-kicker{
-  display:flex; gap:10px; align-items:center; margin-bottom: 18px;
-}
-.s-hero-kicker .pill-cat{
-  display:inline-flex; align-items:center; gap:8px;
-  padding: 6px 12px; border-radius: 999px;
-  background: var(--cat-ai-bg); color: var(--cat-ai);
-  font-size: 11.5px; font-weight: 700; letter-spacing:.12em; text-transform:uppercase;
-}
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #F4EFFA 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: var(--cat-ai-bg); color: var(--cat-ai); font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
 .s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
-.s-hero h1{
-  font-family:var(--serif); font-weight:400;
-  font-size: clamp(40px, 4.4vw, 62px); line-height: 1.02;
-  letter-spacing:-.025em; margin: 0 0 22px; color: var(--ink);
-}
-.s-hero-sub{ font-size: 17px; color: var(--ink-2); line-height: 1.55; max-width: 560px; margin: 0 0 28px; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: var(--cat-ai); }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
 
-.s-hero-meta{
-  display: grid; grid-template-columns: repeat(4, auto);
-  gap: 32px; padding: 20px 0; border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-}
-.s-hero-meta .item .label{ display:block; margin-bottom: 4px; }
-.s-hero-meta .item .val{ font-family: var(--serif); font-size: 22px; letter-spacing:-.015em; color: var(--ink); }
-.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:18px; }
-.s-hero-meta .facilitator{ display:flex; gap:10px; align-items:center; }
-.s-hero-meta .facilitator .avatar{ width:32px; height:32px; font-size:11px; }
-.s-hero-meta .facilitator .val{ font-size: 14px; font-family: var(--sans); font-weight:600; line-height:1.2; }
-.s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
-
-.s-hero-visual{
-  position: relative; aspect-ratio: 1 / 1; max-height: 520px;
-}
-
-/* Two-col body */
-.s-body{
-  display: grid; grid-template-columns: 1fr 320px;
-  gap: 48px; padding: 48px 0;
-}
-
-/* Section blocks */
-.s-block{ margin-bottom: 48px; }
-.s-block-label{
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 11px; color: var(--ink-4); letter-spacing: .18em;
-  text-transform: uppercase; margin-bottom: 10px;
-}
-.s-block h2{
-  font-family: var(--serif); font-weight: 400;
-  font-size: 32px; line-height: 1.1; letter-spacing: -.02em;
-  margin: 0 0 20px;
-}
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: var(--cat-ai); }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
 .s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
-.s-block p.lead{ font-size: 18px; line-height: 1.5; color: var(--ink); }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
 
-/* Learning objectives */
-.objectives{
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  list-style:none; padding:0; margin: 0;
-}
-.objectives li{
-  display:flex; gap: 12px; align-items: flex-start;
-  padding: 14px 16px; border: 1px solid var(--hairline); border-radius: var(--r-md);
-  background: var(--surface);
-}
-.objectives li .num{
-  flex-shrink:0; width: 24px; height: 24px; border-radius:50%;
-  background: var(--lcg-cream); color: var(--lcg-dark);
-  display:flex; align-items:center; justify-content:center;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 11px; font-weight: 700;
-  border: 1px solid #E9E1CC;
-}
-.objectives li p{ margin:0; font-size: 14px; line-height: 1.45; color: var(--ink); }
+/* Two-tool split */
+.split{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.split-card{ padding: 24px 26px; border-radius: var(--r-md); border: 1px solid var(--hairline); background: var(--surface); }
+.split-card.monday{ border-top: 4px solid #FF3D57; }
+.split-card.miro{ border-top: 4px solid #FFD02F; }
+.split-card .sc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.split-card.monday .sc-tag{ color: #FF3D57; }
+.split-card.miro .sc-tag{ color: #B68F00; }
+.split-card h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 26px; letter-spacing: -.02em; color: var(--lcg-dark); }
+.split-card p{ margin: 0 0 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.split-card .sc-role{ display: inline-block; padding: 6px 12px; background: var(--surface-2); border-radius: 6px; font-size: 12px; color: var(--ink-3); font-family: ui-monospace, Menlo, monospace; letter-spacing: .04em; }
 
-/* Video / iso block */
-.content-iso{
-  aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden;
-  position: relative;
-  margin: 0 0 14px;
-}
-.content-iso .iso-title{ font-size: 22px; }
-.content-iso-cap{
-  font-size: 12.5px; color: var(--ink-4); margin-bottom: 30px;
-}
+/* Board structure */
+.board-struct{ margin-top: 14px; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.bs-row{ display: grid; grid-template-columns: 220px 1fr; padding: 14px 22px; border-bottom: 1px solid var(--hairline); gap: 18px; align-items: start; }
+.bs-row:last-child{ border-bottom: 0; }
+.bs-row.is-header{ background: var(--surface-2); font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.bs-row .b-name{ font-family: var(--sans); font-weight: 700; font-size: 13.5px; color: var(--ink); }
+.bs-row .b-name code{ background: var(--surface-2); padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: var(--cat-ai); font-weight: 400; }
+.bs-row .b-desc{ font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.bs-row .b-desc b{ color: var(--ink); }
 
-/* Step list (numbered) */
-.steps{ list-style:none; padding:0; margin:0; counter-reset: step; }
-.steps li{
-  display:grid; grid-template-columns: 32px 1fr; gap: 20px;
-  padding: 18px 0; border-top: 1px solid var(--hairline);
-  counter-increment: step;
-}
-.steps li:first-child{ border-top:0; }
-.steps li::before{
-  content: counter(step, decimal-leading-zero);
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 11px; color: var(--lcg-dark);
-  letter-spacing: .1em; padding-top: 4px;
-}
-.steps li h4{ font-family: var(--sans); font-weight: 600; font-size: 16px; margin: 0 0 6px; color: var(--ink); }
-.steps li p{ margin: 0; font-size: 14.5px; color: var(--ink-2); line-height:1.55; }
-.steps li .chip{
-  display:inline-block; font-family: ui-monospace, Menlo, monospace;
-  font-size: 11px; padding: 2px 8px; border-radius: 4px;
-  background: var(--surface-2); color: var(--ink-3);
-  border: 1px solid var(--hairline);
-  margin-right: 6px; margin-top: 8px;
-}
+/* Column types — chips */
+.cols{ display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.cols span{ display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 4px; background: var(--cat-ai-bg); color: var(--cat-ai); font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .04em; font-weight: 600; }
 
-/* Exercise callout */
-.exercise{
-  padding: 24px; border-radius: var(--r-md);
-  background: var(--lcg-cream); border: 1px solid #E9E1CC;
-  display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center;
-}
-.exercise .ex-icon{
-  width: 48px; height: 48px; border-radius: 12px;
-  background: var(--lcg-dark); color:#fff;
-  display:flex; align-items:center; justify-content:center;
-}
-.exercise h4{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
-.exercise p{ margin: 0; font-size: 13px; color: var(--ink-2); }
+/* Steps */
+.steps{ list-style: none; padding: 0; margin: 14px 0 0; counter-reset: step; display: flex; flex-direction: column; gap: 10px; }
+.steps li{ counter-increment: step; display: grid; grid-template-columns: 38px 1fr; gap: 18px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.steps li::before{ content: counter(step, decimal-leading-zero); width: 38px; height: 38px; border-radius: 50%; background: var(--cat-ai); color: #fff; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+.steps li h4{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
+.steps li p{ margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.steps li code{ background: var(--surface-2); padding: 1px 5px; border-radius: 3px; font-size: 12.5px; color: var(--cat-ai); }
 
-/* Complete bar (bottom action) */
-.complete-bar{
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline);
-  gap: 16px;
-}
-.complete-bar .prev{
-  display:flex; gap: 10px; align-items:center;
-  color: var(--ink-3); text-decoration:none; font-size: 13.5px;
-}
+/* Miro template grid */
+.miro-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.miro-card{ padding: 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid #FFD02F; }
+.miro-card .mc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #B68F00; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.miro-card h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.miro-card p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* Concept call */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(122,78,181,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #F2EEE8; line-height: 1.55; max-width: 640px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* Best practices */
+.bp-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.bp{ padding: 22px 24px; border-radius: var(--r-md); border: 1px solid var(--hairline); background: var(--surface); }
+.bp.is-do{ border-left: 3px solid var(--cat-ai); }
+.bp.is-avoid{ border-left: 3px solid #B5564E; }
+.bp h4{ margin: 0 0 10px; font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.bp.is-do h4{ color: var(--cat-ai); }
+.bp.is-avoid h4{ color: #B5564E; }
+.bp ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.bp ul li{ position: relative; padding-left: 18px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+.bp ul li::before{ position: absolute; left: 0; top: 0; font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; }
+.bp.is-do ul li::before{ content: "+"; color: var(--cat-ai); }
+.bp.is-avoid ul li::before{ content: "−"; color: #B5564E; }
+
+/* Reflect */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6B40A8 0%, #8957C7 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(122,78,181,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(214,191,255,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(214,191,255,.15); border: 1px solid rgba(214,191,255,.35); color: #D6BFFF; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #D6BFFF; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #F2EEE8; line-height: 1.55; }
+
+/* Example link */
+.ex-link{ display: inline-flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px 14px; border-radius: 8px; background: var(--cat-ai-bg); border: 1px solid var(--cat-ai); text-decoration: none; color: var(--cat-ai); font-size: 13px; font-weight: 700; transition: background .15s; }
+.ex-link:hover{ background: var(--cat-ai); color: #fff; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
 .complete-bar .prev:hover{ color: var(--ink); }
 .complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
 .complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
 
-/* Aside / right rail */
 .s-aside{ position: sticky; top: 92px; align-self: start; }
-.aside-box{
-  border: 1px solid var(--hairline); border-radius: var(--r-md);
-  padding: 20px; background: var(--surface); margin-bottom: 16px;
-}
-.aside-box h4{
-  margin:0 0 12px; font-family: var(--sans); font-weight: 700;
-  font-size: 11px; letter-spacing:.14em; text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-/* Outline nav */
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
 .outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
-.outline li a{
-  display: flex; gap: 10px; align-items:center;
-  padding: 8px 10px; border-radius: 6px;
-  text-decoration:none; color: var(--ink-3); font-size: 13px;
-  border-left: 2px solid transparent;
-}
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
 .outline li a:hover{ background: var(--surface-2); color: var(--ink); }
-.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--lcg-dark); background: var(--lcg-cream); }
-.outline li a .tick{
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--hairline); flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-}
-.outline li a.done .tick{ background: var(--lcg-green); color:#fff; }
-.outline li a.done .tick svg{ width: 9px; height: 9px; }
-
-/* Resources */
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
 .res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
-.res-list a{
-  display: flex; gap: 10px; align-items: center;
-  padding: 10px 12px; border-radius: 8px;
-  text-decoration:none; color: var(--ink); font-size: 13px;
-  border: 1px solid var(--hairline); background: var(--surface-2);
-  transition: all .15s;
-}
-.res-list a:hover{ border-color: var(--lcg-dark); background: var(--surface); }
-.res-list .r-icon{
-  width: 32px; height: 32px; border-radius: 6px;
-  background: var(--surface); border: 1px solid var(--hairline);
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; color: var(--lcg-dark);
-}
-.res-list .r-name{ flex:1; font-weight: 600; font-size: 13px; line-height:1.2; }
-.res-list .r-meta{ font-size: 11px; color: var(--ink-4); display:block; font-weight:400; }
-.res-list .r-size{ font-size: 11px; color: var(--ink-4); font-family: ui-monospace, Menlo, monospace; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: var(--cat-ai); background: var(--cat-ai-bg); }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: var(--cat-ai-bg); color: var(--cat-ai); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
 
-/* Notes */
-.notes-box textarea{
-  width:100%; min-height: 120px; resize: vertical;
-  border: 1px solid var(--hairline); border-radius: 8px;
-  padding: 12px; font-family: var(--sans); font-size: 13.5px;
-  color: var(--ink); background: var(--surface-2);
-  outline: none;
-}
-.notes-box textarea:focus{ border-color: var(--lcg-dark); background: var(--surface); }
-.notes-foot{ display:flex; justify-content: space-between; align-items:center; font-size: 11px; color: var(--ink-4); margin-top: 8px; }
-
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: var(--cat-ai); background: linear-gradient(180deg, var(--cat-ai-bg) 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: var(--cat-ai); letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: var(--cat-ai); margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: var(--cat-ai); width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--cat-ai); background: var(--surface); color: var(--cat-ai); font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: var(--cat-ai-bg); }
+.sess-toggle.is-done{ background: var(--cat-ai); color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid var(--cat-ai); border-bottom:2px solid var(--cat-ai); transform: rotate(-45deg); }
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- Sidebar -->
   <aside class="sidebar">
-    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;">
-      <img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" />
-    </a>
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
     <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
-    <div class="side-user">
-      <div class="avatar">AH</div>
-      <div class="side-user-meta">
-        <strong>Ángel Hernández</strong>
-        <span>Consultor Asociado</span>
-      </div>
-    </div>
-    <div class="side-progress">
-      <span class="label">Progreso global</span>
-      <span class="val">48<span style="font-size:20px; color:#8AF4E9;">%</span></span>
-      <div class="progress"><span style="width:48%"></span></div>
-      <div class="meta">12 de 25 sesiones · Día 3 en curso</div>
-    </div>
-    <div>
-      <div class="nav-section-label">Semana 1</div>
-      <ul class="day-list" data-sidebar="days"></ul>
-    </div>
-    <div>
-      <div class="nav-section-label">General</div>
-      <ul class="day-list">
-        <li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li>
-        <li><a class="day-item" href="#"><span class="num" style="background:transparent; border:none; font-size:14px;">☰</span><span class="name">Recursos</span></a></li>
-      </ul>
-    </div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
     <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
   </aside>
 
-  <!-- Main -->
   <div>
     <header class="topbar">
-      <div class="crumb">
-        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
-        <span style="opacity:.4">/</span>
-        <a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a>
-        <span style="opacity:.4">/</span>
-        <b>Monday · Gestión de casos</b>
-      </div>
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-4-jueves.html" style="color:inherit; text-decoration:none;">Jueves</a><span style="opacity:.4">/</span><b>Monday &amp; Miro</b></div>
       <div class="topbar-spacer"></div>
-      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;">
-        <span class="pill-dot"></span> Herramientas & AI
-      </span>
-      <button class="iconbtn" title="Compartir">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-      </button>
-      <button class="iconbtn" title="Marcador">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
+      <span class="pill" style="background: var(--cat-ai-bg); color: var(--cat-ai); border-color: transparent;"><span class="pill-dot"></span> Herramientas</span>
     </header>
 
     <main class="session-main">
-
-      <!-- Hero -->
       <section class="s-hero">
         <div class="container s-hero-inner">
-          <div>
-            <div class="s-hero-kicker">
-              <span class="pill-cat">Herramientas</span>
-              <span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;Bloque 02 de 07</span>
-            </div>
-            <h1>Monday para la gestión de casos y entregables del proyecto.</h1>
-            <p class="s-hero-sub">
-              Cómo estructuramos un proyecto LCG en Monday: tableros de caso,
-              estados de entregables, automatizaciones semanales y tableros de
-              cartera que usa Partner para cada cliente.
-            </p>
-
-            <div class="s-hero-meta">
-              <div class="item">
-                <span class="label">Duración</span>
-                <span class="val"><span class="u-mono">45</span> min</span>
-              </div>
-              <div class="item">
-                <span class="label">Módulos</span>
-                <span class="val"><span class="u-mono">06</span></span>
-              </div>
-              <div class="item">
-                <span class="label">Ejercicios</span>
-                <span class="val"><span class="u-mono">02</span></span>
-              </div>
-              <div class="item">
-                <span class="label">Facilita</span>
-                <div class="facilitator" style="margin-top:4px;">
-                  <div class="avatar">DR</div>
-                  <div>
-                    <div class="val">Diego Ramírez</div>
-                    <div class="sub">Sr. Manager · Retail</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="s-hero-visual">
-            <div class="iso" id="s-hero-iso">
-              <span class="tl">DWG-203 · SYS/MONDAY</span>
-              <span class="tr">SCALE 1:2</span>
-              <span class="bl">45 MIN · 6 MOD</span>
-              <span class="br">CASE.FLOW</span>
-              <span class="iso-kicker">Case Management · Live</span>
-              <div class="sweep"></div>
-              <div class="iso-title">Flujo de<br/>caso LCG</div>
+          <div class="s-hero-kicker"><span class="pill-cat">Herramientas</span><span class="pill"><span style="opacity:.5">Día 04</span>&nbsp;·&nbsp;Bloque A2 de 07</span></div>
+          <h1>Monday <em>&amp; Miro.</em></h1>
+          <p class="s-hero-sub">
+            Dos herramientas, un mismo propósito: <b>visibilidad
+            compartida</b>. Monday es donde vive el <b>Plan de Vuelo</b>
+            y donde se gestiona la ejecución del proyecto LCG. Miro es
+            donde se hacen los <b>VSA, los Design Sprints y los
+            workshops con cliente</b>.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">60</span> min</span></div>
+            <div class="item"><span class="label">Plataformas</span><span class="val"><span class="u-mono">02</span></span></div>
+            <div class="item"><span class="label">Salidas</span><span class="val">Plan + VSA</span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: var(--cat-ai); color:#fff;">AC</div><div><div class="val">Alfredo Chávez</div><div class="sub">Sistemas y Digital MX</div></div></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Body -->
       <div class="container">
         <div class="s-body">
-
-          <!-- Main content -->
           <article>
 
-            <!-- Objectives -->
-            <section class="s-block">
-              <div class="s-block-label">01 · Objetivos de aprendizaje</div>
-              <h2>Al terminar esta sesión, serás capaz de:</h2>
-              <ul class="objectives">
-                <li><span class="num">1</span><p>Configurar un tablero de proyecto LCG con la plantilla estándar y vincular entregables.</p></li>
-                <li><span class="num">2</span><p>Diferenciar los estados de caso (diagnóstico, diseño, ejecución, cierre) y cuándo mover cada uno.</p></li>
-                <li><span class="num">3</span><p>Leer y actuar sobre el tablero de cartera que revisa tu Partner cada lunes a las 8:30.</p></li>
-                <li><span class="num">4</span><p>Construir 2 automatizaciones mínimas (status changed → notify, due date → reminder).</p></li>
+            <section class="s-block" id="sec-intro">
+              <div class="s-block-label">01 · Por qué Monday + Miro</div>
+              <h2>Dos superficies, un mismo principio.</h2>
+              <p class="lead">
+                LCG opera sobre el principio de <b>visibilidad
+                compartida</b>: nadie tiene que preguntar "¿dónde está
+                eso?" en un proyecto bien llevado. Monday y Miro son
+                las dos superficies donde se materializa ese principio.
+              </p>
+
+              <div class="split">
+                <div class="split-card monday">
+                  <div class="sc-tag">Plataforma 01</div>
+                  <h3>Monday</h3>
+                  <p>Gestión estructurada del proyecto: tareas, fechas, responsables, dependencias, indicadores de avance. <b>Aquí vive el Plan de Vuelo</b>.</p>
+                  <span class="sc-role">Gerente · Consultor · Director</span>
+                </div>
+                <div class="split-card miro">
+                  <div class="sc-tag">Plataforma 02</div>
+                  <h3>Miro</h3>
+                  <p>Colaboración visual y workshops. <b>Aquí viven los VSA, los Design Sprints, los PASER y todo lo que se construye en vivo con el cliente</b>.</p>
+                  <span class="sc-role">Gerente · Consultor · Cliente</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-monday-plan">
+              <div class="s-block-label">02 · Monday · Plan de Vuelo</div>
+              <h2>El Plan de Vuelo, <em>traducido a board.</em></h2>
+              <p>
+                Cada engagement LCG arranca creando el board del Plan
+                de Vuelo en Monday. La plantilla maestra
+                <code>LCG_Plan_de_Vuelo_v4</code> está en el workspace
+                <b>London Consulting Group MX</b>. Duplícala, no la
+                edites — es plantilla compartida.
+              </p>
+
+              <h3>Estructura del board (6 grupos)</h3>
+              <div class="board-struct">
+                <div class="bs-row is-header"><div>Grupo</div><div>Contenido</div></div>
+                <div class="bs-row">
+                  <div class="b-name">Análisis Exhaustivo<br/><code>sem 01–04</code></div>
+                  <div class="b-desc">Items: VSAs por área, Gemba Walks, Análisis estructura, Madurez digital. <b>Owner: Gerente.</b> Status: kickoff → en proceso → entregado.</div>
+                </div>
+                <div class="bs-row">
+                  <div class="b-name">Diseño<br/><code>sem 05–15</code></div>
+                  <div class="b-desc">Items: Modelos operativos, KPIs, Pre-Manuales, Días típicos. Sub-items: cada entregable por área. Conecta a la columna "MEF asociado".</div>
+                </div>
+                <div class="bs-row">
+                  <div class="b-name">Quick Wins<br/><code>sem 10–20</code></div>
+                  <div class="b-desc">Items: cada Quick Win con su propio ciclo de 8–12 sem. <b>Linkea</b> al MEF para mostrar beneficio capturado.</div>
+                </div>
+                <div class="bs-row">
+                  <div class="b-name">Implementación<br/><code>sem 15–38</code></div>
+                  <div class="b-desc">Items: coaching individuales, hitos de adopción, JSA semanales. Vista cronograma activa para ver Gantt.</div>
+                </div>
+                <div class="bs-row">
+                  <div class="b-name">Capacitación<br/><code>sem 20–22</code></div>
+                  <div class="b-desc">Items: programas por puesto, sesiones de certificación, evaluaciones. Status: planeada → ejecutada → certificada.</div>
+                </div>
+                <div class="bs-row">
+                  <div class="b-name">Documentación<br/><code>sem 39–40</code></div>
+                  <div class="b-desc">Items: Matriz de auditoría, inventario de procesos implementados. Cierre del proyecto.</div>
+                </div>
+              </div>
+
+              <h3>Columnas estándar del board</h3>
+              <p>
+                Estas son las columnas obligatorias del template LCG —
+                no las elimines. Si tu proyecto necesita columnas
+                extra, agrégalas pero <b>no toques las base</b>:
+              </p>
+              <div class="cols">
+                <span>Status</span>
+                <span>Owner (Person)</span>
+                <span>Co-owner cliente</span>
+                <span>Fecha inicio · fecha fin</span>
+                <span>% Avance</span>
+                <span>Peso MEF</span>
+                <span>Vínculo MEF (Connect)</span>
+                <span>Riesgo (Color)</span>
+                <span>Documentos SharePoint (Link)</span>
+                <span>Última actualización (Auto)</span>
+              </div>
+
+              <a class="ex-link" href="https://london-consulting-group-mxico.monday.com/boards/9585419748" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Ejemplo Plan de Vuelo · workspace LCG México
+              </a>
+            </section>
+
+            <section class="s-block" id="sec-monday-vistas">
+              <div class="s-block-label">03 · Monday · Vistas y automaciones</div>
+              <h2>Lo que cada rol <em>ve.</em></h2>
+              <p>
+                Un board Monday tiene una sola fuente de datos pero
+                <b>múltiples vistas</b>. Cada rol tiene la suya:
+              </p>
+
+              <ol class="steps">
+                <li><div><h4>Vista "Consultor" · Kanban por status</h4><p>Solo los items asignados a ti, agrupados por status. Útil para el día a día — sabes qué te toca hoy sin distracciones del resto del proyecto.</p></div></li>
+                <li><div><h4>Vista "Gerente" · Gantt + dependencias</h4><p>Cronograma completo con dependencias entre items. Permite ver el camino crítico y reaccionar a slippage antes de la JSA.</p></div></li>
+                <li><div><h4>Vista "Director Ops" · Dashboard ejecutivo</h4><p>Widgets agregados: % avance ponderado, ahorros capturados (linkeados al MEF), riesgos abiertos, ítems vencidos. Lo que se proyecta en la JSA semanal.</p></div></li>
+                <li><div><h4>Vista "Cliente" · Filtrada y compartida</h4><p>Solo items con visibilidad pública. <b>Permisos lectura</b>, no edición. Compartida por shareable link expirable (90 días).</p></div></li>
+              </ol>
+
+              <h3>Automaciones LCG estándar</h3>
+              <p>Cada board del Plan de Vuelo activa estas automaciones (vienen pre-configuradas en el template):</p>
+              <ul style="font-size: 14px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li>Cuando un item pasa a <b>"En riesgo"</b> → notificación a Gerente + Director Ops.</li>
+                <li>Cuando un item vence sin completar → mueve a grupo <b>"Atrasados"</b> + email diario al owner.</li>
+                <li>Cada lunes 06:00 → genera resumen ejecutivo y lo postea en el canal de Teams del proyecto.</li>
+                <li>Cuando se completa un Quick Win → actualiza el campo "Beneficio capturado" del MEF asociado.</li>
               </ul>
             </section>
 
-            <!-- Video / intro iso -->
-            <section class="s-block" id="sec-intro">
-              <div class="s-block-label">02 · Contexto</div>
-              <h2>Por qué Monday — y por qué así.</h2>
-              <p class="lead">
-                En LCG, Monday no es un to-do list: es el expediente vivo del proyecto.
-                Cuando un Partner abre el tablero de cartera los lunes, asume que
-                <em>lo que ve es verdad</em> — por eso el ritual de actualización
-                diaria importa tanto como la metodología.
-              </p>
-              <div class="content-iso">
-                <div class="iso" id="s-intro-iso" style="border-radius:var(--r-md);">
-                  <span class="tl">FIG-02 · BOARD.3D</span>
-                  <span class="tr">LIVE</span>
-                  <span class="iso-kicker" style="font-size:9px; padding:3px 8px;">Visualización del tablero</span>
-                  <div class="sweep"></div>
-                </div>
-              </div>
-              <p class="content-iso-cap">
-                Fig. 02 — Representación isométrica del flujo de datos desde las filas
-                del tablero (fuente) hasta la vista de cartera del Partner (consumidor).
-              </p>
+            <section class="s-block" id="sec-monday-integraciones">
+              <div class="s-block-label">04 · Monday + Claude + SharePoint</div>
+              <h2>El board no vive aislado.</h2>
               <p>
-                Cada proyecto tiene un único tablero, y cada tablero tiene la misma
-                estructura de columnas: <em>Entregable · Owner · Status · Due · Cliente ·
-                Engagement · Horas</em>. Esta uniformidad es lo que permite que la vista
-                de cartera agregue 40 proyectos sin romperse.
+                Monday se conecta a los demás sistemas del stack LCG.
+                Estas son las integraciones que tu proyecto debe tener
+                activas desde el día 1:
+              </p>
+
+              <ol class="steps">
+                <li><div><h4>Monday ↔ SharePoint</h4><p>Cada item del board tiene columna "Documentos" que linkea a la carpeta del proyecto. Cambios en SharePoint registran en el activity log del item.</p></div></li>
+                <li><div><h4>Monday ↔ Teams</h4><p>Notificaciones y resúmenes automáticos al canal del proyecto. Comentarios desde Teams se sincronizan al item.</p></div></li>
+                <li><div><h4>Monday ↔ Claude (via integración)</h4><p>Claude.ai con integración Monday puede leer status de tu Plan de Vuelo. <code>"Resúmeme el avance de Aura esta semana"</code> — Claude responde con datos en vivo.</p></div></li>
+                <li><div><h4>Monday ↔ HubSpot</h4><p>Solo Gerentes de cuenta. Linkea el deal de HubSpot al board para visibilidad cross-función entre Comercial y Operaciones.</p></div></li>
+              </ol>
+            </section>
+
+            <section class="s-block" id="sec-miro-uses">
+              <div class="s-block-label">05 · Miro · Casos LCG</div>
+              <h2>Las seis <em>plantillas vivas.</em></h2>
+              <p>
+                LCG tiene seis plantillas Miro maestras. Cada tablero
+                nuevo se duplica de una de ellas — no se diseña desde
+                cero. Eso garantiza consistencia visual y que cualquier
+                colega pueda saltar al board sin orientación:
+              </p>
+
+              <div class="miro-grid">
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 01</div>
+                  <h4>VSA · Value Stream Analysis</h4>
+                  <p>Por área del cliente. Flujo del proceso, evidencias, oportunidades. La plantilla base lleva portada, agenda y status de avance.</p>
+                </div>
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 02</div>
+                  <h4>Design Sprint</h4>
+                  <p>5 secciones: reto, soluciones, elección, prototipo, test. Para construir el modelo operativo nuevo.</p>
+                </div>
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 03</div>
+                  <h4>PASER del cliente</h4>
+                  <p>El sistema de gestión visualizado: P, A, S, E, R con sus elementos. Insumo de Diseño e Implementación.</p>
+                </div>
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 04</div>
+                  <h4>Workshop ejecutivo</h4>
+                  <p>Sesiones de alineación con Top Client: agenda, lienzo de discusión, captura de decisiones, siguientes pasos.</p>
+                </div>
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 05</div>
+                  <h4>Gemba Walk</h4>
+                  <p>Estructura para registrar observaciones en campo: foto, ubicación, hallazgo, hipótesis, oportunidad.</p>
+                </div>
+                <div class="miro-card">
+                  <div class="mc-tag">Plantilla 06</div>
+                  <h4>Estructura organizacional</h4>
+                  <p>Foto y análisis: organigrama actual, perfiles, gaps, propuesta de microestructura.</p>
+                </div>
+              </div>
+
+              <h3>Look &amp; feel institucional</h3>
+              <p>
+                Todas las plantillas LCG en Miro usan: <b>portada con
+                logo LCG + logo cliente</b>, fuentes institucionales
+                (Manrope cuerpo, Fraunces títulos vía sticky notes con
+                fuente custom), paleta verde LCG. Lo importante:
+                cuando el cliente abre el Miro, sabe que es trabajo LCG
+                — no parece improvisado.
               </p>
             </section>
 
-            <!-- Steps -->
-            <section class="s-block" id="sec-config">
-              <div class="s-block-label">03 · Configuración paso a paso</div>
-              <h2>Desde la plantilla hasta el primer entregable.</h2>
-              <ol class="steps">
-                <li>
-                  <div>
-                    <h4>Duplica la plantilla de proyecto LCG</h4>
-                    <p>Workspace <b>LCG · Proyectos Activos</b> → botón <b>Usar plantilla</b> → plantilla <em>Engagement Base v3</em>.</p>
-                    <span class="chip">workspace/activos</span><span class="chip">plantilla v3</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h4>Renombra siguiendo la convención CLIENTE · TIPO · YYMM</h4>
-                    <p>Ej: <b>Grupo Alpha · Transformación · 2604</b>. El <em>YYMM</em> es el mes de kick-off y se usa para filtrar proyectos en cartera por mes.</p>
-                    <span class="chip">convención · estricta</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h4>Vincula el tablero a la cartera del Partner</h4>
-                    <p>Columna de conexión → <b>Cartera · Partner Owner</b>. Esto es lo que hace que el tablero aparezca automáticamente en la vista ejecutiva del lunes.</p>
-                    <span class="chip">mirror column</span><span class="chip">partner-owner</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h4>Configura las 2 automatizaciones mínimas</h4>
-                    <p>Cuando <em>Status</em> cambia a <b>Blocked</b> → notificar al Manager. Cuando <em>Due date</em> llega en ≤48h → recordatorio al Owner.</p>
-                    <span class="chip">automation#1</span><span class="chip">automation#2</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h4>Captura los primeros 3 entregables del diagnóstico</h4>
-                    <p>Siempre: <b>Kick-off deck</b>, <b>Mapa de stakeholders</b>, <b>Plan de entrevistas semana 1</b>. Estos tres son obligatorios, el resto lo define el Manager.</p>
-                    <span class="chip">entregables-base</span>
-                  </div>
-                </li>
-              </ol>
+            <section class="s-block" id="sec-miro-mecanica">
+              <div class="s-block-label">06 · Miro · mecánica de uso</div>
+              <h2>Cómo se trabaja en el board.</h2>
+
+              <h3>Notación estándar de comentarios</h3>
+              <p>LCG codifica con color los stickies para que cualquiera entienda el board sin contexto:</p>
+              <ul style="font-size: 14px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li><b>Sticky amarillo</b> · idea, observación, paso del proceso.</li>
+                <li><b>Sticky rojo</b> · crítica que respalda un "so what" — área de oportunidad material.</li>
+                <li><b>Sticky azul · entre comillas</b> · frase textual del entrevistado, no parafraseo.</li>
+                <li><b>Sticky verde</b> · validación, acuerdo, decisión.</li>
+                <li><b>Sticky morado</b> · pregunta abierta o follow-up con cliente.</li>
+              </ul>
+
+              <div class="concept-call" style="margin-top: 18px;">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                <div>
+                  <h3>Stickies azules entre comillas, sagrados.</h3>
+                  <p>Una de las disciplinas más importantes del VSA en Miro: <b>cuando captas una frase textual del entrevistado, va en sticky azul entre comillas, sin parafrasear</b>. Esos stickies son la evidencia que respalda los hallazgos. Verás esto en el VSA cuando lo apliques en campo.</p>
+                </div>
+              </div>
+
+              <h3>Frames y secciones</h3>
+              <p>
+                Cada plantilla está dividida en <b>frames</b> (secciones
+                fijas). Los frames son lo que se exporta a PDF para
+                entregar al cliente. <b>No pongas contenido fuera de
+                frames</b> — se pierde al exportar.
+              </p>
+
+              <h3>Permisos y compartir</h3>
+              <p>
+                Configuración estándar LCG:
+              </p>
+              <ul style="font-size: 14px; line-height: 1.8; color: var(--ink-2); padding-left: 22px;">
+                <li><b>Equipo LCG</b> · edición completa.</li>
+                <li><b>Cliente Top + Dueños de área</b> · comentar y stickies (no edición de frames).</li>
+                <li><b>Equipo extendido cliente</b> · solo lectura (link expirable).</li>
+                <li><b>NUNCA</b> · permisos públicos sin protección de password.</li>
+              </ul>
             </section>
 
-            <!-- Exercise -->
-            <section class="s-block" id="sec-ex">
-              <div class="s-block-label">04 · Ejercicio</div>
-              <div class="exercise">
-                <div class="ex-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+            <section class="s-block" id="sec-bp">
+              <div class="s-block-label">07 · Buenas prácticas</div>
+              <h2>Lo que distingue al uso <em>maduro</em> del improvisado.</h2>
+
+              <div class="bp-grid">
+                <div class="bp is-do">
+                  <h4>Hacer</h4>
+                  <ul>
+                    <li>Duplicar siempre desde plantilla maestra (Monday y Miro).</li>
+                    <li>Conectar Monday ↔ MEF para que el beneficio capturado se actualice solo.</li>
+                    <li>Frames Miro con nombre claro (<code>01-Portada</code>, <code>02-Agenda</code>...).</li>
+                    <li>Stickies textuales del entrevistado en azul, entre comillas.</li>
+                    <li>Revisión del board Monday al cierre del día — items vencidos no se ocultan.</li>
+                    <li>Snapshot PDF del Miro al cierre de cada VSA (por si Miro cae).</li>
+                  </ul>
                 </div>
-                <div>
-                  <h4>Configura tu primer tablero de caso (15 min)</h4>
-                  <p>Usa el cliente ficticio <b>Grupo Tauro · Dx Operaciones · 2604</b>. Entrega un screenshot al final del día.</p>
+                <div class="bp is-avoid">
+                  <h4>Evitar</h4>
+                  <ul>
+                    <li>Editar la plantilla maestra (siempre duplicar primero).</li>
+                    <li>Crear columnas paralelas a las estándar — agrega, no sustituye.</li>
+                    <li>Stickies sin owner ni color identificable.</li>
+                    <li>Contenido fuera de frames en Miro.</li>
+                    <li>Links de Miro públicos sin password.</li>
+                    <li>Olvidar el log de cambios cuando se mueve un compromiso en Monday.</li>
+                  </ul>
                 </div>
-                <a href="#" class="btn btn-primary">Abrir ejercicio</a>
               </div>
             </section>
 
-            <!-- Key takeaways -->
-            <section class="s-block" id="sec-key">
-              <div class="s-block-label">05 · Para recordar</div>
-              <h2>Tres cosas que no se negocian.</h2>
-              <ol class="steps">
-                <li><div><h4>Actualiza antes de las 8:00 del lunes.</h4><p>El Partner revisa la cartera a las 8:30. Lo que no esté actualizado, no existe.</p></div></li>
-                <li><div><h4>Un proyecto = un tablero.</h4><p>Nunca proyectos compartidos en un solo tablero ni varios tableros para el mismo engagement.</p></div></li>
-                <li><div><h4>Status "Blocked" activa conversación.</h4><p>No basta con mover la tarjeta; hay que escribir en el comentario qué está bloqueando y a quién necesitas.</p></div></li>
-              </ol>
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">08 · Cierre</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+                <div>
+                  <h4>Antes de pasar al siguiente bloque</h4>
+                  <p>Cuando entres a tu primer proyecto, lo primero que harás es: 1) acceder al board Monday del proyecto y configurar tu vista personal, 2) revisar los Miro abiertos del Análisis Exhaustivo, 3) bookmarkear ambos en tu navegador. Las herramientas son inútiles si tienes que buscarlas.</p>
+                </div>
+              </div>
             </section>
 
-            <!-- Complete bar -->
             <div class="complete-bar">
-              <a class="prev" href="day-4-jueves.html">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                <div>
-                  <span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span>
-                  <span class="title">Power BI</span>
-                </div>
-              </a>
-              <div class="next-group">
-                <button class="btn btn-secondary btn-lg">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  Marcar como completada
-                </button>
-                <a class="btn btn-primary btn-lg" href="day-4-jueves.html">
-                  Siguiente · AI-1 · Fundamentos Claude
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </a>
-              </div>
+              <a class="prev" href="session-d4-b01-power-bi.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span><span class="title">Power BI</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="session-d4-b03-ai1-fundamentos.html">Siguiente · AI-1<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
             </div>
 
           </article>
 
-          <!-- Aside -->
           <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Sesión 02 de 07 · Día 04</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
             <div class="aside-box">
               <h4>Contenido</h4>
               <ul class="outline">
-                <li><a class="done" href="#"><span class="tick"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Objetivos</a></li>
-                <li><a class="active" href="#sec-intro"><span class="tick"></span>Contexto — por qué Monday</a></li>
-                <li><a href="#sec-config"><span class="tick"></span>Configuración paso a paso</a></li>
-                <li><a href="#sec-ex"><span class="tick"></span>Ejercicio</a></li>
-                <li><a href="#sec-key"><span class="tick"></span>Para recordar</a></li>
+                <li><a class="active" href="#sec-intro"><span class="tick"></span>Por qué Monday + Miro</a></li>
+                <li><a href="#sec-monday-plan"><span class="tick"></span>Monday · Plan de Vuelo</a></li>
+                <li><a href="#sec-monday-vistas"><span class="tick"></span>Vistas y automaciones</a></li>
+                <li><a href="#sec-monday-integraciones"><span class="tick"></span>Integraciones</a></li>
+                <li><a href="#sec-miro-uses"><span class="tick"></span>Miro · Plantillas LCG</a></li>
+                <li><a href="#sec-miro-mecanica"><span class="tick"></span>Mecánica Miro</a></li>
+                <li><a href="#sec-bp"><span class="tick"></span>Buenas prácticas</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
               </ul>
             </div>
 
             <div class="aside-box">
               <h4>Recursos</h4>
               <ul class="res-list">
-                <li><a href="#">
-                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                  <div class="r-name">Plantilla Monday · Engagement v3<span class="r-meta">.mdtemplate</span></div>
-                  <span class="r-size">12 KB</span>
-                </a></li>
-                <li><a href="#">
-                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
-                  <div class="r-name">Guía de convenciones de nombres<span class="r-meta">.pdf · 8 páginas</span></div>
-                  <span class="r-size">1.2 MB</span>
-                </a></li>
-                <li><a href="#">
-                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-                  <div class="r-name">Video — Lunes de cartera<span class="r-meta">.mp4 · 6:20</span></div>
-                  <span class="r-size">82 MB</span>
-                </a></li>
-                <li><a href="#">
-                  <div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-                  <div class="r-name">Checklist · Primer tablero<span class="r-meta">.pdf · imprimible</span></div>
-                  <span class="r-size">340 KB</span>
-                </a></li>
+                <li><a href="https://london-consulting-group-mxico.monday.com/boards/9585419748" target="_blank" rel="noopener"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg></div><div class="r-name">Plan de Vuelo · ejemplo<span class="r-meta">Workspace LCG México</span></div></a></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">Plantillas Miro LCG<span class="r-meta">Workspace · TD</span></div></div></li>
+                <li><div class="static"><div class="r-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">LCG_Plan_de_Vuelo_v4<span class="r-meta">Template Monday · duplicar</span></div></div></li>
               </ul>
             </div>
 
-            <div class="aside-box notes-box">
-              <h4>Mis notas</h4>
-              <textarea placeholder="Escribe aquí tus notas de la sesión. Se guardan automáticamente en tu perfil de consultor."></textarea>
-              <div class="notes-foot">
-                <span>Privadas · solo tú las ves</span>
-                <span>0 / 2000</span>
-              </div>
+            <div class="aside-box" style="background: var(--cat-ai-bg); border-color: var(--cat-ai);">
+              <h4 style="color: var(--cat-ai);">Después de esta sesión</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Después del break, entramos al bloque AI: <b>AI-1 · Fundamentos Claude</b>.</p>
+              <a href="session-d4-b03-ai1-fundamentos.html" style="font-size: 12.5px; font-weight: 600; color: var(--cat-ai);">Ir a AI-1 →</a>
             </div>
-
-            <div class="aside-box" style="background: var(--lcg-cream); border-color:#E9E1CC;">
-              <h4 style="color: var(--lcg-dark);">Después de esta sesión</h4>
-              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">
-                Agenda 20 min con tu <b>Buddy asignado</b> para revisar tu tablero
-                antes del primer lunes de cartera.
-              </p>
-              <a href="#" style="font-size: 12.5px; font-weight: 600; color: var(--lcg-dark);">Agendar con Buddy →</a>
-            </div>
-
           </aside>
         </div>
       </div>
-
     </main>
   </div>
 </div>
@@ -544,10 +518,26 @@
 <script src="shared/iso-builders.js?v=6"></script>
 <script src="shared/app.js?v=12"></script>
 <script>
-  window.addEventListener('DOMContentLoaded', ()=>{
-    buildSysIso(document.getElementById('s-hero-iso'));
-    buildSysIso(document.getElementById('s-intro-iso'));
-  });
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd4-b02-monday-miro';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
 </script>
 </body>
 </html>
