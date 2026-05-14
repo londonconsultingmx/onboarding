@@ -47,21 +47,21 @@
 .reto-card h4{ margin: 0 0 8px; font-family: var(--sans); font-weight: 700; font-size: 13.5px; color: var(--lcg-dark); line-height: 1.2; }
 .reto-card p{ margin: 0; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
 
-/* SALES FUNNEL · trapezoid stages */
-.funnel{ margin: 18px 0; padding: 26px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
-.funnel-stage{ margin: 4px auto; padding: 14px 18px; color: #fff; border-radius: 6px; display: grid; grid-template-columns: 1fr 110px 90px; gap: 14px; align-items: center; }
-.funnel-stage .fs-name{ font-family: var(--sans); font-weight: 700; font-size: 13.5px; }
-.funnel-stage .fs-name span{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; opacity: .8; letter-spacing: .04em; font-weight: 400; margin-top: 2px; text-transform: uppercase; }
-.funnel-stage .fs-vol{ text-align: right; font-family: ui-monospace, Menlo, monospace; font-size: 12px; opacity: .9; }
-.funnel-stage .fs-vol b{ font-family: var(--serif); font-size: 18px; font-weight: 400; opacity: 1; }
-.funnel-stage .fs-conv{ text-align: center; font-family: ui-monospace, Menlo, monospace; font-size: 10px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.18); font-weight: 700; letter-spacing: .04em; }
+/* SALES FUNNEL · trapezoid stages — narrowing visual, todo cabe */
+.funnel{ margin: 18px 0; padding: 24px 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.funnel-stage{ margin: 4px auto; padding: 12px 18px; color: #fff; border-radius: 6px; display: grid; grid-template-columns: 1fr 88px 56px; gap: 14px; align-items: center; min-height: 52px; }
+.funnel-stage .fs-name{ font-family: var(--sans); font-weight: 700; font-size: 13.5px; line-height: 1.2; min-width: 0; }
+.funnel-stage .fs-name span{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; opacity: .82; letter-spacing: .04em; font-weight: 400; margin-top: 2px; text-transform: uppercase; }
+.funnel-stage .fs-vol{ text-align: right; font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; opacity: .9; line-height: 1.2; }
+.funnel-stage .fs-vol b{ font-family: var(--serif); font-size: 18px; font-weight: 400; opacity: 1; display: block; }
+.funnel-stage .fs-conv{ text-align: center; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; padding: 5px 0; border-radius: 999px; background: rgba(255,255,255,.18); font-weight: 700; letter-spacing: .02em; }
 .funnel-stage.s1{ background: linear-gradient(135deg, #4A8A7E 0%, #5DA29A 100%); width: 100%; }
-.funnel-stage.s2{ background: linear-gradient(135deg, #4D8585 0%, #5F9D9D 100%); width: 92%; }
-.funnel-stage.s3{ background: linear-gradient(135deg, #6E7E85 0%, #82959D 100%); width: 82%; }
-.funnel-stage.s4{ background: linear-gradient(135deg, #8C7470 0%, #A18A85 100%); width: 70%; }
-.funnel-stage.s5{ background: linear-gradient(135deg, #B07A50 0%, #C68A60 100%); width: 56%; }
-.funnel-stage.s6{ background: linear-gradient(135deg, #B07730 0%, #C68A3E 100%); width: 40%; }
-.funnel-stage.s7{ background: linear-gradient(135deg, #6E4720 0%, #8B5E2A 100%); width: 26%; box-shadow: 0 8px 22px rgba(110,71,32,.25); }
+.funnel-stage.s2{ background: linear-gradient(135deg, #4D8585 0%, #5F9D9D 100%); width: 95%; }
+.funnel-stage.s3{ background: linear-gradient(135deg, #6E7E85 0%, #82959D 100%); width: 89%; }
+.funnel-stage.s4{ background: linear-gradient(135deg, #8C7470 0%, #A18A85 100%); width: 82%; }
+.funnel-stage.s5{ background: linear-gradient(135deg, #B07A50 0%, #C68A60 100%); width: 74%; }
+.funnel-stage.s6{ background: linear-gradient(135deg, #B07730 0%, #C68A3E 100%); width: 66%; }
+.funnel-stage.s7{ background: linear-gradient(135deg, #6E4720 0%, #8B5E2A 100%); width: 58%; box-shadow: 0 8px 22px rgba(110,71,32,.25); }
 
 /* WHEEL · ciclo de venta */
 .wheel{ margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -390,13 +390,13 @@
               </p>
 
               <div class="funnel">
-                <div class="funnel-stage s1"><div class="fs-name">Leads<span>Top of funnel · interés inicial</span></div><div class="fs-vol"><b>1 000</b><br/>leads/mes</div><div class="fs-conv">100%</div></div>
-                <div class="funnel-stage s2"><div class="fs-name">MQL · Marketing Qualified Lead<span>Marketing valida fit</span></div><div class="fs-vol"><b>400</b><br/>MQLs</div><div class="fs-conv">40%</div></div>
-                <div class="funnel-stage s3"><div class="fs-name">SQL · Sales Qualified Lead<span>Ventas valida y acepta</span></div><div class="fs-vol"><b>180</b><br/>SQLs</div><div class="fs-conv">45%</div></div>
-                <div class="funnel-stage s4"><div class="fs-name">Discovery<span>Entender necesidad y BANT</span></div><div class="fs-vol"><b>120</b><br/>oportunidades</div><div class="fs-conv">67%</div></div>
-                <div class="funnel-stage s5"><div class="fs-name">Proposal<span>Propuesta económica y técnica</span></div><div class="fs-vol"><b>72</b><br/>propuestas</div><div class="fs-conv">60%</div></div>
-                <div class="funnel-stage s6"><div class="fs-name">Negotiation<span>Términos, descuentos, contrato</span></div><div class="fs-vol"><b>43</b><br/>negociaciones</div><div class="fs-conv">60%</div></div>
-                <div class="funnel-stage s7"><div class="fs-name">Closed Won<span>Cierre · cliente nuevo</span></div><div class="fs-vol"><b>26</b><br/>cierres</div><div class="fs-conv">60%</div></div>
+                <div class="funnel-stage s1"><div class="fs-name">Leads<span>Top of funnel · interés inicial</span></div><div class="fs-vol"><b>1 000</b>leads/mes</div><div class="fs-conv">100%</div></div>
+                <div class="funnel-stage s2"><div class="fs-name">MQL · Marketing Qualified Lead<span>Marketing valida fit</span></div><div class="fs-vol"><b>400</b>MQLs</div><div class="fs-conv">40%</div></div>
+                <div class="funnel-stage s3"><div class="fs-name">SQL · Sales Qualified Lead<span>Ventas valida y acepta</span></div><div class="fs-vol"><b>180</b>SQLs</div><div class="fs-conv">45%</div></div>
+                <div class="funnel-stage s4"><div class="fs-name">Discovery<span>Entender necesidad y BANT</span></div><div class="fs-vol"><b>120</b>opps</div><div class="fs-conv">67%</div></div>
+                <div class="funnel-stage s5"><div class="fs-name">Proposal<span>Propuesta económica y técnica</span></div><div class="fs-vol"><b>72</b>propuestas</div><div class="fs-conv">60%</div></div>
+                <div class="funnel-stage s6"><div class="fs-name">Negotiation<span>Términos y contrato</span></div><div class="fs-vol"><b>43</b>negocios</div><div class="fs-conv">60%</div></div>
+                <div class="funnel-stage s7"><div class="fs-name">Closed Won<span>Cliente nuevo</span></div><div class="fs-vol"><b>26</b>cierres</div><div class="fs-conv">60%</div></div>
               </div>
 
               <h3>El ciclo del cliente · cuatro fases</h3>
