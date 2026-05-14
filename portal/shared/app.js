@@ -121,7 +121,7 @@ const SIDEBAR_DAYS = [
     ]
   },
   {
-    num: 3, name: "Día 03 · Industria", short: "Industria", href: "day.html", cat: "ind",
+    num: 3, name: "Día 03 · Industria", short: "Industria", href: "day-3-miercoles.html", cat: "ind",
     sessions: [
       { name: "Verticales LCG · overview",    href: "session-d3-b01-verticales.html", sid: "d3-b01-verticales" },
       { name: "Supply Chain Management",      href: "session-d3-b02-supply-scm.html", sid: "d3-b02-supply-scm" },
@@ -146,8 +146,8 @@ const SIDEBAR_DAYS = [
     sessions: [
       { name: "Business Case · 3 casos",      href: "session-d5-b01-caso-panel.html", sid: "d5-b01-caso" },
       { name: "Presentación a panel",         href: "session-d5-b01-caso-panel.html#sec-panel", sid: "d5-b02-presentacion" },
-      { name: "Intro a primer proyecto",      href: "#", sid: "d5-b03-proyecto" },
-      { name: "Cierre ejecutivo",             href: "#", sid: "d5-b04-cierre" }
+      { name: "Intro a primer proyecto",      href: "session-d5-b03-proyecto.html", sid: "d5-b03-proyecto" },
+      { name: "Cierre ejecutivo",             href: "session-d5-b04-cierre.html", sid: "d5-b04-cierre" }
     ]
   }
 ];

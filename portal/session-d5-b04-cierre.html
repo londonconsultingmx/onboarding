@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Cierre ejecutivo · Día 5 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #DFF5EB 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: #DFF5EB; color: #03B585; font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: #03B585; }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-body > article{ min-width: 0; }
+.s-block{ margin-bottom: 56px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: #03B585; }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 28px 0 8px; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 720px; }
+.s-block ul, .s-block ol{ font-size: 14.5px; line-height: 1.7; color: var(--ink-2); }
+.s-block ul b, .s-block ol b{ color: var(--ink); font-weight: 600; }
+
+/* AGENDA del cierre · timeline 60min */
+.agenda{ margin: 18px 0; padding: 24px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.agenda-bar{ display: grid; grid-template-columns: 25% 35% 25% 15%; height: 56px; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }
+.agenda-bar > div{ display: flex; align-items: center; justify-content: center; color: #fff; font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 0 8px; text-align: center; line-height: 1.2; }
+.agenda-bar .ab-1{ background: #03B585; }
+.agenda-bar .ab-2{ background: #03A073; }
+.agenda-bar .ab-3{ background: #028A60; }
+.agenda-bar .ab-4{ background: #01734F; }
+.agenda-detail{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+.agenda-step{ padding: 14px 16px; background: var(--surface-2); border-radius: 6px; }
+.agenda-step .as-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #03B585; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.agenda-step h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.agenda-step p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* COMPROMISO MUTUO · diptico LCG / consultor */
+.compromiso{ margin: 18px 0; display: grid; grid-template-columns: 1fr 60px 1fr; gap: 18px; align-items: stretch; }
+.compromiso-card{ padding: 22px 26px; border-radius: var(--r-md); border: 1px solid #03B585; background: var(--surface); }
+.compromiso-card.lcg{ background: linear-gradient(135deg, #02704F 0%, #03B585 100%); color: #fff; border: 0; box-shadow: 0 10px 28px rgba(2,112,79,.18); }
+.compromiso-card .cc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.compromiso-card.lcg .cc-tag{ color: #8AF4E9; }
+.compromiso-card.tu .cc-tag{ color: #03B585; }
+.compromiso-card h4{ margin: 0 0 14px; font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.1; letter-spacing: -.015em; color: var(--lcg-dark); }
+.compromiso-card.lcg h4{ color: #fff; }
+.compromiso-card ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.compromiso-card ul li{ position: relative; padding-left: 22px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.compromiso-card ul li::before{ content: "✓"; position: absolute; left: 0; top: 0; color: #03B585; font-weight: 700; font-size: 14px; }
+.compromiso-card.lcg ul li{ color: #DFF5EB; }
+.compromiso-card.lcg ul li::before{ color: #8AF4E9; }
+.compromiso-card ul li b{ color: var(--ink); font-weight: 600; }
+.compromiso-card.lcg ul li b{ color: #fff; font-weight: 600; }
+.compromiso-arrow{ display: flex; align-items: center; justify-content: center; color: #03B585; font-size: 22px; font-weight: 700; }
+
+/* REFLEXIÓN · 5 preguntas */
+.reflex{ margin: 18px 0; }
+.reflex-q{ display: grid; grid-template-columns: 38px 1fr; gap: 18px; padding: 16px 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); margin-bottom: 8px; align-items: start; }
+.reflex-q .rq-num{ width: 32px; height: 32px; border-radius: 50%; background: #DFF5EB; color: #03B585; font-family: var(--serif); font-size: 16px; font-weight: 400; display: flex; align-items: center; justify-content: center; }
+.reflex-q .rq-meta h5{ margin: 0 0 4px; font-family: var(--serif); font-weight: 400; font-size: 17px; color: var(--lcg-dark); line-height: 1.25; letter-spacing: -.01em; }
+.reflex-q .rq-meta p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; font-style: italic; }
+
+/* INDICADORES · 4 KPIs del programa */
+.kpis{ margin: 18px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.kpi{ padding: 18px 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid #03B585; text-align: center; }
+.kpi .k-pct{ font-family: var(--serif); font-size: 38px; color: #03B585; line-height: 1; font-weight: 400; letter-spacing: -.02em; margin-bottom: 6px; }
+.kpi h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.kpi p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* GRADUACIÓN · banner final */
+.gradu{ margin: 24px 0; padding: 36px 40px; background: linear-gradient(135deg, #02704F 0%, #03B585 50%, #4FC9A6 100%); color: #fff; border-radius: var(--r-md); text-align: center; box-shadow: 0 14px 36px rgba(2,112,79,.22); position: relative; overflow: hidden; }
+.gradu::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 360px; height: 360px; background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%); pointer-events: none; }
+.gradu > *{ position: relative; z-index: 1; }
+.gradu .g-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #8AF4E9; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; display: block; }
+.gradu h2{ margin: 0 0 12px; font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 4vw, 52px); letter-spacing: -.02em; line-height: 1; color: #fff; }
+.gradu h2 em{ font-style: italic; color: #8AF4E9; }
+.gradu p{ margin: 0 auto; font-size: 16px; color: #DFF5EB; line-height: 1.55; max-width: 580px; }
+
+/* REFLECT */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #02704F 0%, #03B585 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(2,112,79,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(138,244,233,.15); border: 1px solid rgba(138,244,233,.35); color: #8AF4E9; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #8AF4E9; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #DFF5EB; line-height: 1.55; }
+
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+.complete-bar .btn-primary{ background: #03B585; }
+.complete-bar .btn-primary:hover{ background: #028A60; }
+
+.s-aside{ position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 6px; }
+.s-aside::-webkit-scrollbar{ width: 6px; }
+.s-aside::-webkit-scrollbar-track{ background: transparent; }
+.s-aside::-webkit-scrollbar-thumb{ background: var(--hairline); border-radius: 3px; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: #03B585; background: #DFF5EB; }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: #03B585; background: linear-gradient(180deg, #DFF5EB 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: #03B585; letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: #03B585; margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: #03B585; width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #03B585; background: var(--surface); color: #03B585; font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); }
+.sess-toggle:hover{ background: #DFF5EB; }
+.sess-toggle.is-done{ background: #03B585; color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid #03B585; border-bottom:2px solid #03B585; transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb"><a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a><span style="opacity:.4">/</span><a href="day-5-viernes.html" style="color:inherit; text-decoration:none;">Viernes</a><span style="opacity:.4">/</span><b>Cierre ejecutivo</b></div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: #DFF5EB; color: #03B585; border-color: transparent;"><span class="pill-dot"></span> Aplicación</span>
+    </header>
+
+    <main class="session-main">
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker"><span class="pill-cat">Aplicación</span><span class="pill"><span style="opacity:.5">Día 05</span>&nbsp;·&nbsp;Bloque 04 de 04</span></div>
+          <h1>Cierre <em>ejecutivo.</em></h1>
+          <p class="s-hero-sub">
+            Última hora del onboarding. <b>Reflexión guiada por el
+            Director patrocinador, entrega del compromiso mutuo y
+            brindis de graduación</b>. No es ceremonia vacía — es el
+            momento donde se sella el contrato implícito entre el
+            consultor que entra y la firma que lo recibe.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">60</span> min</span></div>
+            <div class="item"><span class="label">Modalidad</span><span class="val">Presencial / Teams</span></div>
+            <div class="item"><span class="label">Output</span><span class="val">Compromiso firmado</span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;"><div class="avatar" style="background: #03B585; color:#fff;">DP</div><div><div class="val">Director patrocinador</div><div class="sub">Fernando S. / Jaime R.</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <!-- 01 · AGENDA -->
+            <section class="s-block" id="sec-agenda">
+              <div class="s-block-label">01 · Agenda · 60 minutos</div>
+              <h2>Cuatro momentos del <em>cierre.</em></h2>
+
+              <div class="agenda">
+                <div class="agenda-bar">
+                  <div class="ab-1">Reflexión<br/>15 min</div>
+                  <div class="ab-2">Conversación con el patrocinador<br/>20 min</div>
+                  <div class="ab-3">Compromiso mutuo<br/>15 min</div>
+                  <div class="ab-4">Brindis<br/>10 min</div>
+                </div>
+                <div class="agenda-detail">
+                  <div class="agenda-step">
+                    <div class="as-tag">Etapa 01</div>
+                    <h5>Reflexión guiada</h5>
+                    <p>5 preguntas para sintetizar la semana — qué descubriste, qué te llevó, qué te sorprendió.</p>
+                  </div>
+                  <div class="agenda-step">
+                    <div class="as-tag">Etapa 02</div>
+                    <h5>Conversación 1:1</h5>
+                    <p>Director patrocinador comparte expectativas, contexto estratégico LCG y por qué la firma te quiere aquí.</p>
+                  </div>
+                  <div class="agenda-step">
+                    <div class="as-tag">Etapa 03</div>
+                    <h5>Compromiso mutuo</h5>
+                    <p>Lectura y firma del documento de compromiso. Lo que LCG se compromete contigo y lo que tú con LCG.</p>
+                  </div>
+                  <div class="agenda-step">
+                    <div class="as-tag">Etapa 04</div>
+                    <h5>Brindis de graduación</h5>
+                    <p>Foto oficial, brindis simbólico, bienvenida formal al equipo. Inicio de la cohorte.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 · REFLEXIÓN GUIADA -->
+            <section class="s-block" id="sec-reflex">
+              <div class="s-block-label">02 · Reflexión guiada</div>
+              <h2>Cinco preguntas <em>para ti.</em></h2>
+              <p>
+                El Director patrocinador no toma notas — son preguntas
+                para que tú las pienses en voz alta. <b>El valor está
+                en el ejercicio, no en la respuesta perfecta</b>. Es
+                el cierre del aprendizaje de la semana.
+              </p>
+
+              <div class="reflex">
+                <div class="reflex-q">
+                  <div class="rq-num">1</div>
+                  <div class="rq-meta">
+                    <h5>¿Qué metodología o herramienta de la semana sentiste que se quedó realmente contigo?</h5>
+                    <p>No la que más te gustó — la que sientes que vas a usar el lunes.</p>
+                  </div>
+                </div>
+                <div class="reflex-q">
+                  <div class="rq-num">2</div>
+                  <div class="rq-meta">
+                    <h5>¿Qué momento de la semana te puso más incómodo y por qué?</h5>
+                    <p>Lo incómodo suele ser donde está la zona de crecimiento. Sé honesto.</p>
+                  </div>
+                </div>
+                <div class="reflex-q">
+                  <div class="rq-num">3</div>
+                  <div class="rq-meta">
+                    <h5>¿Qué descubriste de LCG que no esperabas antes de la semana?</h5>
+                    <p>Cultura, ritmo, exigencia, calidad humana — algo que te sorprendió.</p>
+                  </div>
+                </div>
+                <div class="reflex-q">
+                  <div class="rq-num">4</div>
+                  <div class="rq-meta">
+                    <h5>¿Cómo te ves contribuyendo a LCG en los próximos 12 meses?</h5>
+                    <p>No es una promesa — es tu narrativa de aporte. ¿Qué traes que la firma necesita?</p>
+                  </div>
+                </div>
+                <div class="reflex-q">
+                  <div class="rq-num">5</div>
+                  <div class="rq-meta">
+                    <h5>¿Hay algo que necesitas de LCG que no sabes si vas a recibir?</h5>
+                    <p>Mentor, exposición, coaching, capacitación específica. Pídelo ahora — no después.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · COMPROMISO MUTUO -->
+            <section class="s-block" id="sec-compromiso">
+              <div class="s-block-label">03 · Compromiso mutuo</div>
+              <h2>Lo que LCG se compromete contigo · y tú con <em>LCG.</em></h2>
+              <p>
+                El compromiso mutuo no es contrato laboral — es la
+                <b>declaración explícita</b> de qué espera cada parte
+                de la otra. Se firma simbólicamente y se entrega copia.
+                Es el ancla cultural del consultor LCG.
+              </p>
+
+              <div class="compromiso">
+                <div class="compromiso-card lcg">
+                  <div class="cc-tag">LCG se compromete</div>
+                  <h4>Lo que recibes de la firma</h4>
+                  <ul>
+                    <li><b>Coaching del Gerente</b> de tu primer proyecto desde el día 1.</li>
+                    <li><b>Exposición a casos reales</b> de cliente con responsabilidad creciente.</li>
+                    <li><b>Capacitación continua</b> en metodología LCG y stack AI.</li>
+                    <li>Acceso a <b>la red completa de socios</b> y consultores senior para mentoría.</li>
+                    <li>Plan de desarrollo formal con <b>revisión trimestral</b> y feedback estructurado.</li>
+                    <li><b>Compensación competitiva</b> alineada con desempeño y crecimiento.</li>
+                    <li><b>Cultura de transparencia</b>: se discute todo, no se oculta nada.</li>
+                  </ul>
+                </div>
+                <div class="compromiso-arrow">↔</div>
+                <div class="compromiso-card tu">
+                  <div class="cc-tag">Tú te comprometes</div>
+                  <h4>Lo que LCG espera de ti</h4>
+                  <ul>
+                    <li><b>Aplicar la metodología</b> aprendida en cada engagement, sin atajos.</li>
+                    <li><b>Cumplir las 5 reglas de oro AI</b> en cada interacción con datos del cliente.</li>
+                    <li><b>Hacer preguntas</b> cuando no sepas. La duda en silencio es falla.</li>
+                    <li><b>Documentar todo</b> en SharePoint del proyecto. Sin trabajo en carpeta personal.</li>
+                    <li>Aportar al <b>conocimiento colectivo</b> — prompts, plantillas, casos.</li>
+                    <li><b>Cuidar la marca LCG</b> en cliente: discreción, profesionalismo, cumplimiento.</li>
+                    <li><b>Pedir feedback</b> activamente. No esperar evaluaciones formales.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 04 · INDICADORES DE ÉXITO -->
+            <section class="s-block" id="sec-kpis">
+              <div class="s-block-label">04 · Cómo se mide el éxito del onboarding</div>
+              <h2>Cuatro indicadores que LCG <em>rastrea.</em></h2>
+              <p>
+                P&amp;C audita estos cuatro indicadores del programa de
+                onboarding. <b>El objetivo no es que tú los persigas
+                — es que tú los vivas</b>. Si el programa funcionó,
+                estos números se mueven naturalmente.
+              </p>
+
+              <div class="kpis">
+                <div class="kpi">
+                  <div class="k-pct">100%</div>
+                  <h5>Tasa de finalización</h5>
+                  <p>Todos los nuevos ingresos completan los 5 días sin excepción.</p>
+                </div>
+                <div class="kpi">
+                  <div class="k-pct">≥4.5</div>
+                  <h5>Satisfacción del ingreso</h5>
+                  <p>Encuesta de salida con escala 1-5. Meta sostenida arriba de 4.5.</p>
+                </div>
+                <div class="kpi">
+                  <div class="k-pct">Día 1</div>
+                  <h5>Tiempo a productividad</h5>
+                  <p>Día de asignación a primer proyecto. Lunes después del onboarding.</p>
+                </div>
+                <div class="kpi">
+                  <div class="k-pct">≥90%</div>
+                  <h5>Retención a 6 meses</h5>
+                  <p>% de cohorte que sigue en LCG al cierre del primer semestre.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 05 · GRADUACIÓN -->
+            <section class="s-block" id="sec-graduacion">
+              <div class="s-block-label">05 · Brindis de graduación</div>
+              <h2>El cierre <em>simbólico.</em></h2>
+              <p>
+                Foto oficial de la cohorte, brindis con el Director
+                patrocinador y el equipo de P&amp;C, mensaje del CEO
+                (en vivo o video), y bienvenida formal al equipo. Es
+                el momento que cierra la semana y abre la carrera.
+              </p>
+
+              <div class="gradu">
+                <span class="g-tag">Bienvenido a LCG</span>
+                <h2>Eres oficialmente <em>parte del equipo.</em></h2>
+                <p>El lunes a las 9:00 estás en la JSA de tu primer cliente. Hasta entonces — descansa. Te lo mereces.</p>
+              </div>
+            </section>
+
+            <!-- 06 · CIERRE FINAL -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">06 · El programa cierra</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7z"/></svg></div>
+                <div>
+                  <h4>Próximo paso</h4>
+                  <p>El portal queda contigo como referencia permanente. Cuando dudes de un concepto, vuelve. Cuando un cliente pregunte por una metodología, ven aquí. <b>El onboarding cierra — pero la firma apenas empieza contigo</b>.</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="complete-bar">
+              <a class="prev" href="session-d5-b03-proyecto.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Anterior</span><span class="title">Intro a primer proyecto</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="landing.html">Volver al portal<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></a></div>
+            </div>
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Bloque 04 de 04 · Día 05</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-agenda"><span class="tick"></span>Agenda · 60 min</a></li>
+                <li><a href="#sec-reflex"><span class="tick"></span>Reflexión guiada</a></li>
+                <li><a href="#sec-compromiso"><span class="tick"></span>Compromiso mutuo</a></li>
+                <li><a href="#sec-kpis"><span class="tick"></span>Indicadores del programa</a></li>
+                <li><a href="#sec-graduacion"><span class="tick"></span>Brindis de graduación</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>El programa cierra</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: #DFF5EB; border-color: #03B585;">
+              <h4 style="color: #03B585;">Después del cierre</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">El onboarding terminó. <b>El lunes inicia tu primer proyecto</b>. El portal queda como referencia permanente.</p>
+              <a href="landing.html" style="font-size: 12.5px; font-weight: 600; color: #03B585;">Volver al portal →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd5-b04-cierre';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>
