@@ -311,7 +311,11 @@
 .complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
 
 /* Aside */
-.s-aside{ position: sticky; top: 92px; align-self: start; }
+.s-aside{ position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 6px; }
+.s-aside::-webkit-scrollbar{ width: 6px; }
+.s-aside::-webkit-scrollbar-track{ background: transparent; }
+.s-aside::-webkit-scrollbar-thumb{ background: var(--hairline); border-radius: 3px; }
+.s-aside::-webkit-scrollbar-thumb:hover{ background: var(--ink-4); }
 .aside-box{
   border: 1px solid var(--hairline); border-radius: var(--r-md);
   padding: 20px; background: var(--surface); margin-bottom: 16px;
