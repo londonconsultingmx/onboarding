@@ -126,7 +126,7 @@ const SIDEBAR_DAYS = [
       { name: "Verticales LCG · overview",    href: "session-d3-b01-verticales.html", sid: "d3-b01-verticales" },
       { name: "Supply Chain Management",      href: "session-d3-b02-supply-scm.html", sid: "d3-b02-supply-scm" },
       { name: "Lean 4.0",                     href: "session-d3-b03-lean-40.html",    sid: "d3-b03-lean-40" },
-      { name: "Excelencia Comercial",         href: "#",                              sid: "d3-b04-excelencia-comercial" }
+      { name: "Excelencia Comercial",         href: "session-d3-b04-excelencia-comercial.html", sid: "d3-b04-excelencia-comercial" }
     ]
   },
   {
