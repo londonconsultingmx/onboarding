@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Business Case · 3 casos por especialidad + Panel · Día 5 — Portal LCG</title>
+<link rel="stylesheet" href="shared/tokens.css?v=6" />
+<link rel="stylesheet" href="shared/iso.css?v=6" />
+<style>
+.session-main{ padding-bottom: 80px; }
+
+/* HERO */
+.s-hero{ position: relative; overflow:hidden; border-bottom: 1px solid var(--hairline); background: linear-gradient(180deg, #DFF5EB 0%, transparent 100%); }
+.s-hero-inner{ padding: 56px 0 64px; }
+.s-hero-kicker{ display:flex; gap:10px; align-items:center; margin-bottom: 22px; }
+.s-hero-kicker .pill-cat{ display:inline-flex; align-items:center; gap:8px; padding: 7px 14px; border-radius: 999px; background: #DFF5EB; color: #03B585; font-size: 12px; font-weight: 700; letter-spacing:.14em; text-transform:uppercase; }
+.s-hero-kicker .pill-cat::before{ content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+.s-hero h1{ font-family:var(--serif); font-weight:400; font-size: clamp(56px, 5.8vw, 84px); line-height: 1.0; letter-spacing:-.025em; margin: 0 0 26px; color: var(--ink); }
+.s-hero h1 em{ font-style: italic; color: #03B585; }
+.s-hero-sub{ font-size: 19px; color: var(--ink-2); line-height: 1.5; max-width: 760px; margin: 0 0 32px; }
+.s-hero-meta{ display: grid; grid-template-columns: repeat(4, auto); gap: 40px; padding: 24px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.s-hero-meta .item .label{ display:block; margin-bottom: 6px; }
+.s-hero-meta .item .val{ font-family: var(--serif); font-size: 28px; letter-spacing:-.015em; color: var(--ink); }
+.s-hero-meta .item .val .u-mono{ font-family: ui-monospace, Menlo, monospace; font-size:22px; }
+.s-hero-meta .facilitator{ display:flex; gap:12px; align-items:center; }
+.s-hero-meta .facilitator .avatar{ width:38px; height:38px; font-size:12px; }
+.s-hero-meta .facilitator .val{ font-size: 15px; font-family: var(--sans); font-weight:600; line-height:1.2; }
+.s-hero-meta .facilitator .sub{ font-size: 12px; color: var(--ink-4); }
+
+/* BODY */
+.s-body{ display: grid; grid-template-columns: 1fr 320px; gap: 48px; padding: 48px 0; }
+.s-body > article{ min-width: 0; }
+.s-block{ margin-bottom: 64px; }
+.s-block-label{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.s-block h2{ font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; }
+.s-block h2 em{ font-style: italic; color: #03B585; }
+.s-block h3{ font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.15; letter-spacing: -.015em; color: var(--lcg-dark); margin: 32px 0 10px; }
+.s-block h4{ font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); margin: 20px 0 8px; letter-spacing: .02em; }
+.s-block p{ font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
+.s-block p.lead{ font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 760px; }
+.s-block ul, .s-block ol{ font-size: 14.5px; line-height: 1.7; color: var(--ink-2); }
+.s-block ul b, .s-block ol b{ color: var(--ink); font-weight: 600; }
+
+/* EVOLUCIÓN · 2017 vs 2026 */
+.evol{ display: grid; grid-template-columns: 1fr 60px 1fr; gap: 18px; align-items: stretch; margin: 18px 0; }
+.evol-card{ padding: 22px 24px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); }
+.evol-card.before{ background: var(--surface-2); border-style: dashed; opacity: .9; }
+.evol-card.after{ background: linear-gradient(180deg, #DFF5EB 0%, var(--surface) 80%); border: 1px solid #03B585; }
+.evol-card .ec-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.evol-card.before .ec-tag{ color: var(--ink-4); }
+.evol-card.after .ec-tag{ color: #03B585; }
+.evol-card h3{ margin: 0 0 12px; font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; line-height: 1.1; color: var(--ink); }
+.evol-card .ec-row{ display: grid; grid-template-columns: 110px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--hairline); font-size: 12.5px; }
+.evol-card .ec-row:last-child{ border-bottom: 0; }
+.evol-card .ec-row span{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .12em; text-transform: uppercase; font-weight: 700; align-self: center; }
+.evol-card .ec-row b{ color: var(--ink); font-weight: 600; }
+.evol-arrow{ display: flex; align-items: center; justify-content: center; color: #03B585; font-size: 28px; font-weight: 700; }
+
+/* 3 CASOS · cards */
+.casos{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+.caso{ display: flex; flex-direction: column; padding: 22px 22px 24px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 4px solid #03B585; }
+.caso .c-num{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #03B585; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.caso .c-area{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .12em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.caso h4{ margin: 0 0 4px; font-family: var(--serif); font-weight: 400; font-size: 30px; letter-spacing: -.02em; line-height: 1.05; color: var(--lcg-dark); }
+.caso .c-emp{ font-size: 13px; color: var(--ink-3); font-style: italic; margin-bottom: 12px; }
+.caso .c-row{ display: flex; gap: 10px; padding: 6px 0; font-size: 12.5px; color: var(--ink-2); border-top: 1px dashed var(--hairline); }
+.caso .c-row:first-of-type{ border-top: 0; }
+.caso .c-row span{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; min-width: 64px; align-self: center; }
+.caso .c-row b{ color: var(--ink); font-weight: 600; }
+.caso .c-kpis{ margin-top: 12px; padding: 10px 12px; background: var(--surface-2); border-radius: 6px; font-size: 11.5px; color: var(--ink-3); line-height: 1.5; }
+.caso .c-kpis b{ color: var(--ink); font-weight: 600; }
+.caso .c-files{ margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.caso .c-file{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; background: var(--cat-ind-bg); border: 1px solid rgba(198,138,62,.18); text-decoration: none; color: var(--cat-ind); font-size: 12px; font-weight: 600; transition: all .15s; }
+.caso .c-file:hover{ background: var(--cat-ind); color: #fff; }
+.caso .c-file svg{ flex-shrink: 0; }
+.caso .c-file .cf-name{ flex: 1; }
+.caso .c-file .cf-ext{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; opacity: .7; letter-spacing: .04em; }
+
+/* TIEMPO · 6h + 60min visual */
+.tiempo{ margin: 18px 0; padding: 24px 26px; background: linear-gradient(135deg, #03B585 0%, #4FC9A6 100%); color: #fff; border-radius: var(--r-md); display: grid; grid-template-columns: auto 1fr 1fr; gap: 28px; align-items: center; box-shadow: 0 10px 28px rgba(3,181,133,.18); }
+.tiempo-icon{ width: 68px; height: 68px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #fff; }
+.tiempo-block .tb-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #DFF5EB; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+.tiempo-block h3{ margin: 0 0 4px; font-family: var(--serif); font-weight: 400; font-size: 32px; letter-spacing: -.02em; line-height: 1; color: #fff; }
+.tiempo-block p{ margin: 0; font-size: 13px; color: #DFF5EB; line-height: 1.45; }
+
+/* ESTRUCTURA preguntas (3 componentes por pregunta) */
+.estructura{ margin: 18px 0; padding: 24px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr; gap: 8px; align-items: stretch; }
+.est-comp{ padding: 18px 16px; border-radius: 10px; text-align: center; }
+.est-comp.excel{ background: #E5F0E5; border: 1px solid #B5D9B5; }
+.est-comp.ai{ background: #EEE7F8; border: 1px solid #C29CF8; }
+.est-comp.pbi{ background: #FFE9C7; border: 1px solid #F5C56C; }
+.est-comp .ec-icon{ width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; background: var(--surface); }
+.est-comp.excel .ec-icon{ color: #2F6B47; }
+.est-comp.ai .ec-icon{ color: #6B40A8; }
+.est-comp.pbi .ec-icon{ color: #B5740E; }
+.est-comp h5{ margin: 0; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.est-comp span{ display: block; margin-top: 4px; font-size: 11.5px; color: var(--ink-3); line-height: 1.4; }
+.est-op{ display: flex; align-items: center; justify-content: center; color: var(--ink-4); font-size: 18px; font-weight: 700; }
+
+/* BLOQUES de preguntas */
+.bloque{ margin: 14px 0; padding: 18px 22px 20px; border-radius: var(--r-md); border: 1px solid var(--hairline); background: var(--surface); border-left: 4px solid #03B585; }
+.bloque .b-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #03B585; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.bloque h4{ margin: 0 0 10px; font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--ink); }
+.bloque .pregs{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.bloque .preg{ padding: 12px 14px; background: var(--surface-2); border-radius: 6px; display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
+.bloque .preg .p-num{ width: 28px; height: 28px; border-radius: 50%; background: #03B585; color: #fff; font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.bloque .preg .p-meta h5{ margin: 0 0 3px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); line-height: 1.2; }
+.bloque .preg .p-meta p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.4; }
+
+/* ENTREGABLES · 4 cards grandes */
+.entreg{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin: 18px 0; }
+.entreg-card{ padding: 18px 20px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid #03B585; display: flex; flex-direction: column; }
+.entreg-card .e-num{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #03B585; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.entreg-card .e-icon{ width: 40px; height: 40px; border-radius: 10px; background: #DFF5EB; color: #03B585; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.entreg-card h5{ margin: 0 0 4px; font-family: var(--serif); font-weight: 400; font-size: 18px; color: var(--lcg-dark); letter-spacing: -.015em; line-height: 1.1; }
+.entreg-card .e-ext{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.entreg-card p{ margin: 0; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+.entreg-card p b{ color: var(--ink); font-weight: 600; }
+
+/* POLÍTICA AI · tabla R1-R7 */
+.policy{ margin: 18px 0; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.policy-row{ display: grid; grid-template-columns: 60px 220px 1fr; padding: 14px 22px; border-bottom: 1px solid var(--hairline); align-items: start; gap: 18px; }
+.policy-row:last-child{ border-bottom: 0; }
+.policy-row.is-header{ background: var(--surface-2); font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.policy-row .p-id{ font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 700; padding: 5px 10px; border-radius: 6px; background: #DFF5EB; color: #03B585; text-align: center; align-self: start; }
+.policy-row .p-rule{ font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); line-height: 1.4; }
+.policy-row .p-why{ font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* PANEL · timeline 60 min */
+.panel-tl{ margin: 18px 0; padding: 24px 26px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.panel-bar{ display: grid; grid-template-columns: 25% 25% 25% 25%; height: 56px; border-radius: 8px; overflow: hidden; margin-bottom: 14px; }
+.panel-bar > div{ display: flex; align-items: center; justify-content: center; color: #fff; font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 0 8px; text-align: center; line-height: 1.2; }
+.panel-bar .pb-1{ background: #03B585; }
+.panel-bar .pb-2{ background: #03A073; }
+.panel-bar .pb-3{ background: #028A60; }
+.panel-bar .pb-4{ background: #01734F; }
+.panel-detail{ display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+.panel-step{ padding: 12px 14px; background: var(--surface-2); border-radius: 6px; }
+.panel-step .ps-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #03B585; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.panel-step h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); }
+.panel-step p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* EVALUACIÓN · 4 componentes con barras */
+.eval-grid{ margin: 18px 0; }
+.eval-row{ display: grid; grid-template-columns: 220px 80px 1fr 1fr; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--hairline); align-items: center; }
+.eval-row:last-child{ border-bottom: 0; }
+.eval-row.is-header{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 8px 0; border-bottom: 2px solid var(--hairline); }
+.eval-row .er-name{ font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.eval-row .er-name span{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .08em; font-weight: 600; margin-top: 2px; text-transform: uppercase; }
+.eval-row .er-pct{ font-family: var(--serif); font-size: 30px; color: #03B585; font-weight: 400; letter-spacing: -.02em; line-height: 1; }
+.eval-row .er-bar{ height: 12px; background: var(--surface-2); border-radius: 999px; overflow: hidden; position: relative; }
+.eval-row .er-bar span{ display: block; height: 100%; background: linear-gradient(90deg, #03B585 0%, #4FC9A6 100%); border-radius: 999px; }
+.eval-row .er-desc{ font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+/* CONCEPT CALLOUT · verde LCG */
+.concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #02704F 0%, #03B585 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(2,112,79,.18); margin: 14px 0; }
+.concept-call::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%); pointer-events: none; }
+.concept-call > *{ position: relative; z-index: 1; }
+.concept-call .ic-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(138,244,233,.15); border: 1px solid rgba(138,244,233,.35); color: #8AF4E9; display:flex; align-items:center; justify-content:center; flex-shrink: 0; }
+.concept-call h3{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.015em; color: #fff; line-height: 1.15; }
+.concept-call p{ margin: 0 0 8px; font-size: 14.5px; color: #DFF5EB; line-height: 1.55; max-width: 680px; }
+.concept-call p:last-child{ margin-bottom: 0; }
+
+/* PREP · checklist */
+.prep{ margin: 18px 0; }
+.prep-item{ display: grid; grid-template-columns: 32px 1fr; gap: 14px; padding: 14px 18px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); margin-bottom: 8px; align-items: start; }
+.prep-item .pi-num{ width: 28px; height: 28px; border-radius: 50%; background: #DFF5EB; color: #03B585; font-family: ui-monospace, Menlo, monospace; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.prep-item h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
+.prep-item p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+.prep-item p b{ color: var(--ink); font-weight: 600; }
+
+/* REFLECT */
+.reflect{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #02704F 0%, #03B585 100%); color: #fff; border: 0; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 28px rgba(2,112,79,.18); }
+.reflect::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(138,244,233,.22), transparent 70%); pointer-events: none; }
+.reflect > *{ position: relative; z-index: 1; }
+.reflect .ref-icon{ width: 54px; height: 54px; border-radius: 14px; background: rgba(138,244,233,.15); border: 1px solid rgba(138,244,233,.35); color: #8AF4E9; display:flex; align-items:center; justify-content:center; }
+.reflect h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: #8AF4E9; letter-spacing: .04em; text-transform: uppercase; }
+.reflect p{ margin: 0; font-size: 15px; color: #DFF5EB; line-height: 1.55; }
+
+/* COMPLETE BAR */
+.complete-bar{ display: flex; justify-content: space-between; align-items: center; padding: 24px 0; margin-top: 32px; border-top: 1px solid var(--hairline); gap: 16px; }
+.complete-bar .prev{ display:flex; gap: 10px; align-items:center; color: var(--ink-3); text-decoration:none; font-size: 13.5px; }
+.complete-bar .prev:hover{ color: var(--ink); }
+.complete-bar .prev .title{ display:block; font-size: 14.5px; color: var(--ink); font-weight: 600; margin-top: 2px; }
+.complete-bar .next-group{ display:flex; gap: 12px; align-items:center; }
+.complete-bar .btn-primary{ background: #03B585; }
+.complete-bar .btn-primary:hover{ background: #028A60; }
+
+/* ASIDE */
+.s-aside{ position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 6px; }
+.s-aside::-webkit-scrollbar{ width: 6px; }
+.s-aside::-webkit-scrollbar-track{ background: transparent; }
+.s-aside::-webkit-scrollbar-thumb{ background: var(--hairline); border-radius: 3px; }
+.aside-box{ border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 20px; background: var(--surface); margin-bottom: 16px; }
+.aside-box h4{ margin:0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing:.14em; text-transform: uppercase; color: var(--ink-3); }
+.outline{ list-style:none; padding:0; margin:0; display:flex; flex-direction: column; gap: 1px; }
+.outline li a{ display: flex; gap: 10px; align-items:center; padding: 8px 10px; border-radius: 6px; text-decoration:none; color: var(--ink-3); font-size: 13px; border-left: 2px solid transparent; }
+.outline li a:hover{ background: var(--surface-2); color: var(--ink); }
+.outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: #03B585; background: #DFF5EB; }
+.outline li a .tick{ width: 14px; height: 14px; border-radius: 50%; background: var(--hairline); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.res-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 8px; }
+.res-list a, .res-list .static{ display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--hairline); text-decoration:none; background: var(--surface); transition: border-color .15s, background .15s; }
+.res-list a:hover{ border-color: #03B585; background: #DFF5EB; }
+.res-list .static{ cursor: default; }
+.res-list .r-icon{ width: 28px; height: 28px; border-radius: 6px; background: #DFF5EB; color: #03B585; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.res-list .r-name{ font-size: 13px; color: var(--ink); font-weight: 600; }
+.res-list .r-name .r-meta{ display:block; font-size: 11px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+
+.aside-box.sess-complete{ transition: border-color .2s, background .2s; }
+.aside-box.sess-complete.is-done{ border-color: #03B585; background: linear-gradient(180deg, #DFF5EB 0%, var(--surface) 90%); }
+.sess-pct-row{ display:flex; align-items:baseline; gap:10px; margin-bottom: 10px; }
+.sess-pct-big{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height:1; color: #03B585; letter-spacing: -.02em; }
+.sess-pct-sign{ font-size: 18px; color: #03B585; margin-left:2px; }
+.sess-pct-lbl{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+.sess-bar{ height:6px; border-radius:999px; background: var(--surface-2); overflow:hidden; margin-bottom: 14px; }
+.sess-bar span{ display:block; height:100%; background: #03B585; width:0%; transition: width .3s; }
+.sess-toggle{ display:flex; gap:12px; align-items:center; width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #03B585; background: var(--surface); color: #03B585; font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: var(--sans); transition: background .15s, color .15s; }
+.sess-toggle:hover{ background: #DFF5EB; }
+.sess-toggle.is-done{ background: #03B585; color:#fff; }
+.sess-toggle .sess-chk{ width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; position: relative; }
+.sess-toggle.is-done .sess-chk{ background: #fff; border-color:#fff; }
+.sess-toggle.is-done .sess-chk::after{ content:""; position:absolute; left:4px; top:5px; width:8px; height:4px; border-left:2px solid #03B585; border-bottom:2px solid #03B585; transform: rotate(-45deg); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="landing.html" class="brand" style="text-decoration:none; color:inherit;"><img src="assets/logo-lcg-verde-oscuro.png" alt="London Consulting Group" /></a>
+    <div class="brand-tag" style="padding: 0 8px 6px; border-bottom:1px solid var(--hairline);">Portal Onboarding</div>
+    <div class="side-user"><div class="avatar">AH</div><div class="side-user-meta"><strong>Ángel Hernández</strong><span>Consultor Asociado</span></div></div>
+    <div class="side-progress"><span class="label">Progreso global</span><span class="val">0<span style="font-size:20px; color:#8AF4E9;">%</span></span><div class="progress"><span style="width:0%"></span></div><div class="meta">0 de 28 sesiones</div></div>
+    <div><div class="nav-section-label">Semana 1</div><ul class="day-list" data-sidebar="days"></ul></div>
+    <div><div class="nav-section-label">General</div><ul class="day-list"><li><a class="day-item" href="progress.html"><span class="num" style="background:transparent; border:none; font-size:14px;">◎</span><span class="name">Mi progreso</span></a></li></ul></div>
+    <div class="sidebar-foot"><span>v 1.0 · LCG México</span></div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <div class="crumb">
+        <a href="landing.html" style="color:inherit; text-decoration:none;">Portal</a>
+        <span style="opacity:.4">/</span>
+        <a href="day-5-viernes.html" style="color:inherit; text-decoration:none;">Viernes</a>
+        <span style="opacity:.4">/</span>
+        <b>Business Case + Panel</b>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="pill" style="background: #DFF5EB; color: #03B585; border-color: transparent;"><span class="pill-dot"></span> Aplicación</span>
+    </header>
+
+    <main class="session-main">
+
+      <!-- HERO -->
+      <section class="s-hero">
+        <div class="container s-hero-inner">
+          <div class="s-hero-kicker">
+            <span class="pill-cat">Aplicación</span>
+            <span class="pill"><span style="opacity:.5">Día 05</span>&nbsp;·&nbsp;Bloques 01–02 de 04</span>
+          </div>
+          <h1>Business Case <em>+ Panel.</em></h1>
+          <p class="s-hero-sub">
+            La prueba real al cierre del onboarding. <b>Tres casos por
+            especialidad</b> (DIBSA · MATENORSA · GRIM) · 12 preguntas
+            estructuradas con tres componentes cada una (Excel + AI +
+            Power BI) · cuatro entregables formales · panel de defensa
+            de 60 minutos. Es el momento donde el candidato demuestra
+            que puede aplicar todo lo aprendido en la semana — y que
+            puede usar AI con criterio profesional.
+          </p>
+          <div class="s-hero-meta">
+            <div class="item"><span class="label">Duración</span><span class="val"><span class="u-mono">6h</span> + <span class="u-mono">60m</span></span></div>
+            <div class="item"><span class="label">Casos</span><span class="val"><span class="u-mono">03</span></span></div>
+            <div class="item"><span class="label">Entregables</span><span class="val"><span class="u-mono">04</span></span></div>
+            <div class="item">
+              <span class="label">Facilita</span>
+              <div class="facilitator" style="margin-top:4px;">
+                <div class="avatar" style="background: #03B585; color:#fff;">DG</div>
+                <div><div class="val">Director General</div><div class="sub">+ Panel: P&amp;C · TD · Vertical</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="s-body">
+          <article>
+
+            <!-- 01 · EVOLUCIÓN -->
+            <section class="s-block" id="sec-evol">
+              <div class="s-block-label">01 · Evolución del Business Case</div>
+              <h2>De un caso de ventas a <em>tres casos por especialidad.</em></h2>
+              <p class="lead">
+                Desde 2017 LCG evaluó a sus candidatos con un solo
+                caso de ventas (BC · QWERTY) usando únicamente Excel.
+                <b>El BC 2026 evoluciona</b>: tres casos diferenciados
+                por vertical (Comercial+SC, Manufactura, Finanzas),
+                herramientas modernas (Excel + AI + Power BI), y un
+                marco de evaluación de cuatro componentes ponderados
+                que mide no solo cálculo sino comunicación ejecutiva
+                y uso crítico de AI.
+              </p>
+
+              <div class="evol">
+                <div class="evol-card before">
+                  <div class="ec-tag">Versión clásica · 2017</div>
+                  <h3>BC · QWERTY</h3>
+                  <div class="ec-row"><span>Empresa</span><span><b>Comercializadora en Guatemala</b></span></div>
+                  <div class="ec-row"><span>Datos</span><span>2015–2016</span></div>
+                  <div class="ec-row"><span>Herramientas</span><span>Excel únicamente</span></div>
+                  <div class="ec-row"><span>Foco</span><span>Análisis comercial general</span></div>
+                  <div class="ec-row"><span>Entregable</span><span>Excel · PBI · PowerPoint</span></div>
+                  <div class="ec-row"><span>Evaluación</span><span>Correctitud de cálculos</span></div>
+                </div>
+                <div class="evol-arrow">→</div>
+                <div class="evol-card after">
+                  <div class="ec-tag">Versión AI-augmented · 2026</div>
+                  <h3>Tres BCs por especialidad</h3>
+                  <div class="ec-row"><span>Empresas</span><span><b>DIBSA · MATENORSA · GRIM</b> (México)</span></div>
+                  <div class="ec-row"><span>Datos</span><span>2024–2025</span></div>
+                  <div class="ec-row"><span>Herramientas</span><span>Excel + AI a elección + Power BI</span></div>
+                  <div class="ec-row"><span>Foco</span><span>Comercial+SC · Manufactura · Finanzas</span></div>
+                  <div class="ec-row"><span>Entregables</span><span>Excel · Pbix · Deck PPT · Bitácora AI</span></div>
+                  <div class="ec-row"><span>Evaluación</span><span>4 componentes ponderados independientes</span></div>
+                </div>
+              </div>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+                <div>
+                  <h3>El cambio de fondo: ya no se mide solo cálculo.</h3>
+                  <p>La evaluación 2026 mide <b>cuatro entregables</b>: análisis cuantitativo, dashboard interactivo, comunicación ejecutiva y uso crítico de AI. Las cuatro pesan independientemente. <b>Pesos:</b> Excel 30% · Power BI 25% · Deck PPT 15% · AI 30%. Lo que más pesa hoy es lo que más distingue al consultor moderno: <b>juicio crítico sobre la AI</b>.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 · LOS 3 CASOS -->
+            <section class="s-block" id="sec-casos">
+              <div class="s-block-label">02 · Los tres casos por especialidad</div>
+              <h2>El candidato resuelve <em>uno</em> según su vertical.</h2>
+              <p>
+                Cada caso está diseñado para una vertical específica.
+                Los tres tienen la misma estructura (12 preguntas en 4
+                bloques) pero con datos, KPIs y problemática propios
+                del giro. <b>El candidato trabaja sobre el archivo
+                Excel del caso asignado y descarga el brief en Word.</b>
+              </p>
+
+              <div class="casos">
+                <!-- DIBSA -->
+                <div class="caso">
+                  <div class="c-num">Caso 01 · BC1</div>
+                  <span class="c-area">Comercial + Supply Chain</span>
+                  <h4>DIBSA</h4>
+                  <p class="c-emp">Distribuidora Industrial del Bajío</p>
+                  <div class="c-row"><span>Sede</span><b>Querétaro · 5 sucursales</b></div>
+                  <div class="c-row"><span>Sector</span>B2B industrial · automotriz · construcción · minería</div>
+                  <div class="c-row"><span>Datos</span>24 meses · ~7 800 transacciones</div>
+                  <div class="c-row"><span>Volumen</span>90 clientes · 280 SKUs · 10 vendedores</div>
+                  <div class="c-kpis"><b>KPIs centrales:</b> Pareto ABC · OTIF · Fill rate · RFV · margen por categoría · detección de anomalías comerciales</div>
+                  <div class="c-files">
+                    <a class="c-file" href="assets/bc/Business Case Comercial.docx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="cf-name">Brief del caso</span><span class="cf-ext">.docx</span></a>
+                    <a class="c-file" href="assets/bc/BC1_Comercial_SupplyChain_DIBSA.xlsx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span class="cf-name">Datos del caso</span><span class="cf-ext">.xlsx</span></a>
+                  </div>
+                </div>
+
+                <!-- MATENORSA -->
+                <div class="caso">
+                  <div class="c-num">Caso 02 · BC2</div>
+                  <span class="c-area">Manufactura</span>
+                  <h4>MATENORSA</h4>
+                  <p class="c-emp">Manufacturas Tecnológicas del Norte</p>
+                  <div class="c-row"><span>Sede</span><b>Apodaca NL · 2 plantas</b></div>
+                  <div class="c-row"><span>Sector</span>Metalmecánica · Tier 2 automotriz</div>
+                  <div class="c-row"><span>Datos</span>24 meses · ~10 500 producción · ~23 000 paros</div>
+                  <div class="c-row"><span>Volumen</span>21 SKUs · 6 líneas · 3 turnos</div>
+                  <div class="c-kpis"><b>KPIs centrales:</b> OEE · Pareto de paros · scrap · rentabilidad por línea · concentración de clientes · alertas tempranas</div>
+                  <div class="c-files">
+                    <a class="c-file" href="assets/bc/Business Case Manufactura.docx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="cf-name">Brief del caso</span><span class="cf-ext">.docx</span></a>
+                    <a class="c-file" href="assets/bc/BC2_Manufactura_MATENORSA.xlsx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span class="cf-name">Datos del caso</span><span class="cf-ext">.xlsx</span></a>
+                  </div>
+                </div>
+
+                <!-- GRIM -->
+                <div class="caso">
+                  <div class="c-num">Caso 03 · BC3</div>
+                  <span class="c-area">Finanzas / Administración</span>
+                  <h4>GRIM</h4>
+                  <p class="c-emp">Grupo Inmobiliario Metropolitano</p>
+                  <div class="c-row"><span>Sede</span><b>CDMX · 8 unidades</b></div>
+                  <div class="c-row"><span>Sector</span>Renta inmobiliaria · centros comerciales · oficinas · industrial</div>
+                  <div class="c-row"><span>Datos</span>24 meses · ~7 000 movimientos contables</div>
+                  <div class="c-row"><span>Volumen</span>120 inquilinos · 23 cuentas contables</div>
+                  <div class="c-kpis"><b>KPIs centrales:</b> EBITDA · CXC por antigüedad · costo por m² · variaciones de gasto · concentración de mora · proyección de cobranza</div>
+                  <div class="c-files">
+                    <a class="c-file" href="assets/bc/Business Case Finanzas.docx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="cf-name">Brief del caso</span><span class="cf-ext">.docx</span></a>
+                    <a class="c-file" href="assets/bc/BC3_Finanzas_GRIM.xlsx" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span class="cf-name">Datos del caso</span><span class="cf-ext">.xlsx</span></a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 03 · TIEMPO Y MODALIDAD -->
+            <section class="s-block" id="sec-tiempo">
+              <div class="s-block-label">03 · Tiempo, modalidad y herramientas</div>
+              <h2>Seis horas para resolverlo, una hora para <em>defenderlo.</em></h2>
+
+              <div class="tiempo">
+                <div class="tiempo-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="tiempo-block">
+                  <div class="tb-tag">Trabajo asíncrono</div>
+                  <h3>6 horas</h3>
+                  <p>Resolución del caso de manera individual. Acceso a datos, herramientas AI a elección y Power BI Desktop.</p>
+                </div>
+                <div class="tiempo-block">
+                  <div class="tb-tag">Panel ejecutivo</div>
+                  <h3>60 minutos</h3>
+                  <p>Defensa en vivo. Presentación del Deck, navegación del dashboard, revisión de bitácora AI, validación en Excel.</p>
+                </div>
+              </div>
+
+              <h3>Reglas de modalidad</h3>
+              <ul>
+                <li><b>Trabajo individual</b> · sin restricción de herramientas para investigar, validar fórmulas o aprender técnicas.</li>
+                <li><b>Herramientas AI permitidas</b> · el candidato elige (Claude, ChatGPT, Gemini, Copilot u otra). <b>Lo importante es el uso crítico, no la marca</b>.</li>
+                <li><b>Visualización obligatoria</b> · Microsoft Power BI Desktop. No se acepta Tableau ni Looker en este caso.</li>
+                <li><b>Moneda</b> · todos los resultados en pesos mexicanos (MXN).</li>
+                <li><b>Entrega</b> · al correo del evaluador antes del panel; en el panel se defienden los resultados en vivo.</li>
+              </ul>
+            </section>
+
+            <!-- 04 · ESTRUCTURA DE PREGUNTAS -->
+            <section class="s-block" id="sec-estructura">
+              <div class="s-block-label">04 · Estructura de las preguntas</div>
+              <h2>Cada pregunta tiene <em>tres componentes obligatorios.</em></h2>
+              <p>
+                La metodología 2026 obliga a integrar las tres
+                herramientas en cada pregunta. <b>No se vale resolver
+                con solo Excel ni demonstrar solo AI</b>: cada
+                pregunta requiere cálculo cuantitativo, interpretación/
+                construcción asistida y visualización en el dashboard.
+              </p>
+
+              <div class="estructura">
+                <div class="est-comp excel">
+                  <div class="ec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                  <h5>Componente Excel</h5>
+                  <span>Cálculo, fórmulas, tablas dinámicas, formatos condicionales</span>
+                </div>
+                <div class="est-op">+</div>
+                <div class="est-comp ai">
+                  <div class="ec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                  <h5>Componente AI</h5>
+                  <span>Interpretación, hipótesis, redacción ejecutiva, crítica del output</span>
+                </div>
+                <div class="est-op">+</div>
+                <div class="est-comp pbi">
+                  <div class="ec-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+                  <h5>Componente Power BI</h5>
+                  <span>Visualización en el dashboard navegable</span>
+                </div>
+              </div>
+
+              <h3>Las 12 preguntas en 4 bloques</h3>
+              <p>Mismo esqueleto en los tres casos, contenido aterrizado a cada vertical:</p>
+
+              <div class="bloque">
+                <div class="b-tag">Bloque 1 · 4 preguntas</div>
+                <h4>Análisis fundamental del giro</h4>
+                <div class="pregs">
+                  <div class="preg"><div class="p-num">01</div><div class="p-meta"><h5>Pareto ABC</h5><p>Por categoría / línea / unidad — concentración del negocio.</p></div></div>
+                  <div class="preg"><div class="p-num">02</div><div class="p-meta"><h5>Análisis cliente o margen</h5><p>Top deudores · clientes principales · márgenes EBITDA.</p></div></div>
+                  <div class="preg"><div class="p-num">03</div><div class="p-meta"><h5>Productividad / cobertura / OEE turno</h5><p>Métrica primaria de eficiencia operativa.</p></div></div>
+                  <div class="preg"><div class="p-num">04</div><div class="p-meta"><h5>Desempeño por segmento</h5><p>Sucursal / línea / unidad — diagnóstico geográfico u organizacional.</p></div></div>
+                </div>
+              </div>
+
+              <div class="bloque">
+                <div class="b-tag">Bloque 2 · 3 preguntas</div>
+                <h4>Tendencias y profundización</h4>
+                <div class="pregs">
+                  <div class="preg"><div class="p-num">05</div><div class="p-meta"><h5>Tendencia mensual y crecimiento</h5><p>Series 2024 vs 2025 · YoY · meses pico y valle.</p></div></div>
+                  <div class="preg"><div class="p-num">06</div><div class="p-meta"><h5>Rentabilidad o causas categóricas</h5><p>Análisis vertical: márgenes · descuentos · variaciones gasto.</p></div></div>
+                  <div class="preg"><div class="p-num">07</div><div class="p-meta"><h5>Análisis profundo del peor performer</h5><p>Una unidad/línea con deterioro: foco completo.</p></div></div>
+                </div>
+              </div>
+
+              <div class="bloque">
+                <div class="b-tag">Bloque 3 · 2 preguntas</div>
+                <h4>Operación y calidad</h4>
+                <div class="pregs">
+                  <div class="preg"><div class="p-num">08</div><div class="p-meta"><h5>OTIF / scrap / costo por m²</h5><p>Métrica operativa específica del giro.</p></div></div>
+                  <div class="preg"><div class="p-num">09</div><div class="p-meta"><h5>Inventarios / concentración / ranking</h5><p>Riesgo de concentración o inventario.</p></div></div>
+                </div>
+              </div>
+
+              <div class="bloque">
+                <div class="b-tag">Bloque 4 · 3 preguntas · Análisis aumentado con AI</div>
+                <h4>Donde la AI agrega más valor</h4>
+                <div class="pregs">
+                  <div class="preg"><div class="p-num">10</div><div class="p-meta"><h5>Segmentación / proyección con AI</h5><p>RFV · predicciones · métodos sofisticados con bitácora.</p></div></div>
+                  <div class="preg"><div class="p-num">11</div><div class="p-meta"><h5>Detección de anomalías</h5><p>Reglas estadísticas asistidas por AI · página de alertas.</p></div></div>
+                  <div class="preg"><div class="p-num">12</div><div class="p-meta"><h5>Plan de trabajo aumentado</h5><p>AI da el primer borrador · candidato lo critica con tracked changes.</p></div></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 05 · 4 ENTREGABLES -->
+            <section class="s-block" id="sec-entregables">
+              <div class="s-block-label">05 · Los cuatro entregables formales</div>
+              <h2>Cuatro archivos al correo del evaluador <em>antes del panel.</em></h2>
+              <p>
+                Cada archivo se evalúa de manera <b>independiente</b>.
+                Los cuatro deben llegar completos en T-0 (antes del
+                panel). Sin alguno, esa dimensión no se evalúa y el
+                puntaje es cero en ese componente.
+              </p>
+
+              <div class="entreg">
+                <div class="entreg-card">
+                  <div class="e-num">Entregable 01</div>
+                  <div class="e-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                  <h5>Análisis Excel</h5>
+                  <div class="e-ext">.xlsx</div>
+                  <p>Tablas dinámicas, fórmulas visibles, formato profesional. <b>Columna vertebral</b> del análisis cuantitativo.</p>
+                </div>
+                <div class="entreg-card">
+                  <div class="e-num">Entregable 02</div>
+                  <div class="e-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+                  <h5>Power BI Desktop</h5>
+                  <div class="e-ext">.pbix</div>
+                  <p>Mínimo 3 páginas: <b>Vista ejecutiva · Análisis profundo · Detalle</b>. Filtra correctamente sin tu intervención.</p>
+                </div>
+                <div class="entreg-card">
+                  <div class="e-num">Entregable 03</div>
+                  <div class="e-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                  <h5>Deck PowerPoint</h5>
+                  <div class="e-ext">.pptx</div>
+                  <p>Máximo 10 slides. Storytelling ejecutivo: contexto · hallazgos · recomendaciones · plan de trabajo. <b>Es lo que presentas al panel.</b></p>
+                </div>
+                <div class="entreg-card">
+                  <div class="e-num">Entregable 04</div>
+                  <div class="e-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <h5>Bitácora AI</h5>
+                  <div class="e-ext">.docx / .pdf</div>
+                  <p>Una sección por pregunta donde usaste AI: <b>prompt literal · output · crítica · decisión final · iteraciones</b>. Sin esta bitácora la dimensión AI no se evalúa.</p>
+                </div>
+              </div>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                <div>
+                  <h3>Cómo se conectan los cuatro.</h3>
+                  <p><b>El Excel sostiene el cálculo.</b> El Power BI vuelve el cálculo navegable. El Deck cuenta la historia ejecutiva. La Bitácora AI documenta el pensamiento detrás. Cada archivo cumple un rol distinto y los cuatro se evalúan de forma independiente — no se compensan entre sí.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 06 · POLÍTICA AI -->
+            <section class="s-block" id="sec-policy">
+              <div class="s-block-label">06 · Política de uso AI</div>
+              <h2>Siete reglas <em>no negociables.</em></h2>
+              <p>
+                Estas reglas aplican durante todo el caso. La violación
+                de cualquiera puede <b>invalidar el ejercicio</b>.
+                Reflejan el marco LCG sobre uso responsable de AI en
+                proyectos con datos de cliente.
+              </p>
+
+              <div class="policy">
+                <div class="policy-row is-header"><div>#</div><div>Regla</div><div>Por qué</div></div>
+                <div class="policy-row"><div class="p-id">R1</div><div class="p-rule">Etiquetar todo contenido generado o modificado por AI</div><div class="p-why">Trazabilidad. El evaluador y el cliente deben poder distinguir aporte humano de aporte AI.</div></div>
+                <div class="policy-row"><div class="p-id">R2</div><div class="p-rule">Verificar todo dato numérico contra la fuente antes de presentarlo</div><div class="p-why">Las AI generativas <b>alucinan números con seguridad</b>. Un dato falso en un BC es falla grave.</div></div>
+                <div class="policy-row"><div class="p-id">R3</div><div class="p-rule">No subir datos del caso a herramientas no autorizadas o cuentas personales</div><div class="p-why">Riesgo de fuga de información. Usar versión empresarial o cuenta corporativa de la herramienta AI elegida.</div></div>
+                <div class="policy-row"><div class="p-id">R4</div><div class="p-rule">Documentar los prompts críticos en la bitácora AI</div><div class="p-why">Reproducibilidad. Otro consultor debe poder repetir tu análisis con la misma herramienta.</div></div>
+                <div class="policy-row"><div class="p-id">R5</div><div class="p-rule">Cuestionar siempre las recomendaciones genéricas de la AI</div><div class="p-why">Las AI tienden a respuestas medias-aceptables-para-todos. <b>El consultor agrega valor al aterrizar al caso real.</b></div></div>
+                <div class="policy-row"><div class="p-id">R6</div><div class="p-rule">No usar AI para inventar datos faltantes</div><div class="p-why">Si la BD no tiene un dato, no se completa con AI; se declara como información requerida.</div></div>
+                <div class="policy-row"><div class="p-id">R7</div><div class="p-rule">Mantener el juicio profesional como filtro final</div><div class="p-why">La AI no carga responsabilidad profesional; <b>el consultor sí. Aprobar es firmar.</b></div></div>
+              </div>
+            </section>
+
+            <!-- 07 · MECÁNICA DEL PANEL -->
+            <section class="s-block" id="sec-panel">
+              <div class="s-block-label">07 · Mecánica del panel · 60 minutos</div>
+              <h2>Cómo se vive la <em>defensa.</em></h2>
+              <p>
+                El panel está integrado por <b>Director General + P&amp;C
+                + TD + Director de la Vertical correspondiente</b>. Es
+                la última prueba del onboarding y el momento donde se
+                valida que el candidato no solo resolvió el caso, sino
+                que puede <b>defenderlo, navegarlo y argumentar bajo
+                presión</b>.
+              </p>
+
+              <div class="panel-tl">
+                <div class="panel-bar">
+                  <div class="pb-1">Apertura · Deck<br/>10–15 min</div>
+                  <div class="pb-2">Q&amp;A · Power BI<br/>20 min</div>
+                  <div class="pb-3">Bitácora AI<br/>15 min</div>
+                  <div class="pb-4">Cierre · feedback<br/>10–15 min</div>
+                </div>
+                <div class="panel-detail">
+                  <div class="panel-step">
+                    <div class="ps-tag">Etapa 01</div>
+                    <h5>Apertura · presentación del Deck</h5>
+                    <p>Candidato presenta los 10 slides en 10–15 min. Storytelling: contexto, hallazgos, recomendaciones, plan.</p>
+                  </div>
+                  <div class="panel-step">
+                    <div class="ps-tag">Etapa 02</div>
+                    <h5>Q&amp;A en Power BI · en vivo</h5>
+                    <p>Panel pide <b>filtros y vistas específicas</b>. El dashboard corre en vivo. Se valida exploración real, no solo screens estáticas.</p>
+                  </div>
+                  <div class="panel-step">
+                    <div class="ps-tag">Etapa 03</div>
+                    <h5>Revisión bitácora AI</h5>
+                    <p>Panel pregunta por prompts específicos. <b>Cómo iteraste, qué críticas hiciste al output, dónde decidiste no usar AI</b>. Es el momento decisivo del componente AI.</p>
+                  </div>
+                  <div class="panel-step">
+                    <div class="ps-tag">Etapa 04</div>
+                    <h5>Cierre y feedback</h5>
+                    <p>Panel da retroalimentación inmediata. El Excel queda disponible para validar cualquier cálculo en tiempo real si surge duda.</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3>Cuatro archivos abiertos durante el panel</h3>
+              <ul>
+                <li><b>Deck PowerPoint</b> — corre en pantalla principal en los primeros 10–15 minutos.</li>
+                <li><b>Power BI Desktop</b> — abierto y filtrable: el panel pedirá filtros y vistas específicas en vivo.</li>
+                <li><b>Bitácora AI</b> — abierta para revisión de prompts cuando el panel lo solicite.</li>
+                <li><b>Excel</b> — disponible para validar cualquier cálculo en tiempo real.</li>
+              </ul>
+            </section>
+
+            <!-- 08 · EVALUACIÓN -->
+            <section class="s-block" id="sec-evaluacion">
+              <div class="s-block-label">08 · Evaluación · 4 componentes ponderados</div>
+              <h2>Cuatro pesos, alineados <em>uno a uno</em> con los entregables.</h2>
+              <p>
+                La evaluación tiene cuatro componentes alineados uno a
+                uno con los cuatro entregables. <b>Excel y AI pesan
+                igual (30% cada uno) y juntos suman 60% del puntaje
+                final</b>. Visualización pesa 25% y comunicación
+                ejecutiva 15%.
+              </p>
+
+              <div class="eval-grid">
+                <div class="eval-row is-header">
+                  <div>Componente</div>
+                  <div>Peso</div>
+                  <div>Distribución visual</div>
+                  <div>Qué se evalúa</div>
+                </div>
+                <div class="eval-row">
+                  <div class="er-name">Análisis cuantitativo<span>Excel</span></div>
+                  <div class="er-pct">30%</div>
+                  <div class="er-bar"><span style="width:30%"></span></div>
+                  <div class="er-desc">Correctitud de cálculos, tablas dinámicas, fórmulas, claridad de la hoja de respuestas.</div>
+                </div>
+                <div class="eval-row">
+                  <div class="er-name">Visualización<span>Power BI</span></div>
+                  <div class="er-pct">25%</div>
+                  <div class="er-bar"><span style="width:25%"></span></div>
+                  <div class="er-desc">Diseño del dashboard, claridad narrativa, jerarquía visual, capacidad de filtrado y exploración.</div>
+                </div>
+                <div class="eval-row">
+                  <div class="er-name">Comunicación ejecutiva<span>Deck PPT</span></div>
+                  <div class="er-pct">15%</div>
+                  <div class="er-bar"><span style="width:15%"></span></div>
+                  <div class="er-desc">Storytelling, una idea por slide, calidad de los gráficos, recomendaciones accionables, defensa en panel.</div>
+                </div>
+                <div class="eval-row">
+                  <div class="er-name">Uso crítico de AI<span>Bitácora</span></div>
+                  <div class="er-pct">30%</div>
+                  <div class="er-bar"><span style="width:30%"></span></div>
+                  <div class="er-desc">Calidad de prompts, juicio sobre outputs, aterrizaje al caso, integración AI con los otros entregables.</div>
+                </div>
+              </div>
+
+              <div class="concept-call">
+                <div class="ic-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                <div>
+                  <h3>Lo que más cuenta dentro del componente AI.</h3>
+                  <p><b>Pensamiento crítico sobre la AI</b> (25% del componente AI) pesa más que <b>Calidad del prompt</b> (20%). Es deliberado: el riesgo principal de un consultor con AI no es prompar mal — es <b>aceptar respuestas mediocres como si fueran insights</b>. Si solo dominas una de las dos cosas, prioriza la crítica.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 09 · CÓMO PREPARARSE -->
+            <section class="s-block" id="sec-prep">
+              <div class="s-block-label">09 · Cómo prepararse</div>
+              <h2>Checklist <em>previo</em> al BC.</h2>
+              <p>
+                Llegar al caso preparado distingue al candidato seguro
+                del improvisador. Estos son los pasos que LCG
+                recomienda hacer en los días previos:
+              </p>
+
+              <div class="prep">
+                <div class="prep-item">
+                  <div class="pi-num">01</div>
+                  <div>
+                    <h5>Descarga ya los archivos del caso de tu vertical</h5>
+                    <p>Brief en Word + datos en Excel. Léelos completos antes del día del caso. <b>Conoce las hojas, las columnas, los volúmenes</b>. Identifica datos faltantes o inconsistencias antes de que el reloj empiece.</p>
+                  </div>
+                </div>
+                <div class="prep-item">
+                  <div class="pi-num">02</div>
+                  <div>
+                    <h5>Verifica tu setup técnico</h5>
+                    <p><b>Power BI Desktop instalado y actualizado.</b> Excel funcionando con tablas dinámicas. Cuenta corporativa M365 activa. Tu herramienta AI de elección con sesión empresarial (ver Día 04).</p>
+                  </div>
+                </div>
+                <div class="prep-item">
+                  <div class="pi-num">03</div>
+                  <div>
+                    <h5>Repasa el Día 04 · stack AI + plantilla bitácora</h5>
+                    <p>La bitácora AI no se improvisa. <b>Tu plantilla debería tener: prompt literal, output recibido, crítica, decisión final, número de iteraciones</b>. Pre-arma el formato.</p>
+                  </div>
+                </div>
+                <div class="prep-item">
+                  <div class="pi-num">04</div>
+                  <div>
+                    <h5>Define tu plan de tiempo de las 6 horas</h5>
+                    <p>Sugerencia: <b>2h Excel core (preguntas 1-7) · 2h Power BI dashboard · 1.5h AI bloque 4 + bitácora · 0.5h Deck</b>. Ajusta según tu fuerte. <b>El Deck es lo último</b> porque depende de hallazgos.</p>
+                  </div>
+                </div>
+                <div class="prep-item">
+                  <div class="pi-num">05</div>
+                  <div>
+                    <h5>Prepara la apertura del Deck en tu cabeza</h5>
+                    <p>10 slides, 10-15 minutos. <b>Slide 1 contexto, slide 2 hallazgo principal, slides 3-7 análisis, slides 8-10 plan</b>. Una idea por slide. La defensa empieza con cómo abres.</p>
+                  </div>
+                </div>
+                <div class="prep-item">
+                  <div class="pi-num">06</div>
+                  <div>
+                    <h5>Anticipa preguntas duras del panel</h5>
+                    <p>"¿Cómo validaste este número?" · "¿Qué pasa si la hipótesis del bloque 4 está equivocada?" · "Muéstrame cómo iteraste este prompt". <b>El panel buscará la grieta</b>; ten claras las defensas.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 10 · CIERRE -->
+            <section class="s-block" id="sec-cierre">
+              <div class="s-block-label">10 · Cierre del módulo</div>
+              <div class="reflect">
+                <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div>
+                  <h4>Estás listo</h4>
+                  <p>El BC + Panel es la última prueba antes de tu primera asignación real. <b>No es un examen — es un simulacro del trabajo</b>. Si lo resuelves bien, ya hiciste el trabajo de un consultor LCG en 6 horas con AI. Esa es la barra. Adelante.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- COMPLETE BAR -->
+            <div class="complete-bar">
+              <a class="prev" href="day-5-viernes.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><div><span style="font-size:11px; letter-spacing:.1em; text-transform:uppercase;">Volver</span><span class="title">Día 05 · Aplicación</span></div></a>
+              <div class="next-group"><a class="btn btn-primary btn-lg" href="day-5-viernes.html">Volver al Día 05<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
+            </div>
+
+          </article>
+
+          <aside class="s-aside">
+            <div class="aside-box sess-complete">
+              <h4>Tu avance</h4>
+              <div class="sess-pct-row"><span class="sess-pct-big"><span id="sess-pct-num">0</span><span class="sess-pct-sign">%</span></span><span class="sess-pct-lbl">Bloque 01–02 de 04 · Día 05</span></div>
+              <div class="sess-bar"><span id="sess-bar"></span></div>
+              <button class="sess-toggle" id="sess-toggle" type="button" aria-pressed="false"><span class="sess-chk" aria-hidden="true"></span><span class="sess-txt">Marcar como completada</span></button>
+            </div>
+
+            <div class="aside-box">
+              <h4>Contenido</h4>
+              <ul class="outline">
+                <li><a class="active" href="#sec-evol"><span class="tick"></span>Evolución 2017→2026</a></li>
+                <li><a href="#sec-casos"><span class="tick"></span>Los 3 casos</a></li>
+                <li><a href="#sec-tiempo"><span class="tick"></span>Tiempo y modalidad</a></li>
+                <li><a href="#sec-estructura"><span class="tick"></span>Estructura preguntas</a></li>
+                <li><a href="#sec-entregables"><span class="tick"></span>4 Entregables</a></li>
+                <li><a href="#sec-policy"><span class="tick"></span>Política AI · R1-R7</a></li>
+                <li><a href="#sec-panel"><span class="tick"></span><b style="color:var(--ink);">Mecánica del panel</b></a></li>
+                <li><a href="#sec-evaluacion"><span class="tick"></span>Evaluación · 4 pesos</a></li>
+                <li><a href="#sec-prep"><span class="tick"></span>Cómo prepararse</a></li>
+                <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box">
+              <h4>Casos descargables</h4>
+              <ul class="res-list">
+                <li><a href="assets/bc/Business Case Comercial.docx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">DIBSA · Brief<span class="r-meta">Comercial + Supply Chain · .docx</span></div></a></li>
+                <li><a href="assets/bc/BC1_Comercial_SupplyChain_DIBSA.xlsx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">DIBSA · Datos<span class="r-meta">~7 800 transacciones · .xlsx</span></div></a></li>
+                <li><a href="assets/bc/Business Case Manufactura.docx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">MATENORSA · Brief<span class="r-meta">Manufactura · .docx</span></div></a></li>
+                <li><a href="assets/bc/BC2_Manufactura_MATENORSA.xlsx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">MATENORSA · Datos<span class="r-meta">~10.5K producción · .xlsx</span></div></a></li>
+                <li><a href="assets/bc/Business Case Finanzas.docx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div class="r-name">GRIM · Brief<span class="r-meta">Finanzas · .docx</span></div></a></li>
+                <li><a href="assets/bc/BC3_Finanzas_GRIM.xlsx" download><div class="r-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div class="r-name">GRIM · Datos<span class="r-meta">~7K movimientos · .xlsx</span></div></a></li>
+              </ul>
+            </div>
+
+            <div class="aside-box" style="background: #DFF5EB; border-color: #03B585;">
+              <h4 style="color: #03B585;">Después del panel</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px;">Sigue con <b>Intro a primer proyecto</b> y <b>Cierre ejecutivo</b> del Día 05.</p>
+              <a href="day-5-viernes.html" style="font-size: 12.5px; font-weight: 600; color: #03B585;">Volver al Día 05 →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="shared/iso-builders.js?v=6"></script>
+<script src="shared/app.js?v=12"></script>
+<script>
+(function(){
+  const STORE = 'lcg-onb-sessions-v1';
+  const SESSION_ID = 'd5-b01-caso';
+  function loadStore(){ try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e){ return {}; } }
+  function saveStore(s){ localStorage.setItem(STORE, JSON.stringify(s)); }
+  const toggle = document.getElementById('sess-toggle');
+  const barEl  = document.getElementById('sess-bar');
+  const pctEl  = document.getElementById('sess-pct-num');
+  const txtEl  = toggle.querySelector('.sess-txt');
+  function render(){
+    const done = !!loadStore()[SESSION_ID];
+    toggle.classList.toggle('is-done', done);
+    toggle.setAttribute('aria-pressed', done ? 'true' : 'false');
+    barEl.style.width = done ? '100%' : '0%';
+    pctEl.textContent = done ? '100' : '0';
+    txtEl.textContent = done ? '✓ Sesión completada' : 'Marcar como completada';
+  }
+  toggle.addEventListener('click', () => { const store = loadStore(); store[SESSION_ID] = !store[SESSION_ID]; saveStore(store); render(); });
+  render();
+})();
+</script>
+</body>
+</html>
