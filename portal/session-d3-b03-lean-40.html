@@ -58,8 +58,8 @@
 .princ-cell.is-waste .pc-ic{ color: #B5564E; }
 .princ-cell.is-waste h5{ color: #6E342E; }
 
-/* 5S strip */
-.fives{ margin: 16px 0; display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 6px; align-items: stretch; }
+/* 5S strip — 5 cells alternating with 4 arrows */
+.fives{ margin: 16px 0; display: grid; grid-template-columns: 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr; gap: 6px; align-items: stretch; }
 .five-cell{ padding: 14px 12px; border-radius: 10px; background: linear-gradient(180deg, var(--cat-ind-bg) 0%, var(--surface) 100%); border: 1px solid rgba(198,138,62,.22); text-align: center; }
 .five-cell .fc-jp{ font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cat-ind); line-height: 1; letter-spacing: -.02em; margin-bottom: 6px; }
 .five-cell .fc-jp b{ font-style: normal; font-weight: 400; }
@@ -125,8 +125,8 @@
 .mat-step p{ margin: 0; font-size: 11px; color: var(--ink-3); line-height: 1.4; }
 .mat-step.s5 p{ color: #F2EEE8; }
 
-/* PASER big strip */
-.paser-strip{ margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 6px; align-items: stretch; }
+/* PASER big strip · 5 bloques */
+.paser-strip{ margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-items: stretch; }
 .paser-block{ padding: 16px 12px; border-radius: 10px; background: linear-gradient(135deg, #1F4D33 0%, #2F6B47 100%); color: #fff; text-align: center; }
 .paser-block .pb-letter{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height: 1; letter-spacing: -.03em; color: #fff; margin-bottom: 6px; }
 .paser-block .pb-word{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #BFEAC9; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
@@ -170,13 +170,13 @@
 .oee-tier ul{ margin: 0; padding: 0 0 0 14px; font-size: 11px; color: var(--ink-3); line-height: 1.5; text-align: left; }
 .oee-tier.t-85 ul{ color: rgba(242,238,232,.95); }
 
-/* TECH STACK for OEE */
-.tech-stack{ margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 6px; align-items: stretch; }
-.tech-step{ padding: 16px 12px; border-radius: 10px; background: var(--cat-ind-bg); border: 1px solid rgba(198,138,62,.22); text-align: center; }
-.tech-step .ts-ic{ width: 36px; height: 36px; border-radius: 50%; background: var(--surface); color: var(--cat-ind); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+/* TECH STACK for OEE · 4 steps + 3 arrows = 7 columns */
+.tech-stack{ margin: 18px 0; padding: 22px 18px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 22px 1fr 22px 1fr 22px 1fr; gap: 6px; align-items: stretch; }
+.tech-step{ padding: 16px 12px; border-radius: 10px; background: var(--cat-ind-bg); border: 1px solid rgba(198,138,62,.22); text-align: center; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.tech-step .ts-ic{ width: 36px; height: 36px; border-radius: 50%; background: var(--surface); color: var(--cat-ind); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; flex-shrink: 0; }
 .tech-step h5{ margin: 0 0 4px; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--ink); }
 .tech-step span{ font-size: 10.5px; color: var(--ink-3); line-height: 1.4; display: block; }
-.tech-arrow{ display: flex; align-items: center; justify-content: center; color: var(--cat-ind); opacity: .6; font-weight: 700; }
+.tech-arrow{ display: flex; align-items: center; justify-content: center; color: var(--cat-ind); opacity: .55; font-weight: 700; font-size: 14px; }
 
 /* SMART grid */
 .smart{ margin: 18px 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
@@ -191,6 +191,29 @@
 .rca-card .rca-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--cat-ind); letter-spacing: .12em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
 .rca-card h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); }
 .rca-card p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+/* PILAR HEADER · banner por pilar */
+.pilar-banner{ margin: 14px 0 18px; padding: 24px 28px; border-radius: var(--r-md); background: linear-gradient(135deg, #6E4720 0%, #C68A3E 100%); color: #fff; display: grid; grid-template-columns: 88px 1fr 140px; gap: 24px; align-items: center; box-shadow: 0 10px 28px rgba(110,71,32,.18); position: relative; overflow: hidden; }
+.pilar-banner::after{ content: ""; position: absolute; top: -40%; right: -10%; width: 320px; height: 320px; background: radial-gradient(closest-side, rgba(252,229,192,.18), transparent 70%); pointer-events: none; }
+.pilar-banner > *{ position: relative; z-index: 1; }
+.pilar-banner .pb-num{ width: 80px; height: 80px; background: rgba(252,229,192,.15); border: 1px solid rgba(252,229,192,.35); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 38px; color: #FCE5C0; font-weight: 400; letter-spacing: -.025em; }
+.pilar-banner .pb-meta .pb-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #FCE5C0; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; display: block; }
+.pilar-banner .pb-meta h3{ margin: 0; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1.05; letter-spacing: -.02em; color: #fff; }
+.pilar-banner .pb-meta p{ margin: 6px 0 0; font-size: 13.5px; color: #F2EEE8; line-height: 1.5; max-width: 560px; }
+.pilar-banner .pb-count{ text-align: center; padding: 12px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; }
+.pilar-banner .pb-count .pc-num{ font-family: var(--serif); font-size: 32px; line-height: 1; color: #fff; letter-spacing: -.02em; }
+.pilar-banner .pb-count .pc-lbl{ display: block; margin-top: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #FCE5C0; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+
+/* MODELOS GRID · cards de modelos por pilar */
+.modelos-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 14px 0; }
+.modelos-grid.is-two{ grid-template-columns: 1fr 1fr; }
+.modelo-card{ padding: 16px 18px 18px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid var(--cat-ind); display: flex; flex-direction: column; gap: 4px; }
+.modelo-card.is-key{ background: linear-gradient(180deg, var(--cat-ind-bg) 0%, var(--surface) 80%); border-top-color: var(--lcg-dark); }
+.modelo-card .mc-num{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ind); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
+.modelo-card.is-key .mc-num{ color: var(--lcg-dark); }
+.modelo-card h4{ margin: 2px 0 6px; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink); line-height: 1.2; }
+.modelo-card p{ margin: 0; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+.modelo-card p b{ color: var(--ink); font-weight: 600; }
 
 /* CONCEPT CALLOUT */
 .concept-call{ padding: 26px 32px; border-radius: var(--r-md); background: linear-gradient(135deg, #6E4720 0%, #B07730 100%); color: #fff; position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; box-shadow: 0 10px 28px rgba(110,71,32,.18); margin: 14px 0; }
@@ -435,9 +458,13 @@
 
               <div class="fives">
                 <div class="five-cell"><div class="fc-jp"><b>S</b>eiri</div><span class="fc-es">Clasificar</span></div>
+                <div class="five-arrow">→</div>
                 <div class="five-cell"><div class="fc-jp"><b>S</b>eiton</div><span class="fc-es">Ordenar</span></div>
+                <div class="five-arrow">→</div>
                 <div class="five-cell"><div class="fc-jp"><b>S</b>eiso</div><span class="fc-es">Limpiar</span></div>
+                <div class="five-arrow">→</div>
                 <div class="five-cell"><div class="fc-jp"><b>S</b>eiketsu</div><span class="fc-es">Estandarizar</span></div>
+                <div class="five-arrow">→</div>
                 <div class="five-cell"><div class="fc-jp"><b>S</b>hitsuke</div><span class="fc-es">Disciplina</span></div>
               </div>
             </section>
@@ -697,21 +724,141 @@
               </div>
             </section>
 
-            <!-- 07 · OEE Deep-dive -->
-            <section class="s-block" id="sec-oee">
-              <div class="s-block-label">07 · Modelo central · OEE</div>
-              <h2>OEE · la métrica que <em>une todo.</em></h2>
-              <p class="lead">
-                <b>Overall Equipment Effectiveness</b> es la métrica
-                más central de Lean 4.0. Combina <b>tres variables
-                fundamentales</b> y refleja el grado de aprovechamiento
-                real de la capacidad instalada vs. su potencial
-                teórico máximo. No es un indicador más — es el
-                instrumento que <b>identifica con claridad dónde se
-                generan las pérdidas</b>.
+            <!-- 07 · PILAR 01 · Planeación de Producción -->
+            <section class="s-block" id="sec-pilar1">
+              <div class="s-block-label">Pilar 01 · 6 modelos</div>
+              <h2>Planeación de <em>Producción.</em></h2>
+              <p>
+                Alinear capacidad productiva con la demanda del
+                mercado. <b>Sin un buen plan no hay control de piso
+                que aguante</b> — y la planta se vuelve reactiva,
+                acumula inventario o pierde ventas por faltantes.
+                Este pilar abarca desde el foro estratégico mensual
+                (S&amp;OP) hasta los estándares de producción que
+                alimentan al OEE.
               </p>
 
-              <h3>La fórmula</h3>
+              <div class="pilar-banner">
+                <div class="pb-num">01</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Planeación de Producción</span>
+                  <h3>Alinear capacidad con demanda</h3>
+                  <p>De la visión anual a la programación detallada por turno. El plan agregado cae en MRP, MRP cae en programa, programa cae en estándares.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">06</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card is-key">
+                  <span class="mc-num">1.1</span>
+                  <h4>S&amp;OP · Sales &amp; Operations Planning</h4>
+                  <p>Foro mensual donde <b>Ventas, Operaciones y Finanzas</b> alinean demanda y supply en un solo plan agregado. Decisión clave: qué se va a producir, cuánto, cuándo, dónde, con qué inventario y a qué costo. Es el eslabón estratégico que conecta presupuesto comercial con capacidad real.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">1.2</span>
+                  <h4>Pronóstico de Demanda</h4>
+                  <p>Estimación cuantitativa de demanda futura. Combina <b>series de tiempo</b> (histórico), <b>causales</b> (variables externas) y <b>juicio experto</b> (sensing comercial). El error del forecast es lo que dimensiona el inventario de seguridad.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">1.3</span>
+                  <h4>Planeación de Materiales e Insumos</h4>
+                  <p><b>MRP</b>: traduce el plan maestro a órdenes de compra y producción. BOM × volumen × lead time = qué pedir y cuándo. La calidad del MRP depende de la limpieza del catálogo y la exactitud de inventarios.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">1.4</span>
+                  <h4>Capacity Plan</h4>
+                  <p>Cuánta capacidad se necesita por línea, turno o máquina, y cómo asignarla. <b>Rough-cut</b> al inicio, <b>fino</b> al programar. Identifica cuellos de botella antes de que se materialicen en faltantes.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">1.5</span>
+                  <h4>Programación de Producción</h4>
+                  <p>Secuencia detallada (Gantt) de qué producir, cuándo, en qué línea, en qué orden. Optimiza setups (junta corridas similares), respeta restricciones de calidad y minimiza tiempos muertos.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">1.6</span>
+                  <h4>Definición de Estándares de Producción</h4>
+                  <p><b>Tiempo estándar, ritmo esperado, tasa teórica</b>. Insumo crítico del OEE (sin estándar no hay rendimiento medible) y del Capacity Plan (sin estándar no hay capacidad calculable).</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 08 · PILAR 02 · Producción · Control de Piso -->
+            <section class="s-block" id="sec-pilar2">
+              <div class="s-block-label">Pilar 02 · 9 modelos</div>
+              <h2>Producción · <em>Control de Piso.</em></h2>
+              <p>
+                El corazón de Lean 4.0. <b>Donde el plan se ejecuta y
+                donde se generan o se pierden las eficiencias</b>.
+                Aquí viven OEE, 5S, SMED, Gemba — los modelos
+                fundacionales que verás en cualquier proyecto de
+                manufactura.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">02</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Producción · Control de Piso</span>
+                  <h3>El corazón operativo</h3>
+                  <p>Visibilidad en tiempo real, ritmo estandarizado, mejora continua disciplinada. La sala de control + la planta + las personas operando cada turno.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">09</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card is-key">
+                  <span class="mc-num">2.1 · central</span>
+                  <h4>Gestión de OEE</h4>
+                  <p><b>Overall Equipment Effectiveness</b>: la métrica que combina disponibilidad × rendimiento × calidad. Identifica con claridad dónde se generan las pérdidas. <b>Detalle abajo ↓</b></p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">2.2</span>
+                  <h4>Fábrica Visual</h4>
+                  <p>Sistema integral de comunicación visual en planta: <b>andones, tableros digitales, KPIs visibles</b>, semaforización por línea. Convierte problemas ocultos en visibles. Madurez 04+: tableros BI conectados a sensores.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">2.3</span>
+                  <h4>Reto de Productividad</h4>
+                  <p>Mecanismo formal anual para retar mejoras de productividad por área/línea. Compromiso medible (% de mejora vs. base), gobernanza clara y revisión trimestral.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">2.4</span>
+                  <h4>Trabajo Estándar · SMED</h4>
+                  <p><b>Single-Minute Exchange of Die</b>: reducir tiempos de set-up de horas a minutos. Separa actividades internas (con máquina parada) de externas (con máquina operando), convierte internas en externas, optimiza ambas. Mejora directa de Disponibilidad en OEE.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">2.5</span>
+                  <h4>Orden y Limpieza · 5S</h4>
+                  <p>Disciplina del orden: <b>Seiri, Seiton, Seiso, Seiketsu, Shitsuke</b>. Quick Win de arranque en casi todo proyecto Lean — visible, rápido (4-8 sem) y cambia la cultura del piso.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">2.6</span>
+                  <h4>Gemba Walk</h4>
+                  <p>Caminata estructurada al <b>lugar donde sucede el trabajo</b>. Frecuencia, ruta, preguntas guía, formato de captura. Observación directa por liderazgo — no se gestiona desde la oficina.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">2.7</span>
+                  <h4>Estándares de Operación</h4>
+                  <p>Documentación de cómo se ejecuta cada actividad: <b>trabajo estandarizado</b>. Insumo de capacitación, base para auditoría, foundation para mejorar (no se mejora lo que no está estandarizado).</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">2.8</span>
+                  <h4>Ideas Kaizen</h4>
+                  <p>Sistema para captar sugerencias del operador y darles seguimiento. <b>Buzón físico/digital, comité semanal, reconocimiento</b>. Sin sistema, las ideas se pierden y el operador deja de proponer.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">2.9</span>
+                  <h4>Entrenamientos Lean</h4>
+                  <p>Capacitación formal en herramientas Lean. <b>Yellow / Green / Black Belt</b> internos. Currículo por puesto, certificación, refrescos anuales.</p>
+                </div>
+              </div>
+
+              <h3>OEE deep-dive · la fórmula</h3>
               <div class="oee-formula">
                 <div class="oee-row">
                   <div class="oee-cell result">
@@ -843,9 +990,384 @@
               </div>
             </section>
 
-            <!-- 08 · METAS Y RCA -->
+            <!-- PILAR 03 · MANTENIMIENTO -->
+            <section class="s-block" id="sec-pilar3">
+              <div class="s-block-label">Pilar 03 · 7 modelos</div>
+              <h2><em>Mantenimiento.</em></h2>
+              <p>
+                La estrategia LCG promueve <b>TPM · Mantenimiento
+                Productivo Total</b>: prevención sobre reacción,
+                operador involucrado, datos de IoT alimentando análisis
+                predictivo. El objetivo es <b>maximizar la vida útil
+                del equipo y minimizar los tiempos muertos no
+                planeados</b> que destruyen el OEE.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">03</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Mantenimiento</span>
+                  <h3>De correctivo a predictivo</h3>
+                  <p>El cambio de paradigma: dejar de apagar fuegos para anticiparlos. Sensores + análisis + operador autónomo + plan estructurado.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">07</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card">
+                  <span class="mc-num">3.1</span>
+                  <h4>Plan Anual de Mantenimiento</h4>
+                  <p>Calendarización de actividades de mantenimiento para todo el año, por equipo. <b>Sincroniza con plan de producción</b> para minimizar impacto. Insumo del Capacity Plan.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">3.2</span>
+                  <h4>CMMS · Computerized Maintenance Management System</h4>
+                  <p>Software para gestionar <b>órdenes de trabajo, historial de fallas, refacciones, frecuencias</b>. Es la columna vertebral de mantenimiento — sin CMMS no hay datos para análisis predictivo.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">3.3</span>
+                  <h4>Mantenimiento Predictivo</h4>
+                  <p>Sensores IoT + análisis predictivo. <b>Actúa antes de la falla</b>: vibración anormal → cambio de rodamiento programado. Requiere madurez digital alta (Nivel 04+) pero ROI muy alto.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">3.4</span>
+                  <h4>Mantenimiento Preventivo</h4>
+                  <p>Tareas programadas <b>por tiempo o uso</b> (cambio de aceite cada 500h, lubricación cada turno). Default cuando aún no se tiene capacidad predictiva.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">3.5</span>
+                  <h4>Mantenimiento Correctivo</h4>
+                  <p>Reparaciones <b>post-falla</b>. Lo que se quiere minimizar — cada hora de correctivo no planeado es OEE perdido. Métrica clave: <b>MTBF</b> (Mean Time Between Failures) y <b>MTTR</b> (Mean Time To Repair).</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">3.6</span>
+                  <h4>Mantenimiento Autónomo</h4>
+                  <p>Tareas básicas (<b>limpieza, lubricación, inspección</b>) ejecutadas por el operador, no por mantenimiento. Pilar de TPM. Libera al equipo técnico para tareas complejas y empodera al operador.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">3.7</span>
+                  <h4>Gestión de Refacciones</h4>
+                  <p><b>BOM crítica, niveles min/max, lead times de proveedores, gestión de spare parts</b>. Trade-off: inventario alto cuesta caro vs. parar línea por falta de refacción cuesta más.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- PILAR 04 · CALIDAD -->
+            <section class="s-block" id="sec-pilar4">
+              <div class="s-block-label">Pilar 04 · 7 modelos</div>
+              <h2><em>Calidad.</em></h2>
+              <p>
+                Asegurar que el producto cumpla las expectativas del
+                cliente, <b>de forma consistente y eficiente</b>. Lean
+                4.0 trata calidad como sistema integral — no como
+                inspección final, sino como <b>diseño + control en
+                proceso + retroalimentación rápida</b>.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">04</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Calidad</span>
+                  <h3>Hacerlo bien la primera vez</h3>
+                  <p>Estándares claros, inspección estratégica, voz del cliente capturada, mermas cuantificadas. Six Sigma + SGC.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">07</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card">
+                  <span class="mc-num">4.1</span>
+                  <h4>Estándares de Calidad · Tolerancias</h4>
+                  <p>Especificaciones técnicas que definen <b>qué es "bien hecho"</b>: dimensiones, peso, color, características. Sin estándar no hay control posible.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">4.2</span>
+                  <h4>Plan de Inspección</h4>
+                  <p>Frecuencia, tamaño de muestra, criterios de aceptación por etapa del proceso. <b>Inspeccionar todo es caro; no inspeccionar es peor</b>. Diseño basado en riesgo.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">4.3</span>
+                  <h4>Inspección de MP · Confiabilidad de Proveedores</h4>
+                  <p>Calidad de lo que entra. <b>Acuerdos de calidad con proveedores</b>, certificaciones, scorecards. Idealmente se llega a "auto-certificación" del proveedor.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">4.4</span>
+                  <h4>Control de Calidad · Inspecciones</h4>
+                  <p>Verificación durante y al final del proceso. Andones, jidoka (detención automática ante defecto), <b>SPC · Statistical Process Control</b>. Detectar al inicio cuesta menos que al final.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">4.5</span>
+                  <h4>Quejas y Devoluciones</h4>
+                  <p>Sistema para captar, analizar y resolver quejas del cliente. <b>Loop cerrado al diseño y producción</b>. Cada queja es un dato — sin sistema, se pierde.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">4.6</span>
+                  <h4>Gestión de Merma y Desperdicios</h4>
+                  <p>Cuantificación, clasificación y reducción. <b>Tipos: scrap, rework, mermas de proceso, obsolescencia</b>. Insumo del factor Calidad del OEE y de la cuenta de costos.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">4.7</span>
+                  <h4>Aseguramiento de Calidad · SGC</h4>
+                  <p><b>Sistema de Gestión de Calidad</b> (típicamente ISO 9001). Documentación, auditorías internas y externas, mejora continua. La capa formal que sostiene los otros 6 modelos.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- PILAR 05 · INNOVACIÓN -->
+            <section class="s-block" id="sec-pilar5">
+              <div class="s-block-label">Pilar 05 · 5 modelos</div>
+              <h2>Innovación · <em>Design Sprint.</em></h2>
+              <p>
+                Capacidad estructurada de <b>generar y desarrollar
+                soluciones nuevas</b>: nuevos productos, nuevos
+                procesos, nuevas formas de operar. Lean 4.0 promueve
+                <b>metodologías ágiles</b> (Design Sprint) para iterar
+                rápido y reducir riesgo de inversión.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">05</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Innovación · Design Sprint</span>
+                  <h3>Iterar rápido, reducir riesgo</h3>
+                  <p>De idea a prototipo validado en 5 días. Pipeline disciplinado, gobernanza clara, KPIs de innovación que importan.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">05</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card">
+                  <span class="mc-num">5.1</span>
+                  <h4>Generación de Ideas · Investigación</h4>
+                  <p>Mecanismo formal para captar ideas de <b>colaboradores, clientes, mercado, benchmarks</b>. Estructura para no depender de "se nos ocurrió en una junta".</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">5.2</span>
+                  <h4>Desarrollo de Iniciativas · Design Sprint</h4>
+                  <p>Sprint de 5 días para <b>validar concepto antes de invertir</b>: definir reto · buscar soluciones · elegir · prototipar · testear con usuarios. Reduce riesgo de productos/procesos que nadie usa.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">5.3</span>
+                  <h4>Comité y Hub de Innovación</h4>
+                  <p><b>Foro multidisciplinario</b> para gestionar el portafolio de iniciativas + espacio físico/digital donde el equipo trabaja sprints. Sin foro y espacio, las iniciativas mueren entre operativos.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">5.4</span>
+                  <h4>Funnel de Iniciativas</h4>
+                  <p>Pipeline desde concepto hasta producción: <b>Ideas → Concept → Prototipo → Piloto → Escala</b>. Stage-gates con criterios de paso. Más ideas entran de las que salen — eso es saludable.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">5.5</span>
+                  <h4>KPIs de Innovación</h4>
+                  <p>Métricas que importan: <b>tasa de éxito por stage, time-to-market, % de ingresos de productos lanzados &lt;3 años, ROI de inversión en innovación</b>. Sin KPIs, innovar es teatro.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- PILAR 06 · ABASTECIMIENTO -->
+            <section class="s-block" id="sec-pilar6">
+              <div class="s-block-label">Pilar 06 · 7 modelos</div>
+              <h2><em>Abastecimiento.</em></h2>
+              <p>
+                Gestionar la cadena de suministro <b>desde el
+                suministro estratégico hasta la evaluación periódica</b>
+                de proveedores. El objetivo: optimizar costo, asegurar
+                disponibilidad, reducir riesgo. Conecta directo con el
+                pilar Lean 4.0 de <b>Justo a Tiempo</b> (JIT).
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">06</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Abastecimiento</span>
+                  <h3>Suministro estratégico end-to-end</h3>
+                  <p>Plan, búsqueda, selección, costo, desarrollo, evaluación, gobierno. Cartera de proveedores diseñada, no resultado del azar.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">07</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card">
+                  <span class="mc-num">6.1</span>
+                  <h4>Planeación de Compra</h4>
+                  <p>Calendario anual de compras alineado con <b>S&amp;OP</b>. Define qué se va a comprar, cuándo, en qué volumen, con qué proveedor. Insumo financiero (cash forecast) y operativo (lead times).</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">6.2</span>
+                  <h4>Ferias y Congresos</h4>
+                  <p>Mecanismo de <b>mapeo activo del mercado</b> y búsqueda de proveedores nuevos. Evita la dependencia de quien siempre nos ha vendido. Calendario anual, equipo asignado, follow-up estructurado.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">6.3</span>
+                  <h4>Selección y Negociación de Proveedores</h4>
+                  <p><b>RFP / RFQ</b>, evaluación multicriterio (calidad, costo, capacidad, riesgo), negociación de contratos. La selección define costos y servicio para los próximos años.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">6.4</span>
+                  <h4>Análisis de Costos</h4>
+                  <p><b>Cost breakdown, should-cost analysis, benchmarks de mercado</b>. Permite negociar con datos vs. asumir lo que el proveedor dice. Identifica oportunidades estructurales de reducción.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">6.5</span>
+                  <h4>Desarrollo de Proveedores</h4>
+                  <p>Programas para <b>mejorar capacidades del proveedor</b>: calidad, lead time, costo, capacidad técnica. Ganan ambos. Usado típicamente con suppliers estratégicos de bajo volumen-alto valor.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">6.6</span>
+                  <h4>Evaluación de Proveedores</h4>
+                  <p><b>Scorecard periódico</b>: calidad (PPM), entrega (OTIF), costo (variación), servicio (responsividad). Insumo para decisiones de continuar/desarrollar/reemplazar.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">6.7</span>
+                  <h4>Comité de Abastecimiento</h4>
+                  <p>Foro multidisciplinario (Compras, Operaciones, Calidad, Finanzas) para <b>decisiones de sourcing estratégicas</b>: selección, contratos plurianuales, riesgos de supply.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- PILAR 07 · ALMACENES -->
+            <section class="s-block" id="sec-pilar7">
+              <div class="s-block-label">Pilar 07 · 7 modelos</div>
+              <h2><em>Almacenes.</em></h2>
+              <p>
+                Eficiencia en recepción, almacenamiento y distribución
+                interna. Las prácticas <b>5S</b> son cruciales aquí
+                para el layout y la eliminación del desorden, facilitando
+                ubicación rápida y reduciendo costos. Es el eslabón
+                entre supply y producción.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">07</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Almacenes</span>
+                  <h3>El nodo de inventario</h3>
+                  <p>Exactitud, rotación correcta, picking eficiente, layout pensado. WMS que conecta a planta y a TMS.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">07</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card is-key">
+                  <span class="mc-num">7.1</span>
+                  <h4>Control de Inventarios</h4>
+                  <p><b>Conteos cíclicos, exactitud (target 99%+), métodos de valuación</b> (PEPS, UEPS, promedio). Sin exactitud no hay MRP confiable, ni servicio al cliente, ni reportes financieros válidos.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.2</span>
+                  <h4>Modelo de Slotting</h4>
+                  <p>Asignación óptima de ubicaciones a SKUs según <b>rotación, peso, volumen, compatibilidad</b>. Slotting bien hecho reduce 20-30% el tiempo de picking.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.3</span>
+                  <h4>Modelo de Picking</h4>
+                  <p>Mecánica de surtido: <b>pick-to-light, voice picking, batch picking, wave picking</b>. La elección depende del perfil de pedidos y volumen. Optimizar reduce mano de obra y errores.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.4</span>
+                  <h4>Ubicación y Traslado de Inventario</h4>
+                  <p>Operación de movimientos internos: <b>recibo → reserva → forward → picking → embarque</b>. Rutas, equipos, frecuencias. Mover menos = más eficiente.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.5</span>
+                  <h4>Diseño de Almacén</h4>
+                  <p><b>Layout</b>: forward pick / reserve, cross-dock, mezzanines, racks. Decisiones de CAPEX que duran 10+ años — el costo de equivocarse es alto.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.6</span>
+                  <h4>Modelo de Recibo</h4>
+                  <p>Mecánica de recepción: <b>cita previa, descarga, verificación contra orden, captura en sistema, ubicación</b>. Tiempos de descarga directos sobre productividad.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">7.7</span>
+                  <h4>KPIs y Modelo de Gobierno</h4>
+                  <p><b>Productividad (líneas/hora), exactitud, fill rate, ciclo de pedido</b>. Cadencia de revisión, foros, planes de acción. La gestión visual del almacén.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- PILAR 08 · DISTRIBUCIÓN -->
+            <section class="s-block" id="sec-pilar8">
+              <div class="s-block-label">Pilar 08 · 7 modelos</div>
+              <h2><em>Distribución.</em></h2>
+              <p>
+                La <b>logística de salida</b> hasta el cliente final.
+                El principio Lean de eliminar transporte innecesario es
+                vital aquí. <b>Near-shoring</b> y rediseño de red
+                buscan acercar la operación al consumidor para
+                aumentar agilidad y reducir costo logístico.
+              </p>
+
+              <div class="pilar-banner">
+                <div class="pb-num">08</div>
+                <div class="pb-meta">
+                  <span class="pb-tag">Distribución</span>
+                  <h3>Última milla con disciplina</h3>
+                  <p>Capacidad dimensionada, combustible controlado, eficiencia de flota, TMS optimizando rutas, mantenimiento preventivo.</p>
+                </div>
+                <div class="pb-count">
+                  <div class="pc-num">07</div>
+                  <span class="pc-lbl">Modelos</span>
+                </div>
+              </div>
+
+              <div class="modelos-grid">
+                <div class="modelo-card">
+                  <span class="mc-num">8.1</span>
+                  <h4>Introducción Última Milla</h4>
+                  <p>Entrega final al cliente. <b>La etapa más costosa de toda la logística</b> — 28-50% del costo logístico total. Aquí se ganan o pierden NPS y margen.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">8.2</span>
+                  <h4>Capacidad y Planificación de Flota</h4>
+                  <p>Dimensionamiento de unidades por <b>demanda y geografía de rutas</b>. Mix flota propia vs. tercerizada. Planeación a corto, mediano y largo plazo.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">8.3</span>
+                  <h4>Control de Combustible</h4>
+                  <p>Consumo por unidad, kilometraje real, rendimiento km/L. <b>El combustible es 25-35% del costo operativo de la flota</b> — gestionarlo libera margen directo.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">8.4</span>
+                  <h4>Eficiencia de Flota</h4>
+                  <p><b>Utilización (% tiempo productivo), km vacío, % carga, paradas</b>. Indicadores que detectan unidades sub-óptimas y rutas mejorables.</p>
+                </div>
+                <div class="modelo-card is-key">
+                  <span class="mc-num">8.5</span>
+                  <h4>TMS · Transportation Management System</h4>
+                  <p>Software de <b>optimización de rutas y embarques</b>. Reduce km vacío, mejora consolidación, automatiza documentación. Pieza tecnológica clave del pilar.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">8.6</span>
+                  <h4>Seguimiento de Rutas</h4>
+                  <p><b>GPS en tiempo real, ETA al cliente, alertas de desviación</b>. Visibilidad para operación interna y para servicio al cliente. Datos para optimización continua.</p>
+                </div>
+                <div class="modelo-card">
+                  <span class="mc-num">8.7</span>
+                  <h4>Mantenimiento de Flota</h4>
+                  <p>Plan PM por unidad, gestión de neumáticos, fluidos, frenos. <b>Una unidad parada no entrega</b>. Aplica todo lo del pilar Mantenimiento, adaptado a flota.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- HERRAMIENTAS TRANSVERSALES (SMART y RCA) -->
             <section class="s-block" id="sec-rca">
-              <div class="s-block-label">08 · Metas SMART y análisis causa-raíz</div>
+              <div class="s-block-label">Herramientas transversales</div>
               <h2>Cerrar el ciclo: meta clara, <em>causa identificada.</em></h2>
               <p>
                 Medir el OEE no basta — hay que <b>fijar metas</b> con
@@ -897,7 +1419,7 @@
 
             <!-- 09 · COMITÉ Y SCRUMBAN -->
             <section class="s-block" id="sec-comite">
-              <div class="s-block-label">09 · Gobernanza · Comité OEE y Scrumban</div>
+              <div class="s-block-label">Gobernanza · Comité OEE y Scrumban</div>
               <h2>El foro semanal donde <em>se decide.</em></h2>
               <p>
                 El <b>Comité OEE</b> es un equipo multidisciplinario
@@ -927,7 +1449,7 @@
 
             <!-- 10 · APLICACIÓN LCG -->
             <section class="s-block" id="sec-lcg">
-              <div class="s-block-label">10 · Cómo lo aplica LCG</div>
+              <div class="s-block-label">Aplicación LCG</div>
               <h2>Del marco al <em>engagement.</em></h2>
               <p>
                 Cada engagement de Lean 4.0 en LCG arranca con un
@@ -972,7 +1494,7 @@
 
             <!-- 11 · CIERRE -->
             <section class="s-block" id="sec-cierre">
-              <div class="s-block-label">11 · Cierre</div>
+              <div class="s-block-label">Cierre</div>
               <div class="reflect">
                 <div class="ref-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
                 <div>
@@ -1006,8 +1528,15 @@
                 <li><a href="#sec-mapa"><span class="tick"></span>Mapa · 8 áreas · 55 modelos</a></li>
                 <li><a href="#sec-madurez"><span class="tick"></span>Niveles de madurez</a></li>
                 <li><a href="#sec-paser"><span class="tick"></span>PASER · esqueleto</a></li>
-                <li><a href="#sec-oee"><span class="tick"></span>OEE deep-dive</a></li>
-                <li><a href="#sec-rca"><span class="tick"></span>SMART y RCA</a></li>
+                <li style="margin-top:6px; padding-top:6px; border-top:1px solid var(--hairline);"><a href="#sec-pilar1"><span class="tick"></span><b style="color:var(--ink);">Pilar 01 · Planeación</b></a></li>
+                <li><a href="#sec-pilar2"><span class="tick"></span><b style="color:var(--ink);">Pilar 02 · Producción + OEE</b></a></li>
+                <li><a href="#sec-pilar3"><span class="tick"></span><b style="color:var(--ink);">Pilar 03 · Mantenimiento</b></a></li>
+                <li><a href="#sec-pilar4"><span class="tick"></span><b style="color:var(--ink);">Pilar 04 · Calidad</b></a></li>
+                <li><a href="#sec-pilar5"><span class="tick"></span><b style="color:var(--ink);">Pilar 05 · Innovación</b></a></li>
+                <li><a href="#sec-pilar6"><span class="tick"></span><b style="color:var(--ink);">Pilar 06 · Abastecimiento</b></a></li>
+                <li><a href="#sec-pilar7"><span class="tick"></span><b style="color:var(--ink);">Pilar 07 · Almacenes</b></a></li>
+                <li><a href="#sec-pilar8"><span class="tick"></span><b style="color:var(--ink);">Pilar 08 · Distribución</b></a></li>
+                <li style="margin-top:6px; padding-top:6px; border-top:1px solid var(--hairline);"><a href="#sec-rca"><span class="tick"></span>Herramientas transversales</a></li>
                 <li><a href="#sec-comite"><span class="tick"></span>Comités y Scrumban</a></li>
                 <li><a href="#sec-lcg"><span class="tick"></span>Aplicación LCG</a></li>
                 <li><a href="#sec-cierre"><span class="tick"></span>Cierre</a></li>
