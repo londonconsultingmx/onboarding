@@ -145,7 +145,7 @@ const SIDEBAR_DAYS = [
     num: 5, name: "Día 05 · Aplicación", short: "Aplicación", href: "day-5-viernes.html", cat: "apl",
     sessions: [
       { name: "Business Case · 3 casos",      href: "session-d5-b01-caso-panel.html", sid: "d5-b01-caso" },
-      { name: "Presentación a panel",         href: "session-d5-b01-caso-panel.html#sec-panel", sid: "d5-b02-presentacion" },
+      { name: "Presentación a panel",         href: "session-d5-b02-panel.html", sid: "d5-b02-presentacion" },
       { name: "Intro a primer proyecto",      href: "session-d5-b03-proyecto.html", sid: "d5-b03-proyecto" },
       { name: "Cierre ejecutivo",             href: "session-d5-b04-cierre.html", sid: "d5-b04-cierre" }
     ]
