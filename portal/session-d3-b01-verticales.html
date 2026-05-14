@@ -383,6 +383,155 @@
 }
 .outline li a:hover{ background: var(--surface-2); color: var(--ink); }
 .outline li a.active{ color: var(--ink); font-weight: 600; border-left-color: var(--cat-ind); background: var(--cat-ind-bg); }
+
+/* ============================================================ */
+/* NMO · Modelo de Nivel de Madurez Organizacional               */
+/* ============================================================ */
+
+/* Divisor visual entre secciones existentes y NMO */
+.nmo-divider{ margin: 32px 0 8px; padding: 32px 36px; background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; border-radius: var(--r-md); position: relative; overflow: hidden; box-shadow: 0 12px 32px rgba(31,77,85,.22); }
+.nmo-divider::after{ content: ""; position: absolute; top: -50%; right: -10%; width: 360px; height: 360px; background: radial-gradient(closest-side, rgba(160,235,225,.18), transparent 70%); pointer-events: none; }
+.nmo-divider > *{ position: relative; z-index: 1; }
+.nmo-divider .nd-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #A0EBE1; letter-spacing: .18em; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.nmo-divider h2{ font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4vw, 48px); line-height: 1.05; letter-spacing: -.02em; color: #fff; margin: 0 0 16px; }
+.nmo-divider h2 em{ font-style: italic; color: #A0EBE1; }
+.nmo-divider p{ font-size: 15.5px; color: #DCEEEC; line-height: 1.55; margin: 0; max-width: 720px; }
+
+/* Implicaciones críticas (5 cards) */
+.nmo-implic{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 18px 0; }
+.nmo-implic-card{ padding: 14px 14px 16px; border-radius: var(--r-md); background: linear-gradient(180deg, #FBE7E5 0%, var(--surface) 80%); border: 1px solid #F0C8C2; }
+.nmo-implic-card .nic-num{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #B5564E; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.nmo-implic-card h5{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 12.5px; color: #6E342E; line-height: 1.2; }
+.nmo-implic-card p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* Objetivos en 3 dimensiones */
+.nmo-obj-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+.nmo-obj-col{ padding: 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); }
+.nmo-obj-col.col-A{ border-top: 3px solid #2F6B70; }
+.nmo-obj-col.col-B{ border-top: 3px solid #4A8A7E; }
+.nmo-obj-col.col-C{ border-top: 3px solid #C68A3E; }
+.nmo-obj-col h4{ margin: 0 0 12px; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--ink); letter-spacing: .14em; text-transform: uppercase; }
+.nmo-obj-col h4 span{ display: inline-block; padding: 3px 8px; border-radius: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; margin-right: 8px; }
+.nmo-obj-col.col-A h4 span{ background: #DCEEEC; color: #1F4D55; }
+.nmo-obj-col.col-B h4 span{ background: #DCEEE2; color: #2F6B47; }
+.nmo-obj-col.col-C h4 span{ background: var(--cat-ind-bg); color: var(--cat-ind); }
+.nmo-obj-col ol{ margin: 0; padding: 0 0 0 20px; font-size: 12.5px; line-height: 1.6; color: var(--ink-2); }
+.nmo-obj-col ol li{ padding: 3px 0; }
+.nmo-obj-col ol li b{ color: var(--ink); font-weight: 600; }
+
+/* 5 Niveles de Madurez · ladder visual */
+.nmo-ladder{ margin: 18px 0; padding: 24px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.nmo-ladder-step{ padding: 16px 14px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; min-height: 110px; }
+.nmo-ladder-step.s1{ background: #F4EAE5; border: 1px solid #DDC9BF; }
+.nmo-ladder-step.s2{ background: #F0E2C9; border: 1px solid #DDC18F; }
+.nmo-ladder-step.s3{ background: #DCC9F2; border: 1px solid #B89AD9; }
+.nmo-ladder-step.s4{ background: #BFA8E2; border: 1px solid #936DC8; color: var(--lcg-dark); }
+.nmo-ladder-step.s5{ background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; }
+.nmo-ladder-step .nls-num{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; opacity: .7; }
+.nmo-ladder-step h5{ margin: 0; font-family: var(--serif); font-weight: 400; font-size: 18px; line-height: 1.05; letter-spacing: -.015em; color: var(--lcg-dark); }
+.nmo-ladder-step.s5 h5{ color: #fff; }
+.nmo-ladder-step p{ margin: 0; font-size: 11px; color: var(--ink-3); line-height: 1.4; }
+.nmo-ladder-step.s5 p{ color: #DCEEEC; }
+
+/* Card detallada por nivel */
+.nmo-nivel{ margin: 14px 0 10px; padding: 22px 26px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: 80px 1fr; gap: 22px; align-items: start; }
+.nmo-nivel.is-s1{ border-left: 4px solid #B5564E; }
+.nmo-nivel.is-s2{ border-left: 4px solid #C68A3E; }
+.nmo-nivel.is-s3{ border-left: 4px solid #936DC8; }
+.nmo-nivel.is-s4{ border-left: 4px solid #6B40A8; }
+.nmo-nivel.is-s5{ border-left: 4px solid #2F6B70; }
+.nmo-nivel .nn-num{ width: 64px; height: 64px; border-radius: 14px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 32px; color: var(--lcg-dark); font-weight: 400; letter-spacing: -.02em; }
+.nmo-nivel.is-s5 .nn-num{ background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; }
+.nmo-nivel .nn-meta h4{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.1; letter-spacing: -.015em; color: var(--lcg-dark); }
+.nmo-nivel .nn-meta h4 span{ display: block; margin-top: 3px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.nmo-nivel .nn-desc{ margin: 0 0 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.nmo-nivel .nn-block{ margin-top: 10px; }
+.nmo-nivel .nn-block .nb-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--cat-ind); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.nmo-nivel .nn-block ul{ margin: 0; padding: 0 0 0 18px; font-size: 12.5px; line-height: 1.6; color: var(--ink-3); }
+.nmo-nivel .nn-block ul li b{ color: var(--ink); font-weight: 600; }
+.nmo-nivel .nn-conc{ margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border-radius: 6px; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+.nmo-nivel .nn-conc b{ color: var(--ink); }
+
+/* 6 Dimensiones de evaluación */
+.nmo-dim-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+.nmo-dim-card{ padding: 18px 22px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--hairline); border-top: 3px solid #2F6B70; }
+.nmo-dim-card .ndc-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #2F6B70; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.nmo-dim-card h4{ margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 19px; color: var(--lcg-dark); line-height: 1.1; letter-spacing: -.015em; }
+.nmo-dim-card h5{ margin: 10px 0 4px; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.nmo-dim-card ul{ margin: 0; padding: 0 0 0 16px; font-size: 12.5px; line-height: 1.55; color: var(--ink-3); }
+.nmo-dim-card .ndc-rel{ margin-top: 12px; padding: 10px 12px; background: var(--surface-2); border-radius: 6px; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+.nmo-dim-card .ndc-rel b{ color: var(--ink); }
+
+/* PASER strip — verde NMO */
+.nmo-paser{ margin: 18px 0; padding: 22px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-items: stretch; }
+.nmo-paser-block{ padding: 18px 14px; border-radius: 10px; background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.nmo-paser-block .npb-letter{ font-family: var(--serif); font-weight: 400; font-size: 38px; line-height: 1; letter-spacing: -.03em; color: #fff; }
+.nmo-paser-block .npb-word{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #A0EBE1; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.nmo-paser-block .npb-mide{ display: block; margin-top: 6px; font-size: 11px; line-height: 1.45; color: #DCEEEC; }
+.nmo-paser-block .npb-mide b{ color: #fff; font-weight: 600; }
+
+/* Escala Likert · ejemplo de pregunta y respuestas */
+.nmo-likert{ margin: 18px 0; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.nmo-likert-head{ padding: 14px 22px; background: var(--surface-2); border-bottom: 1px solid var(--hairline); }
+.nmo-likert-head .nlh-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.nmo-likert-head h5{ margin: 0; font-size: 14px; font-style: italic; color: var(--ink); font-weight: 600; }
+.nmo-likert-row{ display: grid; grid-template-columns: 80px 1fr; padding: 14px 22px; border-bottom: 1px solid var(--hairline); gap: 18px; align-items: start; }
+.nmo-likert-row:last-child{ border-bottom: 0; }
+.nmo-likert-row .nlr-num{ font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--lcg-dark); line-height: 1; letter-spacing: -.02em; padding: 4px 10px; border-radius: 6px; text-align: center; align-self: start; }
+.nmo-likert-row.r1 .nlr-num{ background: #F4EAE5; }
+.nmo-likert-row.r2 .nlr-num{ background: #F0E2C9; }
+.nmo-likert-row.r3 .nlr-num{ background: #DCC9F2; }
+.nmo-likert-row.r4 .nlr-num{ background: #BFA8E2; color: #fff; }
+.nmo-likert-row.r5 .nlr-num{ background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; }
+.nmo-likert-row .nlr-meta b{ display: block; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: var(--ink-4); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+.nmo-likert-row .nlr-meta p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+/* 5 Fases del procedimiento · vertical timeline */
+.nmo-fases{ margin: 18px 0; }
+.nmo-fase{ display: grid; grid-template-columns: 100px 1fr; gap: 22px; padding: 18px 22px; border: 1px solid var(--hairline); border-radius: var(--r-md); margin-bottom: 10px; background: var(--surface); position: relative; }
+.nmo-fase::before{ content: ""; position: absolute; left: 100px; top: 36px; width: 18px; height: 18px; border-radius: 50%; background: #2F6B70; border: 4px solid var(--surface); transform: translateX(-50%); }
+.nmo-fase .nf-id{ font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--lcg-dark); letter-spacing: -.02em; line-height: 1; padding-top: 4px; }
+.nmo-fase .nf-id span{ display: block; margin-top: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #2F6B70; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
+.nmo-fase .nf-meta h4{ margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--ink); }
+.nmo-fase .nf-meta p{ margin: 0 0 10px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.nmo-fase .nf-meta ul{ margin: 0; padding: 0 0 0 18px; font-size: 12.5px; line-height: 1.6; color: var(--ink-3); }
+.nmo-fase .nf-meta ul li b{ color: var(--ink); font-weight: 600; }
+
+/* Industria card del NMO */
+.nmo-industria{ margin: 12px 0; border: 1px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+.nmo-industria-head{ display: grid; grid-template-columns: 70px 1fr auto; gap: 18px; padding: 18px 22px; background: linear-gradient(135deg, #1F4D55 0%, #2F6B70 100%); color: #fff; align-items: center; }
+.nmo-industria-head .nih-num{ width: 56px; height: 56px; background: rgba(160,235,225,.15); border: 1px solid rgba(160,235,225,.35); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 24px; color: #A0EBE1; font-weight: 400; letter-spacing: -.02em; }
+.nmo-industria-head .nih-name{ font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -.015em; line-height: 1.1; color: #fff; }
+.nmo-industria-head .nih-name span{ display: block; margin-top: 3px; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #A0EBE1; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+.nmo-industria-head .nih-count{ font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #fff; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.15); letter-spacing: .08em; font-weight: 700; }
+.nmo-industria-body{ padding: 18px 22px 22px; }
+.nmo-industria-body .nib-intro{ margin: 0 0 14px; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.nmo-industria-body .nib-intro b{ color: var(--ink); }
+.nmo-areas{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.nmo-areas.is-two{ grid-template-columns: 1fr 1fr; }
+.nmo-areas.is-four{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+.nmo-area{ padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--hairline); border-left: 2px solid #2F6B70; border-radius: 6px; }
+.nmo-area .na-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; color: #2F6B70; letter-spacing: .12em; font-weight: 700; text-transform: uppercase; }
+.nmo-area h5{ margin: 2px 0 4px; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--ink); line-height: 1.2; }
+.nmo-area p{ margin: 0; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* Catálogo amplio · grid de procesos de negocio */
+.nmo-catalogo{ margin: 18px 0; padding: 22px 18px; background: linear-gradient(135deg, #0F2A2E 0%, #1F4D55 100%); border-radius: var(--r-md); color: #fff; overflow-x: auto; }
+.nmo-catalogo h4{ margin: 0 0 14px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #A0EBE1; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
+.nmo-catalogo-grid{ display: grid; grid-template-columns: repeat(6, minmax(180px, 1fr)); gap: 8px; min-width: 1140px; }
+.nmo-cat-col{ display: flex; flex-direction: column; gap: 4px; }
+.nmo-cat-head{ padding: 10px 12px; background: rgba(160,235,225,.12); border: 1px solid rgba(160,235,225,.25); color: #A0EBE1; border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+.nmo-cat-sub{ padding: 8px 12px; background: rgba(255,255,255,.08); color: #fff; font-family: var(--sans); font-size: 11px; font-weight: 700; border-radius: 6px; text-align: center; }
+.nmo-cat-item{ padding: 6px 12px; color: #DCEEEC; font-size: 11px; line-height: 1.35; text-align: center; border-radius: 4px; }
+.nmo-cat-item:hover{ background: rgba(255,255,255,.04); }
+.nmo-cat-foot{ margin-top: 14px; padding: 10px 14px; background: rgba(0,0,0,.18); border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #A0EBE1; letter-spacing: .12em; text-align: center; font-weight: 700; }
+
+/* Aplicación LCG (NMO) */
+.nmo-aplicacion{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.nmo-aplic-card{ padding: 18px 22px; border-radius: var(--r-md); background: linear-gradient(180deg, var(--lcg-cream) 0%, var(--surface) 80%); border: 1px solid #E9E1CC; }
+.nmo-aplic-card .nac-tag{ font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: var(--lcg-dark); letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+.nmo-aplic-card h4{ margin: 0 0 6px; font-family: var(--serif); font-weight: 400; font-size: 18px; color: var(--lcg-dark); line-height: 1.15; letter-spacing: -.01em; }
+.nmo-aplic-card p{ margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
 </style>
 </head>
 <body>
@@ -986,6 +1135,878 @@
               </ul>
             </section>
 
+            <!-- ============================================== -->
+            <!-- 12 · NMO · Apertura                              -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo">
+              <div class="nmo-divider">
+                <span class="nd-tag">Modelo de Nivel de Madurez Organizacional</span>
+                <h2>NMO · el <em>diagnóstico</em> que ordena la transformación.</h2>
+                <p>El NMO es el marco LCG para evaluar el grado de desarrollo, estandarización y gestión de los procesos clave de una organización. <b>Cinco niveles de madurez</b>, <b>seis dimensiones de evaluación</b>, <b>once industrias</b> con cuestionarios específicos, y el esqueleto PASER como columna vertebral. Permite a la organización conocer con precisión su nivel actual, identificar brechas críticas y definir un plan estructurado de evolución.</p>
+              </div>
+            </section>
+
+            <section class="s-block" id="sec-nmo-justif">
+              <div class="s-block-label">12 · Por qué un modelo de madurez</div>
+              <h2>El problema: <em>velocidades organizacionales desiguales.</em></h2>
+              <p>
+                Las organizaciones no evolucionan de manera uniforme. Existen áreas profesionalizadas y sistematizadas conviviendo con áreas que operan de forma informal, reactiva y poco documentada. Esa <b>disparidad genera ineficiencias, falta de alineación y pérdida de valor en el tiempo</b>. El NMO surge para diagnosticar esa heterogeneidad y construir una hoja de ruta de transformación medible.
+              </p>
+
+              <h3>Cinco implicaciones críticas que aborda</h3>
+              <div class="nmo-implic">
+                <div class="nmo-implic-card">
+                  <div class="nic-num">Implic. 01</div>
+                  <h5>Ejecución estratégica fragmentada</h5>
+                  <p>Áreas con disciplinas dispares implementan la estrategia de manera inconsistente.</p>
+                </div>
+                <div class="nmo-implic-card">
+                  <div class="nic-num">Implic. 02</div>
+                  <h5>Limitación en la escalabilidad</h5>
+                  <p>Procesos heterogéneos dificultan replicar el modelo en nuevos mercados o unidades.</p>
+                </div>
+                <div class="nmo-implic-card">
+                  <div class="nic-num">Implic. 03</div>
+                  <h5>Dependencia de personas clave</h5>
+                  <p>Conocimiento concentrado en individuos. Vulnerabilidad ante rotación o ausencias.</p>
+                </div>
+                <div class="nmo-implic-card">
+                  <div class="nic-num">Implic. 04</div>
+                  <h5>Experiencia desigual del cliente</h5>
+                  <p>Servicio inconsistente impacta percepción de confiabilidad y calidad.</p>
+                </div>
+                <div class="nmo-implic-card">
+                  <div class="nic-num">Implic. 05</div>
+                  <h5>Resistencia al cambio</h5>
+                  <p>Áreas rezagadas operan reactivas. Dificultad para adaptarse a transformaciones digitales o crisis.</p>
+                </div>
+              </div>
+
+              <h3>Doce objetivos en tres dimensiones</h3>
+              <p>El NMO se estructura en tres grandes dimensiones de propósito: <b>Diagnóstico, Transformación y Competitividad</b>. Doce objetivos articulados sobre estas dimensiones definen el alcance completo del modelo.</p>
+
+              <div class="nmo-obj-grid">
+                <div class="nmo-obj-col col-A">
+                  <h4><span>A</span>Diagnóstico</h4>
+                  <ol>
+                    <li>Evaluar sistemáticamente el <b>nivel actual de madurez</b> en procesos, liderazgo, cultura, tecnología, datos y gobierno.</li>
+                    <li>Facilitar comparación con <b>benchmarks y mejores prácticas</b> internacionales del sector.</li>
+                    <li>Definir <b>KPIs específicos</b> por nivel, asegurando decisiones con datos objetivos.</li>
+                  </ol>
+                </div>
+                <div class="nmo-obj-col col-B">
+                  <h4><span>B</span>Transformación</h4>
+                  <ol start="4">
+                    <li>Diseñar un <b>plan de acción estructurado, progresivo y medible</b> para evolucionar a través de los niveles.</li>
+                    <li>Permitir <b>revisiones periódicas</b> que rastreen progreso y validen avances.</li>
+                    <li>Fomentar cultura de <b>mejora continua</b>, innovación y disciplina en ejecución.</li>
+                    <li>Motivar la <b>transformación cultural</b> hacia prácticas colaborativas y efectivas.</li>
+                    <li>Promover enfoque proactivo para <b>anticipar desafíos futuros</b> con agilidad.</li>
+                  </ol>
+                </div>
+                <div class="nmo-obj-col col-C">
+                  <h4><span>C</span>Competitividad</h4>
+                  <ol start="9">
+                    <li>Alinear iniciativas de transformación con <b>estándares y mejores prácticas globales</b>.</li>
+                    <li>Mejorar la <b>comunicación interna</b> con un lenguaje común entre directivos, gerentes y operativos.</li>
+                    <li>Elevar la <b>competitividad</b> mediante estandarización y mejora continua de procesos.</li>
+                    <li>Empoderar la <b>toma de decisiones estratégicas</b> con información confiable y análisis críticos.</li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 13 · 5 Niveles de Madurez                        -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-niveles">
+              <div class="s-block-label">13 · 5 Niveles de Madurez Organizacional</div>
+              <h2>De <em>caótico</em> a <em>innovador.</em></h2>
+              <p>
+                El NMO está estructurado en cinco niveles progresivos que reflejan la evolución de una organización desde un funcionamiento basado en prácticas informales y esfuerzos individuales, hasta un estado de excelencia operativa e innovación sostenida. La evaluación no se limita a ubicar el estado actual — sirve como <b>mapa de ruta para definir prioridades, cerrar brechas y avanzar hacia un modelo robusto, resiliente y orientado a resultados</b>.
+              </p>
+
+              <div class="nmo-ladder">
+                <div class="nmo-ladder-step s1">
+                  <div class="nls-num">Nivel 01</div>
+                  <h5>Inicial</h5>
+                  <p>Procesos esporádicos e inconsistentes. Sin estructura formal.</p>
+                </div>
+                <div class="nmo-ladder-step s2">
+                  <div class="nls-num">Nivel 02</div>
+                  <h5>Emergente</h5>
+                  <p>Reconoce importancia de procesos. Implementación irregular.</p>
+                </div>
+                <div class="nmo-ladder-step s3">
+                  <div class="nls-num">Nivel 03</div>
+                  <h5>Definido</h5>
+                  <p>Procesos estandarizados y documentados, aplicados regularmente.</p>
+                </div>
+                <div class="nmo-ladder-step s4">
+                  <div class="nls-num">Nivel 04</div>
+                  <h5>Gestionado &amp; Predecible</h5>
+                  <p>Gestión basada en métricas. Capacidad predictiva de ajustes.</p>
+                </div>
+                <div class="nmo-ladder-step s5">
+                  <div class="nls-num">Nivel 05</div>
+                  <h5>Optimizado &amp; Innovador</h5>
+                  <p>Mejora continua e innovación. Adaptabilidad alta ante cambios.</p>
+                </div>
+              </div>
+
+              <h3>Detalle por nivel</h3>
+
+              <!-- Nivel 1 -->
+              <div class="nmo-nivel is-s1">
+                <div class="nn-num">01</div>
+                <div class="nn-meta">
+                  <h4>Inicial<span>Operación reactiva, dependencia de personas</span></h4>
+                  <p class="nn-desc">Las organizaciones operan principalmente de manera empírica, con procesos informales y alta dependencia de personas clave. Predomina la <b>reacción frente a problemas inmediatos</b> y no existe estructura formal de gestión.</p>
+                  <div class="nn-block">
+                    <div class="nb-tag">Indicadores clave</div>
+                    <ul>
+                      <li>Procesos poco definidos o inexistentes</li>
+                      <li>Alta dependencia de conocimientos tácitos y experiencia individual</li>
+                      <li>Escaso o nulo uso de tecnología; predominio de trabajo manual</li>
+                      <li>Ausencia de métricas, controles o mecanismos de mejora</li>
+                      <li>Operación reactiva, con errores frecuentes y reprocesos</li>
+                    </ul>
+                  </div>
+                  <div class="nn-conc"><b>Conclusión:</b> La prioridad es sentar las bases — documentar procesos mínimos, establecer controles básicos, clarificar roles y responsabilidades, e iniciar la creación de una cultura de orden y disciplina.</div>
+                </div>
+              </div>
+
+              <!-- Nivel 2 -->
+              <div class="nmo-nivel is-s2">
+                <div class="nn-num">02</div>
+                <div class="nn-meta">
+                  <h4>Emergente<span>Reconocimiento sin consolidación</span></h4>
+                  <p class="nn-desc">La organización empieza a reconocer la importancia de los procesos formales y la estructura, pero la aplicación aún es inconsistente. Existe avance hacia cierta organización, aunque <b>persisten altos niveles de improvisación</b>.</p>
+                  <div class="nn-block">
+                    <div class="nb-tag">Indicadores clave</div>
+                    <ul>
+                      <li>Procesos básicos documentados, aplicados de manera irregular</li>
+                      <li>Uso limitado de herramientas tecnológicas (hojas de cálculo, correo)</li>
+                      <li>Comunicación interna débil, con silos de información</li>
+                      <li>Algunos KPIs definidos, pero con escaso seguimiento</li>
+                      <li>Respuesta lenta ante problemas operativos o del cliente</li>
+                    </ul>
+                  </div>
+                  <div class="nn-conc"><b>Conclusión:</b> Estabilizar procesos, reforzar comunicación transversal y fomentar trazabilidad. Avanzar hacia roles claros y uso sistemático de la información.</div>
+                </div>
+              </div>
+
+              <!-- Nivel 3 -->
+              <div class="nmo-nivel is-s3">
+                <div class="nn-num">03</div>
+                <div class="nn-meta">
+                  <h4>Definido<span>Punto de inflexión: operación formal y predecible</span></h4>
+                  <p class="nn-desc">La organización opera con procesos estructurados y disciplina en el uso de información. Existe mayor predictibilidad y se comienza a <b>consolidar una gestión más profesional</b>.</p>
+                  <div class="nn-block">
+                    <div class="nb-tag">Indicadores clave</div>
+                    <ul>
+                      <li>Procesos bien documentados y aplicados con regularidad</li>
+                      <li>Herramientas digitales presentes, aunque no integradas</li>
+                      <li>Indicadores monitoreados periódicamente con reportes simples</li>
+                      <li>Reducción de errores y mayor control sobre tiempos y costos</li>
+                      <li>Iniciativas de mejora presentes, aunque dispersas</li>
+                    </ul>
+                  </div>
+                  <div class="nn-conc"><b>Conclusión:</b> Profesionalizar la toma de decisiones basadas en datos, integrar sistemas tecnológicos y consolidar la mejora continua como componente estratégico de la cultura organizacional.</div>
+                </div>
+              </div>
+
+              <!-- Nivel 4 -->
+              <div class="nmo-nivel is-s4">
+                <div class="nn-num">04</div>
+                <div class="nn-meta">
+                  <h4>Gestionado &amp; Predecible<span>Eficiencia, integración y decisiones basadas en datos</span></h4>
+                  <p class="nn-desc">La organización logra <b>eficiencia operativa, integración tecnológica y decisiones respaldadas por datos</b>. Los procesos son ágiles, las áreas están alineadas y la cultura está orientada a resultados y mejora continua.</p>
+                  <div class="nn-block">
+                    <div class="nb-tag">Indicadores clave</div>
+                    <ul>
+                      <li>Sistemas interconectados que soportan la operación</li>
+                      <li>Procesos ágiles, con tiempos de respuesta controlados</li>
+                      <li>Uso regular de analítica de datos para decisiones estratégicas</li>
+                      <li>Cultura alineada a la eficiencia y mejora continua</li>
+                      <li>Colaboración efectiva entre áreas funcionales</li>
+                    </ul>
+                  </div>
+                  <div class="nn-conc"><b>Conclusión:</b> Incorporar tecnologías emergentes (IA, machine learning, automatización avanzada) y fortalecer la retroalimentación del cliente en el ciclo de mejora continua.</div>
+                </div>
+              </div>
+
+              <!-- Nivel 5 -->
+              <div class="nmo-nivel is-s5">
+                <div class="nn-num">05</div>
+                <div class="nn-meta">
+                  <h4>Optimizado &amp; Innovador<span>Excelencia, innovación constante, resiliencia total</span></h4>
+                  <p class="nn-desc">El máximo nivel de madurez refleja una organización que opera con excelencia, innovación constante y resiliencia frente a entornos cambiantes. Se caracteriza por la <b>integración plena de procesos, tecnologías disruptivas y una cultura organizacional centrada en la generación de valor sostenible</b>.</p>
+                  <div class="nn-block">
+                    <div class="nb-tag">Indicadores clave</div>
+                    <ul>
+                      <li>Operación totalmente digitalizada, integrada y escalable</li>
+                      <li>Uso intensivo de IA, ML, automatización cognitiva, analítica predictiva/prescriptiva</li>
+                      <li>Procesos ágiles centrados en el cliente con personalización a gran escala</li>
+                      <li>Feedback en tiempo real de clientes y stakeholders</li>
+                      <li>Alta resiliencia organizacional con capacidad de reinventarse</li>
+                      <li>Innovación sistemática vinculada a ecosistemas externos (alianzas, startups, centros de investigación)</li>
+                    </ul>
+                  </div>
+                  <div class="nn-conc"><b>Conclusión:</b> El reto principal es <b>evitar la complacencia</b>. La organización debe mantener exploración permanente de nuevas tecnologías, modelos de negocio y tendencias globales, convirtiéndose en referente para inspirar a otras organizaciones o sectores.</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 14 · 6 Dimensiones de Evaluación                 -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-dimensiones">
+              <div class="s-block-label">14 · 6 Dimensiones de evaluación</div>
+              <h2>Seis ángulos para una <em>visión holística.</em></h2>
+              <p>
+                El NMO se fundamenta en seis dimensiones de análisis que se adaptan según el giro, la industria y el nivel de complejidad de cada organización. Estas dimensiones permiten evaluar la madurez desde diferentes ángulos, garantizando que la valoración no se limite a procesos operativos, sino que abarque también <b>elementos estratégicos, culturales y tecnológicos</b> que determinan la sostenibilidad del desempeño.
+              </p>
+
+              <div class="nmo-dim-grid">
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 01</div>
+                  <h4>Procesos</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Existencia, formalización y documentación de procesos clave</li>
+                    <li>Nivel de estandarización y grado de cumplimiento</li>
+                    <li>Uso de metodologías de mejora continua</li>
+                    <li>Alineación con estándares de la industria</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> Constituyen la base de la madurez organizacional. Su análisis permite conocer la consistencia operativa y la solidez de los cimientos sobre los cuales se construye la mejora continua.</div>
+                </div>
+
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 02</div>
+                  <h4>Tecnología y Digitalización</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Nivel de automatización y digitalización en la operación</li>
+                    <li>Integración de herramientas y sistemas interconectados</li>
+                    <li>Uso de datos en tiempo real para decisiones</li>
+                    <li>Incorporación de IA, analítica avanzada, IoT, automatización cognitiva</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> Habilita la eficiencia, escalabilidad e innovación. Determina el grado en que la organización transforma información en conocimiento accionable.</div>
+                </div>
+
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 03</div>
+                  <h4>Gestión del Talento</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Claridad en la estructura organizacional y roles</li>
+                    <li>Nivel de competencias y habilidades del equipo</li>
+                    <li>Mecanismos de formación, capacitación y desarrollo</li>
+                    <li>Grado de autonomía y empoderamiento de colaboradores</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> Las personas son el motor de la madurez. Esta dimensión asegura que exista capital humano preparado, motivado y alineado a la estrategia.</div>
+                </div>
+
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 04</div>
+                  <h4>Liderazgo y Estrategia</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Claridad, coherencia y comunicación de la estrategia</li>
+                    <li>Participación activa del liderazgo en operación y cambio</li>
+                    <li>Capacidad de inspirar, orientar y alinear equipos</li>
+                    <li>Consistencia entre valores declarados y decisiones</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> El liderazgo es el principal catalizador del cambio. Una estrategia clara con líderes comprometidos garantiza que las iniciativas de mejora se sostengan en el tiempo.</div>
+                </div>
+
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 05</div>
+                  <h4>Cultura Organizacional</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Nivel de apertura al cambio y a la innovación</li>
+                    <li>Grado de colaboración entre áreas (ausencia de silos)</li>
+                    <li>Disposición para aprender de errores</li>
+                    <li>Orientación a resultados y compromiso con mejora continua</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> La cultura define el "cómo" se hacen las cosas. Identifica si existe entorno propicio para aprendizaje, colaboración e innovación, o si predominan barreras.</div>
+                </div>
+
+                <div class="nmo-dim-card">
+                  <div class="ndc-tag">Dimensión 06</div>
+                  <h4>Indicadores y Resultados</h4>
+                  <h5>Qué se evalúa</h5>
+                  <ul>
+                    <li>Definición y relevancia de los KPIs vs. objetivos del negocio</li>
+                    <li>Periodicidad y consistencia en seguimiento de indicadores</li>
+                    <li>Uso de información para retroalimentar decisiones</li>
+                    <li>Grado en que los resultados se comunican y comparten</li>
+                  </ul>
+                  <div class="ndc-rel"><b>Relevancia:</b> "Lo que no se mide, no se gestiona". Verifica si la organización cuenta con sistema basado en datos que mide desempeño y lo utiliza para aprender, mejorar y crecer.</div>
+                </div>
+              </div>
+
+              <h3>Síntesis de las seis dimensiones</h3>
+              <p style="font-size: 14px; color: var(--ink-2); line-height: 1.7;">
+                <b>Procesos</b> representan la <b>estructura</b> · <b>Tecnología y Digitalización</b> aportan la <b>capacidad de escalar</b> · <b>Gestión del Talento</b> asegura la <b>ejecución</b> · <b>Liderazgo y Estrategia</b> dan <b>dirección y coherencia</b> · <b>Cultura Organizacional</b> crea el <b>entorno para el cambio</b> · <b>Indicadores y Resultados</b> garantizan el <b>aprendizaje y la mejora continua</b>.
+              </p>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 15 · PASER como base                             -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-paser">
+              <div class="s-block-label">15 · PASER como base de evaluación</div>
+              <h2>El PASER es la <em>columna vertebral</em> metodológica.</h2>
+              <p>
+                El modelo PASER constituye la columna vertebral del NMO. Su inclusión garantiza que la evaluación de madurez no se limite a medir si existen procesos documentados, sino que vaya más allá: <b>analizar si dichos procesos están correctamente diseñados, distribuidos, supervisados, evaluados y retroalimentados</b> para sostener una dinámica de mejora continua.
+              </p>
+
+              <div class="nmo-paser">
+                <div class="nmo-paser-block">
+                  <div class="npb-letter">P</div>
+                  <span class="npb-word">Planeación</span>
+                  <span class="npb-mide"><b>Qué se mide:</b> definición clara de objetivos, metodología previa, asignación de recursos, secuencia de actividades.</span>
+                </div>
+                <div class="nmo-paser-block">
+                  <div class="npb-letter">A</div>
+                  <span class="npb-word">Asignación</span>
+                  <span class="npb-mide"><b>Qué se mide:</b> claridad en distribución de tareas, calidad de instrucciones, recursos disponibles, criterios para balancear cargas.</span>
+                </div>
+                <div class="nmo-paser-block">
+                  <div class="npb-letter">S</div>
+                  <span class="npb-word">Seguimiento</span>
+                  <span class="npb-mide"><b>Qué se mide:</b> supervisión en campo, monitoreo vs. metas, control de KPIs en tiempo real, mecanismos para identificar desviaciones.</span>
+                </div>
+                <div class="nmo-paser-block">
+                  <div class="npb-letter">E</div>
+                  <span class="npb-word">Evaluación</span>
+                  <span class="npb-mide"><b>Qué se mide:</b> análisis sistemático de resultados, revisión de errores y desperdicios, identificación de causas raíz.</span>
+                </div>
+                <div class="nmo-paser-block">
+                  <div class="npb-letter">R</div>
+                  <span class="npb-word">Retroalim.</span>
+                  <span class="npb-mide"><b>Qué se mide:</b> comunicación de hallazgos, acciones correctivas y preventivas, ajustes a procesos, iniciativas de capacitación.</span>
+                </div>
+              </div>
+
+              <p style="font-size: 13.5px; color: var(--ink-3); margin-top: 14px; padding: 14px 18px; background: var(--surface-2); border-radius: 6px; line-height: 1.6;">
+                <b style="color: var(--ink);">Síntesis del PASER en el NMO:</b> garantiza que la evaluación de la madurez integre todas las fases del ciclo de gestión (del diseño a la mejora), promueva disciplina en la ejecución y control de procesos, fomente responsabilidad individual y colectiva en los resultados, y asegure que la organización <b style="color: var(--ink);">aprenda, se adapte y se transforme de manera continua</b>.
+              </p>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 16 · Escala Likert                               -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-likert">
+              <div class="s-block-label">16 · Escala de medición tipo Likert</div>
+              <h2>Cinco escenarios <em>verificables</em>, no opiniones genéricas.</h2>
+              <p>
+                El NMO utiliza una escala Likert de <b>cinco opciones descriptivas y progresivas</b>, no numéricas ni genéricas (no se usa "Nunca / A veces / Siempre"). Cada nivel describe un <b>escenario verificable y específico</b> que permite tanto a evaluados como a líderes reconocerse con precisión, reduciendo subjetividad y haciendo accionables los resultados.
+              </p>
+
+              <div class="nmo-likert">
+                <div class="nmo-likert-head">
+                  <div class="nlh-tag">Pregunta ejemplo</div>
+                  <h5>"¿Qué tan definidos y aplicados están los procesos clave en la organización?"</h5>
+                </div>
+                <div class="nmo-likert-row r1">
+                  <div class="nlr-num">1</div>
+                  <div class="nlr-meta">
+                    <b>Inicial</b>
+                    <p>Los procesos son informales o inexistentes, dependen de la experiencia de las personas y no hay documentación.</p>
+                  </div>
+                </div>
+                <div class="nmo-likert-row r2">
+                  <div class="nlr-num">2</div>
+                  <div class="nlr-meta">
+                    <b>Emergente</b>
+                    <p>Algunos procesos están definidos, pero su aplicación es irregular y no existe un control sistemático.</p>
+                  </div>
+                </div>
+                <div class="nmo-likert-row r3">
+                  <div class="nlr-num">3</div>
+                  <div class="nlr-meta">
+                    <b>Definido</b>
+                    <p>Los procesos están documentados y se aplican regularmente, aunque con oportunidades de mayor integración y consistencia.</p>
+                  </div>
+                </div>
+                <div class="nmo-likert-row r4">
+                  <div class="nlr-num">4</div>
+                  <div class="nlr-meta">
+                    <b>Gestionado &amp; Predecible</b>
+                    <p>Los procesos están estandarizados, se cumplen con disciplina y cuentan con métricas de desempeño.</p>
+                  </div>
+                </div>
+                <div class="nmo-likert-row r5">
+                  <div class="nlr-num">5</div>
+                  <div class="nlr-meta">
+                    <b>Optimizado &amp; Innovador</b>
+                    <p>Los procesos están completamente integrados, digitalizados y en mejora continua, soportados por tecnología avanzada (IA, automatización, analítica predictiva).</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 17 · 5 Fases del Procedimiento                   -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-fases">
+              <div class="s-block-label">17 · Fases del procedimiento metodológico</div>
+              <h2>Cinco fases del <em>diagnóstico al plan.</em></h2>
+              <p>
+                El procedimiento NMO abarca todo el ciclo de evaluación, diagnóstico y mejora. Cinco fases secuenciales garantizan resultados confiables, consistentes y accionables.
+              </p>
+
+              <div class="nmo-fases">
+                <div class="nmo-fase">
+                  <div class="nf-id">F1<span>Fundamentos</span></div>
+                  <div class="nf-meta">
+                    <h4>Fundamentos del Modelo</h4>
+                    <p>Tres vertientes que aseguran que el NMO esté anclado en la realidad del cliente:</p>
+                    <ul>
+                      <li><b>Definición de la industria objetivo</b> — sector con regulaciones, tecnicismos, dinámica de mercado y exigencias específicas.</li>
+                      <li><b>Identificación de áreas y procesos clave</b> — selección de áreas críticas (operación + soporte) con mayor impacto en costos, ingresos, calidad, servicio y control.</li>
+                      <li><b>Definición de sistemas de trabajo bajo PASER</b> — representación gráfica de cada proceso en sus cinco etapas, con roles, puntos de control e indicadores.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="nmo-fase">
+                  <div class="nf-id">F2<span>Diseño y Validación</span></div>
+                  <div class="nf-meta">
+                    <h4>Diseño y Validación del Cuestionario</h4>
+                    <p>Construcción de instrumentos adaptados a cada modelo PASER. Reglas obligatorias de redacción:</p>
+                    <ul>
+                      <li><b>Una idea por pregunta</b> (evitar dobles o condicionales).</li>
+                      <li><b>Lenguaje observable y medible</b> (evitar "a veces", "regular", "bien").</li>
+                      <li><b>Evidencia implícita en las opciones</b>: frecuencia, responsables, instrumentos, registros, tableros, indicadores, foros.</li>
+                      <li><b>Respuestas graduales</b> de menor a mayor madurez, mutuamente excluyentes.</li>
+                      <li>No mencionar términos de nivel ("Nivel 1... Nivel 5").</li>
+                      <li>Mantener consistencia PASER a lo largo del banco de preguntas.</li>
+                      <li><b>Uso de IA</b> con prompts estructurados para acelerar la construcción.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="nmo-fase">
+                  <div class="nf-id">F3<span>Aplicación</span></div>
+                  <div class="nf-meta">
+                    <h4>Aplicación de la Encuesta</h4>
+                    <p>Implementación en los diferentes niveles organizacionales (estratégico, táctico, operativo). Aplicación en fases clave de los proyectos: estudio de factibilidad, análisis exhaustivo, implementación y post-proyecto. Recolección mediante <b>plataformas digitales integradas</b> que aseguran datos confiables y representativos.</p>
+                  </div>
+                </div>
+
+                <div class="nmo-fase">
+                  <div class="nf-id">F4<span>Análisis &amp; Clasificación</span></div>
+                  <div class="nf-meta">
+                    <h4>Análisis y Clasificación del Nivel de Madurez</h4>
+                    <p>Procesamiento de la información mediante <b>MongoDB</b> como base de datos centralizada. Uso de <b>OpenAI</b> para análisis de datos y generación de insights. Visualización de hallazgos a través de <b>Python</b> con gráficos dinámicos y explicativos. Clasificación en los cinco niveles con identificación de brechas críticas.</p>
+                  </div>
+                </div>
+
+                <div class="nmo-fase">
+                  <div class="nf-id">F5<span>Visualización</span></div>
+                  <div class="nf-meta">
+                    <h4>Visualización y Presentación de Resultados</h4>
+                    <p>Despliegue de resultados y visualizaciones a través de <b>Vercel</b>, garantizando accesibilidad y usabilidad para toda la organización. Generación de Carta de Recomendación con resultados, brechas y plan de evolución priorizado por impacto, factibilidad y alineación estratégica.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 18 · 11 Industrias del NMO                       -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-industrias">
+              <div class="s-block-label">18 · Catálogo de industrias del NMO</div>
+              <h2>Once industrias con <em>cuestionario propio.</em></h2>
+              <p>
+                El NMO se ha desarrollado para once industrias específicas con cuestionarios y modelos PASER adaptados a cada una. Cada industria tiene áreas críticas particulares — la cadena de valor de un Ingenio Azucarero no se evalúa con las mismas preguntas que una Aseguradora. Esta personalización es lo que hace al modelo <b>preciso, accionable y comparable con benchmarks sectoriales</b>.
+              </p>
+
+              <!-- INDUSTRIA 01 · AGRÍCOLAS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">01</div>
+                  <div class="nih-name">Agrícolas<span>Operación primaria del campo a empaque</span></div>
+                  <div class="nih-count">6 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">El giro agrícola integra <b>cadena de valor end-to-end</b> desde el cultivo hasta la comercialización, con peculiaridades como estacionalidad, perecibilidad, dependencia climática y trazabilidad para mercados de exportación. La madurez se evalúa en seis áreas críticas que cubren el ciclo completo:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Operaciones de Campo</h5><p>Siembra, manejo agronómico, riego, cosecha. La operación primaria.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Frigorífico</h5><p>Cadena de frío, control de temperatura y atmósfera, conservación.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Empaque</h5><p>Selección, calibrado, embalaje, etiquetado para mercado destino.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Comercial</h5><p>Ventas a mayoristas, exportación, retail. Pricing por temporada.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Mantenimiento</h5><p>Maquinaria agrícola, equipo de frigorífico y empaque.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 06</div><h5>Compras y Almacenes</h5><p>Insumos, fertilizantes, fitosanitarios, refacciones, materiales.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 02 · DISTRIBUIDOR AUTOMOTRIZ -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">02</div>
+                  <div class="nih-name">Distribuidor Automotriz<span>Concesionarios · Ventas, posventa, refacciones</span></div>
+                  <div class="nih-count">3 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Los concesionarios automotrices operan tres unidades de negocio claramente diferenciadas, cada una con su propia mecánica financiera y operativa. La salud financiera del distribuidor depende del balance entre las tres — no solo de las ventas:</p>
+                  <div class="nmo-areas is-two">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Ventas</h5><p>Vehículo nuevo y seminuevo. Pipeline, financiamiento, prospección, demos, cierre.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Posventa · Taller</h5><p>Servicios programados, garantías, reparaciones. Productividad por bahía y técnico.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Refacciones</h5><p>Inventario, slotting, rotación, fill rate, demanda interna (taller) y externa (mostrador).</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 03 · TRANSPORTE DE CARGA -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">03</div>
+                  <div class="nih-name">Transporte de Carga<span>Logística terrestre · operación de flota</span></div>
+                  <div class="nih-count">4 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">El transporte de carga es un <b>negocio de utilización de activos</b>: la rentabilidad depende de mover el máximo volumen con la flota disponible al menor costo unitario. Cuatro áreas cubren la operación end-to-end:</p>
+                  <div class="nmo-areas is-four">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Ventas</h5><p>Cuentas, tarifas, pricing por ruta y tipo de carga.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Operaciones</h5><p>Despacho, rutas, dispatchers, control de viajes, ETA.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Refacciones</h5><p>Inventario crítico, lead times, gestión de proveedores OEM.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Compras y Almacén</h5><p>Combustible, neumáticos, lubricantes, partes de servicio.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 04 · AEROLÍNEAS PRIVADAS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">04</div>
+                  <div class="nih-name">Aerolíneas Privadas<span>Aviación ejecutiva · charter privado</span></div>
+                  <div class="nih-count">5 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Aviación privada combina <b>servicio de alto nivel con operación regulada y ciclos de mantenimiento estrictos</b>. La madurez se evalúa en cinco áreas que reflejan tanto el back-office operativo como el front del cliente:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Atención a Clientes</h5><p>Reservas, concierge, gestión de cambios, experiencia premium.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Comercial</h5><p>Ventas de horas-vuelo, membresías, charter ad-hoc.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Dirección General</h5><p>Gobernanza, finanzas, cumplimiento regulatorio, estrategia.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Mantenimiento</h5><p>Planes de mantenimiento por horas/ciclos, OEM, certificaciones.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Staff y Operaciones</h5><p>Tripulación, dispatch de vuelo, planificación de tripulaciones.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 05 · INGENIOS AZUCAREROS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">05</div>
+                  <div class="nih-name">Ingenios Azucareros<span>Industria de campo + fábrica</span></div>
+                  <div class="nih-count">7 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Los ingenios azucareros tienen un <b>ciclo de operación bimodal</b>: zafra (cosecha + molienda) e inter-zafra (mantenimiento mayor + preparación). Siete áreas críticas cubren ambas fases:</p>
+                  <div class="nmo-areas is-four">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Campo</h5><p>Cultivo de caña, riego, cosecha mecanizada y manual.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Inter Zafra</h5><p>Operación durante la temporada baja: planeación de la siguiente zafra.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Reparación / Mtto Zafra</h5><p>Mantenimiento mayor durante inter-zafra para asegurar disponibilidad.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Compras</h5><p>Insumos, refacciones, materiales para zafra y mantenimiento.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Almacén Refacciones</h5><p>Spare parts críticos para evitar paro de molienda.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 06</div><h5>Almacén PT</h5><p>Producto terminado: azúcar refinada y mascabado, mieles.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 07</div><h5>Fábrica</h5><p>Molienda, clarificación, evaporación, cristalización, centrifugación, secado.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 06 · MANUFACTURERAS LEAN 4.0 -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">06</div>
+                  <div class="nih-name">Manufactureras · Lean 4.0<span>Manufactura discreta y de proceso</span></div>
+                  <div class="nih-count">8 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">El cuestionario más amplio del NMO. Aplicable a <b>manufactura discreta (autopartes, electrónica, línea blanca) y de proceso (química, materiales)</b>. Cubre las ocho áreas funcionales del marco Lean 4.0 — desde planeación estratégica hasta distribución del producto terminado:</p>
+                  <div class="nmo-areas is-four">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Planeación y Programación</h5><p>S&amp;OP, MRP, capacity plan, programa de producción.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Producción · Control de Piso</h5><p>OEE, fábrica visual, SMED, 5S, Gemba, kaizen.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Mantenimiento</h5><p>CMMS, predictivo, preventivo, autónomo, refacciones.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Calidad</h5><p>Estándares, plan inspección, MP, control, quejas, SGC.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Innovación</h5><p>Generación de ideas, design sprint, funnel, KPIs.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 06</div><h5>Abastecimiento</h5><p>Planeación, selección, costos, desarrollo, evaluación.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 07</div><h5>Almacén</h5><p>Inventarios, slotting, picking, recibo, KPIs.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 08</div><h5>Distribución</h5><p>Última milla, flota, combustible, TMS, mantenimiento de flota.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 07 · ALIMENTOS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">07</div>
+                  <div class="nih-name">Alimentos<span>Manufactura de alimentos · perecibilidad y FoodSafety</span></div>
+                  <div class="nih-count">7 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">La industria de alimentos integra <b>todas las exigencias de manufactura más controles de inocuidad y trazabilidad</b> (HACCP, FSSC 22000). Las áreas son similares a manufactura general pero con énfasis particular en calidad y abastecimiento:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Planeación y Programación</h5><p>Demanda con estacionalidad, perecibilidad, mix de productos.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Producción · Control de Piso</h5><p>OEE en líneas de proceso continuo y discreto.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Mantenimiento</h5><p>Equipos críticos: pasteurizadores, llenadoras, hornos.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Calidad</h5><p>HACCP, FoodSafety, inocuidad, control microbiológico.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Abastecimiento</h5><p>Materias primas perecibles, contratos con productores.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 06</div><h5>Almacén</h5><p>Refrigerados, congelados, secos. Cadena de frío.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 07</div><h5>Distribución</h5><p>Logística refrigerada, tiempos de entrega cortos por caducidad.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 08 · LÁCTEOS Y DERIVADOS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">08</div>
+                  <div class="nih-name">Lácteos y Derivados<span>Industria láctea con cadena de frío crítica</span></div>
+                  <div class="nih-count">7 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Industria con peculiaridades fuertes: <b>materia prima viva (leche fresca con vida útil de horas), perecibilidad alta del producto terminado y trazabilidad obligatoria</b> desde el establo. Las áreas son las mismas siete que Alimentos pero con mecánicas específicas en cada una:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Planeación y Programación</h5><p>Recibo diario de leche fresca, ajuste continuo del plan.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Producción · Control de Piso</h5><p>Pasteurización, homogeneización, fermentación, empaque aséptico.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Mantenimiento</h5><p>Centrífugas, intercambiadores de calor, llenadoras estériles.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 04</div><h5>Calidad</h5><p>Control microbiológico, antibióticos en MP, cadena de frío.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 05</div><h5>Abastecimiento</h5><p>Productores ganaderos, tarifas por calidad de leche, programas de fomento.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 06</div><h5>Almacén</h5><p>Cámaras frías estrictas, FIFO obligatorio, control de caducidad.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 07</div><h5>Distribución</h5><p>Reparto refrigerado a retail, frecuencia diaria o cada 2-3 días.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 09 · ASEGURADORAS -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">09</div>
+                  <div class="nih-name">Aseguradoras<span>Servicios financieros · contratación, siniestros, comercial</span></div>
+                  <div class="nih-count">3 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">El negocio asegurador tiene <b>tres procesos críticos</b>: emitir pólizas, atender siniestros y vender más. La madurez se concentra en estas tres áreas que definen la experiencia del asegurado y la rentabilidad técnica:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Contratación</h5><p>Capacity plan, cotización, suscripción, emisión, endosos. Tiempos de respuesta y SLA.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Siniestros</h5><p>Recepción de reclamos, ajuste, distribución, control de tiempos. La métrica clave: tiempo promedio de resolución y satisfacción del cliente.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 03</div><h5>Comercial</h5><p>Canales (agente, broker, directo), pipeline, retención, cross-sell.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 10 · STAFF Y BACK OFFICE -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">10</div>
+                  <div class="nih-name">Staff y Back Office<span>Áreas transversales de soporte</span></div>
+                  <div class="nih-count">1 área integral</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Cuestionario integral para evaluar las <b>áreas transversales de soporte</b> que no son específicas de una industria pero existen en todas: Finanzas, Capital Humano, TI, Legal, Compliance, Comunicación. La madurez se mide en gestión de procesos, tecnología, eficiencia y mejora continua, igualmente clasificable en los 5 niveles del modelo:</p>
+                  <div class="nmo-areas">
+                    <div class="nmo-area"><div class="na-tag">Sub-área</div><h5>Finanzas y Contabilidad</h5><p>Cierre, controlling, tesorería, fiscal.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Sub-área</div><h5>Capital Humano</h5><p>Reclutamiento, nómina, capacitación, desarrollo, clima.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Sub-área</div><h5>Tecnología de Información</h5><p>Infraestructura, aplicaciones, ciberseguridad, datos.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Sub-área</div><h5>Legal y Compliance</h5><p>Contratos, regulatorio, riesgos, gobierno corporativo.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Sub-área</div><h5>Comunicación y Marketing</h5><p>Marca, comunicación interna, marketing digital.</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INDUSTRIA 11 · COMERCIALIZACIÓN Y DISTRIBUCIÓN -->
+              <div class="nmo-industria">
+                <div class="nmo-industria-head">
+                  <div class="nih-num">11</div>
+                  <div class="nih-name">Comercialización y Distribución<span>Comercializadoras · distribuidoras · operadores logísticos</span></div>
+                  <div class="nih-count">2 áreas</div>
+                </div>
+                <div class="nmo-industria-body">
+                  <p class="nib-intro">Para empresas cuyo modelo es <b>comprar y revender, sin transformación productiva</b>: comercializadoras, distribuidoras, operadores logísticos. La madurez se concentra en dos áreas críticas que definen el negocio:</p>
+                  <div class="nmo-areas is-two">
+                    <div class="nmo-area"><div class="na-tag">Área 01</div><h5>Comercial</h5><p>Cartera, fuerza de ventas, pricing, mix de productos, KPIs comerciales.</p></div>
+                    <div class="nmo-area"><div class="na-tag">Área 02</div><h5>Distribución</h5><p>Almacenaje, picking, ruteo, flota, control de combustible, TMS, última milla.</p></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 19 · Catálogo amplio de industrias y procesos    -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-catalogo">
+              <div class="s-block-label">19 · Catálogo amplio · industrias y procesos de negocio</div>
+              <h2>Más allá de las 11: el <em>universo</em> sectorial.</h2>
+              <p>
+                Las once industrias con cuestionario propio del NMO son las primeras que se han desarrollado, pero el modelo está diseñado para <b>extenderse a cualquier sector</b>. Este catálogo muestra el universo de industrias potenciales clasificadas por tipo de actividad económica, con sus procesos de negocio típicos transversales:
+              </p>
+
+              <div class="nmo-catalogo">
+                <h4>Universo sectorial NMO</h4>
+                <div class="nmo-catalogo-grid">
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Actividades Primarias</div>
+                    <div class="nmo-cat-item">Agrícolas</div>
+                    <div class="nmo-cat-item">Ingenios Azucareros</div>
+                    <div class="nmo-cat-item">Avícolas</div>
+                    <div class="nmo-cat-item">Mataderos / Rastros</div>
+                    <div class="nmo-cat-item">Porcícolas / Reses</div>
+                    <div class="nmo-cat-item">Pesqueras</div>
+                    <div class="nmo-cat-item">Acuacultura / Piscicultura</div>
+                    <div class="nmo-cat-item">Madereras</div>
+                    <div class="nmo-cat-item">Horticultura</div>
+                    <div class="nmo-cat-item">Vinicultura</div>
+                  </div>
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Actividades de Transformación</div>
+                    <div class="nmo-cat-item">Manufactura / Lean 4.0</div>
+                    <div class="nmo-cat-item">Acero</div>
+                    <div class="nmo-cat-item">Cemento</div>
+                    <div class="nmo-cat-item">Plásticos</div>
+                    <div class="nmo-cat-item">Pulpa y Papel</div>
+                    <div class="nmo-cat-item">Textil</div>
+                    <div class="nmo-cat-item">Astilleros · Construcción y Mantenimiento</div>
+                    <div class="nmo-cat-item">Vidrio</div>
+                    <div class="nmo-cat-item">Hule</div>
+                  </div>
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Bienes de Consumo</div>
+                    <div class="nmo-cat-sub">Alimentos &amp; Bebidas</div>
+                    <div class="nmo-cat-item">Alimentos</div>
+                    <div class="nmo-cat-item">Embotelladoras</div>
+                    <div class="nmo-cat-item">Lácteos y Derivados</div>
+                    <div class="nmo-cat-item">Cervezas · Bebidas destiladas</div>
+                    <div class="nmo-cat-item">Jugos y néctares</div>
+                    <div class="nmo-cat-item">Tabaco · Café</div>
+                    <div class="nmo-cat-sub">Personal &amp; Hogar</div>
+                    <div class="nmo-cat-item">Health Care · Personal Care</div>
+                    <div class="nmo-cat-item">Productos de Limpieza</div>
+                    <div class="nmo-cat-item">Calzado · Cuero · Ropa / Moda</div>
+                    <div class="nmo-cat-item">Línea Blanca · Muebles · Colchones</div>
+                    <div class="nmo-cat-item">Juguetes</div>
+                  </div>
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Recursos &amp; Energía</div>
+                    <div class="nmo-cat-sub">Metales y Minería</div>
+                    <div class="nmo-cat-item">Metales</div>
+                    <div class="nmo-cat-item">No Metales</div>
+                    <div class="nmo-cat-sub">Petróleo y Gas</div>
+                    <div class="nmo-cat-item">Petróleo</div>
+                    <div class="nmo-cat-item">Petroquímica</div>
+                    <div class="nmo-cat-item">Gas Natural</div>
+                    <div class="nmo-cat-sub">Energía</div>
+                    <div class="nmo-cat-item">Distribución de Energía</div>
+                    <div class="nmo-cat-item">FoodSafety</div>
+                  </div>
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Servicios</div>
+                    <div class="nmo-cat-sub">Telecomunicaciones</div>
+                    <div class="nmo-cat-item">Telefonía Celular / Fija</div>
+                    <div class="nmo-cat-item">Servicios Internet</div>
+                    <div class="nmo-cat-sub">Financieros</div>
+                    <div class="nmo-cat-item">Bancos</div>
+                    <div class="nmo-cat-item">Aseguradoras</div>
+                    <div class="nmo-cat-item">Otras Inst. Financieras</div>
+                    <div class="nmo-cat-sub">Salud</div>
+                    <div class="nmo-cat-item">Hospitales · Lab Clínicos</div>
+                    <div class="nmo-cat-item">Prestadores de Salud</div>
+                    <div class="nmo-cat-sub">Construcción · Inmobiliario</div>
+                    <div class="nmo-cat-item">Constructoras · Inmobiliarias</div>
+                    <div class="nmo-cat-item">Centros Comerciales</div>
+                    <div class="nmo-cat-sub">Transporte · Viaje · Turismo</div>
+                    <div class="nmo-cat-item">Carga · Personas · Aéreo</div>
+                    <div class="nmo-cat-item">Hoteles · Turismo</div>
+                  </div>
+                  <div class="nmo-cat-col">
+                    <div class="nmo-cat-head">Retail · Industrias Especializadas · Gobierno</div>
+                    <div class="nmo-cat-sub">Retail</div>
+                    <div class="nmo-cat-item">Supermercados · Conveniencia</div>
+                    <div class="nmo-cat-item">Departamentales · Electrónica</div>
+                    <div class="nmo-cat-item">Restaurantes · Cadenas · Franquicias</div>
+                    <div class="nmo-cat-item">Farmacias · Casas de Empeño</div>
+                    <div class="nmo-cat-item">Distribuidor Automotriz</div>
+                    <div class="nmo-cat-item">Estaciones de Servicio</div>
+                    <div class="nmo-cat-sub">Industrias Especializadas</div>
+                    <div class="nmo-cat-item">Maquinaria · Equipo Pesado</div>
+                    <div class="nmo-cat-item">Productos Médicos</div>
+                    <div class="nmo-cat-item">Servicios Industria Petrolera</div>
+                    <div class="nmo-cat-item">Materiales para Construcción</div>
+                    <div class="nmo-cat-item">Agroinsumos</div>
+                    <div class="nmo-cat-sub">Otros</div>
+                    <div class="nmo-cat-item">Universidades</div>
+                    <div class="nmo-cat-item">Medios y Entretenimiento</div>
+                    <div class="nmo-cat-item">Instituciones Gubernamentales</div>
+                    <div class="nmo-cat-item">Aeropuertos</div>
+                  </div>
+                </div>
+                <div class="nmo-cat-foot">Procesos transversales: Staff / Backoffice · Procurement · Desarrollo Organizacional · Data &amp; Technology · Comercialización y Distribución · Retail</div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 20 · Aplicación LCG del NMO                      -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-aplic">
+              <div class="s-block-label">20 · Aplicación LCG del NMO</div>
+              <h2>Cómo se usa el NMO en <em>proyectos reales.</em></h2>
+              <p>
+                El NMO es la herramienta de diagnóstico que LCG usa <b>al inicio del Análisis Exhaustivo</b> y como medición evolutiva durante todo el ciclo del engagement. Aterriza en seis aplicaciones concretas:
+              </p>
+
+              <div class="nmo-aplicacion">
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 01 · PreDx y Estudio de Factibilidad</div>
+                  <h4>NMO como hipótesis de venta</h4>
+                  <p>En la fase comercial, el NMO se aplica para estimar el potencial de mejora del cliente. <b>Una organización en Nivel 02 tiene 10x más oportunidad que una en Nivel 04</b> — eso justifica magnitud y duración de la propuesta.</p>
+                </div>
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 02 · Análisis Exhaustivo</div>
+                  <h4>Diagnóstico baseline por área</h4>
+                  <p>Al inicio del proyecto formal, se aplica el cuestionario completo de la industria correspondiente. Resultado: <b>scorecard por área con nivel actual + nivel meta + brechas críticas priorizadas</b>.</p>
+                </div>
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 03 · Diseño del Plan</div>
+                  <h4>Hoja de ruta de evolución</h4>
+                  <p>Cada brecha identificada se traduce en iniciativa con responsable, fecha y métrica. <b>El plan respeta la lógica de niveles</b> — no se salta de Nivel 02 a Nivel 05 en seis meses; se construye progresivamente.</p>
+                </div>
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 04 · Implementación</div>
+                  <h4>Re-evaluaciones trimestrales</h4>
+                  <p>Cada trimestre se re-aplica el cuestionario para medir avance. <b>Comparación visual entre baseline y trimestre actual</b> es el insumo de la JSA con dirección del cliente.</p>
+                </div>
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 05 · Cierre del proyecto</div>
+                  <h4>Carta de Recomendación final</h4>
+                  <p>Documento entregable con resultados finales, nivel alcanzado, brechas restantes y plan de evolución post-LCG. <b>Es el handoff formal al cliente</b> que asegura continuidad.</p>
+                </div>
+                <div class="nmo-aplic-card">
+                  <div class="nac-tag">Aplicación 06 · Continuidad post-cierre</div>
+                  <h4>Auditorías recurrentes</h4>
+                  <p>Cliente puede contratar re-evaluaciones anuales para verificar que la madurez se sostiene en el tiempo. Es el formato natural de <b>relación de largo plazo con LCG</b>.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- 21 · Cierre                                      -->
+            <!-- ============================================== -->
+            <section class="s-block" id="sec-nmo-cierre">
+              <div class="s-block-label">Cierre del módulo</div>
+              <div class="nmo-divider" style="margin-top: 0;">
+                <span class="nd-tag">Antes de pasar al siguiente bloque</span>
+                <h2>El NMO es la <em>lengua común</em> con el cliente.</h2>
+                <p>Cuando entres a tu primer engagement, lo primero que haces es aplicar el NMO de la industria correspondiente. <b>Te dice dónde está el cliente, dónde puede estar y qué iniciativas cierran las brechas más relevantes</b>. Sin NMO, las recomendaciones son intuición; con NMO, son hoja de ruta defendible y medible.</p>
+              </div>
+            </section>
+
             <!-- Complete bar -->
             <div class="complete-bar">
               <a class="prev" href="day.html">
@@ -1035,6 +2056,17 @@
                 <li><a href="#v09">V 09 · Logística</a></li>
                 <li><a href="#sec-comp">Complementarias</a></li>
                 <li><a href="#sec-contexto">Contexto México</a></li>
+                <li style="margin-top:8px; padding-top:8px; border-top:1px solid var(--hairline);"><a href="#sec-nmo"><b style="color:var(--ink);">NMO · Marco completo</b></a></li>
+                <li><a href="#sec-nmo-justif">12 · ¿Por qué un modelo?</a></li>
+                <li><a href="#sec-nmo-niveles">13 · 5 Niveles de Madurez</a></li>
+                <li><a href="#sec-nmo-dimensiones">14 · 6 Dimensiones</a></li>
+                <li><a href="#sec-nmo-paser">15 · PASER base</a></li>
+                <li><a href="#sec-nmo-likert">16 · Escala Likert</a></li>
+                <li><a href="#sec-nmo-fases">17 · 5 Fases procedimiento</a></li>
+                <li><a href="#sec-nmo-industrias"><b style="color:var(--ink);">18 · 11 Industrias NMO</b></a></li>
+                <li><a href="#sec-nmo-catalogo">19 · Catálogo amplio</a></li>
+                <li><a href="#sec-nmo-aplic">20 · Aplicación LCG</a></li>
+                <li><a href="#sec-nmo-cierre">Cierre</a></li>
               </ul>
             </div>
 
