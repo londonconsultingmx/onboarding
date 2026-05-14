@@ -52,6 +52,7 @@
 .s-hero-meta .facilitator .sub{ font-size: 11px; color: var(--ink-4); }
 
 /* Two-col body */
+.s-body > article{ min-width: 0; }
 .s-body{
   display: grid; grid-template-columns: 1fr 320px;
   gap: 48px; padding: 48px 0;
@@ -522,7 +523,7 @@
 /* Catálogo amplio · grid de procesos de negocio */
 .nmo-catalogo{ margin: 18px 0; padding: 22px 18px; background: linear-gradient(135deg, #0F2A2E 0%, #1F4D55 100%); border-radius: var(--r-md); color: #fff; overflow-x: auto; }
 .nmo-catalogo h4{ margin: 0 0 14px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #A0EBE1; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; }
-.nmo-catalogo-grid{ display: grid; grid-template-columns: repeat(6, minmax(180px, 1fr)); gap: 8px; min-width: 1140px; }
+.nmo-catalogo-grid{ display: grid; grid-template-columns: repeat(6, minmax(130px, 1fr)); gap: 8px; min-width: 820px; }
 .nmo-cat-col{ display: flex; flex-direction: column; gap: 4px; }
 .nmo-cat-head{ padding: 10px 12px; background: rgba(160,235,225,.12); border: 1px solid rgba(160,235,225,.25); color: #A0EBE1; border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center; }
 .nmo-cat-sub{ padding: 8px 12px; background: rgba(255,255,255,.08); color: #fff; font-family: var(--sans); font-size: 11px; font-weight: 700; border-radius: 6px; text-align: center; }
