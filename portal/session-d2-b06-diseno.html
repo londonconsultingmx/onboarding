@@ -98,20 +98,28 @@
   color: var(--ink-4); letter-spacing: 0; text-transform: none;
 }
 .lc-row .lc-track{
-  position: relative; height: 28px; background: var(--surface-2); border-radius: 999px; overflow: hidden;
+  position: relative; height: 28px; background: var(--surface-2); border-radius: 999px;
 }
 .lc-row .lc-bar{
   position: absolute; top: 0; bottom: 0;
   background: var(--cat-met); border-radius: 999px;
-  display: flex; align-items: center; padding: 0 12px;
+  display: flex; align-items: center; padding: 0 10px;
   color: #fff; font-family: ui-monospace, Menlo, monospace;
-  font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+  font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700;
+  white-space: nowrap; overflow: hidden;
 }
 .lc-row .lc-bar.tone-1{ background: var(--cat-met); opacity:.95; }
 .lc-row .lc-bar.tone-2{ background: var(--cat-met); opacity:.78; }
 .lc-row .lc-bar.tone-3{ background: var(--cat-met); opacity:.62; }
 .lc-row .lc-bar.tone-4{ background: var(--cat-met); opacity:.50; }
 .lc-row .lc-bar.tone-5{ background: var(--cat-met); opacity:.42; }
+.lc-row .lc-bar-lbl{
+  position: absolute; top: 50%; transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700;
+  color: var(--cat-met);
+}
 .lc-row.is-current .lc-name{ color: var(--cat-met); }
 .lc-row.is-current .lc-track{ background: var(--cat-met-bg); }
 .lifecycle-foot{
@@ -533,7 +541,8 @@
                   <div class="lc-row">
                     <div class="lc-name">Análisis Exhaustivo<span class="lc-sub">VSMs · Gemba · Estructura</span></div>
                     <div class="lc-track">
-                      <div class="lc-bar tone-1" style="left: 0%; width: 10%;">Sem 01–04</div>
+                      <div class="lc-bar tone-1" style="left: 0%; width: 10%;"></div>
+                      <div class="lc-bar-lbl" style="left: 10%; margin-left: 8px;">Sem 01–04</div>
                     </div>
                   </div>
                   <div class="lc-row is-current">
@@ -557,13 +566,15 @@
                   <div class="lc-row is-current">
                     <div class="lc-name">Capacitación<span class="lc-sub">Pre-manuales · Certificación</span></div>
                     <div class="lc-track">
-                      <div class="lc-bar tone-4" style="left: 47.5%; width: 7.5%;">Sem 20–22</div>
+                      <div class="lc-bar tone-4" style="left: 47.5%; width: 7.5%;"></div>
+                      <div class="lc-bar-lbl" style="left: 55%; margin-left: 8px;">Sem 20–22</div>
                     </div>
                   </div>
                   <div class="lc-row is-current">
                     <div class="lc-name">Documentación<span class="lc-sub">Matriz auditoría · Procesos</span></div>
                     <div class="lc-track">
-                      <div class="lc-bar tone-5" style="left: 95%; width: 5%;">39–40</div>
+                      <div class="lc-bar tone-5" style="left: 95%; width: 5%;"></div>
+                      <div class="lc-bar-lbl" style="right: 5%; margin-right: 8px;">Sem 39–40</div>
                     </div>
                   </div>
                 </div>
